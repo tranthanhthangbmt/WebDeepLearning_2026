@@ -501,10 +501,10 @@
           if (isVideo) { slideVideo.pause(); } else { slideAudio.pause(); }
         });
         navigator.mediaSession.setActionHandler('previoustrack', () => {
-          if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1);
+          if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1, true);
         });
         navigator.mediaSession.setActionHandler('nexttrack', () => {
-          if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1);
+          if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1, true);
         });
       }
     }
@@ -546,7 +546,7 @@
     }
 
     /* ==================== XỬ LÝ VIDEO ==================== */
-    function playVideo(videoUrl) {
+    function playVideo(videoUrl, autoPlay = true) {
       isVideoPlaying = true;
       slideAudio.pause(); // Dừng audio nếu đang chạy
       cancelAnimationFrame(scrollAnimationId);
@@ -563,8 +563,12 @@
       // Khi video sẵn sàng
       slideVideo.onloadeddata = () => {
         showLoading(false);
-        slideVideo.play().catch(e => console.warn("Lỗi autoplay video:", e));
-        playPauseBtn.innerHTML = '⏸️';
+        if (autoPlay) {
+          slideVideo.play().catch(e => console.warn("Lỗi autoplay video:", e));
+          playPauseBtn.innerHTML = '⏸️';
+        } else {
+          playPauseBtn.innerHTML = '▶️';
+        }
       };
 
       // Đồng bộ thanh tiến trình cho Video thay vì Audio
@@ -589,7 +593,7 @@
       slideVideo.onended = () => {
         closeVideo();
         if (currentSlideIndex < TOTAL_SLIDES) {
-          showSlide(currentSlideIndex + 1);
+          showSlide(currentSlideIndex + 1, true);
         }
       };
 
@@ -599,7 +603,7 @@
         alert("Lỗi phát video, chuyển sang slide tiếp theo.");
         closeVideo();
         if (currentSlideIndex < TOTAL_SLIDES) {
-          showSlide(currentSlideIndex + 1);
+          showSlide(currentSlideIndex + 1, true);
         }
       };
     }
@@ -614,7 +618,7 @@
 
 
     /* ==================== ĐIỀU CHUYỂN SLIDE ==================== */
-    async function showSlide(index) {
+    async function showSlide(index, autoPlay = true) {
       if (index < 1) index = 1;
       if (index > TOTAL_SLIDES) index = TOTAL_SLIDES;
 
@@ -641,10 +645,10 @@
       if (videoMap.has(index)) {
         try {
           const url = await resourceManager.loadVideo(videoMap.get(index));
-          playVideo(url);
+          playVideo(url, autoPlay);
         } catch (e) {
           console.error("Lỗi preload video:", e);
-          playVideo(videoMap.get(index)); // Fallback URL
+          playVideo(videoMap.get(index), autoPlay); // Fallback URL
         }
         return; // Thoát hàm để Video xử lý phần còn lại
       }
@@ -658,16 +662,20 @@
       // trình duyệt (đặc biệt iOS/Android) sẽ ngưng tải Image khiến Audio không bao giờ được play.
       updateMediaSession(index, false);
       
-      slideAudio.play().then(() => {
-        playPauseBtn.innerHTML = '⏸️';
-        if (isAutoScroll && !isFitMode) {
-          cancelAnimationFrame(scrollAnimationId);
-          scrollAnimationId = requestAnimationFrame(updateScroll);
-        }
-      }).catch(err => {
-        console.warn("Autoplay block hoặc lỗi:", err);
+      if (autoPlay) {
+        slideAudio.play().then(() => {
+          playPauseBtn.innerHTML = '⏸️';
+          if (isAutoScroll && !isFitMode) {
+            cancelAnimationFrame(scrollAnimationId);
+            scrollAnimationId = requestAnimationFrame(updateScroll);
+          }
+        }).catch(err => {
+          console.warn("Autoplay block hoặc lỗi:", err);
+          playPauseBtn.innerHTML = '▶️';
+        });
+      } else {
         playPauseBtn.innerHTML = '▶️';
-      });
+      }
 
       // 2. Tải ảnh chạy ngầm, xong lúc nào thì hiển thị lúc đó
       resourceManager.loadImage(index).then(() => {
@@ -718,7 +726,7 @@
 
     slideAudio.addEventListener('ended', () => {
       if (currentSlideIndex < TOTAL_SLIDES) {
-        showSlide(currentSlideIndex + 1);
+        showSlide(currentSlideIndex + 1, true);
       }
     });
 
@@ -743,17 +751,17 @@
     });
 
     prevBtn.addEventListener('click', () => {
-      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1);
+      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1, true);
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1);
+      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1, true);
     });
 
     closeVideoBtn.addEventListener('click', () => {
       closeVideo();
       if (currentSlideIndex < TOTAL_SLIDES) {
-        showSlide(currentSlideIndex + 1);
+        showSlide(currentSlideIndex + 1, true);
       }
     });
 
@@ -831,7 +839,7 @@
     window.addEventListener('hashchange', () => {
       const h = parseInt(window.location.hash.replace('#', ''));
       if (!isNaN(h) && h >= 1 && h <= TOTAL_SLIDES && h !== currentSlideIndex) {
-        showSlide(h);
+        showSlide(h, true);
       }
     });
 
@@ -841,7 +849,7 @@
       const h = parseInt(window.location.hash.replace('#', ''));
       if (!isNaN(h) && h >= 1 && h <= TOTAL_SLIDES) startIdx = h;
     }
-    showSlide(startIdx);
+    showSlide(startIdx, false);
 
   </script>
 </body>

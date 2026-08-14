@@ -752,14 +752,14 @@
 
       // Chuyển slide tiếp theo
       if (currentSlideIndex < TOTAL_SLIDES) {
-        showSlide(currentSlideIndex + 1);
+        showSlide(currentSlideIndex + 1, true);
       }
     }
 
     closeVideoBtn.addEventListener('click', closeVideo);
 
     /* ================= LOGIC CHÍNH ================= */
-    async function showSlide(index) {
+    async function showSlide(index, autoPlay = true) {
       // Validate index
       if (index < 1) index = 1;
       if (index > TOTAL_SLIDES) index = TOTAL_SLIDES;
@@ -862,7 +862,7 @@
       } else {
         // Normal flow
         if (currentSlideIndex < TOTAL_SLIDES) {
-          showSlide(currentSlideIndex + 1);
+          showSlide(currentSlideIndex + 1, true);
         }
       }
     });
@@ -894,11 +894,11 @@
     });
 
     prevBtn.addEventListener('click', () => {
-      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1);
+      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1, true);
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1);
+      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1, true);
     });
 
     autoscrollBtn.addEventListener('click', () => {
