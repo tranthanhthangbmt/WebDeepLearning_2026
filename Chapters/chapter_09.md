@@ -1099,7 +1099,7 @@ Phần này kết thúc phần giới thiệu của chúng tôi về các phươ
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter09.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter09.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 #### ** 💻 Luyện tập **

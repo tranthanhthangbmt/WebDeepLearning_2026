@@ -3,6 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
+  <script>
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      var pass = prompt('Vui lòng nhập mật khẩu để truy cập:');
+      if (pass === 'UDA') {
+        localStorage.setItem('isLoggedIn', 'true');
+      } else {
+        alert('Mật khẩu không đúng!');
+        document.documentElement.innerHTML = '<body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;background-color:#f8f9fa;"><h2>Truy cập bị từ chối. <a href="#" onclick="location.reload();return false;">Tải lại trang</a> để thử lại.</h2></' + 'body>';
+        throw new Error("Unauthorized");
+      }
+    }
+  </script>
   <title>Học Sâu - Đại học Đông Á</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Tài liệu môn học Học Sâu - Deep Learning">

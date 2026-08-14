@@ -2521,7 +2521,7 @@ một cách tự nhiên, một tập dữ liệu lớn hơn hoặc tốt hơn lu
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter05.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter05.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 #### ** 💻 Luyện tập **

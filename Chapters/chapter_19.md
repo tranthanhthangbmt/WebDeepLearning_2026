@@ -1695,7 +1695,7 @@ Hệ thống phát triển mô hình học tập không ngừng này có thể �
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter19.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter19.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 <!-- tabs:end -->

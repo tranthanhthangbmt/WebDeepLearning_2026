@@ -2346,7 +2346,7 @@ nội suy giữa các hình ảnh làm đầu ra.
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter17.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter17.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 #### ** 💻 Luyện tập **

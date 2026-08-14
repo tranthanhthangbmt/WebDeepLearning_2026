@@ -3643,7 +3643,7 @@ chẳng hạn, nó có thể là trình tối ưu hóa RMSProp, SGD có động 
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter02.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter02.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 #### ** 💻 Luyện tập **

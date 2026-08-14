@@ -959,7 +959,7 @@ Cuộc cách mạng AI, từng là một tầm nhìn xa vời, giờ đây đang
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter01.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter01.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 <!-- tabs:end -->

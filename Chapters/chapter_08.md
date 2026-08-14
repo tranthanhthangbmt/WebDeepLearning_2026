@@ -2934,7 +2934,7 @@ người mẫu. Điều này đẩy hiệu suất đi xa hơn một chút.
 #### **Slide**
 
 <div class="pdf-container" style="margin-bottom: 20px; width: 100%; height: 85vh;">
-  <iframe src="TaiLieu/slideDL/Chapter08.pdf" width="100%" height="100%" style="border: none;"></iframe>
+  <iframe src="TaiLieu/slideDL/Chapter08.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
 #### ** 💻 Luyện tập **
