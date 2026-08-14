@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Các thuật ngữ cốt lõi (Glossary)}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Phân loại Nhị phân (IMDb Dataset)}{7}{0}{2}
+\beamer@sectionintoc {3}{3. Phân loại Đa lớp (Reuters Dataset)}{18}{0}{3}
+\beamer@sectionintoc {4}{4. Hồi quy Vô hướng (Boston Housing)}{25}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{33}{0}{5}

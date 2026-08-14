@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Vấn đề "Hộp Đen" trong Deep Learning}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Trực quan hóa Biểu diễn Trung gian}{5}{0}{2}
+\beamer@sectionintoc {3}{3. Trực quan hóa Bộ lọc bằng Gradient Ascent}{15}{0}{3}
+\beamer@sectionintoc {4}{4. Bản đồ Kích hoạt Lớp (Grad-CAM)}{23}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{32}{0}{5}

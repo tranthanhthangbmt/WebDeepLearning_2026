@@ -1,0 +1,18 @@
+\frametitle{Lắp ráp mô hình Mini-Xception (Phần 2)}
+Kết thúc vòng lặp, ta gắn khối Classifier (Toàn cục). Kích thước mạng cực nhẹ, chỉ tốn $721,857$ tham số so với 1.5 triệu tham số của CNN cũ!
+
+\begin{lstlisting}[language=Python]
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    x = layers.SeparableConv2D(size, 3, padding="same", use_bias=False)(x)
+    x = layers.MaxPooling2D(3, strides=2, padding="same")(x)
+
+    # Project residual block
+    residual = layers.Conv2D(size, 1, strides=2, padding="same", use_bias=False)(residual)
+    x = layers.add([x, residual])
+
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.Dropout(0.5)(x)
+outputs = layers.Dense(1, activation="sigmoid")(x)
+model = keras.Model(inputs=inputs, outputs=outputs)
+\end{lstlisting}

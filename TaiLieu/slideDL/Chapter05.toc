@@ -1,0 +1,8 @@
+\beamer@sectionintoc {1}{1. Tối ưu hóa (Optimization) và Khái quát hóa (Generalization)}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Tác động của Dữ liệu Nhiễu (Noisy Data)}{6}{0}{2}
+\beamer@sectionintoc {3}{3. Các phương pháp Đánh giá Mô hình}{11}{0}{3}
+\beamer@sectionintoc {4}{4. Nâng cao chất lượng mô hình}{16}{0}{4}
+\beamer@sectionintoc {5}{5. Các Phương pháp Regularization chuyên sâu}{25}{0}{5}
+\beamer@sectionintoc {6}{6. Quản lý dữ liệu và Kỹ thuật Tính năng}{30}{0}{6}
+\beamer@sectionintoc {7}{7. Giả thuyết Đa tạp (The Manifold Hypothesis)}{32}{0}{7}
+\beamer@sectionintoc {8}{Tổng kết}{35}{0}{8}

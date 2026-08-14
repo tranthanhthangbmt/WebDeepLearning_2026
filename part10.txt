@@ -1,0 +1,145 @@
+Summary 797
+For the complete-data case, the inner loop to learn the parameters is very fast—just a
+matter of extracting conditional frequencies from the data set. When there are hidden vari-
+ables, the inner loop may involve many iterations of EM or a gradient-based algorithm, and
+each iteration involves the calculation of posteriors in a Bayes net, which is itself an NP-hard
+problem. To date, this approach has proved impractical for learning complex models.
+One possible improvement is the so-called structural EM algorithm, which operates in Structural EM
+much the same way as ordinary (parametric) EM except that the algorithm can update the
+structure as well as the parameters. Just as ordinary EM uses the current parameters to com-
+pute the expected counts in the E-step and then applies those counts in the M-step to choose
+new parameters, structural EM uses the current structure to compute expected counts and
+then applies those counts in the M-step to evaluate the likelihood for potential new struc-
+tures. (This contrasts with the outer-loop/inner-loop method, which computes new expected
+counts for each potential structure.) In this way, structural EM may make several structural
+alterations to the network without once recomputing the expected counts, and is capable of
+learning nontrivial Bayes net structures. Structural EM has a search space over the space
+of structures rather than the space of structures and parameters. Nonetheless, much work
+remains to be done before we can say that the structure-learning problem is solved.
+Summary
+Statistical learning methods range from simple calculation of averages to the construction of
+complex models such as Bayesian networks. They have applications throughout computer
+science, engineering, computational biology, neuroscience, psychology, and physics. This
+chapter has presented some of the basic ideas and given a ﬂavor of the mathematical under-
+pinnings. The main points are as follows:
+•Bayesian learning methods formulate learning as a form of probabilistic inference,
+using the observations to update a prior distribution over hypotheses. This approach
+provides a good way to implement Ockham’s razor, but quickly becomes intractable for
+complex hypothesis spaces.
+•Maximum a posteriori (MAP) learning selects a single most likely hypothesis given
+the data. The hypothesis prior is still used and the method is often more tractable than
+full Bayesian learning.
+•Maximum-likelihood learning simply selects the hypothesis that maximizes the likeli-
+hood of the data; it is equivalent to MAP learning with a uniform prior. In simple cases
+such as linear regression and fully observable Bayesian networks, maximum-likelihood
+solutions can be found easily in closed form. Naive Bayes learning is a particularly
+effective technique that scales well.
+• When some variables are hidden, local maximum likelihood solutions can be found
+using the expectation maximization (EM) algorithm. Applications include unsuper-
+vised clustering using mixtures of Gaussians, learning Bayesian networks, and learning
+hidden Markov models.
+• Learning the structure of Bayesian networks is an example of model selection . This
+usually involves a discrete search in the space of structures. Some method is required
+for trading off model complexity against degree of ﬁt.
+
+798 Chapter 21 Learning Probabilistic Models
+•Nonparametric models represent a distribution using the collection of data points.
+Thus, the number of parameters grows with the training set. Nearest-neighbors methods
+look at the examples nearest to the point in question, whereas kernel methods form a
+distance-weighted combination of all the examples.
+Statistical learning continues to be a very active area of research. Enormous strides have been
+made in both theory and practice, to the point where it is possible to learn almost any model
+for which exact or approximate inference is feasible.
+Bibliographical and Historical Notes
+The application of statistical learning techniques in AI was an active area of research in the
+early years (see Duda and Hart, 1973) but became separated from mainstream AI as the
+latter ﬁeld concentrated on symbolic methods. A resurgence of interest occurred shortly after
+the introduction of Bayesian network models in the late 1980s; at roughly the same time,
+a statistical view of neural network learning began to emerge. In the late 1990s, there was
+a noticeable convergence of interests in machine learning, statistics, and neural networks,
+centered on methods for creating large probabilistic models from data.
+The naive Bayes model is one of the oldest and simplest forms of Bayesian network,
+dating back to the 1950s. Its origins were mentioned in Chapter 12. Its surprising success is
+partially explained by Domingos and Pazzani (1997). A boosted form of naive Bayes learning
+won the ﬁrst KDD Cup data mining competition (Elkan, 1997). Heckerman (1998) gives an
+excellent introduction to the general problem of Bayes net learning. Bayesian parameter
+learning with Dirichlet priors for Bayesian networks was discussed by Spiegelhalter et al.
+(1993). The beta distribution as a conjugate prior for a Bernoulli variable was ﬁrst derived
+by Thomas (Bayes, 1763) and later reintroduced by Karl Pearson (1895) as a model for
+skewed data; for many years it was known as a “Pearson Type I distribution.” Bayesian linear
+regression is discussed in the text by Box and Tiao (1973); Minka (2010) provides a concise
+summary of the derivations for the general multivariate case.
+Several software packages incorporate mechanisms for statistical learning with Bayes
+net models. These include B UGS (Bayesian inference Using Gibbs Sampling) (Gilks et al. ,
+1994; Lunn et al. , 2000, 2013), J AGS (Just Another Gibbs Sampler) (Plummer, 2003), and
+STAN (Carpenter et al. , 2017).
+The ﬁrst algorithms for learning Bayes net structures used conditional independence
+tests (Pearl, 1988; Pearl and Verma, 1991). Spirtes et al. (1993) implemented a compre-
+hensive approach in the T ETRAD package for Bayes net learning. Algorithmic improvements
+since then led to a clear victory in the 2001 KDD Cup data mining competition for a Bayes
+net learning method (Cheng et al. , 2002). (The speciﬁc task here was a bioinformatics prob-
+lem with 139,351 features!) A structure-learning approach based on maximizing likelihood
+was developed by Cooper and Herskovits (1992) and improved by Heckerman et al. (1994).
+More recent algorithms have achieved quite respectable performance in the complete-
+data case (Moore and Wong, 2003; Teyssier and Koller, 2005). One important component is
+an efﬁcient data structure, the AD-tree, for caching counts over all possible combinations of
+variables and values (Moore and Lee, 1997). Friedman and Goldszmidt (1996) pointed out
+the inﬂuence of the representation of local conditional distributions on the learned structure.
+
+Bibliographical and Historical Notes 799
+The general problem of learning probability models with hidden variables and missing
+data was addressed by Hartley (1958), who described the general idea of what was later
+called EM and gave several examples. Further impetus came from the Baum–Welch algo-
+rithm for HMM learning (Baum and Petrie, 1966), which is a special case of EM. The paper
+by Dempster, Laird, and Rubin (1977), which presented the EM algorithm in general form
+and analyzed its convergence, is one of the most cited papers in both computer science and
+statistics. (Dempster himself views EM as a schema rather than an algorithm, since a good
+deal of mathematical work may be required before it can be applied to a new family of dis-
+tributions.) McLachlan and Krishnan (1997) devote an entire book to the algorithm and its
+properties. The speciﬁc problem of learning mixture models, including mixtures of Gaus-
+sians, is covered by Titterington et al. (1985).
+Within AI, A UTOCLASS (Cheeseman et al. , 1988; Cheeseman and Stutz, 1996) was the
+ﬁrst successful system that used EM for mixture modeling. A UTOCLASS was applied to
+a number of real-world scientiﬁc classiﬁcation tasks, including the discovery of new types
+of stars from spectral data (Goebel et al. , 1989) and new classes of proteins and introns in
+DNA/protein sequence databases (Hunter and States, 1992).
+For maximum-likelihood parameter learning in Bayes nets with hidden variables, EM
+and gradient-based methods were introduced around the same time by Lauritzen (1995) and
+Russell et al. (1995). The structural EM algorithm was developed by Friedman (1998) and
+applied to maximum-likelihood learning of Bayes net structures with latent variables. Fried-
+man and Koller (2003) describe Bayesian structure learning. Daly et al. (2011) review the
+ﬁeld of Bayes net learning, providing extensive citations to the literature.
+The ability to learn the structure of Bayesian networks is closely connected to the issue
+of recovering causal information from data. That is, is it possible to learn Bayes nets in
+such a way that the recovered network structure indicates real causal inﬂuences? For many
+years, statisticians avoided this question, believing that observational data (as opposed to data
+generated from experimental trials) could yield only correlational information—after all, any
+two variables that appear related might in fact be inﬂuenced by a third, unknown causal
+factor rather than inﬂuencing each other directly. Pearl (2000) has presented convincing
+arguments to the contrary, showing that there are in fact many cases where causality can be
+ascertained and developing the causal network formalism to express causes and the effects
+of intervention as well as ordinary conditional probabilities.
+Nonparametric density estimation, also called Parzen window density estimation, was
+investigated initially by Rosenblatt (1956) and Parzen (1962). Since that time, a huge litera-
+ture has developed investigating the properties of various estimators. Devroye (1987) gives a
+thorough introduction. There is also a rapidly growing literature on nonparametric Bayesian
+methods, originating with the seminal work of Ferguson (1973) on the Dirichlet process ,Dirichlet process
+which can be thought of as a distribution over Dirichlet distributions. These methods are par-
+ticularly useful for mixtures with unknown numbers of components. Ghahramani (2005) and
+Jordan (2005) provide useful tutorials on the many applications of these ideas to statistical
+learning. The text by Rasmussen and Williams (2006) covers the Gaussian process , which Gaussian process
+gives a way of deﬁning prior distributions over the space of continuous functions.
+The material in this chapter brings together work from the ﬁelds of statistics and pattern
+recognition, so the story has been told many times in many ways. Good texts on Bayesian
+statistics include those by DeGroot (1970), Berger (1985), and Gelman et al. (1995). Bishop
+
+800 Chapter 21 Learning Probabilistic Models
+(2007), Hastie et al. (2009), Barber (2012), and Murphy (2012) provide excellent introduc-
+tions to statistical machine learning. For pattern classiﬁcation, the classic text for many years
+has been Duda and Hart (1973), now updated (Duda et al. , 2001). The annual NeurIPS
+(Neural Information Processing Systems, formerly NIPS) conference, whose proceedings are
+published as the series Advances in Neural Information Processing Systems , includes many
+Bayesian learning papers, as does the annual conference on Artiﬁcial Intelligence and Statis-
+tics. Speciﬁcally Bayesian venues include the Valencia International Meetings on Bayesian
+Statistics and the journal Bayesian Analysis .
+

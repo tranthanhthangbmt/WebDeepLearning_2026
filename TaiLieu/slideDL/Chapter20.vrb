@@ -1,0 +1,16 @@
+\frametitle{Xây dựng Transformer với Keras}
+Sử dụng \texttt{TransformerEncoder} cho tác vụ phân loại chuỗi (Sequence Classification):
+\begin{lstlisting}[language=Python]
+from keras_hub.layers import TokenAndPositionEmbedding
+from keras_hub.layers import TransformerEncoder
+
+inputs = keras.Input(shape=(seq_length,), dtype="int64")
+# Add token and position embedding
+x = TokenAndPositionEmbedding(vocab_size, seq_length, embed_dim)(inputs)
+x = TransformerEncoder(intermediate_dim=256, num_heads=8)(x)
+x = layers.GlobalMaxPooling1D()(x)
+
+outputs = layers.Dense(1, activation="sigmoid")(x)
+model = keras.Model(inputs, outputs)
+model.compile(optimizer="adamw", loss="binary_crossentropy")
+\end{lstlisting}

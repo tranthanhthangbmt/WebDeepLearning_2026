@@ -1,0 +1,2 @@
+hãy tham khảo D:\DongAUniversity\TÀI LIỆU DẠY HỌC_2024-2025\Môn Học sâu_UDA\WebDeepLearning_2026\TaiLieu\Video\Chapter_01\planScriptDemo.md và scriptDemo.txt để làm kế hoạch planScriptCh01.md với tài liệu để lấy nội dung là tab Tiếng Việt của chương đó, số lượng slide trong script sau này bằng đúng số lượng slide trong file pdf slide của chương đó
+=========================

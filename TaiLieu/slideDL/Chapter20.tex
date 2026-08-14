@@ -1,0 +1,349 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setbeamertemplate{caption}[numbered]
+\renewcommand{\figurename}{Hình}
+\renewcommand{\thefigure}{20.\arabic{figure}}
+
+\lstset{
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    showstringspaces=false
+}
+
+\title[Chương 20: Conclusions]{Học Sâu (Deep Learning) \\ \vspace{0.5cm} \Large Chương 20: Tổng kết Giáo trình (Conclusions)}
+\author{Đại học Đông Á}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Nội dung chương}
+    \tableofcontents
+\end{frame}
+
+\section{1. Bức tranh Toàn cảnh Trí tuệ Nhân tạo}
+
+\begin{frame}{Khái niệm Trí tuệ nhân tạo (AI)}
+    \begin{itemize}
+        \item \textbf{Trí tuệ nhân tạo (Artificial Intelligence - AI)} là một lĩnh vực rộng lớn, lâu đời, nhằm "tự động hóa các quá trình nhận thức của con người".
+        \item Bao gồm cả những quy tắc được lập trình cứng (Hard-coded rules) như những câu lệnh IF-ELSE trong một phần mềm kế toán.
+        \item Nó bao hàm từ máy tính bỏ túi cơ bản, hệ chuyên gia (Expert systems) cho đến các robot hình người hiện đại.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Khái niệm Machine Learning (Học máy)}
+    \begin{itemize}
+        \item \textbf{Machine Learning (ML)} là một trường con cụ thể của AI.
+        \item Mục đích: Tự động phát triển các chương trình (được gọi là mô hình - models) \textit{hoàn toàn từ việc tiếp xúc với dữ liệu đào tạo}.
+        \item Thay vì lập trình luật lệ (Rules) để giải quyết vấn đề, chúng ta cung cấp dữ liệu (Data) và câu trả lời (Answers), để máy tự học ra luật lệ.
+        \item Dạng AI thống trị mạnh mẽ từ những năm 1990 và 2000.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Khái niệm Deep Learning (Học sâu)}
+    \begin{itemize}
+        \item \textbf{Deep Learning (DL)} là một nhánh của Học máy.
+        \item Mô hình là chuỗi dài các phép biến đổi hình học (Geometric transformations) nối tiếp nhau, cấu trúc thành các \textbf{Lớp (Layers)}.
+        \item Quá trình "Học" là việc tìm kiếm giá trị tốt nhất cho các \textbf{Trọng số (Weights)} để giảm thiểu Hàm mất mát (Loss function).
+        \item Quá trình này được tối ưu hiệu quả nhờ thuật toán \textbf{Gradient Descent} trên các không gian biến đổi khả vi.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Khái niệm Generative AI (AI Tạo sinh)}
+    \begin{itemize}
+        \item \textbf{Generative AI} là tập hợp con cụ thể của Deep Learning, với các mô hình khổng lồ (hàng tỷ đến hàng nghìn tỷ tham số).
+        \item Khả năng đặc biệt: Tạo ra văn bản, hình ảnh, video, âm thanh \textit{mới} chưa từng có.
+        \item Được đào tạo theo cơ chế tự giám sát (Self-supervised): dự đoán phần bị thiếu (Khử nhiễu ảnh, Dự đoán từ tiếp theo).
+        \item Khởi đầu cho "kỷ nguyên tiêu dùng" của AI với ChatGPT, Midjourney.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tại sao Deep Learning tạo nên bước ngoặt? (Phần 1)}
+    \begin{itemize}
+        \item Trong vòng vài năm, Deep Learning đã chinh phục hàng loạt nhiệm vụ được coi là bất khả thi với máy tính: Xử lý hình ảnh, Video, Âm thanh.
+        \item Với đủ dữ liệu chất lượng do con người gán nhãn, Deep Learning có thể trích xuất \textit{mọi thứ} mà nhận thức con người làm được.
+        \item Lĩnh vực Nhận thức Máy (Machine Perception) gần như đã được giải quyết ở mức độ hẹp.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tại sao Deep Learning tạo nên bước ngoặt? (Phần 2)}
+    \begin{itemize}
+        \item \textbf{Mùa hè AI lần thứ 3:} Sự thành công chưa từng có về mặt kỹ thuật đã thu hút lượng đầu tư khổng lồ vào AI.
+        \item Khác với những "Mùa đông AI" trong quá khứ do kỳ vọng ảo, lần này Deep Learning mang lại \textbf{giá trị kinh doanh thực tế vô cùng to lớn} cho xã hội.
+        \item Ngay cả khi không có thêm đột phá lý thuyết nào, việc ứng dụng các thuật toán hiện tại vào đa ngành cũng đã làm thay đổi cả nền kinh tế.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cách tư duy đúng về Deep Learning}
+    \begin{itemize}
+        \item "Nó không phức tạp, nó chỉ chứa rất nhiều phép tính." (Richard Feynman).
+        \item Mọi thứ trong DL đều là \textbf{Vector} (một điểm trong không gian hình học).
+        \item Mạng nơ-ron thực chất là công cụ \textbf{gỡ rối các đường cong đa tạp} (Uncrumpling manifolds).
+        \item Khái niệm "Nơ-ron" chỉ mang tính lịch sử; chúng không mô phỏng bộ não người. Tên gọi chính xác hơn phải là "Học biểu diễn phân cấp" (Hierarchical Representation Learning).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bốn công nghệ hỗ trợ cuộc cách mạng AI}
+    Sự trỗi dậy của AI là sản phẩm của sự hội tụ 4 yếu tố:
+    \begin{enumerate}
+        \item \textbf{Thuật toán tiên tiến:} Cải tiến liên tục của Backpropagation và các kiến trúc chấn động như Transformer (2017).
+        \item \textbf{Kỷ nguyên Big Data:} Internet và bộ nhớ lưu trữ giá rẻ cung cấp lượng dữ liệu khổng lồ vô tận.
+        \item \textbf{Phần cứng tính toán song song:} Sự bùng nổ của GPU (Graphics Processing Units) do NVIDIA sản xuất, cho phép xử lý ma trận khổng lồ.
+        \item \textbf{Hệ sinh thái Phần mềm:} Các Framework nguồn mở hỗ trợ tính đạo hàm tự động (TensorFlow, PyTorch, JAX) và các API bậc cao như \textbf{Keras}.
+    \end{enumerate}
+\end{frame}
+
+\section{2. Hệ thống hóa Quy trình Machine Learning}
+
+\begin{frame}{Bước 1: Xác định Bài toán và Thước đo}
+    \begin{block}{Xác định Vấn đề (Define the Problem)}
+        \begin{itemize}
+            \item Dữ liệu đầu vào là gì? Chúng ta muốn dự đoán cái gì?
+            \item Cần thu thập hay gán nhãn thêm dữ liệu không?
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Xác định Thước đo (Measure Success)}
+        \begin{itemize}
+            \item Phân loại cân bằng: Accuracy.
+            \item Phân loại mất cân bằng: Precision, Recall, AUC-ROC.
+            \item Hồi quy: MSE, MAE.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Bước 2: Quy trình Đánh giá và Vector hóa}
+    \begin{block}{Phân chia Dữ liệu}
+        \begin{itemize}
+            \item Phải chia nhỏ dữ liệu thành 3 tập: \textbf{Train, Validation, Test}.
+            \item Đảm bảo dữ liệu từ tập Test tuyệt đối không bị rò rỉ (leak) sang quá trình huấn luyện.
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Xử lý Dữ liệu}
+        \begin{itemize}
+            \item Biến mọi đầu vào thành các Vector (Vectorization).
+            \item Chuẩn hóa (Normalization) để dữ liệu xoay quanh điểm 0, giúp mạng dễ hội tụ.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Bước 3: Thiết lập Baseline và Overfitting}
+    \begin{itemize}
+        \item \textbf{Phát triển Baseline thông thường:} Xây dựng một mô hình nhỏ nhất có thể. Nếu mạng Neural không thể đánh bại một dự đoán xác suất ngẫu nhiên, nghĩa là dữ liệu không mang tính thông tin!
+        \item \textbf{Đẩy mô hình tới Overfitting:} Nhiệm vụ thứ hai là tạo ra một mô hình mạnh quá mức cần thiết (thêm Layer, Train lâu hơn) cho đến khi điểm số trên tập Validation bắt đầu giảm. Đó là lúc ta tìm ra "Ranh giới chịu đựng" của dữ liệu.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bước 4: Tinh chỉnh mô hình (Regularization)}
+    Sau khi xác định được điểm Overfitting, quá trình quan trọng nhất là áp dụng các phương pháp \textbf{Regularization} (Kiểm soát mô hình) để tăng khả năng Tổng quát hóa (Generalization):
+    \begin{itemize}
+        \item \textbf{Early Stopping:} Dừng huấn luyện sớm.
+        \item \textbf{Dropout:} Loại bỏ ngẫu nhiên trọng số để tránh sự phụ thuộc cục bộ.
+        \item \textbf{L1/L2 Weight Decay:} Giảm kích thước của các tham số.
+        \item \textbf{Data Augmentation:} Biến đổi dữ liệu đầu vào.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bước 5: Triển khai (Deployment)}
+    \begin{itemize}
+        \item Sau khi chốt mô hình cuối cùng trên tập Test, tiến hành triển khai vào môi trường sản xuất.
+        \item Có thể thông qua Web API, phần mềm C++, hoặc các thiết bị nhúng (IoT, Mobile).
+        \item Phải liên tục giám sát (Monitoring) hiệu suất trên dữ liệu thực tế (Real-world data) để lập kế hoạch huấn luyện lại mô hình trong tương lai.
+    \end{itemize}
+\end{frame}
+
+\section{3. Không gian Kiến trúc Mạng Nơ-ron}
+
+\begin{frame}{Các loại Kiến trúc theo Dữ liệu}
+    Mỗi kiến trúc mạng mang một Giả thuyết (Assumptions) riêng về đặc tính của dữ liệu:
+    \begin{table}[]
+        \centering
+        \resizebox{\textwidth}{!}{
+        \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Đầu vào} & \textbf{Đầu ra} & \textbf{Kiến trúc mạng (Model)} \\ \midrule
+        Dữ liệu Vector (Bảng) & Xác suất phân loại, Hồi quy & Densely connected network \\
+        Chuỗi thời gian & Xác suất phân loại, Hồi quy & RNN, LSTM, Transformer \\
+        Hình ảnh & Xác suất phân loại, Hồi quy & ConvNet (CNN) \\
+        Văn bản & Xác suất phân loại, Hồi quy & Transformer \\
+        Văn bản, Hình ảnh & Văn bản & Transformer (Đa phương thức) \\
+        Văn bản, Hình ảnh & Hình ảnh & VAE, Diffusion Model \\ \bottomrule
+        \end{tabular}
+        }
+        \caption{Kiến trúc mạng ứng với các loại dữ liệu}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Mạng kết nối dày đặc (Densely Connected Networks)}
+    Dùng cho dữ liệu bảng CSV, không có mối liên kết không gian. Code mẫu với Keras cho phân loại nhị phân:
+\begin{lstlisting}[language=Python]
+import keras
+from keras import layers
+
+inputs = keras.Input(shape=(num_input_features,))
+x = layers.Dense(32, activation="relu")(inputs)
+x = layers.Dense(32, activation="relu")(x)
+# Output layer with sigmoid for binary classification
+outputs = layers.Dense(1, activation="sigmoid")(x)
+
+model = keras.Model(inputs, outputs)
+model.compile(optimizer="rmsprop", loss="binary_crossentropy")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Mạng kết nối dày đặc (Multi-class Classification)}
+    Mạng Dense dùng cho bài toán phân loại đa lớp (Multi-class classification):
+\begin{lstlisting}[language=Python]
+inputs = keras.Input(shape=(num_input_features,))
+x = layers.Dense(32, activation="relu")(inputs)
+x = layers.Dense(32, activation="relu")(x)
+# Output layer with softmax for multi-class classification
+outputs = layers.Dense(num_classes, activation="softmax")(x)
+
+model = keras.Model(inputs, outputs)
+# Use categorical_crossentropy if targets are one-hot encoded
+model.compile(optimizer="rmsprop", loss="categorical_crossentropy")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Mạng Tích chập (ConvNets - CNN)}
+    \begin{itemize}
+        \item \textbf{Đặc điểm dữ liệu:} Dữ liệu lưới như Ảnh 2D, Video 3D. Các điểm ảnh lân cận có quan hệ mật thiết.
+        \item \textbf{Tính chất bất biến dịch (Translation Invariant):} Nhận diện mẫu ảnh ở mọi vị trí trên khung hình.
+        \item \textbf{Đặc trưng phân cấp (Spatial Hierarchies):} Lớp đầu học các đường thẳng, góc cạnh. Lớp sau ghép lại thành vật thể phức tạp.
+        \item Cực kỳ tiết kiệm tham số và chống Overfitting tốt đối với dữ liệu hình ảnh.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mạng Hồi quy (Recurrent Neural Networks - RNN)}
+    \begin{itemize}
+        \item \textbf{Đặc điểm dữ liệu:} Dữ liệu dạng Chuỗi thời gian (Timeseries). Thứ tự các mốc thời gian là yếu tố quyết định.
+        \item Hoạt động bằng cách xử lý tuần tự từng điểm thời gian (Timestep) và duy trì một \textbf{Trạng thái (State)} bộ nhớ.
+        \item Các biến thể tốt nhất hiện nay: \textbf{LSTM} và \textbf{GRU}. LSTM mạnh hơn nhưng tính toán lâu hơn, GRU là lựa chọn thay thế gọn nhẹ.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Kiến trúc Transformer}
+    \begin{itemize}
+        \item Giải pháp tối thượng thay thế RNN trong lĩnh vực xử lý ngôn ngữ tự nhiên (NLP).
+        \item Hoạt động bằng cách sử dụng \textbf{Sự chú ý thần kinh (Neural Attention)} để xem xét toàn bộ các từ trong câu cùng một lúc.
+        \item Hiểu rõ ngữ cảnh của một từ thông qua mối liên hệ của nó với toàn bộ các từ xung quanh.
+        \item Phù hợp cho Translation, Text Generation (GPT) và Question Answering.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Xây dựng Transformer với Keras}
+    Sử dụng \texttt{TransformerEncoder} cho tác vụ phân loại chuỗi (Sequence Classification):
+\begin{lstlisting}[language=Python]
+from keras_hub.layers import TokenAndPositionEmbedding
+from keras_hub.layers import TransformerEncoder
+
+inputs = keras.Input(shape=(seq_length,), dtype="int64")
+# Add token and position embedding
+x = TokenAndPositionEmbedding(vocab_size, seq_length, embed_dim)(inputs)
+x = TransformerEncoder(intermediate_dim=256, num_heads=8)(x)
+x = layers.GlobalMaxPooling1D()(x)
+
+outputs = layers.Dense(1, activation="sigmoid")(x)
+model = keras.Model(inputs, outputs)
+model.compile(optimizer="adamw", loss="binary_crossentropy")
+\end{lstlisting}
+\end{frame}
+
+\section{4. Hạn chế của Deep Learning và Tương lai}
+
+\begin{frame}{Hạn chế cốt lõi của Deep Learning (Phần 1)}
+    Xây dựng Deep Learning giống như lắp ráp LEGO, có thể ánh xạ (Mapping) gần như bất kỳ hàm toán học nào. Tuy nhiên:
+    \begin{itemize}
+        \item \textbf{Kém thích nghi với sự mới lạ (Novelty):} Do bản chất chỉ là "Nội suy tĩnh", khi đối mặt với dữ liệu nằm ngoài phân bố huấn luyện (Out-of-distribution), mô hình sẽ hoàn toàn sụp đổ.
+        \item Đây là lý do các siêu AI vẫn thất bại trước những bộ Test Logic đơn giản (như ARC-AGI-2).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hạn chế cốt lõi của Deep Learning (Phần 2)}
+    \begin{itemize}
+        \item \textbf{Rất nhạy cảm với cách diễn đạt (Prompt sensitivity):} Mô hình thiếu sự thấu hiểu thực sự. Đổi một từ đồng nghĩa trong Prompt có thể khiến LLM thay đổi hoàn toàn câu trả lời.
+        \item \textbf{Dễ bị tấn công (Adversarial attacks):} Một nhiễu loạn siêu nhỏ trên điểm ảnh có thể lừa được mô hình thị giác tự tin phán đoán sai.
+        \item \textbf{Không thể học thuật toán:} Deep Learning không thể học cách thực thi một vòng lặp logic tuần tự chính xác 100\% (như thuật toán Sắp xếp mảng).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Sự nguy hiểm của việc nhân hóa AI (Anthropomorphization)}
+    \begin{itemize}
+        \item Không được nhầm lẫn khả năng "Đoán từ tiếp theo trôi chảy" của AI với khả năng "Nhận thức".
+        \item Scaling up (Tăng kích thước mạng) không sinh ra Trí thông minh (General Intelligence), nó chỉ giúp AI làm tốt các bài kiểm tra do con người soạn sẵn (Memorization test).
+        \item Phương pháp thích ứng tại thời điểm kiểm tra (Test-time adaptation - TTA) hiện đang quá đắt đỏ và chưa giải quyết được tận gốc vấn đề.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tương lai của AI: Các mô hình Hệ thống Lai (Hybrid Models)}
+    \begin{itemize}
+        \item Deep Learning hiện chỉ làm tốt nửa \textbf{Giá trị (Value-centric)}: Nhận diện, Trực giác.
+        \item Thiếu vắng hoàn toàn nửa \textbf{Chương trình (Program-centric)}: Suy luận logic, Lập kế hoạch rời rạc.
+        \item \textbf{Giải pháp tương lai:} Mô hình Hybrid kết hợp mạng nơ-ron truyền thống với các mô-đun toán học rời rạc (Vòng lặp, Đệ quy, Bộ nhớ).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tương lai của AI: Tổng hợp Chương trình và Recombination}
+    \begin{itemize}
+        \item \textbf{Program Synthesis (Tổng hợp chương trình):} Dùng "Trực giác" của Deep learning để dẫn đường cho hệ thống tự động sinh ra mã Code logic hoàn hảo để giải bài toán.
+        \item \textbf{Recombination (Tái tổ hợp):} Các AI sẽ lưu trữ các đoạn code giải pháp vào chung một thư viện toàn cầu để gọi (Fetch) ra và tái sử dụng cho các vấn đề tương tự.
+        \item Từ đó tạo ra một chu trình học tập suốt đời (Lifelong learning) thực sự linh hoạt.
+    \end{itemize}
+\end{frame}
+
+\section{5. Hành trang Kỹ sư Machine Learning}
+
+\begin{frame}{Rèn luyện thực chiến: Sân chơi Kaggle}
+    Sách giáo khoa chỉ cung cấp nguyên lý, để thành thạo bạn phải thực chiến.
+    \begin{itemize}
+        \item \textbf{Kaggle (kaggle.com):} Sân chơi Machine Learning lớn nhất thế giới, được mua lại bởi Google.
+        \item Cung cấp dữ liệu thực từ các tập đoàn lớn, với các cuộc thi giải thưởng hàng triệu USD.
+        \item Cộng đồng Kaggle là nơi chia sẻ Code và hướng dẫn (Notebooks) chất lượng nhất thế giới.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cập nhật tri thức mới nhất}
+    Lĩnh vực AI tiến bộ quá nhanh, sách in không bao giờ theo kịp hiện tại.
+    \begin{itemize}
+        \item \textbf{Hugging Face:} Nền tảng Git khổng lồ của thế giới AI. Nơi mọi công ty công bố các mô hình Open-source mới nhất (Llama, Gemma) và các tệp dữ liệu miễn phí.
+        \item \textbf{arXiv.org:} Máy chủ báo cáo khoa học mở của ĐH Cornell. Toàn bộ các phát minh AI mới nhất đều được công bố ở đây miễn phí. Sử dụng Google Scholar để theo dõi các nhà khoa học bạn quan tâm.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tận dụng Hệ sinh thái Keras}
+    \begin{itemize}
+        \item Keras có hơn 2.5 triệu người dùng (2025). Nó là cầu nối mang AI đến với bất kỳ lập trình viên nào.
+        \item Đọc tài liệu chuẩn trên trang chủ \textbf{keras.io} để cập nhật các hướng dẫn (guides).
+        \item Github: \textbf{keras-team/keras} và \textbf{keras-team/keras-hub} cung cấp mã nguồn mở và vô số ví dụ thực hành tiêu chuẩn công nghiệp.
+    \end{itemize}
+\end{frame}
+
+\section{6. Tổng kết Lời kết}
+
+\begin{frame}{Lời khuyên cuối giáo trình}
+    \begin{itemize}
+        \item Học AI là một hành trình dài hạn. Giáo trình "Học Sâu" trang bị cho bạn tư duy, công cụ và bản chất toán học.
+        \item Các khung làm việc (Framework) có thể thay đổi, nhưng bản chất của quá trình \textbf{Tối ưu hóa đa tạp không gian vi phân} luôn không đổi.
+        \item \textbf{Hãy chọn một lĩnh vực ngách} (Computer Vision, NLP, GenAI) và bắt tay xây dựng ứng dụng (Projects).
+        \item Trí tuệ Nhân tạo thực sự mới chỉ ở những bước đi đầu tiên. Chúc các bạn kỹ sư Đông Á tương lai sẽ tự mình khai phá ra những nền tảng công nghệ vĩ đại tiếp theo!
+    \end{itemize}
+\end{frame}
+
+\end{document}

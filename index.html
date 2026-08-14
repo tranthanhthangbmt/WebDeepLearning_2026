@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Học Sâu - Đại học Đông Á</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Tài liệu môn học Học Sâu - Deep Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Theme: Modern UI using Docsify Themeable -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+
+  <style>
+    :root {
+      --theme-color: #1a73e8;
+      --base-font-size: 16px;
+      --sidebar-width: 300px;
+      /* Custom docsify-tabs colors */
+      --docsifytabs-border-color: #eaeaea;
+      --docsifytabs-tab-highlight-color: var(--theme-color);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    }
+
+    .markdown-section {
+      max-width: 1000px;
+      padding: 2rem 15px;
+      /* Better padding on mobile */
+    }
+
+    /* ===== DOCSIFY TABS: MOBILE OPTIMIZATION ===== */
+    /* Docsify-tabs grid layout to allow horizontal swipe without breaking DOM */
+    .docsify-tabs {
+      display: grid !important;
+      grid-auto-columns: max-content;
+      grid-auto-flow: column;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 0 !important;
+      /* Reduce space above tabs */
+      margin-bottom: 5px !important;
+      /* Reduce space below tabs */
+      border-bottom: none !important;
+      scrollbar-width: none;
+      /* Hide scrollbar Firefox */
+      container-type: inline-size;
+      justify-content: start;
+    }
+
+    .docsify-tabs::-webkit-scrollbar {
+      display: none;
+      /* Hide scrollbar Chrome/Safari/Edge */
+    }
+
+    /* Style tabs as modern "pills" */
+    .docsify-tabs__tab {
+      grid-row: 1 !important;
+      order: 1 !important;
+      /* Ensure tabs are placed before content in auto-flow */
+      text-align: center;
+      padding: 10px 16px !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease-in-out !important;
+      border: 1px solid var(--docsifytabs-border-color) !important;
+      border-radius: 20px !important;
+      /* Pill shape */
+      color: #555 !important;
+      background: #fff !important;
+      cursor: pointer;
+      margin: 0 8px 5px 0 !important;
+      /* Reduce bottom margin on tabs */
+    }
+
+    .docsify-tabs__tab:hover {
+      background-color: #f8faff !important;
+      border-color: var(--theme-color) !important;
+      color: var(--theme-color) !important;
+    }
+
+    .docsify-tabs__tab--active {
+      color: #fff !important;
+      background-color: var(--theme-color) !important;
+      border-color: var(--theme-color) !important;
+      box-shadow: 0 4px 6px rgba(26, 115, 232, 0.2);
+    }
+
+    .docsify-tabs__content {
+      grid-row: 2 !important;
+      grid-column: 1 / 999 !important;
+      /* Span across tab columns */
+      width: 100cqw !important;
+      /* Exact visible width of container */
+      position: sticky !important;
+      left: 0 !important;
+      order: 99 !important;
+      /* Keep content below tabs */
+      padding-top: 5px;
+      /* Reduce space between tabs and content */
+    }
+
+    /* ============================================= */
+
+    /* Style for iframe PDF to ensure it scales correctly */
+    .pdf-container {
+      width: 100%;
+      height: 80vh;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      background: #fafafa;
+    }
+
+    /* Remove scrollbars from inline MathJax equations and inline code */
+    .markdown-section p *,
+    .markdown-section li * {
+      overflow: visible !important;
+    }
+
+    .math,
+    .math *,
+    mjx-container,
+    mjx-container * {
+      overflow: visible !important;
+    }
+
+    mjx-container[display="true"] {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+    }
+
+    /* Mobile specific text scaling and iframe optimization */
+    @media (max-width: 600px) {
+      .markdown-section {
+        padding: 10px 5px !important;
+      }
+
+      .markdown-section h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        /* Reduce space under H1 */
+      }
+
+      .markdown-section h2 {
+        font-size: 1.4rem;
+      }
+
+      .docsify-tabs {
+        margin-top: 0 !important;
+      }
+
+      .docsify-tabs__content {
+        padding: 0 !important;
+        /* Remove all top padding on mobile */
+      }
+
+      .pdf-container {
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        height: 85vh !important;
+      }
+    }
+    }
+
+    /* Customize APlayer to blend with the premium theme */
+    .aplayer {
+      border-radius: 10px !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      margin-bottom: 0 !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    .aplayer .aplayer-info .aplayer-music .aplayer-title {
+      font-weight: 600 !important;
+    }
+
+    .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+      background: var(--theme-color) !important;
+    }
+
+    .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+      background: var(--theme-color) !important;
+    }
+
+    /* Floating NotebookLM Button */
+    .notebooklm-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #1a73e8, #4285f4);
+      color: #fff !important;
+      padding: 12px 24px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+      text-decoration: none !important;
+      font-weight: 600;
+      font-size: 15px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      letter-spacing: 0.3px;
+    }
+
+    .notebooklm-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.5);
+    }
+
+    .notebooklm-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    @media (max-width: 600px) {
+      .notebooklm-btn {
+        bottom: 90px;
+        /* Safe area above mobile APlayer */
+        right: 15px;
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+    }
+  </style>
+
+  <!-- APlayer CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+</head>
+
+<body>
+  <div id="app">Đang tải nội dung môn học...</div>
+
+  <script>
+    window.$docsify = {
+      name: 'Học Sâu',
+      repo: '',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      search: {
+        paths: 'auto',
+        placeholder: 'Tìm kiếm',
+        noData: 'Không tìm thấy kết quả!',
+        depth: 3
+      },
+      tabs: {
+        persist: true,
+        sync: false,
+        theme: 'classic',
+        tabComments: true,
+        tabHeadings: true
+      }
+    }
+  </script>
+
+  <!-- Docsify v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <!-- Code Highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+
+  <!-- Tabs Plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+
+  <!-- Math Equation Support (MathJax + docsify-latex) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        tags: 'all'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-latex@0"></script>
+
+  <!-- APlayer JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+  <!-- NotebookLM Floating Button -->
+  <a href="https://notebooklm.google.com/notebook/bc5cfedf-6067-4be3-bd8a-45aab0b95054?authuser=9" target="_blank"
+    class="notebooklm-btn">
+    <svg viewBox="0 0 24 24">
+      <path
+        d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z" />
+    </svg>
+    Hỏi đáp với AI
+  </a>
+
+  <!-- APlayer Container -->
+  <div id="aplayer"></div>
+
+  <!-- APlayer Initialization & Docsify Sync Plugin -->
+  <script>
+    const audioFiles = [
+      'DL_Ch01_Học_sâu_không_phải_phép_màu.m4a',
+      'DL_Ch02_Deep_Learning_là_toán_học_thuần_túy.m4a',
+      'DL_Ch03_Keras_3_hợp_nhất_TensorFlow_PyTorch_JAX.m4a',
+      'DL_Ch04_Toán_học_phân_loại_và_hồi_quy.m4a',
+      'DL_Ch05_AI_học_vẹt_và_cách_thoát_bẫy.m4a',
+      'DL_Ch06_Quy_trình_thực_tế_của_học_máy.m4a',
+      'DL_Ch07_Triết_lý_thiết_kế_AI_trong_Keras.m4a',
+      'DL_Ch08_Cách_ConvNets_nhìn_và_phân_loại_ảnh.m4a',
+      'DL_Ch09_Bí_mật_kiến_trúc_mạng_ConvNet.m4a',
+      'DL_Ch10_AI_thực_sự_nhìn_gì_trong_ảnh.m4a',
+      'DL_Ch11_Cách_AI_bóc_tách_mọi_vật_thể.m4a',
+      'DL_Ch12_Cơ_chế_AI_định_vị_đối_tượng.m4a',
+      'DL_Ch13_Cách_AI_dự_báo_chuỗi_thời_gian.m4a',
+      'DL_Ch14_AI_biến_ngôn_ngữ_thành_toán_học.m4a',
+      'DL_Ch15_Cơ_chế_Attention_và_Transformer.m4a',
+      'DL_Ch16_GPT_là_cỗ_máy_đoán_từ.m4a',
+      'DL_Ch17_Nghịch_lý_sáu_ngón_tay_của_AI.m4a',
+      'DL_Ch18_Nâng_cấp_AI_lên_chuẩn_sản_xuất.m4a',
+      'DL_Ch19_AI_học_vẹt_hay_biết_suy_luận.m4a'
+    ];
+
+    const playlist = audioFiles.map((file, index) => {
+      // Clean up the name for display
+      let name = file.replace('.m4a', '').replace(/_/g, ' ');
+      return {
+        name: name,
+        artist: 'AI Audiobook',
+        url: encodeURI('audio/' + file),
+        cover: 'https://cdn-icons-png.flaticon.com/512/860/860142.png' // Default AI icon cover
+      };
+    });
+
+    const ap = new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      lrcType: 0,
+      theme: '#1a73e8', // Matches --theme-color
+      preload: 'auto', // Đổi thành auto để trình duyệt buffer trước, tránh ngắt quãng giữa chừng
+      audio: playlist
+    });
+
+    // Xử lý lỗi khi audio bị ngắt giữa chừng do mạng hoặc lỗi file
+    ap.audio.addEventListener('error', function() {
+      console.error('Lỗi phát audio:', ap.audio.error);
+      // Hiển thị thông báo nhỏ nếu có lỗi xảy ra
+      let errorMsg = 'Đã xảy ra lỗi khi tải audio. Vui lòng kiểm tra mạng và thử lại.';
+      if (ap.audio.error && ap.audio.error.code === 3) { // MEDIA_ERR_DECODE
+        errorMsg = 'Lỗi giải mã audio. File có thể bị hỏng hoặc mạng không ổn định.';
+      } else if (ap.audio.error && ap.audio.error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
+        errorMsg = 'Lỗi mạng hoặc không tìm thấy file audio.';
+      }
+      // Dùng toast của docsify hoặc alert
+      alert(errorMsg);
+    });
+
+    ap.audio.addEventListener('stalled', function() {
+      console.warn('Audio đang bị gián đoạn do mạng...');
+    });
+
+    // Docsify plugin to sync player with current chapter and optimize PDF for mobile
+    window.$docsify.plugins = [].concat(
+      function (hook, vm) {
+        hook.doneEach(function () {
+          // 1. Mobile PDF Viewer Support
+          const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          if (isMobile) {
+            document.querySelectorAll('.pdf-container iframe').forEach(function(iframe) {
+              let src = iframe.getAttribute('src');
+              if (src && src.includes('.pdf')) {
+                // Remove existing hash like #view=FitH
+                src = src.split('#')[0];
+                
+                // Build absolute URL for Google Docs Viewer
+                let absoluteUrl = src;
+                if (!src.startsWith('http')) {
+                  let baseUrl = window.location.origin + window.location.pathname;
+                  baseUrl = baseUrl.replace(/index\.html$/, '');
+                  if (!baseUrl.endsWith('/')) baseUrl += '/';
+                  absoluteUrl = baseUrl + src;
+                }
+                
+                // Use Google Docs Viewer to render PDF on mobile
+                iframe.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(absoluteUrl) + '&embedded=true';
+              }
+            });
+          }
+
+          // 2. Check URL hash to find current chapter
+          let hash = window.location.hash;
+          if (hash.includes('chapter_')) {
+            // Extract chapter number, e.g. "chapter_05" -> 5
+            let match = hash.match(/chapter_(\d+)/);
+            if (match && match[1]) {
+              let chapterIndex = parseInt(match[1]) - 1; // 0-indexed
+              if (chapterIndex >= 0 && chapterIndex < playlist.length) {
+                // If player is not already playing this chapter, switch to it
+                if (ap.list.index !== chapterIndex) {
+                  ap.list.switch(chapterIndex);
+                }
+              }
+            }
+          }
+        });
+      },
+      window.$docsify.plugins || []
+    );
+  </script>
+</body>
+
+</html>

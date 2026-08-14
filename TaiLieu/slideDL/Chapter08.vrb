@@ -1,0 +1,22 @@
+\frametitle{Fine-Tuning: Mã nguồn giải mã các lớp cuối}
+Chỉ mở khóa Block cuối cùng của VGG16 (block 5).
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\scriptsize]
+conv_base.trainable = True
+
+# Freeze all layers EXCEPT the ones from 'block5_conv1' onwards
+set_trainable = False
+for layer in conv_base.layers:
+    if layer.name == "block5_conv1":
+        set_trainable = True
+    if set_trainable:
+        layer.trainable = True
+    else:
+        layer.trainable = False
+
+# Re-compile model with a VERY SMALL learning rate
+model.compile(
+    loss="binary_crossentropy",
+    optimizer=keras.optimizers.RMSprop(learning_rate=1e-5),
+    metrics=["accuracy"]
+)
+\end{lstlisting}

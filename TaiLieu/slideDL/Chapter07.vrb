@@ -1,0 +1,17 @@
+\frametitle{Kích hoạt TensorBoard trong Keras}
+Rất đơn giản, bạn chỉ cần dùng Callback \texttt{TensorBoard} có sẵn:
+
+\begin{lstlisting}[language=Python]
+callbacks = [
+    keras.callbacks.TensorBoard(
+        log_dir="/full_path_to_your_logs",
+    )
+]
+model.fit(..., callbacks=callbacks)
+\end{lstlisting}
+
+Sau khi model chạy, mở Terminal và gọi:
+\begin{lstlisting}[language=bash]
+$ tensorboard --logdir /full_path_to_your_logs
+\end{lstlisting}
+Sau đó truy cập \texttt{http://localhost:6006} trên trình duyệt.

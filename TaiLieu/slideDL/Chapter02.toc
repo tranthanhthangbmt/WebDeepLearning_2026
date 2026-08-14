@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Cái nhìn đầu tiên về mạng nơ-ron}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Biểu diễn dữ liệu bằng Tensor}{10}{0}{2}
+\beamer@sectionintoc {3}{3. Các phép toán Tensor và Hình học}{16}{0}{3}
+\beamer@sectionintoc {4}{4. Tối ưu hóa Dựa trên Gradient}{23}{0}{4}
+\beamer@sectionintoc {5}{5. Đồ thị Tính toán \& Lan truyền ngược}{28}{0}{5}

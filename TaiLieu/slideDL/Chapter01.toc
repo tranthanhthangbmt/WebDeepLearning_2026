@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Giới thiệu và Các khái niệm cơ bản}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Học biểu diễn và Học quy tắc từ dữ liệu}{11}{0}{2}
+\beamer@sectionintoc {3}{3. Sự "sâu" trong Học sâu}{17}{0}{3}
+\beamer@sectionintoc {4}{4. Cơ chế hoạt động của Mạng nơ-ron}{23}{0}{4}
+\beamer@sectionintoc {5}{5. Kỷ nguyên AI Tạo sinh và Tương lai}{29}{0}{5}

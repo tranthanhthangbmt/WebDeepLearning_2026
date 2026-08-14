@@ -1,0 +1,124 @@
+CHAPTER 21
+LEARNING PROBABILISTIC MODELS
+In which we view learning as a form of uncertain reasoning from observations, and devise
+models to represent the uncertain world.
+Chapter 12 pointed out the prevalence of uncertainty in real environments. Agents can handle
+uncertainty by using the methods of probability and decision theory, but ﬁrst they must learn
+their probabilistic theories of the world from experience. This chapter explains how they
+can do that, by formulating the learning task itself as a process of probabilistic inference
+(Section 21.1). We will see that a Bayesian view of learning is extremely powerful, providing
+general solutions to the problems of noise, overﬁtting, and optimal prediction. It also takes
+into account the fact that a less-than-omniscient agent can never be certain about which theory
+of the world is correct, yet must still make decisions by using some theory of the world.
+We describe methods for learning probability models—primarily Bayesian networks—in
+Sections 21.2 and 21.3. Some of the material in this chapter is fairly mathematical, although
+the general lessons can be understood without plunging into the details. It may beneﬁt the
+reader to review Chapters 12 and 13 and peek at Appendix A.
+21.1 Statistical Learning
+The key concepts in this chapter, just as in Chapter 19, are data andhypotheses . Here, the
+data are evidence —that is, instantiations of some or all of the random variables describing the
+domain. The hypotheses in this chapter are probabilistic theories of how the domain works,
+including logical theories as a special case.
+Consider a simple example. Our favorite surprise candy comes in two ﬂavors: cherry
+(yum) and lime (ugh). The manufacturer has a peculiar sense of humor and wraps each piece
+of candy in the same opaque wrapper, regardless of ﬂavor. The candy is sold in very large
+bags, of which there are known to be ﬁve kinds—again, indistinguishable from the outside:
+h1: 100% cherry,
+h2: 75% cherry + 25% lime,
+h3: 50% cherry + 50% lime,
+h4: 25% cherry + 75% lime,
+h5: 100% lime.
+Given a new bag of candy, the random variable H(forhypothesis ) denotes the type of the
+bag, with possible values h1through h5.His not directly observable, of course. As the
+pieces of candy are opened and inspected, data are revealed— D1,D2,:::,DN, where each Di
+is a random variable with possible values cherry andlime. The basic task faced by the agent
+
+Section 21.1 Statistical Learning 773
+is to predict the ﬂavor of the next piece of candy.1Despite its apparent triviality, this scenario
+serves to introduce many of the major issues. The agent really does need to infer a theory of
+its world, albeit a very simple one.
+Bayesian learning simply calculates the probability of each hypothesis, given the data, Bayesian learning
+and makes predictions on that basis. That is, the predictions are made by using allthe hy-
+potheses, weighted by their probabilities, rather than by using just a single “best” hypothesis.
+In this way, learning is reduced to probabilistic inference.
+LetDrepresent all the data, with observed value d. The key quantities in the Bayesian ap-
+proach are the hypothesis prior ,P(hi), and the likelihood of the data under each hypothesis, Hypothesis prior
+Likelihood P(djhi). The probability of each hypothesis is obtained by Bayes’ rule:
+P(hijd) =P(djhi)P(hi): (21.1)
+Now, suppose we want to make a prediction about an unknown quantity X. Then we have
+P(Xjd) =å
+iP(Xjhi)P(hijd); (21.2)
+where each hypothesis determines a probability distribution over X. This equation shows that
+predictions are weighted averages over the predictions of the individual hypotheses, where the
+weight P(hijd)is proportional to the prior probability of hiand its degree of ﬁt, according
+to Equation (21.1). The hypotheses themselves are essentially “intermediaries” between the
+raw data and the predictions.
+For our candy example, we will assume for the time being that the prior distribution
+over h1;:::; h5is given byh0:1;0:2;0:4;0:2;0:1i, as advertised by the manufacturer. The
+likelihood of the data is calculated under the assumption that the observations are i.i.d. (see
+page 683), so that
+P(djhi) =Õ
+jP(djjhi): (21.3)
+For example, suppose the bag is really an all-lime bag ( h5) and the ﬁrst 10 candies are all
+lime; then P(djh3)is 0:510, because half the candies in an h3bag are lime.2Figure 21.1(a)
+shows how the posterior probabilities of the ﬁve hypotheses change as the sequence of 10
+lime candies is observed. Notice that the probabilities start out at their prior values, so h3
+is initially the most likely choice and remains so after 1 lime candy is unwrapped. After 2
+lime candies are unwrapped, h4is most likely; after 3 or more, h5(the dreaded all-lime bag)
+is the most likely. After 10 in a row, we are fairly certain of our fate. Figure 21.1(b) shows
+the predicted probability that the next candy is lime, based on Equation (21.2). As we would
+expect, it increases monotonically toward 1.
+The example shows that the Bayesian prediction eventually agrees with the true hypoth- J
+esis. This is characteristic of Bayesian learning. For any ﬁxed prior that does not rule out the
+true hypothesis, the posterior probability of any false hypothesis will, under certain techni-
+cal conditions, eventually vanish. This happens simply because the probability of generating
+“uncharacteristic” data indeﬁnitely is vanishingly small. (This point is analogous to one made
+in the discussion of PAC learning in Chapter 19.) More important, the Bayesian prediction is
+1Statistically sophisticated readers will recognize this scenario as a variant of the urn-and-ball setup. We ﬁnd
+urns and balls less compelling than candy.
+2We stated earlier that the bags of candy are very large; otherwise, the i.i.d. assumption fails to hold. Technically,
+it is more correct (but less hygienic) to rewrap each candy after inspection and return it to the bag.
+
+774 Chapter 21 Learning Probabilistic Models
+ 0 0.2 0.4 0.6 0.8 1
+ 0  2  4  6  8  10Posterior probability of hypothesis
+Number of observations in dP(h1 | d)
+P(h2 | d)
+P(h3 | d)
+P(h4 | d)
+P(h5 | d)
+ 0.4 0.5 0.6 0.7 0.8 0.9 1
+ 0  2  4  6  8  10Probability that next candy is lime
+Number of observations in d
+(a) (b)
+Figure 21.1 (a) Posterior probabilities P(hijd1;:::; dN)from Equation (21.1). The number
+of observations Nranges from 1 to 10, and each observation is of a lime candy. (b) Bayesian
+prediction P(DN+1=limejd1;:::; dN)from Equation (21.2).
+optimal , whether the data set is small or large. Given the hypothesis prior, any other predic-
+tion is expected to be correct less often.
+The optimality of Bayesian learning comes at a price, of course. For real learning prob-
+lems, the hypothesis space is usually very large or inﬁnite, as we saw in Chapter 19. In some
+cases, the summation in Equation (21.2) (or integration, in the continuous case) can be carried
+out tractably, but in most cases we must resort to approximate or simpliﬁed methods.
+A very common approximation—one that is usually adopted in science—is to make pre-
+dictions based on a single most probable hypothesis—that is, an hithat maximizes P(hijd).
+This is often called a maximum a posteriori or MAP (pronounced “em-ay-pee”) hypothesis.Maximum a
+posteriori
+Predictions made according to an MAP hypothesis hMAP are approximately Bayesian to the
+extent that P(Xjd)P(XjhMAP). In our candy example, hMAP=h5after three lime can-
+dies in a row, so the MAP learner then predicts that the fourth candy is lime with probability
+1.0—a much more dangerous prediction than the Bayesian prediction of 0.8 shown in Fig-
+ure 21.1(b). As more data arrive, the MAP and Bayesian predictions become closer, because
+the competitors to the MAP hypothesis become less and less probable.
+Although this example doesn’t show it, ﬁnding MAP hypotheses is often much easier
+than Bayesian learning, because it requires solving an optimization problem instead of a
+large summation (or integration) problem.
+In both Bayesian learning and MAP learning, the hypothesis prior P(hi)plays an im-
+portant role. We saw in Chapter 19 that overﬁtting can occur when the hypothesis space is
+too expressive, that is, when it contains many hypotheses that ﬁt the data set well. Bayesian
+and MAP learning methods use the prior to penalize complexity . Typically, more complex
+hypotheses have a lower prior probability—in part because there so many of them. On the
+other hand, more complex hypotheses have a greater capacity to ﬁt the data. (In the extreme
+case, a lookup table can reproduce the data exactly.) Hence, the hypothesis prior embodies a
+tradeoff between the complexity of a hypothesis and its degree of ﬁt to the data.
+

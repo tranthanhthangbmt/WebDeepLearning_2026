@@ -1,0 +1,14 @@
+\frametitle{Xây dựng Bidirectional LSTM}
+Lớp \texttt{Bidirectional} của Keras đóng vai trò như một wrapper, nhân đôi LSTM bên trong nó và đảo ngược chuỗi thời gian cho nhân bản thứ hai.
+\begin{lstlisting}[language=Python]
+inputs = keras.Input(shape=(sequence_length, raw_data.shape[-1]))
+
+# Wrap the LSTM layer inside a Bidirectional wrapper
+x = layers.Bidirectional(layers.LSTM(16))(inputs)
+
+outputs = layers.Dense(1)(x)
+model = keras.Model(inputs, outputs)
+
+model.compile(optimizer="adam", loss="mse", metrics=["mae"])
+\end{lstlisting}
+\textit{Tuy nhiên, Bidirectional hoạt động rất kém trên tập dữ liệu Thời tiết, bởi vì yếu tố quá khứ đóng vai trò quan trọng, trong khi chiều đọc ngược (tương lai về quá khứ) chứa dữ liệu gây nhiễu loạn luồng Logic của LSTM.}

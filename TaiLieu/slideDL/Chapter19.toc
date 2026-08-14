@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Giới hạn của Deep Learning}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Scale is not all you need (Mở rộng quy mô là chưa đủ)}{9}{0}{2}
+\beamer@sectionintoc {3}{3. Thước đo ARC và Bản chất Nhận thức}{16}{0}{3}
+\beamer@sectionintoc {4}{4. Nền tảng còn thiếu của AI: Search và Symbols}{19}{0}{4}
+\beamer@sectionintoc {5}{5. Tương lai: Program Synthesis và Meta-learning}{26}{0}{5}

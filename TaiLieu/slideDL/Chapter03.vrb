@@ -1,0 +1,14 @@
+\frametitle{Hàm mất mát (MSE) và Vòng lặp huấn luyện}
+Chúng ta cập nhật $\mathbf{W}$ và $\mathbf{b}$ dựa trên đạo hàm:
+    \begin{lstlisting}[language=Python]
+learning_rate = 0.1
+for step in range(40):
+    with tf.GradientTape() as tape:
+        predictions = tf.matmul(inputs, W) + b
+        loss = tf.reduce_mean(tf.square(targets - predictions))
+
+    grad_W, grad_b = tape.gradient(loss, [W, b])
+
+    W.assign_sub(grad_W * learning_rate)
+    b.assign_sub(grad_b * learning_rate)
+    \end{lstlisting}

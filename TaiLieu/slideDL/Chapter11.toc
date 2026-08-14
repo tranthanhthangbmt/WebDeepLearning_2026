@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Tổng quan các Bài toán Thị giác Máy tính}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Xây dựng Mô hình Phân vùng Semantic}{5}{0}{2}
+\beamer@sectionintoc {3}{3. Siêu mô hình Nền tảng: Segment Anything (SAM)}{19}{0}{3}
+\beamer@sectionintoc {4}{4. Thực hành Kỹ nghệ Prompting trên SAM}{23}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{31}{0}{5}

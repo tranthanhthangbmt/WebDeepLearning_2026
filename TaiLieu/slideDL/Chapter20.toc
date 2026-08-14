@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{1. Bức tranh Toàn cảnh Trí tuệ Nhân tạo}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Hệ thống hóa Quy trình Machine Learning}{11}{0}{2}
+\beamer@sectionintoc {3}{3. Không gian Kiến trúc Mạng Nơ-ron}{16}{0}{3}
+\beamer@sectionintoc {4}{4. Hạn chế của Deep Learning và Tương lai}{23}{0}{4}
+\beamer@sectionintoc {5}{5. Hành trang Kỹ sư Machine Learning}{28}{0}{5}
+\beamer@sectionintoc {6}{6. Tổng kết Lời kết}{31}{0}{6}

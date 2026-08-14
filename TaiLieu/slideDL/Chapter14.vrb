@@ -1,0 +1,19 @@
+\frametitle{Sử dụng Pre-trained Embeddings}
+Thay vì train Embedding từ đầu trên 20k review, ta có thể tải Embedding đã được train trên toàn bộ Wikipedia (GloVe, Word2Vec) và cắm vào layer.
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+# Load pretrained weights into the Embedding layer
+embedding_layer = layers.Embedding(
+    max_tokens,
+    256,
+    embeddings_initializer=keras.initializers.Constant(pretrained_matrix),
+    trainable=False, # Freeze the layer!
+)
+
+# Build LSTM model
+inputs = keras.Input(shape=(max_length,))
+x = embedding_layer(inputs)
+x = layers.Bidirectional(layers.LSTM(32))(x)
+outputs = layers.Dense(1, activation="sigmoid")(x)
+\end{lstlisting}

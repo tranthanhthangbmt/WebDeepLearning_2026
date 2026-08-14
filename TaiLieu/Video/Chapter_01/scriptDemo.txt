@@ -1,0 +1,185 @@
+Slide 1: BỨC TRANH TỔNG QUAN VỀ HỌC MÁY
+Người 1: Chào các em sinh viên. Hôm nay chúng ta sẽ bắt đầu môn học mới với Chương 1: Bức tranh tổng quan về Học máy - Machine Learning. Đây là một trong những nền tảng quan trọng nhất của Trí tuệ nhân tạo hiện đại. 
+Người 2: Dạ chào thầy. Em có nghe nói rất nhiều về Học máy, nhưng để hiểu cặn kẽ nó là gì và bức tranh toàn cảnh ra sao thì bài học hôm nay chắc chắn sẽ rất hữu ích ạ.
+
+Slide 2: Nội dung Chương trình
+Người 1: Trước tiên, chúng ta cùng nhìn qua nội dung chương trình. Chương này gồm 3 phần chính: Khái quát và ứng dụng của học máy; Phân loại các hệ thống học máy; và cuối cùng là những thách thức, kiểm thử và xác thực trong học máy.
+Người 2: Vâng thưa thầy. Việc đi từ khái niệm, phân loại đến các thách thức thực tế sẽ giúp chúng em có cái nhìn hệ thống hơn.
+
+Slide 3: Mục tiêu bài học
+Người 1: Về mục tiêu, sau chương này, các em cần hiểu rõ định nghĩa Học máy, phân biệt được các hệ thống như Học có giám sát, Không giám sát, Học tăng cường. Ngoài ra, các em cần nắm được quy trình phát triển dự án và nhận diện các thách thức như quá khớp hay dữ liệu kém.
+Người 2: Dạ, những mục tiêu này rất sát với thực tế công việc của một kỹ sư dữ liệu sau này.
+
+Slide 4: 1. Khái quát & Ứng dụng của Học máy
+Người 1: Chúng ta đi vào phần đầu tiên: Khái quát và Ứng dụng của Học máy.
+
+Slide 5: Đặt vấn đề: Bức tranh tổng quan
+Người 1: Học máy không còn là khoa học viễn tưởng nữa. Hàng tỷ người đang dùng nó mỗi ngày. Từ những năm 90, chúng ta đã có bộ lọc thư rác (spam filter). Và nay, nó hiện diện trong dịch tự động, tìm kiếm hình ảnh, và lời nhắc giọng nói.
+Người 2: Thật vậy ạ, ngay cả việc em xem Youtube hay mua sắm trên Shopee, hệ thống đề xuất cũng là một dạng của học máy phải không thầy?
+Người 1: Đúng vậy. Câu hỏi đặt ra là: cỗ máy đó thực sự đã học được gì và học như thế nào? Chúng ta sẽ giải đáp ở slide tiếp theo.
+
+Slide 6: Học máy là gì?
+Người 1: Về định nghĩa, Arthur Samuel năm 1959 nói rằng: "Học máy là lĩnh vực nghiên cứu cung cấp cho máy tính khả năng học hỏi mà không cần được lập trình rõ ràng". 
+Người 2: Còn định nghĩa thứ 2 của Tom Mitchell thì sao ạ? Nó có vẻ kỹ thuật hơn.
+Người 1: Tom Mitchell định nghĩa chi tiết hơn: Một chương trình được gọi là học từ kinh nghiệm E, đối với một nhiệm vụ T và thước đo hiệu suất P, nếu hiệu suất P trên nhiệm vụ T được cải thiện nhờ kinh nghiệm E. Ví dụ với bộ lọc thư rác: Nhiệm vụ T là phân loại thư, kinh nghiệm E là tập dữ liệu thư rác và thư thường, hiệu suất P có thể là tỷ lệ thư phân loại đúng.
+
+Slide 7: Cách tiếp cận truyền thống vs. Học máy
+Người 1: Các em nhìn vào hình 1.1. Với cách tiếp cận truyền thống, lập trình viên phải viết thủ công các quy tắc. Ví dụ: Nếu thư có chữ "miễn phí", "thẻ tín dụng", thì là thư rác. 
+Người 2: Em thấy cách này nếu gặp vấn đề phức tạp thì danh sách quy tắc sẽ dài vô tận và cực kỳ khó bảo trì. Kẻ gửi thư rác chỉ cần đổi chữ "miễn phí" thành "mi.ễn ph.í" là hệ thống hỏng ngay.
+
+Slide 8: Cách tiếp cận bằng Học máy
+Người 1: Chính xác. Đó là lúc Học máy thể hiện sức mạnh (Hình 1.2). Hệ thống tự động học các quy tắc từ dữ liệu và đáp án. Chúng ta cung cấp dữ liệu thư rác và thư thường, máy tính tự rút ra các khuôn mẫu (patterns).
+Người 2: Nhờ vậy, mã nguồn sẽ ngắn gọn, dễ bảo trì và độ chính xác cao hơn rất nhiều đúng không thầy?
+
+Slide 9: Tại sao sử dụng học máy?
+Người 1: Vậy tại sao chúng ta dùng học máy? Thứ nhất, nó tự động thích ứng. Thứ hai, nó giải quyết được bài toán phức tạp mà thuật toán truyền thống bó tay, như nhận diện giọng nói. Thứ ba, nó giúp khám phá tri thức (Data Mining) từ dữ liệu khổng lồ.
+Người 2: Khám phá tri thức tức là máy tính giúp con người tìm ra những quy luật ẩn mà mắt thường không thấy được ạ?
+Người 1: Đúng vậy, ví dụ phân tích hàng triệu giao dịch mua hàng để tìm ra xu hướng tiêu dùng mới.
+
+Slide 10: Tự động thích ứng với thay đổi
+Người 1: Ở slide này (Hình 1.3), các em thấy quy trình tự động thích ứng. Khi người dùng thay đổi hành vi, ví dụ dùng từ lóng mới, chúng ta chỉ cần cập nhật dữ liệu và huấn luyện lại mô hình, không cần sửa code.
+Người 2: Quá trình này giúp hệ thống học máy luôn được làm mới và bắt kịp thực tế.
+
+Slide 11: Học máy giúp con người học hỏi
+Người 1: Không chỉ máy học, mà con người cũng học được từ máy. Khi máy phân tích dữ liệu và tìm ra quy luật, chúng ta có thể xem xét những quy luật đó để hiểu rõ hơn về bài toán.
+Người 2: Tức là máy tính đóng vai trò như một người nghiên cứu phụ tá siêu đẳng, chỉ ra những điểm mù của con người.
+
+Slide 12: Ví dụ về các ứng dụng (1/2)
+Người 1: Cụ thể hơn, học máy ứng dụng trong sản xuất để phát hiện khối u từ ảnh y tế, hay phân loại tự động tin tức.
+Người 2: Em biết thêm cả ứng dụng nhận diện biển số xe trong bãi giữ xe, hoặc tự động gắn thẻ bạn bè trên ảnh Facebook nữa ạ.
+
+Slide 13: Ví dụ về các ứng dụng (2/2)
+Người 1: Ngoài ra, học máy còn giúp dự báo doanh thu dựa trên các đặc trưng, tạo bot trò chuyện tự động (Chatbot) hay xe tự lái.
+Người 2: Sự đa dạng này chứng tỏ học máy là chìa khóa cho mọi ngành nghề trong tương lai.
+
+Slide 14: 2. Phân loại Hệ thống Học máy
+Người 1: Bây giờ, chúng ta chuyển sang phần 2: Phân loại các hệ thống Học máy.
+
+Slide 15: Tiêu chí phân loại hệ thống học máy
+Người 1: Có ba tiêu chí phân loại chính: Một là chúng có được huấn luyện với sự giám sát của con người hay không; Hai là chúng có thể học tăng dần một cách động khi đang chạy hay không; Ba là cách chúng tổng quát hóa từ dữ liệu (dựa trên thực thể hay xây dựng mô hình).
+Người 2: Ba tiêu chí này như ba trục tọa độ để định vị một hệ thống học máy thầy nhỉ.
+
+Slide 16: Học có giám sát (Supervised Learning)
+Người 1: Bắt đầu với Học có giám sát. Ở đây, dữ liệu huấn luyện đưa vào thuật toán đã bao gồm các giải pháp mong muốn, gọi là "nhãn" (labels).
+Người 2: Nghĩa là chúng ta vừa đưa bài tập, vừa đưa sẵn đáp án để máy tính học cách giải, đúng không ạ?
+Người 1: Đúng thế. Bộ lọc thư rác là ví dụ điển hình. Mỗi thư đều được dán nhãn là "thư rác" hoặc "thư thường".
+
+Slide 17: Phân loại (Classification) vs Hồi quy (Regression)
+Người 1: Trong học có giám sát, có hai bài toán chính. Phân loại (Classification) dùng để dự đoán nhãn rời rạc (như thư rác hay thư thường). Hồi quy (Regression) dùng để dự đoán một giá trị số liên tục, ví dụ giá của một chiếc ô tô dựa trên số km đã đi và năm sản xuất.
+Người 2: Vậy nếu em muốn dự đoán xem ngày mai trời mưa hay nắng thì đó là bài toán Phân loại, còn dự đoán nhiệt độ ngày mai là bao nhiêu độ C thì là Hồi quy phải không ạ?
+Người 1: Rất xuất sắc! Một ví dụ minh họa rất dễ hiểu.
+
+Slide 18: Học không giám sát (Unsupervised Learning)
+Người 1: Ngược lại, Học không giám sát là khi dữ liệu huấn luyện hoàn toàn không có nhãn. Hệ thống phải tự học và tìm ra cấu trúc ẩn bên trong dữ liệu.
+Người 2: Không có đáp án thì làm sao máy tính biết mình đúng hay sai thưa thầy?
+Người 1: Thuật toán sẽ nhóm các dữ liệu có sự tương đồng với nhau. Chẳng hạn, nhóm khách hàng có chung thói quen mua sắm lại với nhau.
+
+Slide 19: Phân cụm (Clustering)
+Người 1: Thuật toán nổi tiếng nhất của Học không giám sát là Phân cụm (Clustering). Chẳng hạn thuật toán K-Means. Bạn có một tệp dữ liệu người dùng blog, hệ thống tự nhóm họ thành những cụm như: những người thích đọc vào cuối tuần, thích truyện tranh, v.v.
+Người 2: Ứng dụng này rất hữu ích cho Marketing để phân khúc khách hàng tự động ạ.
+
+Slide 20: Giảm chiều dữ liệu (Dimensionality Reduction)
+Người 1: Một bài toán khác của học không giám sát là Giảm chiều dữ liệu. Mục tiêu là đơn giản hóa dữ liệu mà không làm mất quá nhiều thông tin. Kỹ thuật phổ biến là "trích xuất đặc trưng" (feature extraction). 
+Người 2: Việc này giúp giảm không gian lưu trữ và tăng tốc độ xử lý cho các thuật toán sau đúng không thầy? Giống như ta nén một tệp tin lớn lại.
+Người 1: Đúng vậy, ví dụ gộp đặc trưng "quãng đường ô tô đã đi" và "năm sản xuất" thành một đặc trưng chung là "độ hao mòn".
+
+Slide 21: Phát hiện bất thường (Anomaly Detection) & Luật kết hợp
+Người 1: Tiếp theo là Phát hiện bất thường. Hệ thống học trạng thái "bình thường", sau đó tự động cờ báo khi gặp dữ liệu "bất thường", ví dụ phát hiện gian lận thẻ tín dụng. Luật kết hợp (Association Rule Learning) thì tìm quy luật liên quan giữa các mặt hàng, như "khách mua bỉm thường mua thêm bia".
+Người 2: À, em thấy cái này siêu thị áp dụng rất nhiều để sắp xếp các kệ hàng cạnh nhau.
+
+Slide 22: Minh họa: Bất thường & Luật kết hợp
+Người 1: Slide này minh họa rõ hơn cách hệ thống cô lập các điểm bất thường (các điểm màu vàng) nằm xa khỏi cụm dữ liệu bình thường.
+Người 2: Trực quan lắm ạ. Mọi giao dịch gian lận sẽ ngay lập tức bị văng ra khỏi khu vực an toàn.
+
+Slide 23: Học bán giám sát (Semi-supervised Learning)
+Người 1: Giữa có giám sát và không giám sát là Bán giám sát. Chúng ta có lượng lớn dữ liệu chưa gán nhãn, và chỉ một số ít dữ liệu có nhãn. Điển hình là Google Photos tự động nhận diện cùng một khuôn mặt trong nhiều ảnh (không giám sát), sau đó chỉ cần bạn gán nhãn tên 1 lần (có giám sát), mọi bức ảnh đều được đặt tên.
+Người 2: Quả là một sự kết hợp hoàn hảo để tiết kiệm công sức gán nhãn dữ liệu!
+
+Slide 24: Học tự giám sát (Self-supervised Learning)
+Người 1: Gần đây nổi lên Học tự giám sát. Hệ thống tự tạo ra nhãn từ chính dữ liệu không nhãn. Ví dụ: che đi một phần bức ảnh và bắt mô hình đoán phần bị che, hoặc dự đoán từ tiếp theo trong câu (như cách ChatGPT hoạt động).
+Người 2: Đây giống như việc máy tính tự ra đề bài rồi tự giải để nâng cao nội lực.
+
+Slide 25: Học tăng cường (Reinforcement Learning)
+Người 1: Học tăng cường là một cách tiếp cận hoàn toàn khác. Hệ thống (gọi là tác nhân) quan sát môi trường, thực hiện hành động, và nhận phần thưởng (reward) hoặc hình phạt (penalty). Mục tiêu là học được "chính sách" (policy) tối đa hóa phần thưởng theo thời gian.
+Người 2: Rất giống cách con người huấn luyện một chú chó ạ. Làm đúng thì được thưởng thức ăn, làm sai thì bị mắng. AlphaGo chơi cờ vây chắc chắn cũng dùng phương pháp này.
+
+Slide 26: Học theo lô vs Học trực tuyến (Batch vs Online)
+Người 1: Tiêu chí thứ hai: Học theo lô là hệ thống không học thêm khi đang chạy thực tế. Phải lấy toàn bộ dữ liệu (cũ + mới) để huấn luyện lại từ đầu. Còn Học trực tuyến (Online learning) là hệ thống được huấn luyện liên tục từng phần một, giúp mô hình luôn cập nhật với dữ liệu mới nhất.
+Người 2: Học trực tuyến có vẻ vượt trội khi xử lý dòng dữ liệu liên tục như giá chứng khoán.
+
+Slide 27: Minh họa: Học trực tuyến
+Người 1: Slide này minh họa luồng học trực tuyến. Dữ liệu mới đến liên tục, mô hình cập nhật ngay lập tức. Quan trọng là tham số "tốc độ học" (learning rate). Tốc độ cao thì học nhanh nhưng nhanh quên cái cũ.
+Người 2: Nó đòi hỏi sự cân bằng để mô hình không bị "nhiễu" bởi dữ liệu sai lệch mới đưa vào.
+
+Slide 28: Học với tập dữ liệu khổng lồ (Out-of-core)
+Người 1: Khi dữ liệu quá lớn không vừa bộ nhớ (RAM), ta dùng thuật toán học ngoài bộ nhớ (Out-of-core). Dữ liệu được chia nhỏ và mô hình học dần qua từng phần dữ liệu đó, thường sử dụng kết hợp với cơ chế học trực tuyến.
+Người 2: Phương pháp này giúp máy tính cá nhân cũng có thể huấn luyện dữ liệu Big Data.
+
+Slide 29: Học dựa trên thực thể (Instance-based Learning)
+Người 1: Tiêu chí thứ ba là cách mô hình tổng quát hóa. "Học dựa trên thực thể" có nghĩa là hệ thống "học thuộc lòng" các ví dụ, sau đó dùng độ đo tương tự (similarity measure) để phân loại dữ liệu mới với dữ liệu đã học.
+Người 2: Nó giống như việc so sánh một email mới với một email rác cũ, nếu giống nhau đến 80% thì cũng kết luận là thư rác.
+
+Slide 30: Học dựa trên mô hình (Model-based Learning)
+Người 1: Phương pháp thứ hai là "Học dựa trên mô hình". Chúng ta xây dựng một mô hình (ví dụ một hàm số tuyến tính y bằng theta 0 cộng theta 1 nhân x), sau đó dùng dữ liệu để tối ưu hóa các tham số theta. Cuối cùng dùng mô hình đó để dự đoán.
+Người 2: Cách này tổng quát và mạnh mẽ hơn, giống như việc tìm ra một định luật vật lý thay vì chỉ học thuộc các hiện tượng.
+
+Slide 31: Minh họa: Biểu đồ phân tán & Mô hình phù hợp nhất
+Người 1: Hãy nhìn đồ thị này. Những điểm chấm xanh là dữ liệu (GDP và mức độ hạnh phúc). Đường thẳng màu đỏ chính là "Mô hình phù hợp nhất" (best-fit model). Khoảng cách từ các điểm tới đường thẳng này được đo bằng "Hàm chi phí" (cost function), và quá trình học máy chính là việc thu nhỏ hàm chi phí này.
+Người 2: Trực quan quá thầy, nhìn vào đường thẳng là dự đoán được ngay nước nào có GDP cao thì sẽ hạnh phúc ra sao.
+
+Slide 32: 3. Thách thức, Kiểm thử & Xác thực
+Người 1: Phần cuối cùng, chúng ta tìm hiểu xem làm học máy sẽ gặp những cạm bẫy nào.
+
+Slide 33: Những thách thức chính của học máy
+Người 1: Tóm gọn lại, có 2 nguyên nhân chính làm hỏng một dự án ML: "Dữ liệu tồi" hoặc "Thuật toán tồi".
+Người 2: "Rác vào thì Rác ra" (Garbage in, Garbage out) đúng không thầy? Cụ thể dữ liệu tồi là như thế nào ạ?
+
+Slide 34: Dữ liệu huấn luyện không đủ (Dữ liệu tồi)
+Người 1: Thứ nhất là không đủ dữ liệu. Một đứa trẻ chỉ cần nhìn vài quả táo là biết quả táo. Nhưng Học máy thì cần hàng ngàn, hàng triệu ví dụ mới phân biệt được quả táo. Thuật toán đôi khi không quan trọng bằng lượng dữ liệu lớn.
+Người 2: Các công ty công nghệ lớn như Google có lợi thế cực lớn vì họ sở hữu kho dữ liệu khổng lồ.
+
+Slide 35: Dữ liệu huấn luyện không đại diện
+Người 1: Thứ hai là dữ liệu không mang tính đại diện. Nếu muốn khảo sát mức độ hài lòng về chất lượng sống, mà em chỉ lấy phiếu khảo sát ở khu nhà giàu, thì kết quả mô hình dự đoán ra sẽ bị sai lệch hoàn toàn so với thực tế.
+Người 2: Hiện tượng này gọi là thiên vị dữ liệu (data bias). Khâu chọn mẫu rất quan trọng để mô hình khách quan.
+
+Slide 36: Dữ liệu chất lượng kém
+Người 1: Thứ ba là dữ liệu đầy nhiễu, lỗi, hoặc bị thiếu giá trị. Xử lý dữ liệu (làm sạch dữ liệu) chiếm phần lớn thời gian của một kỹ sư dữ liệu. 
+Người 2: Vậy nếu gặp dữ liệu thiếu thì sao ạ? Em có thể điền bằng giá trị trung bình hoặc bỏ qua cả dòng đó luôn?
+Người 1: Cả hai cách đều đúng, tùy thuộc vào sự ảnh hưởng của dòng dữ liệu đó tới tổng thể.
+
+Slide 37: Đặc trưng không liên quan
+Người 1: Thứ tư, hệ thống sẽ rối loạn nếu ta đưa vào quá nhiều đặc trưng không liên quan. Bài toán "Lựa chọn đặc trưng" (Feature selection) và "Trích xuất đặc trưng" (Feature extraction) là cực kỳ thiết yếu. 
+
+Slide 38: Overfitting (Khớp quá mức)
+Người 1: Chuyển sang lỗi của thuật toán. Overfitting, hay Khớp quá mức, là tình trạng mô hình học quá tốt trên tập huấn luyện, học cả nhiễu và những đặc điểm ngẫu nhiên, dẫn đến việc dự đoán cực kỳ tệ trên dữ liệu thực tế.
+Người 2: Giống như một học sinh chỉ học vẹt thuộc lòng đề thi mẫu, ra thi thật đổi đề một chút là trượt ngay đúng không thầy?
+
+Slide 39: Điều chuẩn (Regularization)
+Người 1: Để chống lại Overfitting, chúng ta dùng Regularization (Điều chuẩn). Biện pháp này giúp kìm hãm, làm giảm mức độ tự do (bậc của mô hình), ép mô hình trở nên đơn giản hơn để nó bắt được quy luật chung thay vì quy luật cục bộ.
+Người 2: Hay còn gọi là thêm ràng buộc vào hàm chi phí để các trọng số không bị bùng nổ quá lớn.
+
+Slide 40: Underfitting (Chưa khớp)
+Người 1: Ngược lại với Overfitting là Underfitting. Đó là khi mô hình quá đơn giản, không đủ sức để hiểu cấu trúc phức tạp của dữ liệu. Giống như dùng một đường thẳng tuyến tính để mô tả một đường cong parabol.
+Người 2: Để giải quyết thì mình phải tăng độ phức tạp của mô hình, ví dụ đổi từ mô hình tuyến tính sang mạng nơ ron, hoặc bổ sung thêm nhiều đặc trưng tốt hơn.
+
+Slide 41: Kiểm thử và xác thực (Testing and Validating)
+Người 1: Sau khi huấn luyện, làm sao biết mô hình tốt? Ta phải chia dữ liệu thành 2 tập: Tập huấn luyện (Training set) và Tập kiểm thử (Test set). Mô hình học trên tập huấn luyện, sau đó đánh giá độ lỗi (generalization error) trên tập kiểm thử. 
+Người 2: Việc này đảm bảo ta đánh giá mô hình bằng dữ liệu hoàn toàn xa lạ mà nó chưa từng thấy qua.
+
+Slide 42: Tinh chỉnh mô hình và Tập xác thực (Validation Set)
+Người 1: Nhưng nếu ta cứ liên tục thay đổi mô hình để đạt điểm cao trên Test set, thì mô hình lại bị overfitting đối với chính Test set đó! Vì vậy ta sinh ra thêm một tập ở giữa, gọi là Tập xác thực (Validation set).
+Người 2: Tức là: Học trên Training set, Tinh chỉnh và chọn mô hình trên Validation set, và Khảo thí lần cuối cùng duy nhất trên Test set để lấy điểm thực lực?
+Người 1: Đúng hoàn toàn!
+
+Slide 43: Sự không khớp dữ liệu (Data Mismatch) & Tập train-dev
+Người 1: Có một khái niệm chuyên sâu hơn. Nếu dữ liệu lấy trên mạng (train) khác với dữ liệu thu từ app di động (thực tế), ta sẽ gặp tình trạng "Không khớp dữ liệu". Khi đó Andrew Ng đề xuất dùng thêm tập "train-dev". Nó giúp ta phân định rõ nguyên nhân lỗi là do Overfitting hay do khác biệt bản chất phân phối dữ liệu.
+Người 2: Tập train-dev này giống như một bước đệm kiểm tra độ lệch chuẩn của dữ liệu. Rất hay ạ.
+
+Slide 44: Không có bữa trưa miễn phí (No Free Lunch)
+Người 1: Cuối cùng, định lý "Không có bữa trưa miễn phí". Định lý này phát biểu rằng: nếu bạn hoàn toàn không có giả định nào về dữ liệu, thì không có lý do gì để ưu tiên một mô hình ML này hơn mô hình khác.
+Người 2: Nghĩa là không có thuật toán nào là hoàn hảo cho mọi bài toán. Mình bắt buộc phải thử nghiệm nhiều mô hình khác nhau và đánh giá thực tế mới biết cái nào tốt nhất.
+
+Slide 45: Tổng kết Chương 1
+Người 1: Rất tốt. Hôm nay chúng ta đã đi qua một chặng đường dài, từ khái niệm học máy, tại sao học máy vượt trội hơn lập trình truyền thống, cho đến các phương pháp phân loại và những thách thức thực tế. Hy vọng các em đã nắm vững những viên gạch nền tảng này.
+Người 2: Bài học hôm nay rất thú vị và trực quan ạ. Em cảm ơn thầy.
+Người 1: Chào các em. Buổi học của chúng ta kết thúc tại đây. Hẹn gặp lại vào buổi thực hành tới! 

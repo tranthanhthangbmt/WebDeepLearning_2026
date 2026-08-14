@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Giới thiệu Xử lý Ngôn ngữ Tự nhiên (NLP)}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Chuỗi Tiền xử lý Văn bản (Text Pipeline)}{5}{0}{2}
+\beamer@sectionintoc {3}{3. Phương pháp Biểu diễn Túi từ (Bag-of-Words)}{12}{0}{3}
+\beamer@sectionintoc {4}{4. Mô hình Trình tự và Word Embeddings - Trái tim của NLP Hiện đại}{20}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{32}{0}{5}

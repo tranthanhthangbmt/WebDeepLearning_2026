@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Giới thiệu Bài toán Phát hiện Vật thể}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Kiến trúc Hai giai đoạn (Two-stage Detectors)}{10}{0}{2}
+\beamer@sectionintoc {3}{3. Kiến trúc Một giai đoạn (Single-stage Detectors)}{11}{0}{3}
+\beamer@sectionintoc {4}{4. Thuật toán YOLO (You Only Look Once)}{13}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{31}{0}{5}

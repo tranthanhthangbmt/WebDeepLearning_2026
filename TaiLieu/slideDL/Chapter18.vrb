@@ -1,0 +1,12 @@
+\frametitle{Mã nguồn: API Int8 Quantization trong Keras}
+\begin{lstlisting}[language=Python]
+# Instantiates a trained model (or any quantizable layer like Transformer)
+model = ...
+
+# Boom! Compress the model.
+model.quantize("int8")
+
+# Now predict() and call() will run (partially) in int8!
+# Very fast on CPU and takes 4x less RAM
+predictions = model.predict(x_test)
+\end{lstlisting}

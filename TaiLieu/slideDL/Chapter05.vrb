@@ -1,0 +1,16 @@
+\frametitle{Cơ chế cân bằng Toán học của Dropout}
+\begin{itemize}
+        \item \textbf{Khi Training:} Ngắt $50\%$ nơ-ron (rate $= 0.5$).
+        \item \textbf{Khi Testing (Inference):} Tuyệt đối không Dropout! Mô hình chạy full công suất.
+        \item Vấn đề: Nếu lúc học có 50 người kéo co, lúc thi có tận 100 người kéo co thì tổng lực (tổng Activation) bị tăng gấp đôi, làm vỡ hàm Loss.
+        \item Giải pháp Keras: Tại lúc học, các kích hoạt còn sống sót sẽ được \textbf{Scale Up} (nhân cho $\frac{1}{1 - \text{rate}} = 2$).
+    \end{itemize}
+\begin{lstlisting}[language=Python]
+model = keras.Sequential([
+    layers.Dense(16, activation="relu"),
+    layers.Dropout(0.5), # Nhet lop Dropout ngay sau lop Dense
+    layers.Dense(16, activation="relu"),
+    layers.Dropout(0.5),
+    layers.Dense(1, activation="sigmoid")
+])
+\end{lstlisting}

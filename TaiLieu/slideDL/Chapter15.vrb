@@ -1,0 +1,18 @@
+\frametitle{Tinh chỉnh (Fine-tuning) RoBERTa}
+Ta có thể cắm thêm một lớp Dense vào đuôi của RoBERTa Backbone để dạy nó thực hiện mọi bài toán NLP mình muốn, từ Phân loại Cảm xúc đến Tìm kiếm thông tin. Quá trình này diễn ra cực kỳ nhanh và chuẩn xác.
+\begin{lstlisting}[language=Python]
+# Attach a Classification Head to RoBERTa
+classifier = keras_hub.models.TextClassifier.from_preset(
+    "roberta_base_en",
+    num_classes=2,
+)
+
+classifier.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer="adam",
+    metrics=["accuracy"],
+)
+
+# Fine-tune on our small IMDb Dataset
+classifier.fit(train_ds, validation_data=val_ds, epochs=1)
+\end{lstlisting}

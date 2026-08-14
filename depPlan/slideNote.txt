@@ -1,0 +1,107 @@
+Index of /~russell/slides
+[ICO]	Name	Last modified	Size	Description
+[PARENTDIR]	Parent Directory	 	-	 
+[   ]	aima-slides.sty	1999-08-18 18:36	13K	 
+[DIR]	algorithms/	1999-04-04 15:38	-	 
+[   ]	chapter01.pdf	1999-08-18 18:39	827K	 
+[   ]	chapter01.pdf.gz	1999-08-18 18:37	197K	 
+[   ]	chapter01.ps.gz	1999-08-18 18:37	38K	 
+[   ]	chapter01.tex	1999-08-18 18:27	7.1K	 
+[   ]	chapter02.pdf	1999-08-18 18:42	836K	 
+[   ]	chapter02.pdf.gz	1999-08-18 18:40	199K	 
+[   ]	chapter02.ps.gz	1999-08-18 18:40	35K	 
+[   ]	chapter02.tex	1999-08-18 18:27	5.9K	 
+[   ]	chapter03.pdf	1998-11-24 22:30	2.8M	 
+[   ]	chapter03.pdf.gz	1999-01-06 14:02	606K	 
+[   ]	chapter03.ps.gz	1998-11-24 22:16	84K	 
+[   ]	chapter03.tex	1998-11-24 22:16	17K	 
+[   ]	chapter04a.pdf	1998-11-24 22:30	1.8M	 
+[   ]	chapter04a.pdf.gz	1999-01-06 14:02	413K	 
+[   ]	chapter04a.ps.gz	1998-11-24 22:16	67K	 
+[   ]	chapter04a.tex	1998-11-24 22:16	11K	 
+[   ]	chapter04b.pdf	1998-11-24 22:30	1.6M	 
+[   ]	chapter04b.pdf.gz	1999-01-06 14:02	388K	 
+[   ]	chapter04b.ps.gz	1998-11-24 22:16	58K	 
+[   ]	chapter04b.tex	1998-11-24 22:16	13K	 
+[   ]	chapter05.pdf	1998-11-24 22:30	1.5M	 
+[   ]	chapter05.pdf.gz	1999-01-06 14:03	348K	 
+[   ]	chapter05.ps.gz	1998-11-24 22:16	61K	 
+[   ]	chapter05.tex	1998-11-24 22:16	8.9K	 
+[   ]	chapter06.pdf	1998-11-24 22:30	1.6M	 
+[   ]	chapter06.pdf.gz	1999-01-06 14:03	358K	 
+[   ]	chapter06.ps.gz	1998-11-24 22:16	57K	 
+[   ]	chapter06.tex	1998-11-24 22:16	13K	 
+[   ]	chapter07.pdf	1998-11-24 22:30	1.4M	 
+[   ]	chapter07.pdf.gz	1999-01-06 14:03	374K	 
+[   ]	chapter07.ps.gz	1998-11-24 22:16	49K	 
+[   ]	chapter07.tex	1998-11-24 22:16	11K	 
+[   ]	chapter09a.pdf	1998-11-24 22:30	875K	 
+[   ]	chapter09a.pdf.gz	1999-01-06 14:03	211K	 
+[   ]	chapter09a.ps.gz	1998-11-24 22:16	37K	 
+[   ]	chapter09a.tex	1998-11-24 22:16	8.1K	 
+[   ]	chapter09b.pdf	1998-11-24 22:30	908K	 
+[   ]	chapter09b.pdf.gz	1999-01-06 14:03	219K	 
+[   ]	chapter09b.ps.gz	1998-11-24 22:17	43K	 
+[   ]	chapter09b.tex	1998-11-24 22:16	8.0K	 
+[   ]	chapter11.pdf	1999-04-04 18:25	870K	 
+[   ]	chapter11.pdf.gz	1999-04-04 18:01	197K	 
+[   ]	chapter11.ps.gz	1999-04-04 15:59	45K	 
+[   ]	chapter11.tex	1999-04-04 15:39	5.3K	 
+[   ]	chapter13.pdf	1999-04-04 18:25	647K	 
+[   ]	chapter13.pdf.gz	1999-04-04 18:01	135K	 
+[   ]	chapter13.ps.gz	1999-05-20 02:49	35K	 
+[   ]	chapter13.tex	1999-04-04 15:39	4.5K	 
+[   ]	chapter14.pdf	1999-04-04 18:25	1.3M	 
+[   ]	chapter14.pdf.gz	1999-04-04 18:02	328K	 
+[   ]	chapter14.ps.gz	1999-04-04 16:00	46K	 
+[   ]	chapter14.tex	1999-04-04 15:39	12K	 
+[   ]	chapter15a.pdf	1999-04-04 18:25	2.5M	 
+[   ]	chapter15a.pdf.gz	1999-04-04 18:03	695K	 
+[   ]	chapter15a.ps.gz	1999-04-04 17:49	93K	 
+[   ]	chapter15a.tex	1999-04-04 15:39	13K	 
+[   ]	chapter15b.pdf	1999-04-04 18:26	2.2M	 
+[   ]	chapter15b.pdf.gz	1999-04-04 18:05	547K	 
+[   ]	chapter15b.ps.gz	1999-04-04 17:49	66K	 
+[   ]	chapter15b.tex	1999-04-04 15:39	16K	 
+[   ]	chapter16.pdf	1999-04-04 18:26	1.4M	 
+[   ]	chapter16.pdf.gz	1999-04-04 18:08	344K	 
+[   ]	chapter16.ps.gz	1999-04-04 17:51	58K	 
+[   ]	chapter16.tex	1999-04-04 15:39	12K	 
+[   ]	chapter17a.pdf	1999-04-04 18:26	631K	 
+[   ]	chapter17a.pdf.gz	1999-04-04 18:08	155K	 
+[   ]	chapter17a.ps.gz	1999-04-04 17:51	38K	 
+[   ]	chapter17a.tex	1999-04-04 15:39	4.7K	 
+[TXT]	epsf.sty	1998-10-15 23:33	8.1K	 
+[DIR]	figures/	1999-08-18 18:25	-	 
+[DIR]	graphs/	1999-04-04 16:04	-	 
+[TXT]	syllabus.html	1999-08-18 18:46	5.2K	 
+[DIR]	tables/	1999-08-18 18:26	-	 
+Lecture slides for users of
+Artificial Intelligence: A Modern Approach
+by Stuart Russell and Peter Norvig
+Overview
+These slides are a fairly faithful LaTeX reproduction of handwritten slides used at Berkeley for the last two years. The undergraduate AI course at Berkeley lasts fifteen weeks. With one midterm exam and one public holiday, there are usually 28 lectures of 80 minutes each. The material covered is described in the sample syllabus, which also contains pointers to the slides themselves and to notes on each lecture.
+The lecture schedule is fairly ambitious. In practice, we seldom get to cover philosophical issues (Chapters 26 and 27) and the coverage of vision and robotics is often compressed into two lectures. The slides reflect this: the coverage of the later chapters is somewhat shallower than that of the traditional "core" material. Each lecturer should adjust the pace of presentation to suit his or her interests and those of the students. There is no obligation to cover each chunk of slides in a single lecture.
+
+Features
+These slides are designed primarily for use as transparencies on a regular overhead projector, but it is easy to produce a version suitable for computer projection using a postscript or pdf viewer. The slides are generally a straightforward combination of short lines of text, equations, and figures from the text as well as many new figures. The files are available as postscript and as latex source files (see next section). Two pedagogical devices are used:
+Questions: some slides include explicit questions, doubly underlined, that students should answer verbally in class. Of course, the instructor will probably ask many more questions than this, but it is sometimes helpful to have some questions on the slides to push students to "fill in the answers." In most cases, the next slide is a copy with the answers filled in.
+
+Overlays: Instead of elaborate PowerPoint animations, sequences of overlaid slides are used to show, for example, the progress of an algorithm. Overlays are distinguished by the absence of headers; overlay figures are positioned so that the slides stack directly on top of each other. In some cases, a long sequence (more than six) has to be broken into two or more subsequences to avoid creating an opaque stack. Depending on the nature of your transparencies, projector, and classroom, you may need to modify the source files to generate more subsequences. For computer projection of ps or pdf files, you will want to use a sequence of cumulative figures rather than a sequence of overlays; for instructions on how to do this, see below. The pdf files provided here use cumulative figures, whereas the postscript files use overlay figures.
+
+Source files
+The latex source files are named by chapter number, e.g., chapter03.tex, and can be run with plain old latex and the style file aima-slides.sty. The sequence on a typical unix machine is as follows:
+latex chapter03
+dvips -o chapter03.ps -t landscape chapter03
+The source files are fairly self-explanatory and it should be straightforward to create additional slides by following the existing examples. The trickiest part is creating overlays: to make sure that the figures line up with the underlying slide, the phantom heading macro
+
+\pheading{...}
+is used, and if the underlying slide has lines of text then the overlay uses an (almost) blank line in place of each. Since latex figure placement is defined by the postscript bounding box, and most drawing programs compute the bounding box by the outermost "marks", overlay figures are usually drawn on an enclosing white (invisible) background that is fixed for all the overlays in a sequence.
+If you want cumulative figures instead of overlay figures, simply replace the line
+
+\overlay
+with
+\cumulative
+in aima-slides.sty and rerun LaTeX. The pdf files provided here were created in this way to allow for computer projection.
+If you are running LaTeX on a non-Unix platform, redefine the \file and \sfile commands to generate the appropriate name string (e.g., on a Mac, use ":" instead of "/" as the separator).
+

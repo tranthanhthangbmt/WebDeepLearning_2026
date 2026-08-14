@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Tầm quan trọng của Quy trình Phổ quát}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Định nghĩa Bài toán (Defining the task)}{5}{0}{2}
+\beamer@sectionintoc {3}{3. Phát triển Mô hình (Developing a model)}{18}{0}{3}
+\beamer@sectionintoc {4}{4. Triển khai Mô hình (Deploying the model)}{25}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{31}{0}{5}

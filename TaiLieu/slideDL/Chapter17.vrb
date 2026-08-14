@@ -1,0 +1,15 @@
+\frametitle{Mã nguồn: Kỹ thuật ổn định huấn luyện Diffusion}
+\begin{lstlisting}[language=Python]
+model.compile(
+    optimizer=keras.optimizers.AdamW(
+        # Configures the learning rate decay schedule
+        learning_rate=keras.optimizers.schedules.InverseTimeDecay(
+            initial_learning_rate=1e-3, decay_steps=1000, decay_rate=0.1,
+        ),
+        # Turns on Polyak averaging (Exponential Moving Average)
+        use_ema=True,
+        # Overwrite the weights with EMA every 100 iterations
+        ema_overwrite_frequency=100,
+    ),
+)
+\end{lstlisting}

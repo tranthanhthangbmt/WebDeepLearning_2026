@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Tối ưu hóa Siêu tham số (Hyperparameter Tuning)}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Suy diễn Đám đông - Model Ensembling}{10}{0}{2}
+\beamer@sectionintoc {3}{3. Huấn luyện Phân tán (Distributed Training)}{14}{0}{3}
+\beamer@sectionintoc {4}{4. Tối ưu Bộ nhớ: Mixed-Precision \& Quantization}{21}{0}{4}
+\beamer@sectionintoc {5}{5. Tổng kết: Vòng lặp Tiến bộ}{31}{0}{5}

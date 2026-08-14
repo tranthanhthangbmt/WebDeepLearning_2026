@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{1. Triết lý Thiết kế của Keras}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Ba phương pháp Xây dựng Mô hình}{6}{0}{2}
+\beamer@sectionintoc {3}{3. Tùy biến Vòng lặp Huấn luyện (Customizing)}{20}{0}{3}
+\beamer@sectionintoc {4}{4. Callbacks: Tự động hóa quá trình Huấn luyện}{27}{0}{4}
+\beamer@sectionintoc {5}{5. Giám sát với TensorBoard}{32}{0}{5}
+\beamer@sectionintoc {6}{Tổng kết}{35}{0}{6}

@@ -1,0 +1,7 @@
+\beamer@sectionintoc {1}{1. Nguyên lý Thiết kế Kiến trúc}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Kết nối Thặng dư (Residual Connections)}{9}{0}{2}
+\beamer@sectionintoc {3}{3. Batch Normalization (Chuẩn hóa Hàng loạt)}{15}{0}{3}
+\beamer@sectionintoc {4}{4. Tích chập Tách rời (Separable Convolution)}{19}{0}{4}
+\beamer@sectionintoc {5}{5. Thực hành: Xây dựng Mini-Xception}{23}{0}{5}
+\beamer@sectionintoc {6}{6. Kỷ nguyên mới: Vision Transformers (ViTs)}{27}{0}{6}
+\beamer@sectionintoc {7}{Tổng kết}{31}{0}{7}

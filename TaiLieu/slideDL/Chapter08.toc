@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{1. Nền tảng của Mạng Tích chập (CNN)}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Thực hành: Bài toán Phân loại Chó \& Mèo}{12}{0}{2}
+\beamer@sectionintoc {3}{3. Chống Overfitting bằng Data Augmentation}{16}{0}{3}
+\beamer@sectionintoc {4}{4. Chuyển giao Học tập (Transfer Learning)}{20}{0}{4}
+\beamer@sectionintoc {5}{5. Tinh chỉnh (Fine-Tuning)}{27}{0}{5}
+\beamer@sectionintoc {6}{Tổng kết}{31}{0}{6}

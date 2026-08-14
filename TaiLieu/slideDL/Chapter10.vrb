@@ -1,0 +1,21 @@
+\frametitle{Chồng bản đồ nhiệt (Superimposed Heatmap)}
+Ta áp dụng phổ màu JET (Xanh dương sang Đỏ) của \texttt{matplotlib} để nhuộm màu bản đồ, rồi áp lên trên ảnh gốc với hệ số trong suốt $0.4$.
+
+\begin{lstlisting}[language=Python]
+import matplotlib.cm as cm
+
+img = keras.utils.load_img(img_path)
+img = keras.utils.img_to_array(img)
+
+heatmap = np.uint8(255 * heatmap)
+jet = cm.get_cmap("jet")
+jet_colors = jet(np.arange(256))[:, :3]
+jet_heatmap = jet_colors[heatmap]
+
+jet_heatmap = keras.utils.array_to_img(jet_heatmap)
+jet_heatmap = jet_heatmap.resize((img.shape[1], img.shape[0]))
+jet_heatmap = keras.utils.img_to_array(jet_heatmap)
+
+# Superimposes the heatmap at 40% opacity
+superimposed_img = jet_heatmap * 0.4 + img
+\end{lstlisting}

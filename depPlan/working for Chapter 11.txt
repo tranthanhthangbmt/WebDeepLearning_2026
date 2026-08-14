@@ -1,0 +1,64 @@
+tôi muốn dịch tài liệu này sang tiếng Việt, hãy chain of thought hoặc tree of thought và hướng dẫn tôi chia tài liệu thành nhiều phần. Hãy phân chia đoạn văn, xuống dòng cho hợp lý để người đọc dễ theo dõi. Tôi cần bản dịch thật chi tiết không được bỏ sót nội dung. Kể cả các tiêu đề của các hình. Hãy tạo cho tôi các prompt tương ứng với từng phần của tài liệu để tôi đạt được mục tiêu này để tôi đễ làm
+=======================
+Chào bạn,
+Để giải quyết một tài liệu học thuật phức tạp và dài như Chương 11: Automated Planning (Lập kế hoạch tự động)
+, phương pháp chia để trị (Divide and Conquer) dựa trên cấu trúc tư duy Tree of Thought (Cây Tư duy) là một hướng đi hoàn toàn chính xác. Dưới đây là phân tích luồng suy nghĩ và hướng dẫn chi tiết để bạn thực hiện mục tiêu này.
+1. Chiến lược tư duy (Tree of Thought) để dịch tài liệu
+Nhận diện vấn đề: Tài liệu chứa lượng kiến thức chuyên ngành khổng lồ về AI, bao gồm các định nghĩa logic PDDL
+, thuật toán tìm kiếm
+, Heuristics
+, quy trình lập trình phân cấp
+, và quản lý lịch trình/tài nguyên
+. Đặc biệt, tài liệu đan xen rất nhiều đoạn giả mã (pseudo-code)
+, biểu đồ
+ và các công thức toán học/logic
+.
+Lý do cần chia nhỏ: Nếu yêu cầu AI dịch toàn bộ gần 40 trang văn bản cùng lúc, hệ thống sẽ gặp hiện tượng "quá tải ngữ cảnh" (context window overflow). Hậu quả là AI có thể dịch lướt, tự động tóm tắt làm mất nội dung, dịch sai thuật ngữ hoặc bỏ quên các chú thích hình ảnh, làm hỏng hoàn toàn định dạng của một cuốn sách giáo khoa.
+Giải pháp (Cây tư duy): Chúng ta sẽ bóc tách tài liệu dựa trên cấu trúc phân cấp tự nhiên của tác giả: Chương -> Mục chính -> Tiểu mục. Chúng ta sẽ gom các tiểu mục có sự liên kết ngữ nghĩa chặt chẽ thành từng "gói dịch thuật" (chunk) có độ dài vừa phải. Mỗi gói sẽ đi kèm với một bộ quy tắc dịch thuật (prompt) chặt chẽ để ép AI tuân thủ định dạng.
+2. Hướng dẫn chia tài liệu thành 10 phần logic
+Dựa vào nguồn dữ liệu bạn cung cấp, tôi đã thiết kế bố cục chia tài liệu thành 10 phần độc lập. Bạn hãy dựa vào mục lục này để copy text từ file PDF:
+Phần 1: Nền tảng Lập kế hoạch Cổ điển. Bao gồm đoạn mở đầu chương và toàn bộ Mục 11.1 (từ định nghĩa PDDL đến 3 ví dụ: Vận chuyển hàng không, Lốp dự phòng, Thế giới khối vuông)
+.
+Phần 2: Các thuật toán Lập kế hoạch. Toàn bộ Mục 11.2 (Tìm kiếm trạng thái tiến/lùi, SATPLAN, và các hướng tiếp cận cổ điển khác)
+.
+Phần 3: Heuristics trong Lập kế hoạch. Toàn bộ Mục 11.3 (Cách xây dựng Heuristic, cắt tỉa miền độc lập, trừu tượng hóa trạng thái)
+.
+Phần 4: Lập kế hoạch Phân cấp (Nửa đầu). Mục 11.4 đến hết tiểu mục 11.4.2 (Giới thiệu các hành động cấp cao - HLAs và cách tìm kiếm giải pháp nguyên thủy)
+.
+Phần 5: Lập kế hoạch Phân cấp (Nửa sau). Mục 11.4.3 (Tìm kiếm các giải pháp trừu tượng, phần này chứa nhiều hình minh họa về tập hợp trạng thái có thể tiếp cận - Reachable sets)
+.
+Phần 6: Môi trường Nondeterministic (Nửa đầu). Mục 11.5 đến hết 11.5.1 (Lập kế hoạch trong môi trường không quan sát toàn phần và Lập kế hoạch không cần cảm biến)
+.
+Phần 7: Môi trường Nondeterministic (Nửa sau). Mục 11.5.2 và 11.5.3 (Lập kế hoạch dự phòng và Lập kế hoạch trực tuyến - Online planning)
+.
+Phần 8: Lịch trình & Tài nguyên. Toàn bộ Mục 11.6 (Thời gian, biểu đồ lịch trình Job-shop, và phương pháp đường găng - Critical path)
+.
+Phần 9: Phân tích & Tổng kết. Mục 11.7 (Phân tích các phương pháp) và phần Summary (Tóm tắt chương)
+.
+Phần 10: Ghi chú Lịch sử. Phần Bibliographical and Historical Notes (Lịch sử nghiên cứu AI trong lĩnh vực lập kế hoạch)
+.
+3. Prompt mẫu chuẩn hóa cho từng phần
+Dưới đây là một Prompt (câu lệnh) được tối ưu hóa để bạn đạt được mục tiêu bản dịch chi tiết, không bỏ sót và định dạng đẹp mắt. Bạn chỉ cần sao chép Prompt này, sửa lại tên phần, dán text từ PDF vào và gửi cho tôi.
+Hãy copy và dùng Prompt sau cho từng lần dịch:
+Đóng vai: Bạn là một chuyên gia dịch thuật tài liệu học thuật chuyên sâu về Trí tuệ Nhân tạo (AI) và Khoa học Máy tính.
+Nhiệm vụ: Hãy dịch phần văn bản thuộc [ĐIỀN TÊN PHẦN - Ví dụ: Phần 1 (Mục 11.1)] của tài liệu "Chapter 11: Automated Planning" sang tiếng Việt.
+Yêu cầu nghiêm ngặt:
+Tuyệt đối không bỏ sót: Dịch thật chi tiết và bám sát nguyên bản. Không được tự ý tóm tắt, cắt xén bất kỳ câu chữ, ý nghĩa hay chi tiết nào.
+Dịch toàn bộ chú thích hình ảnh & Code: Bắt buộc dịch toàn bộ các tiêu đề, chú thích của hình ảnh (Figure), sơ đồ, cũng như các ghi chú trong các đoạn mã.
+Bảo tồn thuật ngữ: Giữ nguyên các định dạng mã code/cú pháp PDDL (như Init, Goal, Action, PRECOND, EFFECT). Với các thuật ngữ học thuật quan trọng, hãy để từ tiếng Anh gốc trong ngoặc đơn sau bản dịch tiếng Việt (ví dụ: lập kế hoạch cổ điển (classical planning), chiều dài đoạn găng (critical path), v.v.) để người đọc dễ đối chiếu.
+Phân chia đoạn văn rõ ràng:
+Tự động nhận diện và xuống dòng một cách hợp lý để tách biệt các luận điểm, không để một đoạn văn quá dài gây mỏi mắt.
+Bôi đậm (bold) các từ khóa quan trọng, các khái niệm mới hoặc tiêu đề để dễ theo dõi.
+Văn phong: Sử dụng văn phong mạch lạc, chuẩn ngôn ngữ sách giáo trình đại học, dễ hiểu nhưng vẫn đảm bảo tính học thuật cao.
+
+=================
+Đóng vai: Bạn là một chuyên gia dịch thuật tài liệu học thuật chuyên sâu về Trí tuệ Nhân tạo (AI) và Khoa học Máy tính.
+Nhiệm vụ: Hãy dịch phần văn bản thuộc [Phần 1: Nền tảng Lập kế hoạch Cổ điển. Bao gồm đoạn mở đầu chương và toàn bộ Mục 11.1 (từ định nghĩa PDDL đến 3 ví dụ: Vận chuyển hàng không, Lốp dự phòng, Thế giới khối vuông)] của tài liệu "Chapter 11: Automated Planning" sang tiếng Việt.
+Yêu cầu nghiêm ngặt:
+Tuyệt đối không bỏ sót: Dịch thật chi tiết và bám sát nguyên bản. Không được tự ý tóm tắt, cắt xén bất kỳ câu chữ, ý nghĩa hay chi tiết nào.
+Dịch toàn bộ chú thích hình ảnh & Code: Bắt buộc dịch toàn bộ các tiêu đề, chú thích của hình ảnh (Figure), sơ đồ, cũng như các ghi chú trong các đoạn mã.
+Bảo tồn thuật ngữ: Giữ nguyên các định dạng mã code/cú pháp PDDL (như Init, Goal, Action, PRECOND, EFFECT). Với các thuật ngữ học thuật quan trọng, hãy để từ tiếng Anh gốc trong ngoặc đơn sau bản dịch tiếng Việt (ví dụ: lập kế hoạch cổ điển (classical planning), chiều dài đoạn găng (critical path), v.v.) để người đọc dễ đối chiếu.
+Phân chia đoạn văn rõ ràng:
+Tự động nhận diện và xuống dòng một cách hợp lý để tách biệt các luận điểm, không để một đoạn văn quá dài gây mỏi mắt.
+Bôi đậm (bold) các từ khóa quan trọng, các khái niệm mới hoặc tiêu đề để dễ theo dõi.
+Văn phong: Sử dụng văn phong mạch lạc, chuẩn ngôn ngữ sách giáo trình đại học, dễ hiểu nhưng vẫn đảm bảo tính học thuật cao.

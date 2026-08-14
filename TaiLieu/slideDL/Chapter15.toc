@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{1. Mô hình Ngôn ngữ \& Seq2Seq}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Cơ chế Chú ý (Attention Mechanism)}{11}{0}{2}
+\beamer@sectionintoc {3}{3. Self-Attention và Query-Key-Value}{14}{0}{3}
+\beamer@sectionintoc {4}{4. Kiến trúc Transformer}{20}{0}{4}
+\beamer@sectionintoc {5}{Tổng kết}{32}{0}{5}

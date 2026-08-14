@@ -1,0 +1,13 @@
+\frametitle{Huấn luyện chung cuộc và Dự đoán}
+Sau khi xác định được \texttt{epochs=130} là điểm tốt nhất, ta huấn luyện mô hình trên toàn bộ tập train và chạy test.
+\begin{lstlisting}[language=Python]
+model = build_model()
+model.fit(train_data, train_targets, epochs=130, batch_size=16, verbose=0)
+
+test_mse, test_mae = model.evaluate(test_data, test_targets)
+print(test_mae) # Khoang 2.5 (Sai lech khoang $2,500)
+
+predictions = model.predict(test_data)
+print(predictions[0]) # Mang ket qua scalar
+# VD: array([28.34494], dtype=float32) -> Can nha co gia 28,344$
+\end{lstlisting}

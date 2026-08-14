@@ -1,0 +1,28 @@
+\frametitle{Nhắc bằng Điểm đơn (Single Point Prompting)}
+\begin{columns}
+        \column{0.5\textwidth}
+        Nhập đúng 1 tọa độ rơi vào quả Đào. (Nhãn $1$ nghĩa là Tiền cảnh, chọn cái này!)
+
+\begin{lstlisting}[language=Python]
+# Coordinates of our point
+input_point = np.array([[580, 450]])
+
+# 1 means foreground, 0 means background
+input_label = np.array([1])
+
+outputs = model.predict(
+    {
+        "images": ops.expand_dims(image, axis=0),
+        "points": ops.expand_dims(input_point, axis=0),
+        "labels": ops.expand_dims(input_label, axis=0),
+    }
+)
+\end{lstlisting}
+
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{../../images/ch11/peach_segmented.333556ff.png}
+            \caption{SAM lan truyền điểm đó thành Mặt nạ Đào}
+        \end{figure}
+    \end{columns}

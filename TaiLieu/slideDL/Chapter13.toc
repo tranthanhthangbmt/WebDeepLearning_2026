@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{1. Giới thiệu Chuỗi thời gian và Bài toán Dự báo}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Xây dựng Dữ liệu và Các Baseline}{10}{0}{2}
+\beamer@sectionintoc {3}{3. Mạng Nơ-ron Truyền hồi (Recurrent Neural Networks - RNN)}{17}{0}{3}
+\beamer@sectionintoc {4}{4. Kiến trúc LSTM - Long Short-Term Memory}{21}{0}{4}
+\beamer@sectionintoc {5}{5. Các Kỹ thuật Nâng cao cho RNN}{27}{0}{5}
+\beamer@sectionintoc {6}{Tổng kết}{33}{0}{6}

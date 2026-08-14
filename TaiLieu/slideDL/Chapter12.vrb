@@ -1,0 +1,18 @@
+\frametitle{Huấn luyện Mô hình}
+Cuối cùng, chúng ta đóng gói thành 1 quá trình biên dịch hoàn chỉnh. Loss của phân loại dùng hàm \texttt{sparse\_categorical\_crossentropy} chuẩn.
+
+\begin{lstlisting}[language=Python]
+# We use two separate loss functions for the two outputs
+model.compile(
+    optimizer=keras.optimizers.Adam(2e-4),
+    loss={"box": box_loss, "class": "sparse_categorical_crossentropy"},
+)
+
+# Start training the detector
+model.fit(
+    train_dataset,
+    validation_data=val_dataset,
+    epochs=4,
+)
+\end{lstlisting}
+Quá trình có thể tốn hàng giờ trên GPU do khối lượng tính toán quá khổng lồ.

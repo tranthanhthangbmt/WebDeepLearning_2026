@@ -1,0 +1,7 @@
+\beamer@sectionintoc {1}{1. Lịch sử phát triển các Framework Học sâu}{3}{0}{1}
+\beamer@sectionintoc {2}{2. Tổng quan về TensorFlow}{8}{0}{2}
+\beamer@sectionintoc {3}{3. Tổng quan về PyTorch}{15}{0}{3}
+\beamer@sectionintoc {4}{4. Tổng quan về JAX}{20}{0}{4}
+\beamer@sectionintoc {5}{5. Mối quan hệ giữa Keras và các Backend}{26}{0}{5}
+\beamer@sectionintoc {6}{6. Bài toán cốt lõi: Bộ Phân loại Tuyến tính}{31}{0}{6}
+\beamer@sectionintoc {7}{Tổng kết}{37}{0}{7}

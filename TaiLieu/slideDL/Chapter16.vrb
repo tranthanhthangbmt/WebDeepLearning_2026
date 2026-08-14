@@ -1,0 +1,12 @@
+\frametitle{Mã nguồn: Fine-Tuning CausalLM}
+\begin{lstlisting}[language=Python]
+# Compile the pre-trained LLM for fine-tuning
+gemma_lm.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=keras.optimizers.Adam(5e-5),
+    weighted_metrics=[keras.metrics.SparseCategoricalAccuracy()],
+)
+
+# Train on instruction-response dataset
+gemma_lm.fit(train_ds, validation_data=val_ds, epochs=1)
+\end{lstlisting}
