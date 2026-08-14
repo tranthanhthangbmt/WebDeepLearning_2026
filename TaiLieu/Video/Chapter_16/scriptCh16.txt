@@ -1,0 +1,121 @@
+Slide 1: Sinh văn bản & Kỷ nguyên AI Tạo sinh
+Người 1: Chào các em! Hôm nay chúng ta chính thức bước vào vùng đất của AI Tạo Sinh (Generative AI). Kỷ nguyên của ChatGPT, Midjourney, và sức mạnh vô hạn của ngôn ngữ.
+Người 2: Cuối cùng cũng đến phần hấp dẫn nhất rồi thưa thầy!
+
+Slide 2: Nội dung chương
+Người 1: Chúng ta sẽ đi qua 5 nội dung lớn: Lịch sử hình thành AI Tạo sinh, Cách đào tạo Mini-GPT từ đầu, Bí mật để AI "sáng tạo" (Sampling), Cách tối ưu hóa với Lô-ra (LoRA), và Tương lai của LLM (RAG, Đa phương thức). Rất dài và thú vị!
+
+Slide 3: Trí tuệ Nhân tạo Tạo sinh là gì?
+Người 1: Trước giờ ta học AI Phân Loại (Nhận diện mặt người, lọc thư rác). Giờ là lúc AI TỰ TẠO RA nội dung mới! Bài văn mới, bức tranh mới, bài nhạc mới!
+Người 2: Làm sao nó tạo ra cái mới được ạ? Nó có sáng tạo thực sự không?
+Người 1: Nó nén toàn bộ Dữ liệu Con người thành các Khuôn mẫu Thống kê ẩn (Latent Space). Rồi nó thực hiện Phép Lấy Mẫu (Sampling) từ không gian đó. Nên thực chất nó là Toán học Sáng tạo!
+
+Slide 4: Sự kết hợp giữa AI và Nghệ thuật
+Người 1: Cú sốc lớn nhất là Mít-giơ-ni (Midjourney). Nhập một dòng chữ (Prompt Engineering), AI vẽ ra một bức tranh sơn dầu đẹp rợn người! AI không cướp đi nghệ thuật, nó tháo tung xiềng xích của người họa sĩ, biến Ngôn ngữ thành Bút vẽ quyền năng nhất.
+
+Slide 5: Sơ lược về lịch sử tạo trình tự (Sequence Generation)
+Người 1: Chuyện này không mới. Năm 2013 Alex Graves đã dùng mạng RNN cho máy bắt chước chữ viết tay. Nhưng Bước Ngoặt vĩ đại là 2018. OpenAI ráp Transformer + Dữ liệu khổng lồ Không Gán Nhãn, đẻ ra Gờ-Pê-Tê (GPT) thế hệ 1! 
+
+Slide 6: Sự phát triển từ GPT-1 đến GPT-3
+Người 1: Gờ-Pê-Tê 1 (117 triệu tham số) muốn dùng thì phải Fine-tune. Gờ-Pê-Tê 2 (1 tỷ rưỡi tham số) phát hiện khả năng kỳ lạ: Phiu-sót linh-ninh (Few-shot learning), đưa 3 ví dụ là nó tự làm được! Đỉnh cao Gờ-Pê-Tê 3 (175 Tỷ tham số), Không cần ví dụ nào (Zero-shot), nó tự hiểu lệnh!
+
+Slide 7: Sự bùng nổ của Large Language Models (LLMs)
+Người 1: Bắt đầu từ đây, cuộc đua Kích thước (Scale-up) nổ ra. Data tăng từ chục Gigabyte lên hàng ngàn Terabyte. Tham số từ trăm triệu phình lên hàng Trăm Tỷ, Thậm chí Nghìn Tỷ (Trillion). Các E-L-E-M (LLMs) siêu to khổng lồ thống trị thế giới.
+
+Slide 8: Dữ liệu đào tạo: Tập C4 và Tokenization
+Người 1: Giờ ta tập tành tự build một con Mini-GPT nghiệm thu nhé. Ta tải bộ dữ liệu Xi-Pho (C4) do Google cào từ toàn bộ Internet về. Cắt chữ bằng Sen-tơn-Pít (SentencePiece).
+Người 2: Để phân biệt trang web A và bài báo B, ta làm sao thầy?
+Người 1: Gắn một mã thông báo dán nhãn Đặc biệt gọi là Én-Ọp-Tếch (<|endoftext|>) vào giữa để ngắt.
+
+Slide 9: Xây dựng Pipeline dữ liệu
+Người 1: Quá trình xử lý dữ liệu ống nước. Dùng Tê-Ép Đát-Ta (tf.data) nhồi dữ liệu song song. Chú ý dòng code cuối: Đầu vào là `x[:-1]`, Label là `x[1:]`. Luôn là trò dịch đi 1 chữ để Bắt AI đoán tương lai!
+
+Slide 10: Kiến trúc Transformer Decoder-only
+Người 1: Khác với Dịch máy dùng cả 2 phần, Mô hình Gờ-Pê-Tê (GPT) vứt bỏ En-cốt-đơ (Encoder). Nó CHỈ CÓ Đi-cốt-đơ (Decoder-only)!
+Người 2: Tức là nó bỏ C-rốt A-ten-xần (Cross-Attention) đi, chỉ giữ lại Xeo A-ten-xần (Self-Attention) che Tương lai đúng không ạ?
+Người 1: Hoàn toàn chính xác. Hỏi và Trả lời nối thành một chuỗi duy nhất!
+
+Slide 11: Kỹ thuật Nhúng nghịch đảo (Reversible Embedding)
+Người 1: Tối ưu kiến trúc. Mạng có 2 lớp tốn diện tích nhất: Lớp Nhúng Từ đầu vào (Embedding) và Lớp Xuất từ Đầu ra. Cả 2 đều dài bằng Cuốn Từ Điển.
+Người 2: Nếu Cuốn từ điển lớn thì ma trận đó sập RAM luôn!
+Người 1: Kỹ thuật nhúng nghịch đảo: Gắn hai lớp này chung một ma trận trọng số. Tiết kiệm hàng tỷ Tham số vô ích!
+
+Slide 12: Learning Rate Warmup trong Huấn luyện
+Người 1: Bắt đầu bấm Train. Nếu để Tốc độ Học (Learning Rate) to ngay từ đầu, Mô hình sẽ bị sốc và Phát nổ Đạo hàm (Exploding Gradient)! Ta phải Uôm-Úp (Warmup). Khởi đầu bằng số 0, sau đó Tăng Dần Dần lên sau vài ngàn bước để Mạng "Làm Nóng" êm ái!
+
+Slide 13: Giải mã Sáng tạo & Vấn đề biên dịch (Compilation)
+Người 1: Quá trình Chạy thật sinh văn bản (Inference). Mỗi lần máy tính nhả ra 1 chữ, Chiều dài mảng Input lại To ra. 
+Người 2: Việc mảng cứ Dài ra liên tục sẽ làm GPU biên dịch lại đồ thị tính toán từ đầu (re-compile) gây treo máy ạ?
+Người 1: Đúng. Giải pháp là Đệm Pát-đinh (Padding) cứng. Khóa chặt chiều dài Input từ đầu tới cuối là 1000 chữ. Thế là GPU chạy vù vù!
+
+Slide 14: Tối ưu Giải mã với Key-Value Caching
+Người 1: Tối ưu hóa cực độ: Ka-Vê Cát-xinh (KV Caching).
+Người 2: Nó là gì vậy thầy?
+Người 1: Trong Self-Attention, các chữ ở Quá Khứ KHÔNG HỀ THAY ĐỔI. Việc tính toán lại Q, K, V cho các chữ đó ở mỗi bước nhảy là cực kỳ Ngu ngốc! Ta Đóng Băng các K và V ở quá khứ lại vào Bộ nhớ đệm. Chữ Mới ra chỉ cần tính Q rồi Đập vào Bộ nhớ đệm đó. Tốc độ phi mã hàng ngàn lần!
+
+Slide 15: Làm sao AI có tính "Sáng tạo"?
+Người 1: Giờ là câu hỏi lớn: Sao AI nói chuyện có vẻ "Sáng tạo" không bị lặp lại máy móc?
+Người 2: Bản chất Đầu ra là Xác suất Softmax. Nếu luôn bốc từ có Xác suất To Nhất (Greedy Search) thì nó sẽ lặp đi lặp lại văn bản y hệt nhau đúng không ạ?
+Người 1: Rất chuẩn. Giải pháp: Thêm Gacha (Sự ngẫu nhiên). Bốc bừa (Sampling) trong rổ các Từ có khả năng ra cao nhất!
+
+Slide 16: Kỹ thuật Nhiệt độ (Temperature Sampling)
+Người 1: Siêu Tham Số "Nhiệt Độ" (Temperature). 
+Người 2: Em thấy trên web ChatGPT có thanh kéo Temperature này. Nó hoạt động sao thầy?
+Người 1: Hạ nhiệt độ xuống (0.2): AI trở nên an toàn, rụt rè, bám sát sách giáo khoa. Tăng nhiệt độ lên (1.5): AI phá cách, làm thơ cực bay bổng, thi thoảng hơi bị ngáo! 
+
+Slide 17: Kỹ thuật Top-K và Top-p
+Người 1: Để kiểm soát Gacha, ta xài Top-Ca (Top-K) hoặc Top-P. Top-Ca là chỉ Cắt đúng 10 từ đứng đầu để lắc xí ngầu. Top-P (Hay còn gọi là Nu-cờ-li-ợt / Nucleus) thì gộp các từ đứng đầu sao cho Tổng Xác Xuất bằng 90% thì dừng. Xài Top-P thông minh hơn vì độ dài rổ từ vựng tự động co giãn!
+
+Slide 18: Sử dụng LLM đã được đào tạo trước (Pre-trained LLM)
+Người 1: Build xong mini-GPT. Giờ ta ra giang hồ. Ta lấy mấy con mã nguồn mở khổng lồ như La-ma (Llama) hoặc Ghem-ma (Gemma) của Google xài. Bản Gốc (Base Model) của nó giống y hệt Tính năng Gợi ý Bàn phím điện thoại: Nó chỉ biết tự động nối chữ cho xuôi tai thôi, không hề biết "Tuân Lệnh" em đâu!
+
+Slide 19: Hướng dẫn tinh chỉnh (Instruction Fine-Tuning)
+Người 1: Để Base Model thành Ô-sin biết Dạ vâng, Ta phải tinh chỉnh (Instruction Fine-Tuning). Tạo bộ dữ liệu Hội thoại. Gắn nhãn Đánh dấu User và AI (Dấu ngoặc nhọn nhỏ). Ép AI đọc lệnh User xong phải sủa ra Câu Trả lời chuẩn mực.
+
+Slide 20: Mã nguồn: Fine-Tuning CausalLM
+Người 1: Code Keras Hub huấn luyện cực nhàn. Cầm Ghem-ma Mô-đồ, gọi Hàm Compile và Fit 1 vòng (Epoch). Thế là AI biết dạ vâng!
+
+Slide 21: Vấn đề VRAM của Fine-Tuning LLM
+Người 1: Ác mộng ập đến. Fine-tune mô hình 3 tỷ tham số cần RAM GPU lên tới 16GB? KHÔNG! Nó cần RAM gấp BỐN LẦN số đó!
+Người 2: Ui, vì thuật toán Tối ưu A-đam (Adam Optimizer) bắt lưu lại Vận tốc (Velocity) và Xung lượng (Momentum) của đạo hàm đúng không ạ? Tràn V-RAM chết chắc!
+
+Slide 22: Giải pháp Đại số Tuyến tính: LoRA (Low-Rank Adaptation)
+Người 1: Kỹ sư nghĩ ra phép thuật Đại Số Tuyến Tính: Lô-Ra (LoRA - Low-Rank Adaptation). Đóng Băng hoàn toàn Bộ Não Gốc $W_0$. Xong gắn cái Cục U (Ma trận $\Delta W$) vào. Cái Cục $\Delta W$ đó được Nén Lại bằng Phân rã Hạng Thấp thành 2 thanh Ma trận A và B mỏng dính! 
+
+Slide 23: Sự hiệu quả đáng kinh ngạc của LoRA
+Người 1: Tối ưu không tưởng! Thay vì Update 1 TỶ tham số (3.7 GB RAM), Lô-ra nén lại chỉ Update 5 MEGABYTE (Năm mê)! Tiết kiệm V-RAM tới mức Card đồ họa nhà nghèo chơi game cũng Fine-tune được siêu AI rớt hàm!
+
+Slide 24: Học tập tăng cường từ Phản hồi Con người (RLHF)
+Người 1: Đỉnh cao nhất của ChatGPT: A-E-O-Hát-Ép (RLHF - Học tăng cường qua phản hồi con người). Fine-tune bằng tay thì dữ liệu quá ít. Ta bắt AI sinh ra 5 câu trả lời, mướn Con Người Đánh Giá chấm điểm (Câu này 1 điểm, Câu kia 10 điểm). Sau đó Train một con AI Phụ gọi là Mô Hình Phần Thưởng (Reward Model)!
+
+Slide 25: Quy trình hoạt động của RLHF
+Người 1: Có Mô hình Phần Thưởng rồi. Gắn vào con LLM chính (LLM đóng vai Agent học tăng cường). Lâu lâu LLM nói bậy, Mô hình Phần thưởng tát cho 1 cái (Phạt). LLM nói dạ vâng ngoan ngoãn, được thưởng điểm! Vậy là AI học được Đạo Đức của Con người một cách tự động!
+
+Slide 26: Tiến hóa thành Mô hình Đa phương thức (Multimodal)
+Người 1: Giai đoạn tiếp theo: Tương lai! L-L-M chỉ biết Text. Ta muốn nó Nhìn Ảnh? Rất dễ, gắn con mắt (Vision Encoder ViT) vào. Cắt ảnh thành các Bản Vá (Patches). Ép ảnh thành Chuỗi Véc-tơ Xốp Tố-Cân (Soft Tokens). Tống nó chung vào ống nước Transformer để trộn với Text. Ta có Ghem-ma V-L-M (VLM)!
+
+Slide 27: Thực nghiệm với Mô hình Đa phương thức
+Người 1: Lúc này Mạng Đa phương thức cực bá đạo. Ném bức ảnh con khỉ cầm súng, hỏi nó đây là gì. Nó xuất Text trả lời "Con khỉ đeo kính". Sự hội tụ của Text và Vision hoàn hảo.
+
+Slide 28: Mô hình Nền tảng (Foundation Models)
+Người 1: Do đó từ Large Language Model lỗi thời rồi. Người ta xài từ Phao-đây-xần Mô-đồ (Foundation Models - Mô hình Nền tảng). Một cục Não Khổng Lồ duy nhất ở giữa Trung tâm. Học Không giám sát toàn bộ Internet. Xong tinh chỉnh chỉa ra hàng ngàn nhánh nhỏ: Làm Toán, Làm Y Học, Làm Code...
+
+Slide 29: Retrieval-Augmented Generation (RAG)
+Người 1: Khuyết điểm lớn nhất của AI hiện tại: Bệnh Ảo Giác (Hallucination). Nó cực kỳ Tự tin bịa chuyện! Và nó mù tịt kiến thức mới ra lò sáng nay. Làm sao chữa bệnh bịa chuyện thưa thầy? 
+Người 2: Rắc (RAG) cứu giá! (Retrieval-Augmented Generation). 
+
+Slide 30: Cơ chế hoạt động của RAG
+Người 1: Hoạt động của Rắc (RAG): Người dùng hỏi. Hệ thống nhảy vào Rương Tài Liệu Của Công Ty lấy đúng Tờ Giấy Chứa Đáp Án ra. Nhét Tờ giấy đó CÙNG Với Câu Hỏi của người dùng Bắt LLM đọc. "Ê LLM, mày phải đọc tờ giấy này mà tóm tắt trả lời, cấm bịa!". Chữa bệnh tuyệt đối!
+
+Slide 31: Các mô hình Lý luận (Reasoning Models)
+Người 1: LLM rất dốt Toán. Kêu tính nhẩm 4 chữ số là đứt cước. Kỹ thuật Chuỗi Suy Nghĩ Chên Ọp Thót (Chain-of-Thought - CoT): Lệnh cho nó "Bước 1 làm gì, bước 2 làm gì". 
+Người 2: Có phải mô hình Điếp-Xích E-rờ Một (DeepSeek r1) và O-Một (o1) sinh ra là để tự động viết "Suy nghĩ ẩn" trong đầu trước khi nói không thầy? 
+Người 1: Hoàn toàn chính xác! 
+
+Slide 32: Tương lai của LLM
+Người 1: Tương lai đen tối tiềm ẩn: Cạn kiệt Dữ liệu (Data Exhaustion). Dữ liệu Rác ngập tràn. Mạng AI đời sau lôi rác AI đời trước đi Train lại, dẫn tới Sụp đổ Mô hình (Model Collapse). Cuộc chiến bây giờ không phải Model to, mà là Dữ liệu Sạch và Chất Lượng!
+
+Slide 33: Tổng kết Chương 16
+Người 1: Tuyệt vời. Lịch sử AI Tạo Sinh đã khép lại Khóa Học Deep Learning. Các em đã đi từ một Nơ-ron Đơn giản nhất, qua Mạng Dày Đặc (Dense), Thị Giác Máy Tính (CNN), Dự báo Chuỗi (RNN, LSTM) và Đỉnh Cao Nhân Loại (Transformer, LLM, RAG, RLHF).
+Người 2: Một hành trình không thể nào quên. Cảm ơn thầy vì những bài giảng rực rỡ này!
+Người 1: Chúc các em bước ra thế giới, sử dụng Trí Tuệ Nhân Tạo để tạo nên kỷ nguyên huy hoàng của chính mình. Tạm biệt!

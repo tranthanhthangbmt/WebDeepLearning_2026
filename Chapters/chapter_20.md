@@ -1056,4 +1056,9 @@ và Keras Hub có thể được tìm thấy tại <https://github.com/keras-tea
   <iframe src="TaiLieu/slideDL/Chapter20.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
+
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_20/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
 <!-- tabs:end -->

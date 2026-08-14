@@ -1,0 +1,129 @@
+Slide 1: Quy trình Phổ quát của Học máy (The Universal Workflow of Machine Learning)
+Người 1: Chào các em. Từ chương một đến chương năm, chúng ta tập trung toàn lực vào cách viết mã, cách xây dựng các lớp Nơ-ron và giải quyết hàm đạo hàm. Nhưng ở môi trường doanh nghiệp thực tế, viết mã chỉ chiếm chưa tới hai mươi phần trăm công sức.
+Người 2: Hôm nay mình sẽ học về tám mươi phần trăm khối lượng công việc còn lại phải không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Chương sáu có tiêu đề là Quy trình phổ quát của Học máy. Ta sẽ đi qua ba giai đoạn khổng lồ: Đầu tiên là Định nghĩa bài toán kinh doanh. Thứ hai là Phát triển mô hình kỹ thuật. Và thứ ba là Triển khai đưa ứng dụng lên phục vụ khách hàng.
+Người 2: Đây giống như quy trình vòng đời phát triển phần mềm trong môn Kỹ nghệ phần mềm, nhưng dành riêng cho Trí tuệ nhân tạo!
+
+Slide 3: Vượt ra ngoài Tập dữ liệu có sẵn
+Người 1: Trong các chương trước, khi giải bài toán, các em luôn có sẵn những bộ dữ liệu chuẩn chỉnh sạch sẽ, ví dụ thư viện Keras gạch dưới Data set để tải về dùng ngay.
+Người 2: Thực tế ở công ty thì không bao giờ có sẵn file dữ liệu hoàn hảo như vậy đúng không ạ?
+Người 1: Chính xác. Ở thực tế, khởi điểm của em không phải là Dữ liệu, mà khởi điểm là một Vấn đề kinh doanh (Business Problem) cần giải quyết.
+
+Slide 4: 3 Giai đoạn của Học máy (MLOps Workflow)
+Người 1: Quy trình hoàn chỉnh thường được gọi là Em Eo Ốp (MLOps). Gồm ba phần. Phần một: Định nghĩa bài toán, chốt phương án thu thập và gán nhãn dữ liệu. Phần hai: Huấn luyện, Tinh chỉnh siêu tham số và chống Quá khớp.
+Người 2: Phần ba là Triển khai, đưa mô hình lên Điện toán đám mây Cloud, hoặc nhúng thẳng vào điện thoại. Sau đó là Giám sát xem mô hình có bị suy giảm chất lượng theo thời gian không để tiếp tục vòng lặp huấn luyện lại.
+
+Slide 5: Khung bài toán (Framing the problem) - Phần 1
+Người 1: Ở giai đoạn một, các em phải ngồi với ban giám đốc để thống nhất Khung bài toán. Câu hỏi đầu tiên: Dữ liệu đầu vào lấy từ đâu, và Mục tiêu đầu ra là gì?
+Người 2: Nếu giám đốc bảo "Hãy làm công cụ nhận diện giọng nói", nhưng công ty lại không có file ghi âm nào và cũng không có người gõ văn bản nhãn, thì dự án đó phá sản từ trên giấy đúng không ạ?
+Người 1: Đúng vậy. Không có Dữ liệu cặp Đầu vào - Đầu ra thì không có Học sâu.
+
+Slide 6: Khung bài toán (Framing the problem) - Phần 2
+Người 1: Tiếp theo, phải xem xét các giới hạn phi kỹ thuật. Công cụ của em có bị cấm gửi dữ liệu người dùng lên mạng vì luật bảo mật thông tin mã hóa đầu cuối không?
+Người 2: Nếu có, thì ứng dụng Trí tuệ nhân tạo của em bắt buộc phải nhỏ gọn để chạy trực tiếp trên bộ nhớ yếu ớt của điện thoại cá nhân (On-device), chứ không được gửi lệnh Gọi API lên đám mây máy chủ mạng. Mọi thứ trở nên rất khác biệt.
+
+Slide 7: Các Ứng dụng Thực tế - Phần 1
+Người 1: Ta thử áp dụng lý thuyết để phân loại một số dự án thật. Tính năng gõ chữ "đám cưới" để tìm ảnh trong điện thoại thuộc bài toán gì?
+Người 2: Điện thoại có vô vàn danh mục, và một tấm ảnh vừa có thể là đám cưới, vừa có thể là du lịch. Nên nó là bài toán Phân loại đa lớp, đa nhãn (Multiclass, multilabel) ạ.
+
+Slide 8: Các Ứng dụng Thực tế - Phần 2
+Người 1: Còn Hệ thống lọc bình luận độc hại chống văng tục trên Diễn đàn?
+Người 2: Bài này thì chỉ có hai cửa: Độc hại, hoặc An toàn. Nên nó đích thị là Phân loại Nhị phân (Binary Classification).
+Người 1: Hệ thống Tính tiền dự đoán Tỷ lệ phần trăm Click vào quảng cáo là Hồi quy vô hướng (Scalar regression) vì nó trả ra một con số liên tục. Các em làm rất tốt.
+
+Slide 9: Lưu ý về Đạo đức AI
+Người 1: Nhưng làm Kỹ sư AI, các em phải giữ vững lằn ranh Đạo đức. Nếu công ty yêu cầu làm ứng dụng "Chấm điểm đạo đức một người thông qua ảnh khuôn mặt của họ", các em có làm không?
+Người 2: Cảm giác rất phân biệt chủng tộc ạ. Nếu người gán nhãn dữ liệu có định kiến tiêu cực với màu da hay hình xăm, mô hình sẽ học thuộc định kiến đó và từ chối người dùng vô tội. Trí tuệ nhân tạo lúc này sẽ trở thành công cụ hợp pháp hóa sự phân biệt đối xử của con người.
+
+Slide 10: Thu thập Dữ liệu (Collecting a dataset)
+Người 1: Rất tốt. Bỏ qua vấn đề đạo đức, ta đến phần cốt tủy của công ty: Thu thập Dữ liệu. Thuật toán tối tân không bù đắp được dữ liệu thưa thớt. Đây là khâu tốn tiền, tốn sức và mệt mỏi nhất.
+Người 2: Tự gán nhãn nội bộ (In-house) thì lâu và tốn nhân sự. Còn đi thuê ngoài, ví dụ dùng Amazon Cơ học (Mechanical Turk) thì rẻ nhưng dữ liệu rác, nhãn sai sẽ rất nhiều thưa thầy.
+
+Slide 11: Cơ sở hạ tầng Gán nhãn (Annotation Infrastructure)
+Người 1: Vì thế, xây dựng phần mềm Công cụ nội bộ để dán nhãn là cực kỳ đáng giá. Thay vì bắt nhân viên gõ tọa độ thủ công, một phần mềm có giao diện kéo thả mượt mà để vẽ Khung chữ nhật bao quanh vật thể sẽ tăng năng suất lên hàng trăm lần.
+Người 2: Chuyên môn của người gán nhãn cũng quyết định tất cả. Nhãn phân biệt chó mèo thì ai cũng làm được, nhưng gán nhãn tế bào ung thư phổi thì bắt buộc phải là bác sĩ chuyên khoa đúng không thầy?
+
+Slide 12: Cảnh báo: Dữ liệu không đại diện (Nonrepresentative data)
+Người 1: Lưu ý tử huyệt: Dữ liệu tập Huấn luyện phải y hệt như Dữ liệu thực tế lúc ứng dụng chạy.
+Người 2: Em từng thấy ứng dụng Dịch ảnh văn bản. Lúc huấn luyện, Kỹ sư toàn dùng ảnh văn bản scan PDF trắng đen rõ nét. Nhưng lúc đưa cho người dùng, họ dùng Camera điện thoại chụp ngoài đường, rung tay, lóa sáng, làm ứng dụng không đọc được chữ nào!
+
+Slide 13: Thiên kiến Lấy mẫu (Sampling Bias)
+Người 1: Rất hay. Hoặc trường hợp này: Báo Chicago Tribune năm một chín bốn tám chạy tít trang nhất tuyên bố ứng viên Dewey đắc cử Tổng thống Mỹ vì họ thăm dò bằng cách gọi Điện thoại.
+Người 2: Oa, em hiểu rồi! Thời điểm đó, chỉ người giàu mới có tiền lắp điện thoại ở nhà, và người giàu thì toàn bầu cho Dewey. Sự thật là ứng viên Truman mới đắc cử! Đây là thảm họa do Dữ liệu Lấy mẫu không đại diện cho toàn dân.
+
+Slide 14: Sự trôi dạt Khái niệm (Concept Drift)
+Người 1: Một vấn đề khác. Mô hình AI cũng bị "lão hóa" theo thời gian, gọi là Hiện tượng Trôi dạt khái niệm (Concept Drift).
+Người 2: Giống như gu thời trang vậy, cách đây năm năm áo chấm bi là mốt, bây giờ không ai mua. Nếu AI vẫn dùng dữ liệu mười năm trước để đưa ra Gợi ý bán hàng thì doanh thu sẽ chạm đáy! Giải pháp là phải huấn luyện mô hình liên tục hàng tuần phải không ạ?
+Người 1: Chính xác.
+
+Slide 15: Hiểu dữ liệu của bạn (Understanding your data)
+Người 1: Về kỹ thuật, đừng bao giờ quăng cục dữ liệu vào huấn luyện khi chưa hiểu nó. Hãy in biểu đồ (Histogram). Xem tỷ lệ các lớp có bị mất cân bằng (Imbalanced) không.
+Người 2: Ở bài toán Dự đoán Gian lận thẻ tín dụng, tới chín mươi chín phần trăm giao dịch là bình thường, chỉ có một phần trăm là tội phạm! Sự chênh lệch khổng lồ này chắc chắn sẽ làm khó quá trình hội tụ đạo hàm thưa thầy.
+
+Slide 16: Lựa chọn Độ đo Thành công (Metrics) - Balanced Data
+Người 1: Nếu dữ liệu cân bằng (năm mươi năm mươi), ta dùng số đo Độ chính xác Ác-cu-ra-xi (Accuracy) truyền thống. Công thức là: Tê Pê cộng Tê En, chia cho Tổng số trường hợp.
+Người 2: Tê Pê (True Positive) là Dự đoán có bệnh chuẩn. Tê En (True Negative) là Dự đoán không bệnh chuẩn. Lấy số lượng trả lời đúng chia tổng số, rất logic.
+
+Slide 17: Lựa chọn Độ đo Thành công (Metrics) - Imbalanced Data
+Người 1: Nhưng nếu dữ liệu bị lệch chín mươi chín phần trăm và một phần trăm, thì mô hình chỉ cần nhắm mắt nói CÓ ở mọi trường hợp cũng đạt Accuracy là chín mươi chín phần trăm. Ta phải dùng Pre-xi-zần (Precision) và Re-côn (Recall).
+Người 2: Pre-xi-zần là Độ chuẩn xác: Trong số những người bị Máy bắt tống vào tù, thì có bao nhiêu phần trăm là tội phạm thật?
+Người 1: Tốt. Còn Re-côn là Độ bao phủ: Trong TỔNG SỐ tội phạm ngoài vòng pháp luật, Máy đã quét và tóm cổ được bao nhiêu phần trăm? Tối ưu hai thông số này là một nghệ thuật đánh đổi.
+
+Slide 18: Chuẩn bị Dữ liệu (Data Preparation)
+Người 1: Sang giai đoạn hai: Phát triển mô hình. Mọi dữ liệu phải được Véc-tơ hóa thành Tensor số thực. Nếu thang đo lộn xộn, phải Chuẩn hóa (Normalization).
+Người 2: Tức là gọi mảng X trừ đi giá trị trung bình Mean của X, sau đó đem tất cả chia cho độ lệch chuẩn. Lúc đó mọi cột dữ liệu sẽ tụ hội về tọa độ không với tỷ lệ biến thiên xấp xỉ một.
+
+Slide 19: Xử lý Giá trị Khuyết (Handling Missing Values)
+Người 1: Dữ liệu thực tế sẽ có những dòng bị bỏ trống. Nếu là dữ liệu danh mục, hãy tạo hẳn một cột mới tên là Khuyết (Missing). Mô hình sẽ tự tìm cách khai thác sự vô tâm của người bỏ trống ô.
+Người 2: Còn dữ liệu dạng số thì ta thay thế ô trống bằng giá trị Trung bình hoặc Trung vị của cột đó để không làm xáo trộn phân phối thống kê ạ.
+
+Slide 20: Chọn Giao thức Đánh giá (Evaluation Protocol)
+Người 1: Giống như chương trước ta đã học, nếu em có thừa thãi hàng triệu điểm dữ liệu, dùng Hold-out Validation.
+Người 2: Nếu dữ liệu trung bình thì dùng Thẩm định chéo Ca lần (K-Fold Cross-Validation). Còn nếu dữ liệu hiếm cực độ, ta chạy Ca lần nhưng lặp lại quy trình đó vô số lượt với các hạt giống ngẫu nhiên trộn khác nhau.
+
+Slide 21: Đánh bại Đường cơ sở (Beating a baseline)
+Người 1: Bí quyết trong nghề: Trước khi xây kiến trúc Học sâu, hãy dùng thuật toán Thống kê cổ điển để giải thử (ví dụ Random Forest), tạo ra một điểm Đường cơ sở (Baseline).
+Người 2: Nếu cái Mạng nơ-ron hàng triệu tham số huấn luyện hai ngày của em còn dự đoán kém hơn cả thuật toán Logistic Regression cơ bản, thì chứng tỏ dữ liệu của em vốn chẳng có quy luật ẩn gì bên trong, nó hoàn toàn ngẫu nhiên! Phải quay về bước một ngay lập tức.
+
+Slide 22: Bảng 6.1: Chọn Activation và Loss function
+Người 1: Đây là bảng cứu mạng. Ta không tối ưu trực tiếp Độ đo Accuracy vì nó không thể tính đạo hàm. Ta tối ưu Gián tiếp qua hàm Mất mát (Loss).
+Người 2: Bài toán Nhị phân thì kích hoạt Sigmoid, loss Bai-nơ-ri cờ-rót én-tờ-rô-pi. Đa lớp một nhãn thì kích hoạt Sốp-mác, loss Ca-tê-gô-ri-cồ. Đa lớp nhiều nhãn thì quay lại dùng Sigmoid ạ.
+
+Slide 23: Mở rộng Quy mô (Scaling up: Overfitting Model)
+Người 1: Để tìm đường biên tốt nhất, em phải biết Quá khớp nằm ở đâu. Khởi đầu, hãy làm mô hình to ra bằng cách Nhồi thêm lớp, Tăng Nơ-ron, Tăng vòng lặp Epochs.
+Người 2: Ép mô hình học thuộc lòng, cho đến khi Validation Loss cắm đầu đi xuống rồi giật tung ngược lên lại. Thế là em đã định vị được ranh giới sức mạnh tối đa của hệ thống!
+
+Slide 24: Tinh chỉnh và Chuẩn hóa (Regularizing & Tuning)
+Người 1: Khi đã biết giới hạn, em tiến hành Tinh chỉnh. Bật hệ thống ngắt Nơ-ron Rốp-ao, bổ sung thuật toán phạt trọng số Lờ hai, thay đổi cấu hình Tốc độ học.
+Người 2: Nhưng thầy có dặn, nếu ta nhìn chằm chằm vào biểu đồ Validation để sửa tới sửa lui quá nhiều lần, mạng sẽ vô tình ghi nhớ kết quả của tập Validation. Rò rỉ thông tin đánh giá (Information Leakage) xảy ra.
+
+Slide 25: Quản trị Kỳ vọng với Stakeholders
+Người 1: Tuyệt vời. Sang giai đoạn ba: Triển khai. Đây là lúc em nói chuyện với cổ đông. Cổ đông luôn ảo tưởng AI là thần thánh với kết quả hoàn hảo.
+Người 2: Em sẽ nói: Không có độ chính xác một trăm phần trăm. Em sẽ thiết lập kỳ vọng: Mỗi ngày máy chặn đúng hai trăm sáu mươi sáu giao dịch lừa đảo, chặn nhầm hai trăm giao dịch thật khiến bộ phận chăm sóc khách hàng phải can thiệp thủ công, và vẫn bị lọt lưới mười bốn tên lừa đảo. Rất rõ ràng thưa thầy.
+
+Slide 26: Xuất mô hình (Exporting an inference model)
+Người 1: Khi làm thành ứng dụng, ta không lưu mạng dưới dạng code Python vì tốc độ chạy bằng Python rất chậm. Ta xuất mô hình ra thành dạng Đồ thị máy (Computation Graph) như dạng Ti-Ép xếp mô-đô (tf_saved_model) hoặc tệp On-níc (ONNX).
+Người 2: Sau đó, đội ngũ kỹ sư Backend sẽ dùng ngôn ngữ C Cộng cộng (C++) cực nhanh để nạp Đồ thị đó lên máy chủ web phục vụ truy vấn của người dùng.
+
+Slide 27: Các Môi trường Triển khai (Deployment Environments)
+Người 1: Có ba môi trường triển khai phổ biến. Một là Trên Cloud (Đám mây), gửi request lên Máy chủ GPU giải quyết. Hai là Trên Thiết bị (On-device) cho di động bằng TensorFlow Lite, không cần mạng Internet để chạy.
+Người 2: Cách ba là chạy trực tiếp trên Trình duyệt web máy tính người dùng bằng JavaScript (TensorFlow.js). Cách này công ty sẽ tiết kiệm được khổng lồ tiền thuê máy chủ vì bắt máy tính của khách hàng tự tính toán đúng không ạ?
+
+Slide 28: Tối ưu hóa Suy luận (Inference Optimization)
+Người 1: Trí tuệ của khách hàng luôn là thứ miễn phí. Nhưng để chạy được trên điện thoại, mô hình phải nhỏ gọn. Ta dùng Lượng tử hóa trọng số (Weight Quantization). Ép các số thực ba mươi hai bit khổng lồ thành các số nguyên int-tơ-giơ tám bit.
+Người 2: Oa, như vậy kích thước mô hình giảm ngay bốn lần, tải qua 3G cực nhanh, RAM tiêu tốn cực ít, mà độ chính xác gần như không suy suyển. Thuật toán toán học thật vi diệu.
+
+Slide 29: Giám sát trên Môi trường Thực (Monitoring in the wild)
+Người 1: Sản phẩm đã Go-live. Đừng nghĩ mọi thứ đã xong. Hiệu suất của AI sẽ tụt dốc từng ngày. Ta phải chạy thử nghiệm A/B. Đẩy ứng dụng mới cho năm mươi phần trăm lượng người dùng, giữ ứng dụng cũ ở năm mươi phần trăm còn lại, sau đó so sánh doanh thu.
+Người 2: Đồng thời, nút "Báo cáo lỗi" từ người dùng chính là phao cứu sinh lớn nhất. Nó cung cấp cho em dữ liệu để biết mô hình đang dở ở chỗ nào.
+
+Slide 30: Bảo trì và Cập nhật (Maintaining your model)
+Người 1: Các mẫu mà người dùng báo cáo sai chính là những mẫu Ngoại lai hiếm gặp. Ưu tiên thuê người gán nhãn lại những mẫu đó. Sau một tháng, gộp dữ liệu cũ và mẫu hỏng đó lại, ấn nút Huấn luyện tạo ra Phiên bản hai chấm không.
+Người 2: Đó là vòng lặp vô tận của Vòng đời phần mềm Trí tuệ nhân tạo (MLOps) thưa thầy. Một guồng máy khổng lồ không ngừng chạy.
+
+Slide 31: Tổng kết Chương 6
+Người 1: Khép lại chương. Học máy bắt đầu từ hiểu Bài toán Kinh doanh và Sự đánh đổi. Kỹ năng lớn nhất không phải viết mạng Nơ-ron mười lớp, mà là kỹ năng thu thập và dán nhãn dữ liệu chuẩn xác nhất có thể.
+Người 2: Mọi quy trình đều trải qua Khởi tạo cơ sở, Thúc ép Quá khớp, Tinh chỉnh, Cuối cùng là nén thành gói On-níc và triển khai theo dõi. Em cảm ơn thầy, đây là một chương vô cùng thực tế và hữu ích trước khi đi làm.
+Người 1: Cảm ơn các em. Hẹn gặp lại trong bài giảng tiếp theo. Chào các em!

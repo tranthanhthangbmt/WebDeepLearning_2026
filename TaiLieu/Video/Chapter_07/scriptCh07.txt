@@ -1,0 +1,149 @@
+Slide 1: Lập trình Chuyên sâu với Keras (A Deep Dive on Keras)
+Người 1: Chào các em. Hôm nay chúng ta học Chương bảy: Lập trình Chuyên sâu với Keras. Ở các chương trước, các em mới chỉ dùng Keras ở bề mặt cơ bản như gọi hàm xếp lớp tuần tự Sequential.
+Người 2: Tức là Keras còn nhiều bí mật lập trình đẳng cấp hơn ẩn giấu bên dưới để xử lý các thuật toán mạng Nơ-ron phức tạp phải không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Nội dung chương có năm phần. Phần đầu ta tìm hiểu triết lý thiết kế của Keras. Tiếp theo là ba phương pháp xây dựng mô hình. Phần ba là kỹ thuật tùy biến sâu vòng lặp. Và cuối cùng là tự động hóa với Callbacks, cũng như theo dõi đồ thị trực quan qua TensorBoard.
+Người 2: Nhìn cấu trúc thì có vẻ hôm nay chúng ta sẽ làm quen với việc viết mã thủ công thay vì để thư viện tự động làm hết.
+
+Slide 3: Từng bước phơi bày sự phức tạp (Progressive Disclosure)
+Người 1: Triết lý thiết kế cốt lõi của Keras là Từng bước phơi bày sự phức tạp. Tức là Keras cung cấp giao diện vô cùng dễ dãi để người mới nhập môn làm quen trong ba nốt nhạc. Nhưng khi cần, em có thể lột bỏ lớp vỏ ngoài, đào sâu xuống đáy để viết mã cấu trúc cực khó.
+Người 2: Nhìn sơ đồ thì mức độ dễ nhất nằm ở lớp Xê-quen-xô (Sequential), rồi sâu hơn là Fân-sừn-nồ A Pi I (Functional API), và sâu nhất là Mô-đô Sấp-cờ-lát-xinh (Model Subclassing) phải không ạ?
+
+Slide 4: Spectrum of workflows (Phổ quy trình)
+Người 1: Khác với những công cụ áp đặt một con đường duy nhất, Keras cung cấp một Phổ quy trình, đa mô hình. Người mới dùng nó như thư viện thống kê ăn liền. Kỹ sư chuyên gia dùng nó như thư viện Tensor lõi.
+Người 2: Điểm hay nhất là một mô hình viết theo cách dễ nhất vẫn có thể gọi lồng vào bên trong một mô hình viết theo cách khó nhất. Chúng giao tiếp trơn tru không giới hạn rào cản.
+
+Slide 5: Vòng lặp Tiến bộ (The Loop of Progress)
+Người 1: Thêm một điểm nữa, Học máy là môn khoa học thực nghiệm. Để tạo ra đột phá, em cần đi qua Vòng lặp: Lên ý tưởng, Lập trình thử nghiệm, rồi Đánh giá kết quả.
+Người 2: Keras tối ưu hóa trải nghiệm người dùng để cái vòng lặp này quay nhanh nhất có thể. Mình lập trình càng nhanh, càng chạy được nhiều thuật toán test nghiệm trong một ngày.
+
+Slide 6: Phương pháp 1: Sequential API
+Người 1: Ta vào chi tiết Ba phương pháp thiết kế. Cách thứ nhất dễ nhất: Xê-quen-xô A Pi I (Sequential API). Các lớp Nơ-ron được xếp chồng liên tiếp giống hệt như một danh sách mảng trong Python. Lớp này nhả đầu ra nối vào đầu vào lớp kia.
+Người 2: Cách này có giới hạn là gì ạ?
+Người 1: Nó chỉ giải quyết được các bài toán đúng một đầu vào và một đầu ra. Không thể phân nhánh rẽ lối được.
+
+Slide 7: Sequential API: Mã nguồn cơ bản
+Người 1: Cú pháp viết rất quen thuộc. Em gọi lớp Kê-rát chấm Xê-quen-xô, truyền vào một danh sách các khối Đen-x.
+Người 2: Ngoài truyền mảng vào từ đầu, em cũng thấy người ta hay viết lệnh mô-đô chấm ét (model.add) từng lớp một từ trên xuống dưới. Hai cách này hiệu quả hoàn toàn tương đương nhau.
+
+Slide 8: Sequential API: Trọng số (Weights) và Shape
+Người 1: Nhưng điểm yếu của cách viết nối đuôi này là: Khi em vừa gõ lệnh mô-đô chấm ét xong, các Trọng số chưa hề được sinh ra trên RAM máy tính.
+Người 2: Em thấy gõ mô-đô chấm quết (model.weights) trả về mảng rỗng. Tại sao vậy thưa thầy?
+Người 1: Vì mạng nơ-ron không biết dữ liệu đầu vào của em có bao nhiêu phần tử, nên nó không biết kích thước của ma trận đắp-biu là bao nhiêu để tạo.
+
+Slide 9: Sequential API: Khai báo Input Shape trước
+Người 1: Do đó, kỹ thuật chuẩn mực là ngay tại đầu mảng danh sách, em phải chèn thêm đối tượng Kê-rát chấm ín-pút (keras.Input) và khai báo số chiều.
+Người 2: À, lúc này thì mô hình sẽ tự động khởi tạo luôn bộ nhớ. Và ta có thể dùng lệnh mô-đô chấm sum-ma-ri (model.summary) để in ra bảng tóm tắt kiến trúc mạng ngay từ đầu mà không cần chờ chạy huấn luyện! 
+
+Slide 10: Phương pháp 2: Functional API
+Người 1: Sang cách thứ hai: Fân-sừn-nồ A Pi I (Functional API), coi mỗi lớp Mạng nơ-ron như một Hàm toán học. Nó nhận đầu vào là Tensor, trả ra Tensor.
+Người 2: Phương pháp này vẽ ra mạng lưới có rẽ nhánh, có gộp luồng, dạng Đồ thị đa hướng. Đây mới thực sự là lắp ráp khối Lego chuyên nghiệp.
+
+Slide 11: Functional API: Các bước cơ bản
+Người 1: Bước một: Khai báo đối tượng Đầu vào, gọi là In-put. Bước hai: gọi lớp Đen-x và ngay lập tức nhét đối tượng Đầu vào đó vào hai dấu ngoặc đơn ở sau đuôi, giống hệt như gọi Hàm truyền tham số. Lớp đó sẽ nhả ra biến fi-chờ (features).
+Người 2: Bước ba là gọi lớp Đầu ra và nhét biến fi-chờ ở trên vào. Sau cùng, ta gom đối tượng In-put và Out-put thành một cục mô hình bằng Kê-rát chấm Mô-đô. Thật logic!
+
+Slide 12: Functional API: Ví dụ Mạng phân loại vé
+Người 1: Hãy lấy hệ thống phân loại vé Hỗ trợ Khách hàng làm ví dụ Đa luồng. Khách tạo một vé lỗi gồm ba đầu vào: Tiêu đề, Nội dung lỗi, và Thẻ tag.
+Người 2: Mô hình chạy qua lớp trung gian, rồi nhả ra hai nhánh đầu ra. Nhánh một là dự đoán Mức độ ưu tiên để xử lý gấp. Nhánh hai là dự đoán xem phải ném lỗi này cho Phòng ban kỹ thuật nào. Rất thực tế!
+
+Slide 13: Functional API: Cài đặt hệ thống phân loại vé
+Người 1: Về mã nguồn, em tạo ba đối tượng In-put. Sau đó gọi lây-ơ chấm Còn-kết-ti-nết (layers.Concatenate) để nối ba cục Tensor đầu vào lại làm một mảng trộn chung. Cho mảng đó đi qua lớp Đen-x 64 Nơ-ron.
+Người 2: Từ mảng trộn Đen-x đó, em sẽ đẻ ra nhánh một là lớp Ưu tiên với hàm Sigmoid, nhánh hai là lớp Phòng ban với hàm Sốp-mác. Tuyệt cú mèo!
+
+Slide 14: Functional API: Huấn luyện với Multi-Input/Output
+Người 1: Lúc huấn luyện hàm biên dịch Com-pai (compile), em truyền Tên của hai đầu ra vào một biến Tự điển, hay Đích-sần-nơ-ri (Dictionary). Cấu hình Mức độ ưu tiên chạy theo hàm mất mát Em Ét Ê, còn Phòng ban thì chạy theo Ca-tê-gô-ri-cồ cờ-rót én-tờ-rô-pi.
+Người 2: Khi gọi lệnh Phít (fit), em truyền dữ liệu đầu vào cũng bằng Đích-sần-nơ-ri luôn để bảo đảm không bị gắn nhầm thứ tự mảng. Cách quản lý này quá rõ ràng.
+
+Slide 15: Functional API: Luồng dữ liệu và Hình dáng (Shapes)
+Người 1: Đặc quyền cao nhất của kỹ thuật Đồ thị hàm (Functional API) là khả năng trực quan hóa. Em có thể gọi lệnh Pờ-lót mô-đô (plot_model) để tự động xuất ra file ảnh chụp sơ đồ mạng.
+Người 2: Tham số in Shape bằng Tru sẽ vẽ cả kích thước của từng nút. Có cả số Năn (None) đại diện cho kích thước lô ngẫu nhiên. Nếu nhìn vào ảnh mà thấy toán học bị lệch thì ta biết ngay mình bị sai ở khâu nối ống nào.
+
+Slide 16: Functional API: Trích xuất Tính năng (Feature Extraction)
+Người 1: Đặc quyền thứ hai là Trích xuất mạng. Khi đồ thị đã chạy xong, em muốn moi ruột một nút ở giữa, em gọi mô-đô chấm lây-ơ vị trí số i (model.layers). Keras sẽ trích xuất ra một đầu ra ở chính giữa.
+Người 2: Xong em gắn một cái lớp Đen-x mới tinh vào nhánh đứt đó để tạo ra lớp tính toán độ khó của vé. Vậy là từ mô hình hai nhánh, mình độ chế thêm nhánh thứ ba mà không phải đập đi xây lại từ đầu! Thật linh hoạt.
+
+Slide 17: Phương pháp 3: Model Subclassing
+Người 1: Sang cách thứ ba, cũng là cách sâu nhất: Mô-đô Sấp-cờ-lát-xinh (Model Subclassing). Lập trình Hướng đối tượng 100%. Em sẽ viết một Lớp kế thừa từ Kê-rát chấm Mô-đô.
+Người 2: Cách này có gì mạnh mà giới nghiên cứu lại thích dùng ạ?
+Người 1: Vì luồng truyền dữ liệu được viết trong hàm Kôn (call) bằng mã Python thuần. Em có thể viết lệnh lặp for, viết lệnh đệ quy nhúng sâu, bẻ nhánh tùy ý từng li từng tí một.
+
+Slide 18: Model Subclassing: Mã nguồn
+Người 1: Quan sát mã nguồn. Trong hàm khởi tạo in-ít (__init__), ta phải gọi lệnh Super, rồi khai báo bộ nhớ cho các lớp Đen-x.
+Người 2: Và dưới hàm Kôn (call), ta lần lượt kéo dữ liệu đi qua các lớp Đen-x đó. Luồng đi thế nào thì ta viết như ngôn ngữ Python bình thường, xong cuối cùng gọi Rì-tơn (return) ra kết quả. Trông giống hệt cách viết một Hàm truyền thống.
+
+Slide 19: Model Subclassing: Cảnh báo
+Người 1: Ưu điểm tự do luôn đi kèm với điểm yếu. Vì quá trình truyền dữ liệu bị ẩn sâu trong cái khối hộp đen của hàm Kôn, nên mạng bị mất tính cấu trúc đồ thị.
+Người 2: Ý thầy là ta không thể gọi Hàm Pờ-lót mô-đô (plot_model) để vẽ đồ thị mạng được nữa sao ạ?
+Người 1: Chắc chắn rồi. Máy tính không biết bên trong hộp đen đó có bao nhiêu ngã rẽ vòng lặp for. Em phải tự chịu trách nhiệm dò lỗi. Em cũng không thể Trích xuất lớp như phương pháp Functional được.
+
+Slide 20: Tùy biến Keras: Khi các hàm có sẵn là không đủ
+Người 1: Khép lại ba phương pháp, giờ ta tiến vào Kỹ thuật Ghi đè tùy biến vòng lặp (Customizing). Hàm phít (fit) rất tuyệt vời, nhưng làm khoa học thì em luôn cần phát minh ra Mất mát (Loss) hay Thước đo (Metrics) phi truyền thống.
+Người 2: Ví dụ em xây dựng Mạng đối nghịch GAN sinh ảnh từ số không thì không có hàm phít nào hỗ trợ sẵn đúng không thầy? Ta phải tự nhúng tay phá khóa hệ thống?
+
+Slide 21: Tự định nghĩa Hàm Mất mát (Custom Losses)
+Người 1: Để tự định nghĩa hàm Loss, em chỉ cần viết một hàm Python truyền vào I-thực (y_true) và I-dự-đoán (y_pred). Gọi Ti-ép chấm rì-đíu-sờ min của phương trình bình phương sai số.
+Người 2: Khi đã có hàm Toán học đó, mình chỉ việc truyền Tên Hàm vào tham số biên dịch Com-pai là xong. Cách này dễ hiểu quá.
+
+Slide 22: Tự định nghĩa Thước đo (Custom Metrics)
+Người 1: Nhưng Thước đo (Metrics) lại phức tạp hơn, vì nó có Trạng thái (Stateful). Hàm Loss chỉ tính điểm trên một lô tám mẫu, rồi qua lô mới nó tính điểm khác. Còn Metric thì phải cộng dồn điểm số của tất cả các lô chạy qua trong một Epoch, rồi lấy Trung bình cộng.
+Người 2: Vậy bắt buộc ta phải tạo một đối tượng Class kế thừa Kê-rát Mê-trích (keras.metrics.Metric). Phải tự viết hàm update để cộng điểm, hàm result để xuất kết quả, và hàm reset để xóa trắng bộ nhớ khi qua Epoch mới.
+
+Slide 23: Custom Metrics: Cài đặt thực tế (Root Mean Squared Error)
+Người 1: Đoạn mã này xây dựng thước đo Lỗi căn bậc hai trung bình. Trong hàm Khởi tạo in-ít, ta khai báo biến nhớ lưu trữ tổng sai số, và biến nhớ đếm số lượng mẫu đã duyệt qua.
+Người 2: Trong hàm Úp-đết-sờ-tết (update_state), cứ chạy xong một mảng, ta lại lấy giá trị cũ, gọi lệnh chấm ơ-sai-ét (assign_add) cộng thêm giá trị lỗi lô mới vào tổng, tăng biến số mẫu lên. Hàm Rì-dớt (result) chỉ việc gọi Toán học Căn bậc hai của Thương số hai biến đó. Rất chặt chẽ!
+
+Slide 24: Viết lại Vòng lặp Huấn luyện với GradientTape
+Người 1: Điên rồ hơn nữa, ta vứt bỏ luôn hàm phít. Ta sẽ điều khiển Lõi tối ưu của AI: Phép toán Truyền ngược đạo hàm riêng Bác-pờ-rô-pa-gây-xần (Backpropagation).
+Người 2: Công thức Delta đắp-biu bằng trừ Ê-ta nhân cho đạo hàm của Hàm mất mát theo biến Trọng số. Vòng lặp phải mở bằng đối tượng Gradient Tape của cơ sở TensorFlow. 
+
+Slide 25: Custom Training Loop: Mã nguồn GradientTape
+Người 1: Mở hai vòng lặp lồng nhau cho Epoch và lô dữ liệu. Bước một, gọi Tếp Tệp Mở băng ghi (with tf.GradientTape() as tape). Bước hai, cho In-put x đi qua lớp nơ-ron sinh ra mảng kết quả lõi, và tính Loss.
+Người 2: Bước ba là gọi lệnh tệp chấm gra-đi-ần (tape.gradient) để Tua lại băng và lấy ma trận Đạo hàm. Cú chót, ném cái mảng đạo hàm đó cho Hàm tối ưu Ốp-ti-mai-dơ A Đam (Optimizer Adam) để nó cập nhật trừ lùi các trọng số Đắp-biu.
+
+Slide 26: Ghi đè hàm train_step()
+Người 1: Viết tay thì ngầu, nhưng lại không có thanh tiến trình đồ họa hiện lên màn hình khi chạy. Để tích hợp sức mạnh của Gradient Tape vào lại hàm Phít gốc của Keras, ta ghi đè hàm chuyên biệt truyên-gạch-dưới-tép (train_step).
+Người 2: À, lúc này em có thể chèn các ma thuật Toán học lạ lùng vào ruột của quy trình huấn luyện, xong ở bên ngoài gọi mô-đô chấm phít thì hệ thống vẫn nhận và chạy mượt mà như bình thường. Thật vi diệu.
+
+Slide 27: Sức mạnh của Callbacks
+Người 1: Ta sang công cụ cuối cùng: Côn-bách (Callbacks). Vì thuật toán Deep Learning chạy tính bằng ngày. Em không thể dán mắt vào màn hình liên tục. Côn-bách là các chốt chặn móc câu (hook) được cắm vào các thời điểm cố định để máy tự hành động.
+Người 2: Ví dụ cứ chạy xong mỗi lô hoặc xong mỗi Epoch thì Côn-bách lại bật lên kiểm tra xem có cần tắt chương trình đi ngủ không đúng không ạ?
+
+Slide 28: Các Callbacks tích hợp: EarlyStopping & ModelCheckpoint
+Người 1: Hai Côn-bách xài nhiều nhất. Ơ-ly tóp-ping (EarlyStopping): Tự dừng huấn luyện nếu chỉ số Validation dậm chân tại chỗ hai vòng liên tiếp, chặn đứng Quá khớp.
+Người 2: Và Mô-đô chéc-pọi (ModelCheckpoint) dùng để tự động sao lưu bộ Trọng số đang giữ kỷ lục xuống ổ cứng máy tính. Tránh trường hợp đang chạy cúp điện mất sạch dữ liệu. Đây là hai vệ sĩ đắc lực nhất.
+
+Slide 29: Tùy biến Callback (Custom Callback)
+Người 1: Nếu vẫn chưa thỏa mãn, em tự viết Côn-bách bằng cách kế thừa keras.callbacks.Callback. Keras cho em quyền truy cập mọi ngóc ngách thời gian thực: Bắt đầu lô, Kết thúc lô, Bắt đầu Epoch, Kết thúc Epoch...
+Người 2: Thích hợp để in ra màn hình các dòng cảnh báo, hoặc gọi hàm chụp ảnh kết quả của máy sau mỗi tiếng đồng hồ thưa thầy.
+
+Slide 30: Custom Callback: Ví dụ ghi lại Loss theo Batch
+Người 1: Ví dụ ứng dụng nhé. Em tạo biến nhớ mảng trống. Chèn mã vào sự kiện on-bát-én (on_batch_end), cứ dứt một lô là em lại tóm lấy con số hàm Mất mát nhét vào cái mảng nhớ kia.
+Người 2: Chạy xong xuôi, ở sự kiện kết thúc on-truyên-én (on_train_end), em lấy cái mảng dài dằng dặc đó đưa vào thư viện vễ đồ thị Mát-pờ-lót-líp (Matplotlib) để in ra ảnh minh họa! 
+
+Slide 31: Kết quả sinh ra bởi Custom Callback
+Người 1: Và đây là cái ảnh chụp mà đoạn mã Côn-bách vừa chạy ra. Em có nhận xét gì?
+Người 2: Độ phân giải của đồ thị này cực kì mịn! Hàm Mất mát được in ra ở cấp độ Lô thay vì cấp độ Epoch, nên ta thấy rõ sự nhảy múa giật cục kinh khủng của thuật toán tối ưu trên từng lô dữ liệu một! Rất đẳng cấp ạ!
+
+Slide 32: Bảng điều khiển TensorBoard
+Người 1: Phần giám sát khép lại với Tensor Board. Thay vì dán mắt nhìn terminal nhảy số hàng tiếng đồng hồ, Tên-sơ-bo (TensorBoard) sẽ bật một máy chủ Web cục bộ trên màn hình để vẽ ra cả một bức tranh hoạt động của máy.
+Người 2: Giao diện web có đồ thị cực xịn xò. Mọi đường cong chạy theo thời gian thực luôn ạ?
+Người 1: Đúng, đó là món đồ chơi ưa thích của giới chuyên gia phân tích.
+
+Slide 33: Kích hoạt TensorBoard trong Keras
+Người 1: Để chạy nó, em chỉ cần nạp Côn-bách có sẵn tên là Kê-rát Côn-bách Tên-sơ-bo (keras.callbacks.TensorBoard). Khi bắt đầu huấn luyện, Keras sẽ đổ các file báo cáo nhị phân vào thư mục.
+Người 2: Cùng lúc đó, em ra Terminal gõ lệnh tensorboard chỉ đường dẫn vào thư mục log đó, rồi mở Trình duyệt Chrome truy cập lô-cồ-hót sáu ngàn không trăm lẻ sáu. Rất dễ sử dụng!
+
+Slide 34: Các tính năng cốt lõi của TensorBoard
+Người 1: Tên-sơ-bo có chức năng gì? Vẽ nhiều Đồ thị Mất mát đè lên nhau để so sánh các ý tưởng thí nghiệm. Vẽ Biểu đồ phân phối trọng số Histogram để xem số bị tràn cực đại cực tiểu không.
+Người 2: Và in ra ảnh Kiến trúc mạng khổng lồ để đối chiếu dễ dàng hơn cả hàm Pờ-lót mô-đô. Đặc biệt nhất là Giảm chiều không gian chiếu hàng ngàn chiều xuống giao diện ba đê để ngắm các hòn đảo Đa tạp gom nhóm. Cực kỳ mạnh mẽ.
+
+Slide 35: Tổng kết Chương 7
+Người 1: Kết thúc chương 7. Chúng ta học được Keras có ba đẳng cấp: Lớp cho người mới Xê-quen-xô. Lớp chuyên nghiệp Fân-sừn-nồ A Pi I chuyên vẽ mạng đa luồng. Và Lớp đại cao thủ Mô-đô Sấp-cờ-lát-xinh (Model Subclassing).
+Người 2: Về mặt Tùy biến mã nguồn, Keras cho phép ta xé toạc các hàm có sẵn để nhồi vào các thuật toán Toán học Tự định nghĩa như Hàm Mất mát, Thước đo, và Lõi Bác-pờ-rô-pa-gây-xần.
+
+Slide 36: Tổng kết Chương 7 (tiếp)
+Người 1: Để không phải cắm cờ túc trực ở máy, hãy ủy thác quyền giám sát cho đội quân Côn-bách (Callbacks) cắm chốt. Muốn làm nghiên cứu xuất bản báo cáo, phải biết soi đồ thị với Tên-sơ-bo (TensorBoard).
+Người 2: Hôm nay học toàn là kỹ thuật bẻ khóa và viết mã cấp thấp cực kỳ chuyên sâu. Em cảm ơn thầy, nó sẽ là bảo bối để em thiết kế mọi mô hình trên đời sau này.
+Người 1: Tuyệt lắm. Cảm ơn các em đã theo dõi. Xin chào và hẹn gặp lại!

@@ -1,0 +1,107 @@
+Slide 1: Trí tuệ Nhân tạo Sinh ảnh (Image Generation)
+Người 1: Chào các em. Ở chương trước ta đã học AI Sinh chữ (ChatGPT). Bắt đầu từ chương 17 này, chúng ta sẽ học về AI Sinh ảnh (Image Generation). Những thuật toán đứng sau Mít-giơ-ni (Midjourney) hay Đan-Li (DALL-E)!
+Người 2: Có phải nó đang cướp chén cơm của các họa sĩ thiết kế 2D đúng không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Khái niệm cướp chén cơm là sai lệch. Lát nữa em sẽ hiểu nó thực sự hoạt động ra sao. Chúng ta sẽ đi qua 4 phần: Một là Không gian tiềm ẩn. Hai là thuật toán Vi-Ây-I (VAE). Ba là Đi-phiu-zần (Diffusion). Bốn là S-tây-bồ Đi-phiu-zần (Stable Diffusion). 
+
+Slide 3: Khái quát về Sinh ảnh (Image Generation)
+Người 1: Nguyên lý số 1 của Sinh ảnh: AI không hề copy ảnh có sẵn. Nó tạo ra một Không Gian Ẩn Lây-Tần S-Pây (Latent Space). Không gian này giống như Tọa độ. Em ném phi tiêu vào một tọa độ bất kỳ, cỗ máy Giải mã Đi-cốt-đơ (Decoder) sẽ đọc tọa độ đó và vẽ ra một bức ảnh hoàn toàn mới! Chưa từng tồn tại trên cõi đời này!
+
+Slide 4: Mô hình Text-to-Image (Văn bản thành Hình ảnh)
+Người 1: Thế Tếch-Tu-Y-Mịt (Text-to-Image) là gì? Thay vì Ném phi tiêu mù. Hệ thống nhét Nhúng Văn Bản (Text Embedding) của câu lệnh vào Không gian Tọa độ đó. Để DIỀU HƯỚNG Tọa độ đi đúng vào Vùng Không gian có chứa những khái niệm mà người dùng mong muốn.
+
+Slide 5: Bộ dữ liệu kinh điển: Oxford Flowers
+Người 1: Để thực hành huấn luyện, ta sẽ dùng bộ Óc-x-phớt P-lao-ờ (Oxford Flowers). Hàng ngàn bức ảnh hoa đã được resize về kích thước vuông vức 128 x 128 điểm ảnh. Bắt đầu nhé.
+
+Slide 6: Giới hạn của Autoencoder truyền thống
+Người 1: Đầu tiên. Bộ mã hóa truyền thống Âu-tô-en-cốt-đơ (Autoencoder). Bộ mã hóa bóp nghẹt cái ảnh thành một Điểm Tọa Độ. Giao cho Bộ giải mã phóng to Tọa độ đó ra thành cái Ảnh. 
+Người 2: Ui, thế thì đúng ý tưởng Sinh ảnh rồi thầy?
+Người 1: Sai. Vì Không gian Tọa độ của nó BỊ ĐỨT GÃY. Nếu em bốc đại một tọa độ nằm giữa 2 bông hoa, cỗ máy giải mã sẽ phun ra một cục nhiễu rác rưởi không hình thù! 
+
+Slide 7: Sự đột phá của Variational Autoencoder (VAE)
+Người 1: Giải pháp ra đời: Bộ mã hóa Biến thể Vi-Ây-I (VAE). Nó không bóp cái ảnh thành 1 Điểm Tọa Độ Cứng Nhắc. MÀ NÓ BÓP CÁI ẢNH THÀNH MỘT ĐÁM MÂY XÁC SUẤT. (Phân phối chuẩn hình chuông).
+Người 2: Đám mây Xác suất?
+Người 1: Đúng. Nó xuất ra Trung bình (Mean) và Phương sai (Variance). Nghĩa là Tọa độ bông hoa Hồng sẽ là một Đám Mây Mờ. Khi đó các đám mây sẽ Đan xen và Chạm vào nhau. Không gian trở nên Mịn Màng và Liên Tục. Lấy mẫu ở đâu cũng sinh ra hoa hợp lệ! Cực kỳ thiên tài!
+
+Slide 8: Mã nguồn: Lớp Lấy mẫu (Sampler) của VAE
+Người 1: Hãy nhìn Code. Từ Min (Mean) và Lóc-Va (log_var), ta sinh ngẫu nhiên số E-psi-lon (Epsilon) rồi áp dụng Mẹo Tái tham số hóa (Reparameterization trick) để bốc ra tọa độ.
+
+Slide 9: Mã nguồn: Mạng Bộ giải mã (Decoder) của VAE
+Người 1: Đây là kiến trúc của Decoder. Nhận cái Tọa độ Z Lây-tần mỏng dính đó. Cho qua một đống lớp Tích chập Chuyển vị Côn-vờ 2D T-ran-s-pô-zờ (Conv2DTranspose) để phóng bự cái ảnh lên như cũ. 
+
+Slide 10: Toán học của VAE: Hàm mất mát KL Divergence
+Người 1: Nguồn gốc sức mạnh của VAE nằm ở Hàm Mất Mát Đi-vơ-zần (KL Divergence Loss). Hàm này ép các Đám Mây Mờ của bông hoa phải gom lại ở giữa tâm bản đồ thành hình Quả chuông. Ngăn chặn việc các đám mây bị văng ra quá xa nhau gây đứt gãy không gian. 
+Người 2: Nhưng thầy ghi ở dưới là chất lượng ảnh bị Blur (Mờ)?
+Người 1: Đúng. Vì lúc khôi phục ảnh nó dùng MSE Loss tính trung bình lỗi Pixel, nên ảnh sinh ra thường mờ mờ, không sắc nét lấp lánh được! Đó là khuyết điểm chết người của VAE.
+
+Slide 11: Mã nguồn: Tính toán hàm mất mát cho VAE
+Người 1: Code hàm Mất mát Total Loss bằng Loss Tái tạo cộng với Loss KL Divergence Toán học kia. Keras hỗ trợ tính cái rẹt.
+
+Slide 12: Mã nguồn: Lấy mẫu lưới điểm từ Không gian tiềm ẩn
+Người 1: Đây là code sinh ảnh sau khi Train xong VAE. Ta kẻ một cái Lưới tọa độ X, Y cắt ngang cái Không gian Đám mây kia. Vét từng điểm cho vào Decoder P-rị-đích (Predict).
+
+Slide 13: Kết quả sinh ảnh từ VAE
+Người 1: Kết quả vẽ các chữ số. Em thấy chưa? Các chữ số BIẾN HÌNH MỘT CÁCH TRƠN TRU. Từ số 1 từ từ gập đầu xuống thành số 7. Từ số 0 từ từ khép nách lại thành số 9. Quá hoàn hảo! Sự mượt mà của Không gian Lây-tần. Nhưng ảnh vẫn bị Mờ sương!
+
+Slide 14: Ứng dụng tiền thân: Nâng cao độ phân giải (Super Resolution)
+Người 1: Để khắc phục độ Mờ của VAE, kỷ nguyên thứ hai xuất hiện. Nó bắt nguồn từ bài toán Khử Nhiễu (Denoising) phục hồi ảnh Siêu Phân Giải. Đưa ảnh mờ, AI phục hồi ra ảnh Nét.
+Người 2: Ý thầy là... Nếu đưa cho nó một cục nhiễu tĩnh điện tivi nhiễu 100%, nó cũng phục hồi ra bức ảnh Nét được ạ?
+Người 1: Trí tưởng tượng của em vô tiền khoáng hậu đấy! Đó chính là Đi-phiu-zần!
+
+Slide 15: Mô hình Khuếch tán (Diffusion Models)
+Người 1: Mô hình Khuếch tán (Diffusion). Bước 1: Tiền Đạo (Forward). Lấy bức ảnh thật Cố Tình xịt Nhiễu Muối Tiêu (Noise) vào, xịt dần xịt dần cho đến khi nát bét thành Cục Nhiễu trắng. Bước 2: Đi Lùi (Backward). Dạy 1 con AI làm nhiệm vụ duy nhất: GỠ NHIỄU từ từ. Gỡ đến đâu, Tượng điêu khắc lòi ra đến đó!
+
+Slide 16: Lịch trình thêm nhiễu (Noise Schedule)
+Người 1: Quá trình xịt Nhiễu phải tuân theo một lịch trình khắt khe. Gọi là Lịch trình Noi S-ke-đun (Noise Schedule). Tốt nhất là Lịch trình Cốt (Cosine). Đảm bảo Phương trình Tín hiệu Bình Phương cộng Nhiễu Bình Phương luôn bằng 1!
+
+Slide 17: Góc độ Hình học của Cosine trong Diffusion
+Người 1: Bằng Toán học Lượng giác Cosine Sine, Tổng bình phương bằng 1 bảo vệ sự Ổn định của Cường độ Không gian Không bị Phá Vỡ. Đây là cơ sở toán học để quá trình Gỡ nhiễu không bị Oẳng (Sụp đổ số học).
+
+Slide 18: Mạng U-Net khử nhiễu
+Người 1: Vậy con AI nào đứng ra lãnh trọng trách Gỡ Nhiễu (Denoising)? Đó là mạng U-Nét (U-Net). Với cấu trúc Thắt cổ chai và Đi Tắt S-kíp Côn-nếc-xần (Skip-Connections) siêu việt để bảo toàn chi tiết vi mô cho bức ảnh. U-Net chính là trái tim của hệ thống Sinh Ảnh hiện đại!
+
+Slide 19: Mã nguồn: Lịch trình Khuếch tán Cosine
+Người 1: Code của Hàm Cốt S-ke-đun (Cosine Schedule) dùng lượng giác. Rất gọn.
+
+Slide 20: Mã nguồn: Tính toán Bước khử nhiễu (Denoise)
+Người 1: Hàm Đi-noi (Denoise). Nó gọi U-Net nhảy vào cắn cái cục nhiễu đi. Sau đó Dùng công thức Đại số trừ cái cục Nhiễu đó khỏi bức ảnh gốc để trả về Ảnh Sạch Hơn Một Chút.
+
+Slide 21: Mã nguồn: Tiến trình Sinh ảnh ngẫu nhiên (Generation)
+Người 1: Quá trình AI Sinh Ảnh. Khởi đầu vòng For bằng một Cục nhiễu Ngẫu nhiên Răn-đôm No-mờ (Random Normal). Xong chạy vòng lặp 50 bước, cứ Gỡ Nhiễu, Gỡ Nhiễu, Gỡ Nhiễu. Bùm! Chạy xong vòng For thu được Tác phẩm nghệ thuật vô giá!
+
+Slide 22: Mã nguồn: Kỹ thuật ổn định huấn luyện Diffusion
+Người 1: Tuy nhiên, Train mạng U-Net cho Diffusion cực kỳ rớt mồ hôi hột. Mạng bị giật cục văng lung tung do Loss quá khó. Ta phải bật cờ Sử dụng E-M-A bẳng Tru (use_ema=True) cho A-đam (Adam Optimizer).
+
+Slide 23: Ý nghĩa của Kỹ thuật Polyak Averaging (EMA)
+Người 1: Kỹ thuật Trung bình E-M-A (Polyak Averaging). Nó không lấy Trọng số của Epoch hiện tại. Nó lấy Trung bình cộng của hàng loạt Trọng số trong quá khứ cộng lại! Điều này làm cho Đường Đi của Đạo Hàm êm ru mượt mà, chống kẹt vào các hố sụt cực tiểu địa phương. Nhớ kỹ nhé! Mạng G-A-N và Diffusion bắt buộc phải có EMA!
+
+Slide 24: Kết quả sinh ảnh hoa từ Diffusion
+Người 1: Nhìn kết quả đi. Tốc độ sinh ảnh của Đi-phiu-zần RẤT CHẬM (Do phải chạy vòng For 50 bước gỡ nhiễu). Nhưng đổi lại... Ảnh sinh ra SẮC NÉT ĐẾN TỪNG ĐIỂM ẢNH! Đập nát khuyết điểm Mờ mịt của V-A-E.
+
+Slide 25: Nhược điểm của Standard Diffusion và Sự ra đời của Stable Diffusion
+Người 1: Khuyết điểm lớn nhất của Đi-phiu-zần Truyền thống: Nó chạy trực tiếp trên Tấm Ảnh Pixel bự chà bá! Sinh ảnh Full HD mất 30 phút rát cả Card Màn Hình. 
+Người 2: Thế S-tây-bồ Đi-phiu-zần (Stable Diffusion) xuất hiện để tối ưu cái đó hả thầy?
+Người 1: Đỉnh cao trí tuệ. SD Lấy Không gian Mây Mờ Lây-tần Xíu Xíu của Vi-Ây-I ra. Xong ném thẳng cục U-Net Diffusion vào cái không gian bé xíu đó mà chạy Gỡ Nhiễu! Gỡ nhiễu xong xuôi mới Dùng Decoder phóng to lại thành Pixel thật! Nhờ vậy nó nhẹ tới mức chạy phà phà trên Laptop em luôn! Sự kết hợp hoàn hảo!
+
+Slide 26: Kết quả từ Stable Diffusion 3
+Người 1: Mạng S-tây-bồ 3 (Stable Diffusion 3) xài thêm Tếch En-cốt-đơ (Text Encoder) để dịch cái Lời Nhắc (Prompt) ra hướng dẫn U-Net gỡ nhiễu.
+Người 2: "Phi hành gia cỡi con voi Origami trên phố". Thật điên rồ! Ảnh quá ảo diệu!
+
+Slide 27: Tác động của Số bước Khử nhiễu (Denoising Steps)
+Người 1: Chú ý Tham số Số bước Đi-noi-zing (Denoising Steps). Kéo về 5 bước: AI Gỡ nhiễu chưa xong, ảnh vẫn dính sạn hột nhiễu. Kéo lên 20 - 50 bước: Ảnh Nét căng hoàn thiện. Kéo lên 200 bước: Chả đẹp hơn tí nào mà rớt cục Pin hao điện tốn công!
+
+Slide 28: Sức mạnh của Negative Prompt (Lời nhắc tiêu cực)}
+Người 1: Kỹ năng Prompt: Lời nhắc tiêu cực (Negative Prompt). AI lỡ vẽ dính Màu Xanh, gõ chữ Blue vào ô Negative. Thuật toán Xi-Ép-Gi (CFG) sẽ Hướng Vector của bước chạy ÉP NGƯỢC CHIỀU Lại cái màu Xanh. Thế là ảnh mất sạch màu xanh! Rất ma thuật!
+
+Slide 29: Nội suy hình học trong Không gian tiềm ẩn
+Người 1: Điểm thú vị cuối: Không gian Ẩn của Stable Diffusion rất mượt. Em lấy 2 tọa độ ảnh. Bắt máy tính nối đường thẳng giữa 2 tọa độ đó xong giải mã ra ảnh. Em sẽ có một hiệu ứng Chuyển Cảnh Mót-phing (Morphing Video) thay hình đổi dạng kinh khủng khiếp!
+
+Slide 30: Toán học Nội suy cầu (SLERP)
+Người 1: Nhưng trong Không gian 4000 chiều của AI. Nối đường thẳng Li-nia (Linear) sẽ Đâm Xuyên Qua Lõi Quả Cầu, làm Ảnh bị Vỡ!
+Người 2: Á đù! Thế nối bằng cách nào ạ?
+Người 1: S-Lớp (SLERP - Toán học nội suy cầu). Tính góc Sine Cosine, vẽ cái Tọa độ Lượn men theo Bề Mặt Quả Cầu Sinh Thái Lây-tần! Nhờ đi Đường Vòng Cung nên quá trình biến hình Ảnh không bao giờ bị Rác vỡ hạt! Đây là Toán học của Hệ thống Text-to-Video Đỉnh cao thế giới!
+
+Slide 31: Tổng kết Chương 17
+Người 1: Tóm gọn: VAE mở ra kỷ nguyên Không gian Ẩn bằng Phương sai. Diffusion đánh sập giới hạn Bờ Mờ ảnh bằng U-Net gỡ nhiễu. Stable Diffusion đẻ ra phép màu chạy Real-time trên máy cỏ nhờ kết hợp Mây VAE và U-Net Diffusion.
+Người 2: Em không thể tin được Toán học lại có thể vẽ ra Phép màu Nghệ thuật như thế. Kỷ nguyên thiết kế Đồ họa hoàn toàn thay đổi. Cảm ơn thầy!

@@ -1,0 +1,129 @@
+Slide 1: Phân loại Ảnh với Mạng Tích chập (Image Classification with ConvNets)
+Người 1: Xin chào các em! Chào mừng đến với Chương 8. Bắt đầu từ chương này, ta chính thức bước chân vào Lĩnh vực Thị giác máy tính cực kỳ thú vị. Và hạt nhân của toàn bộ lĩnh vực này chính là Mạng Nơ-ron Tích chập, hay còn gọi là CNN.
+Người 2: Có phải công nghệ này được dùng để chạy ứng dụng mở khóa khuôn mặt trên điện thoại, hay quét mã định danh căn cước công dân không thầy? 
+
+Slide 2: Nội dung chương
+Người 1: Chính xác. Nội dung hôm nay gồm có: Thứ nhất, nền tảng cơ chế hoạt động của mạng Tích chập. Thứ hai là bài thực hành kinh điển Phân loại Chó và Mèo. Thứ ba là cách tự sinh ra ảnh chống Quá khớp bằng kỹ thuật Đa-ta Óc-mên-tây-xần (Data Augmentation). 
+Người 2: Em thấy có phần số bốn và năm là Chuyển giao học tập Transfer Learning và Tinh chỉnh Fine-Tuning. Tên gọi nghe rất chuyên nghiệp ạ.
+
+Slide 3: Tại sao lại là Tích chập (Convolution)?
+Người 1: Nhớ lại mạng Dense nhiều lớp truyền thống, nó nhìn một bức ảnh theo góc nhìn Toàn cục.
+Người 2: Tức là Dense nó kéo giãn bức ảnh ra thành một sợi dây số liệu siêu dài, rồi học nguyên cái sợi dây đó đúng không ạ?
+Người 1: Đúng. Do đó Dense rất dở trong việc nhận diện không gian. Nhưng Mạng Tích chập CNN thì khác. Nó tìm kiếm các Đặc trưng cục bộ, như cạnh, góc. Nó có tính Bất biến dịch chuyển. Nếu nó nhận ra hình dáng Đôi Mắt ở góc trái ảnh, thì khi Đôi Mắt đó chạy sang góc phải, nó vẫn nhận ra! Dense thì mù tịt việc này.
+
+Slide 4: Hệ thống Phân cấp Thị giác (Visual Hierarchy)
+Người 1: Tính chất thứ hai là Sự phân cấp thị giác. Bộ não người nhận diện vật thể ra sao?
+Người 2: Hình như mắt mình nhìn thấy các nét ngang nét dọc trước, rồi ghép lại thành hình đa giác, cuối cùng não phân tích thành hình con chó phải không thầy?
+Người 1: Cực chuẩn! CNN cũng học y như vậy. Lớp CNN đầu tiên tìm các viền cạnh. Lớp thứ hai ghép viền cạnh thành bộ phận Mắt, Mũi. Lớp cuối cùng tổng hợp thành Khái niệm "Con Mèo". 
+
+Slide 5: Mạng CNN cơ bản: Mã nguồn
+Người 1: Về mã nguồn, em gọi đối tượng lớp Kê-rát lây-ơ Côn-vờ hai đê (layers.Conv2D). Truyền vào số bộ lọc, và kích thước cửa sổ quét thường là ba nhân ba.
+Người 2: Sau mỗi lớp Côn-vờ hai đê, em lại thấy đi kèm một lớp Mác pu-ling hai đê (MaxPooling2D) có tham số pùn sai bằng hai. Chức năng của lớp Pu-ling này là gì vậy ạ?
+Người 1: Nó dùng để nén bức ảnh nhỏ lại một nửa sau mỗi bước quét. Cuối cùng, để xuất ra phân loại, em phải đập bẹp khối Tensor đó bằng Lớp Đen-x.
+
+Slide 6: Kiểm tra quá trình nén không gian (Model Summary)
+Người 1: Hãy nhìn vào bảng tóm tắt Sum-ma-ri. Đầu vào ảnh là 28 nhân 28, chiều sâu là một kênh màu xám.
+Người 2: Đi qua lớp Tích chập và Pu-ling thứ nhất, nó tụt xuống 13 nhân 13, nhưng chiều sâu phình to ra 64 kênh! Đi tiếp xuống tận đáy, kích thước ảnh chỉ còn ba nhân ba siêu nhỏ, nhưng chiều sâu khổng lồ 256 kênh. Nó giống như một cái Phễu!
+
+Slide 7: Toán học của Phép Tích chập (Dot Product)
+Người 1: Bí mật Toán học nằm ở Phép trượt nhân chập. Nó tính bằng công thức Sigma lấy Điểm ảnh I nhân với Bộ lọc K. Bản chất chỉ là Phép tính Tích vô hướng đơn giản.
+Người 2: Có nghĩa là Bộ lọc K đóng vai trò như một cái Cửa sổ vuông, nó rọi đèn pin trượt từ trái sang phải, từ trên xuống dưới lên bề mặt tấm ảnh để rà quét tính điểm?
+
+Slide 8: Trích xuất Phân mảnh (Patches)
+Người 1: Rất trực quan. Kích thước Cửa sổ đèn pin đó phổ biến là ba nhân ba hoặc năm nhân năm. 
+Người 2: Giả sử tấm ảnh to năm nhân năm, đèn pin ba nhân ba. Nó rọi xuống, cắt ra một mảnh hình vuông nhỏ gọi là Phân mảnh, đem nhân vô hướng. Cứ mỗi Phân mảnh như vậy, Toán học sẽ nhả ra đúng một con Số duy nhất đại diện cho độ phù hợp!
+
+Slide 9: Bản đồ Phản hồi (Response Map)
+Người 1: Thế em có biết 64 Kênh trong bảng tóm tắt khi nãy đại diện cho cái gì không? Nó chính là 64 Cửa sổ Đèn pin quét cùng một lúc!
+Người 2: Oa! Nghĩa là cái Cửa sổ số một chuyên đi dò tìm Mắt mèo. Cửa sổ số hai chuyên đi tìm Lông chó. Ánh sáng quét ra được gọi là Bản đồ phản hồi (Response Map). Chỗ nào trên hình sáng rực lên nghĩa là Cửa sổ đó đã bắt quả tang được con mắt nằm ở tọa độ đó! 
+
+Slide 10: Kỹ thuật Lấp đầy (Padding)
+Người 1: Tuy nhiên, vì cửa sổ quét luôn nằm ở trong biên của ảnh, nên cứ quét xong là ảnh bị co ngót lại. Từ năm nhân năm tụt xuống ba nhân ba. Để chống lại sự co ngót, ta dùng Lấp đầy (Padding).
+Người 2: Tham số pát-đinh bằng Sêm (padding="same") là ta nhồi thêm các viền chứa số không (Zero-padding) bao quanh tấm ảnh gốc, để ăn gian diện tích, giúp ảnh đầu ra giữ nguyên kích thước phải không ạ?
+
+Slide 11: Bước nhảy (Strides)
+Người 1: Tham số cuối cùng: Bước nhảy (Strides). Mặc định đèn pin trượt nhích từng mi li mét một (strides bằng một).
+Người 2: Nếu em cấu hình xờ-troai bằng hai (strides=2), thì đèn pin sẽ nhảy cóc một bước sải dài. Tấm ảnh kết quả sẽ lập tức bị giảm kích thước phân giải đi một nửa (Downsampling) ngay và luôn đúng không thầy?
+
+Slide 12: Tập Dữ liệu Kaggle Dogs vs Cats
+Người 1: Áp dụng lý thuyết vào thi đấu thực tế. Ta dùng tập dữ liệu Phân biệt Chó Mèo của Két-gồ (Kaggle) năm 2013. Cuộc thi này có hai mươi lăm nghìn tấm ảnh.
+Người 2: Dữ liệu lớn như vậy máy em RAM có 8 Gigabyte thì chạy kiểu gì ạ?
+Người 1: Ta giả lập tình huống công ty nghèo khó, chỉ bóc ra hai nghìn tấm ảnh để làm huấn luyện Train thôi. Vừa nhẹ máy, vừa sát thực tế doanh nghiệp thiếu dữ liệu.
+
+Slide 13: Tiền xử lý ảnh với Keras: image_dataset_from_directory
+Người 1: Kể cả hai nghìn ảnh, em cũng không nên nạp toàn bộ vào RAM. Keras có hàm im-mít đát-ta-xét phờ-rom đi-rếch-tô-ri (image_dataset_from_directory) cực kỳ mạnh.
+Người 2: À, nó tạo ra một Bộ sinh dữ liệu theo Lô (Data Generator). Máy chạy đến lô nào thì nó mới rẽ xuống ổ cứng đọc ba mươi hai tấm ảnh của lô đó lên RAM, rồi tự động đưa hết về kích thước chuẩn 180 nhân 180 pixel. Tuyệt vời!
+
+Slide 14: Huấn luyện CNN cơ bản (Từ con số 0)
+Người 1: Chạy mô hình thử nghiệm tự code bằng 4 khối Côn-vờ hai đê. Kết quả cao nhất trên Validation là bảy mươi lăm phần trăm.
+Người 2: Em thấy trên đồ thị, Đường Huấn luyện màu xanh thì cắm đầu chạy vút lên tiệm cận một trăm phần trăm, trong khi đường Validation Đứt nét thì nằm bẹp ở dưới. Quá khớp trầm trọng thưa thầy!
+
+Slide 15: Phân tích hàm Loss cơ bản
+Người 1: Cùng nhìn đồ thị hàm Mất mát (Loss). Loss của tập Train tụt mạnh về không, chứng tỏ mạng Nơ-ron đang học thuộc lòng từng pixel của hai nghìn bức ảnh, chứ không hề rút ra được quy luật con chó con mèo!
+Người 2: Loss của Validation thì bật ngửa tăng vọt. Vì dữ liệu đầu vào hai nghìn là quá ít cho một thuật toán Mạng Tích chập triệu tham số. Mạng bị ngộp!
+
+Slide 16: Kỹ thuật Tăng cường Dữ liệu (Data Augmentation)
+Người 1: Bí quyết trong nghề xuất hiện: Đa-ta Óc-mên-tây-xần (Data Augmentation) - Tăng cường dữ liệu. Quy tắc: Không có dữ liệu thì tự đẻ ra dữ liệu!
+Người 2: Tức là từ một ảnh con mèo ban đầu, em bẻ cong nó, lật ngang nó, phóng to nó, xoay nó nghiêng đi hai mươi độ... là em đã có hàng chục tấm ảnh con mèo hoàn toàn mới để cho máy học rồi!
+
+Slide 17: Data Augmentation: Mã nguồn
+Người 1: Đúng. Keras có sẵn các Lớp biến đổi ngẫu nhiên. Lớp lây-ơ rên-đầm Phờ-líp (layers.RandomFlip) để lật. Rên-đầm rô-tây-xần để xoay góc. Em bó nó vào một biến Xê-quen-xô.
+Người 2: Sau đó lấy biến Xê-quen-xô đó nhét vào đầu đồ thị của mạng Nơ-ron. Cứ mỗi lần ảnh đi qua, nó lại bị vặn vẹo ngẫu nhiên thành một kiểu mới. Và lớp này tự động Tắt tính năng khi chạy kiểm tra Validation để không làm hỏng dữ liệu gốc. Hoàn hảo.
+
+Slide 18: Đánh giá Accuracy sau Augmentation
+Người 1: Hãy nhìn đồ thị Ác-cu-ra-xi mới. 
+Người 2: Kinh ngạc! Validation đã vọt lên chạm mốc hơn tám mươi phần trăm. Nhưng quan trọng nhất là hai đường cong màu xanh và đứt nét đang ôm chặt lấy nhau. Căn bệnh Quá khớp (Overfitting) đã bị bẻ gãy hoàn toàn.
+
+Slide 19: Đánh giá Loss sau Augmentation
+Người 1: Căn bệnh được chữa là vì mô hình không bao giờ bị nhìn thấy một bức ảnh lặp lại giống y xì đúc lần thứ hai trong đời, buộc nó phải học các đặc trưng lõi bất biến!
+Người 2: Tuy nhiên em thấy ở Epoch cực đại, nó vẫn lẩn quẩn ở mốc tám mươi hai phần trăm. Cảm giác thuật toán đã hết hơi, không thể mạnh hơn được nữa?
+
+Slide 20: Trích xuất Đặc trưng (Feature Extraction)
+Người 1: Đúng, để vượt ngưỡng tám mươi hai, ta phải sử dụng kỹ thuật cấm thuật: Chuyển giao học tập (Transfer Learning). Tái sử dụng Tri thức từ các Gã khổng lồ.
+Người 2: Ý thầy là sử dụng Mạng Vi-Ghi-Ghi mười sáu (VGG16) khổng lồ đã được Huấn luyện tốn hàng ngàn Đô la điện năng trên tập ImageNet một phẩy bốn triệu bức ảnh?
+Người 1: Chính nó. Ta giữ nguyên Khối Tích chập của VGG16, sau đó cầm kéo cắt đứt cái đầu Phân loại của nó đi, gắn cái đầu Phân loại mới của chúng ta vào.
+
+Slide 21: Feature Extraction: Mã nguồn (Sử dụng VGG16)
+Người 1: Trong mã nguồn, gọi Kê-rát ét-pli-cây-xần (keras.applications) gọi hàm VGG16, với trọng số quết bằng i-mết-nét (weights="imagenet"), và in-cờ-lút tốp bằng Phôn (include_top=False) để cắt bỏ cái đầu đi.
+Người 2: Sau đó, câu lệnh cờn-vờ bây chấm truyên-na-bồ bằng Phôn (conv_base.trainable = False) là để Đóng băng siêu ma trận này lại! Đừng cho trọng số bị sửa đổi, bảo toàn tuyệt đối 100% sức mạnh tri thức của nó. Tiếp theo mới gắn cái Lớp Dense phân loại Nhị phân nhỏ xíu của mình lên ngọn.
+
+Slide 22: Accuracy với Feature Extraction Cơ bản
+Người 1: Chạy hàm Huấn luyện. Mô hình giờ chỉ phải tập trung học vài ngàn tham số ở Lớp Dense ngọn, còn lớp Đáy nó dùng chung não của ImageNet. Kết quả?
+Người 2: Ác-cu-ra-xi bắn thủng nóc nhà, đạt luôn mốc chín mươi phần trăm! Sự vĩ đại của ImageNet đã giúp trích xuất các đặc trưng mắt mèo mũi chó sắc lẹm! 
+
+Slide 23: Loss với Feature Extraction Cơ bản
+Người 1: Nhưng xem kìa, ở đồ thị Loss, nó lại bị bung bét Quá khớp ở Epoch số 5.
+Người 2: Lý do là vì ở bước này, mình không bật chức năng vặn vẹo hình ảnh Data Augmentation lên. Với sức mạnh của VGG16 học quá nhanh, chỉ cần năm Epoch là nó học thuộc lòng luôn hai nghìn tấm ảnh một cách dễ dàng thưa thầy.
+
+Slide 24: Mô hình Liên hoàn: Feature Extraction + Data Augmentation
+Người 1: Vậy ta xài chiêu cuối. Ghép chuỗi liên hoàn: Biến dạng Ảnh Data Augmentation, nối vào Lớp Đáy VGG16 Đóng băng, nối tiếp vào Lớp ngọn Dense phân loại của ta.
+Người 2: Mô hình này chạy qua cả một hệ thống Tích chập VGG khổng lồ cho MỖI bức ảnh bị vặn vẹo ngẫu nhiên... Chắc chắn phải có Card đồ họa GPU cực xịn mới chạy nổi thưa thầy. Rất ngốn phần cứng!
+
+Slide 25: Accuracy với Feature Extraction + Data Augmentation
+Người 1: Kết quả trả về rất xứng đáng tiền điện. 
+Người 2: Đường cong mượt mà tuyệt mĩ! Không còn một dấu vết nào của Overfitting. Mà Ác-cu-ra-xi vươn thẳng lên Chín mươi sáu phần trăm! Đã sát tới giới hạn nhận diện của con người!
+
+Slide 26: Loss với Feature Extraction + Data Augmentation
+Người 1: Nhìn Loss kìa, nó uốn lượn ổn định đi xuống dần đều một cách bền bỉ.
+Người 2: Nhưng thầy có nói, con số chín sáu này chưa phải giới hạn cuối cùng. Ta vẫn còn một tuyệt kỹ ép xung hệ thống nữa tên là Fine-Tuning phải không ạ?
+
+Slide 27: Quy trình Fine-Tuning
+Người 1: Đúng. Fine-Tuning, hay Tinh chỉnh siêu độ phân giải. Sau khi em đã có 96 phần trăm nhờ đóng băng VGG16. Em rã đông, mở khóa (Unfreeze) một vài Lớp Tích chập trên cùng của VGG16 ra.
+Người 2: Ý thầy là ta nới lỏng nhẹ trọng số của Gã khổng lồ, sau đó hạ Tốc độ học lơn-ninh rết (learning_rate) xuống siêu nhỏ, rồi ép Gã khổng lồ uốn mình thay đổi một chút theo đặc trưng riêng của hai nghìn bức ảnh Chó Mèo của ta?
+
+Slide 28: Fine-Tuning: Mã nguồn giải mã các lớp cuối
+Người 1: Đúng vậy. Cú pháp: Ta lặp vòng for qua các Lớp của VGG16. Chỉ khi nào gặp cái tên lớp là bờ-lóc-năm Côn-vờ-một (block5_conv1), ta mới bật truyên-na-bồ bằng Tru.
+Người 2: Vậy là các khối từ 1 đến 4 bị khóa chặt làm nền móng. Chỉ có khối số 5 trên đỉnh là nới lỏng nhẹ nhàng. Cuối cùng biên dịch lại với tốc độ học một E trừ 5, tức là một phần trăm ngàn! Cực kỳ chậm để không phá nát móng nhà cũ.
+
+Slide 29: Kết quả Accuracy sau Fine-Tuning
+Người 1: Và bùm! Chạy huấn luyện. Hiệu suất tăng lên chín mươi bảy phẩy lăm phần trăm!
+Người 2: Chín mươi bảy phẩy lăm phần trăm chỉ với hai nghìn bức ảnh gốc nghèo nàn ban đầu! Thuật toán Transfer Learning thực sự là bảo bối thần kỳ cứu mạng các doanh nghiệp nhỏ không có tiền gán nhãn hàng triệu ảnh.
+
+Slide 30: Kết quả Loss sau Fine-Tuning
+Người 1: Đồ thị Loss có thể biến động nhảy múa có vẻ nhiễu. Nhưng nếu kẻ một đường trung bình trượt (Moving Average), ta thấy nó vẫn đang ổn định đâm xuyên xuống đáy.
+Người 2: Một kết quả xuất chúng và hoàn mỹ. Em không tin được là mình vừa làm được một trí tuệ nhân tạo thị giác mạnh mẽ đến thế trên máy cá nhân.
+
+Slide 31: Tổng kết Chương 8
+Người 1: Tổng kết lại, CNN là vị vua của Thị giác máy tính nhờ khả năng quét qua từng bản đồ đặc trưng cục bộ.
+Người 2: Và bài toán thiếu dữ liệu được giải quyết triệt để nhờ phép màu Data Augmentation kết hợp với Transfer Learning trích xuất não bộ từ VGG16, sau cùng đẩy giới hạn bằng Fine-Tuning lớp thứ năm.
+Người 1: Các em tiếp thu rất xuất sắc. Bài hôm nay rất nặng nhưng cực kỳ thực tiễn. Hẹn gặp lại các em ở Chương 9.

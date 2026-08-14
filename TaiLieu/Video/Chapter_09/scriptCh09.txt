@@ -1,0 +1,131 @@
+Slide 1: Các Mẫu Kiến trúc Mạng Tích chập (ConvNet Architecture Patterns)
+Người 1: Chào các em. Ở bài trước ta đã biết cách dùng Transfer Learning mượn một kiến trúc có sẵn như Vi-Ghi-Ghi mười sáu (VGG16) để dùng. Hôm nay ở Chương 9, ta sẽ học cách tự tay Lắp ráp nên một kiến trúc Mạng Tích chập khổng lồ và đẳng cấp như thế từ con số không.
+Người 2: Tức là không mượn não của người khác nữa, mà mình tự xây một bộ não chuyên biệt luôn phải không thầy? Tuyệt quá!
+
+Slide 2: Nội dung chương
+Người 1: Chương 9 có năm phần cốt lõi. Một là triết lý thiết kế. Hai là Kỹ thuật Kết nối thặng dư (Residual). Ba là Chuẩn hóa hàng loạt (Batch Normalization). Bốn là Tích chập tách rời (Separable Convolution). Năm là kết hợp cả ba vũ khí đó để chế tạo mạng Mi-ni Ếch-xép-xần (Mini-Xception). Cuối cùng ta sẽ nói về kỷ nguyên mới của Vi-dần Chan-pho-mờ (Vision Transformers).
+Người 2: Nghe có vẻ kiến thức ở tầm kỹ sư kiến trúc sư (Architect), không còn là thợ gõ code nữa.
+
+Slide 3: Không gian Giả thuyết (Hypothesis Space)
+Người 1: Đầu tiên, Kiến trúc mô hình là gì? Nó là nghệ thuật lắp ráp các tầng mạng. Sự lắp ráp này tạo ra một Không gian giả thuyết.
+Người 2: Không gian giả thuyết có phải là một cái hộp vô hình giới hạn các khả năng? Cỗ máy Gradient Descent (Gra-đi-ần đề-xen) buộc phải đi tìm bộ Trọng số hoàn hảo nhất chỉ được phép nằm ở bên trong cái hộp đó?
+Người 1: Rất chuẩn. Xây kiến trúc tức là em đang đóng gói Tri thức tiên nghiệm của con người vào trong máy. Ví dụ, thiết kế ra lớp Tích chập là em đang cấy vào bộ não máy tính định luật: Mẫu cục bộ bất biến với sự dịch chuyển!
+
+Slide 4: Tầm quan trọng của Thiết kế Kiến trúc
+Người 1: Tại sao phải thiết kế cẩn thận? Nếu thiết kế khéo léo, Không gian tìm kiếm bị thu hẹp, máy sẽ tìm ra kết quả cực nhanh.
+Người 2: Và nếu ta chọn sai thiết kế, ví dụ dùng mạng Dense tuyến tính để học ảnh siêu nét Bốn Ca (4K)?
+Người 1: Thì cỗ máy bị mắc kẹt vĩnh viễn ở hiệu suất thấp! Dù em có nạp một tỷ bức ảnh vào cho nó học thì nó vẫn vô phương cứu chữa.
+
+Slide 5: Nghệ thuật Thiết kế vs. Bằng chứng Khoa học
+Người 1: Có một sự thật khá phũ phàng ở Thung lũng Silicon: Thiết kế mạng phần nhiều dựa vào Nghệ thuật Cảm tính hơn là Khoa học chứng minh tuyệt đối.
+Người 2: Nghĩa là những kỹ sư xuất chúng thiết kế ra những siêu kiến trúc là nhờ họ có Trực giác và kinh nghiệm nhìn quen mắt, chứ họ không thể giải phương trình đạo hàm chứng minh là thiết kế này chắc chắn tốt hơn thiết kế kia ạ?
+Người 1: Đúng. Hầu hết là dựa trên Thực nghiệm. Chạy thử thấy số to thì chứng tỏ nó đúng.
+
+Slide 6: Ablation Studies (Nghiên cứu Cắt bỏ)
+Người 1: Chính vì cậy vào thực nghiệm nên nhiều người hay cố tình vẽ hươu vẽ vượn cho kiến trúc phức tạp lên để đi khoe. Để bóc trần sự thật, ta dùng Kỹ thuật Nghiên cứu Cắt bỏ (Ablation Studies).
+Người 2: Có phải là phương pháp loại trừ? Ví dụ mô hình của anh gồm ba cục ích, y, zét cộng lại chạy rất ngon. Vậy tôi thử chặt bỏ cục zét xem nó có ngon không. Chặt bỏ xong mà máy vẫn chạy y hệt, chứng tỏ cục zét anh vẽ ra chỉ làm trò vô dụng! Rất khoa học thưa thầy!
+
+Slide 7: Công thức MHR: Modularity, Hierarchy, Reuse
+Người 1: Bất kỳ một hệ thống phức tạp nào trong vũ trụ, kể cả sinh học tế bào con người, đều tuân thủ công thức ba chữ: Em Hát E-rờ (MHR).
+Người 2: Chữ Em là Mô-đu-la-ri-ti: Đóng gói thành các Khối độc lập. Chữ Hát là Hai-a-ra-ki: Xếp khối dưới làm móng cho khối trên. Chữ E-rờ là Ri-iu (Reuse): Tái sử dụng lại khối đó mười lần liên tiếp thay vì phải ngồi code lại mười kiểu khối khác nhau!
+
+Slide 8: Tháp Đặc trưng trong Mô hình Xception
+Người 1: Nhìn vào cấu trúc của mạng Ếch-xép-xần (Xception). Nó tuân thủ chặt chẽ MHR. Các khối lặp lại tuần hoàn.
+Người 2: Em thấy nó vẽ thành hình một cái Tháp kim tự tháp lộn ngược. Càng đi xuống sâu, kích thước chiều rộng và chiều cao của ảnh càng teo nhỏ lại. Tuy nhiên, chiều sâu số kênh (Filters) thì lại nở to dần ra.
+
+Slide 9: Vấn đề: Suy biến Đạo hàm (Vanishing Gradient)
+Người 1: Càng sâu thì càng thông minh. Đó là chân lý. Nhưng hễ đắp mạng sâu tầm một trăm lớp, thì mô hình tự nhiên bị đột quỵ, tê liệt hoàn toàn, điểm Loss không hề suy giảm. Hiện tượng này gọi là Suy biến đạo hàm (Vanishing Gradient).
+Người 2: Căn bệnh này do đâu mà ra thưa thầy?
+
+Slide 10: Quy tắc Chuỗi (Chain Rule) và Trò chơi Truyền tin
+Người 1: Nó sinh ra bởi Quy tắc Chuỗi của phép truyền ngược (Backpropagation). Thông điệp sửa lỗi Toán học đi ngược từ dưới đáy, bị nhân đi nhân lại với các con số cực nhỏ bé nhỏ hơn một.
+Người 2: Giống y như trò chơi Tam sao thất bản truyền tin nối tiếp nhau vậy. Đứa thứ nhất nói câu A, qua miệng một trăm đứa, đứa thứ một trăm cuối hàng sẽ chả nghe được gì!
+Người 1: Quá đúng. Đạo hàm bị teo tóp nhân chia về số không tuyệt đối, tầng đầu không nhận được lực đẩy nào, mô hình đứng im!
+
+Slide 11: Giải pháp: Kết nối Thặng dư (Residual Connections)
+Người 1: Năm 2015, kỹ sư tên Kai-minh Hê đã phát minh ra giải pháp chấn động: Kết nối Thặng dư (Residual). Phát minh này nhận luôn giải bài báo khoa học xuất sắc nhất toàn cầu!
+Người 2: Ý tưởng của nó là tạo ra một đường tắt vòng qua khối Tính toán! Hàm I bằng Ép-ích (Fx) cộng ích. Có nghĩa là nó vẫn nhét dữ liệu qua khối để tính toán, nhưng kết quả trả về sẽ được cộng thẳng thừng với cái Dữ liệu Gốc ban đầu chưa bị chỉnh sửa!
+
+Slide 12: Mã nguồn giả (Pseudocode) cho Residual
+Người 1: Trong mã nguồn, đầu tiên em tạo biến rế-di-đu-ồ (residual) bằng biến ích (x). Đây là giữ lại gốc. Sau đó em ném biến ích đi qua lớp Côn-vờ hai đê đầy hiểm nguy có thể phá nát tín hiệu.
+Người 2: Xong bước cuối cùng, em gọi hàm Kê-rát Lây-ơ ÉT (layers.add) để ghép cái x vừa bị băm nát đó với cái x bản gốc rế-di-đu-ồ ban đầu!
+Người 1: Đúng! Nhờ thế, dù có qua một ngàn lớp, tín hiệu đạo hàm truyền ngược vẫn xé gió bay dọc theo đường tắt cao tốc đó về đích một cách hoàn hảo.
+
+Slide 13: Mã nguồn: Cân bằng số lượng Bộ lọc (Filters)
+Người 1: Nhưng hàm Cộng hai Tensor thì bắt buộc phải hai mảng phải cùng số chiều. Nếu lớp giữa nó phình chiều sâu Kênh từ ba mươi hai lên sáu mươi bốn thì sao?
+Người 2: Thế thì mình dùng một lớp Côn-vờ hai đê (Conv2D) một nhân một chiếu thẳng lên đường cắt rế-di-đu-ồ. Không nhằm mục đích tính toán, chỉ làm cái bơm bơm phồng số Kênh lên bằng sáu mươi bốn cho khớp mảng để lấy chỗ cộng lại!
+
+Slide 14: Mã nguồn: Cân bằng Kích thước (MaxPooling)
+Người 1: Tương tự. Nếu lớp giữa nó có tham số Mác Pu-ling làm giảm nửa không gian bức ảnh đi?
+Người 2: Chắc chắn ở nhánh cắt rế-di-đu-ồ em cũng phải gọi Côn-vờ hai đê một nhân một kèm theo tham số xờ-troai bằng hai (strides=2) để ép đường cắt này nhảy cóc, cũng giảm nửa kích thước ảnh giống nhánh kia luôn để bảo toàn phép cộng Toán học! Rất tinh vi thưa thầy.
+
+Slide 15: Tại sao cần Chuẩn hóa Kích hoạt (Activation Normalization)?
+Người 1: Ta học xong vũ khí thứ nhất. Sang vũ khí số hai: Chuẩn hóa Hàng loạt (Batch Normalization). Ta đã biết chuẩn hóa giá trị từ 0 đến 1 cho ảnh gốc. Nhưng khi ảnh gốc qua từng lớp nó lại bị lệch phân phối đi.
+Người 2: Tầng sau luôn phải học lại từ đầu vì bộ dữ liệu bị thay hình đổi dạng xoành xoạch. Gọi là Dịch chuyển Hiệp phương sai Nội bộ phải không thầy?
+
+Slide 16: Toán học của Batch Normalization
+Người 1: Bát-nó-mờ-lai-zây-xần (BatchNormalization) xử lý bằng Toán học. Đầu tiên tính trung bình Mi (Mean), tính phương sai Xích-ma bình phương (Sigma) của Lô. Xong áp dụng công thức Chuẩn hóa gốc.
+Người 2: Em thấy có hai tham số là Gama và Bê-ta (Beta) gọi là Dịch chuyển và Tỷ lệ? Hai số này là hai trọng số dùng Gradient Descent để Máy tự động điều chỉnh trong lúc học. Quá đỉnh. Máy sẽ tự quyết định xem có giữ chuẩn hóa không.
+
+Slide 17: Quá trình Suy luận (Inference Mode)
+Người 1: Khi mang ra làm sản phẩm thương mại. Cửa hàng chỉ đưa cho em từng tấm hình một. Kích thước Lô bằng 1. Thế làm sao tính Trung bình với Phương sai?
+Người 2: À, lớp này nó cực kỳ thông minh. Trong lúc mình Huấn luyện ngàn tấm, nó âm thầm cộng lũy thừa ghi lại điểm Trung bình di động (Moving Average). Đến lúc đi làm kiếm tiền, nó vác con số ghi chú đó ra xài lại luôn thưa thầy!
+
+Slide 18: Cách lập trình Batch Normalization chuẩn xác
+Người 1: Ghi nhớ lệnh Kỹ sư chuẩn: Lớp Chuẩn hóa Hàng loạt LUÔN LUÔN đứng ở phía sau lớp Tích chập nhưng phía trước Lớp Kích hoạt Rê-lu (ReLU). Không bao giờ làm ngược lại.
+Người 2: Kế tiếp, vì bản thân hàm Chuẩn hóa nó tự trừ đi Mi đưa tọa độ về 0, nên cái tham số bai-át (bias) của lớp Tích chập trước nó hoàn toàn vô dụng. Để không gây tốn RAM vô ích, ta phải truyền Iu-bai-át bằng Phôn (use_bias=False) vào lớp Tích chập! Rất tỉ mỉ ạ.
+
+Slide 19: Giới hạn của Tích chập Truyền thống (Conv2D)
+Người 1: Vũ khí số ba: Tích chập Tách rời (Separable Convolution). Conv2D tiêu chuẩn làm hai việc một lúc: Quét các ô xung quanh (Không gian 2D) và Trộn thông tin các màu lại (Trộn Kênh).
+Người 2: Nhưng làm gộp một cục thế thì công thức nhân kích thước ma trận sẽ vô cùng khổng lồ. 
+
+Slide 20: Tích chập Tách rời (Depthwise Separable Convolution)
+Người 1: Người ta vạch ra ý tưởng: Đặc trưng Không gian và Đặc trưng Kênh màu chả liên quan mảng miếng gì với nhau. Bóc tách nó ra. Lớp Sé-pờ-rây-bồ Côn-vờ hai đê (SeparableConv2D).
+Người 2: À! Pha 1 (Đép-wai): Cầm khung vuông ba nhân ba quét qua từng kênh độc lập. Kênh đỏ chỉ dò hình khối kênh đỏ, kênh xanh chỉ dò kênh xanh. Không trộn nhau. Xong ra đến Pha 2 (Po-wai): Mới dùng khối một nhân một đâm xuyên đâm lủng trục Z qua các lớp để Trộn thông tin màu chéo. Tách biệt hoàn toàn!
+
+Slide 21: Phân tích Toán học về Hiệu suất
+Người 1: Kết quả tiết kiệm kinh dị: Thay vì nhân chung ra ba mươi sáu ngàn tham số. Lớp tách rời này chỉ tốn của ta bốn ngàn sáu trăm tham số. Giảm mất tiêu chín mươi phần trăm công sức tính toán của máy!
+Người 2: Bộ não vừa nhẹ, không bị ì ạch dư thừa, lại có thể né được bệnh Quá khớp vì không bị học thuộc lòng các con số thừa! Đúng là vũ khí hạng nặng.
+
+Slide 22: Sự co-evolve (Tiến hóa đồng thời) của Phần cứng và Phần mềm
+Người 1: Nhưng thực tế chạy trên GPU máy tính, Tích chập tách rời không hề nhanh hơn 90% như lý thuyết. Em biết vì sao không?
+Người 2: Hình như là do các công ty bán Card đồ họa NVIDIA họ chỉ viết Driver lõi ở hợp ngữ Assembly ưu tiên cho cái thằng Conv2D truyền thống quá quen thuộc? Còn Tích chập kiểu mới chả ai thèm tối ưu dòng code cấp thấp!
+Người 1: Đúng. Ở Deep Learning, Toán học đúng chưa chắc Hardware đã hỗ trợ.
+
+Slide 23: Lắp ráp mô hình Mini-Xception (Phần 1)
+Người 1: Giờ ta gom ba món bảo bối lại, ráp mô hình Mi-ni Ếch-xép-xần (Mini-Xception). Lớp đầu tiên, ta vẫn dùng Côn-vờ-hai-đê (Conv2D) cổ điển vì ở ảnh gốc, ba màu Đỏ Xanh Lục dính chặt với nhau, tách ra sẽ mất nét.
+Người 2: Tiếp theo, mở vòng lặp tạo 5 khối Block khổng lồ từ kênh kích thước 32 lên tận 512. Trong lõi vòng lặp, em chốt luôn biến rế-di-đu-ồ tạo đường tắt! Chèn Chuẩn hóa Hàng loạt, nhét Rê-lu, và nã Tích chập tách rời!
+
+Slide 24: Lắp ráp mô hình Mini-Xception (Phần 2)
+Người 1: Ở đoạn cuối vòng lặp, gọi Côn-vờ hai đê một nhân một để bắn cái rế-di-đu-ồ nhảy cóc qua khối! Rồi lấy hai cục X và Rế-di-đu-ồ Cộng lại (add) với nhau. Cuối cùng nhét vào Đầu ra Xích-moi (Sigmoid).
+Người 2: Nguyên một con Robot khổng lồ mà ráp ra chỉ ngốn có bảy trăm ngàn dòng lệnh Tham số so với một triệu rưỡi dòng của CNN cũ lúc nãy. Gọn nhẹ hơn hẳn.
+
+Slide 25: Đánh giá Độ chính xác (Accuracy)
+Người 1: Mở máy và huấn luyện. So sánh nào. Hôm qua mạng CNN gõ tay chỉ đạt Ác-cu-ra-xi 83.9%. Hôm nay, vũ khí tự chế này...
+Người 2: Oa, đạt Ác-cu-ra-xi 90.8 phần trăm! Tăng vọt lên hẳn 7 điểm phần trăm thưa thầy! Bằng đúng lượng dữ liệu đó, thuật toán xuất sắc luôn chiến thắng thuật toán sơ khai.
+
+Slide 26: Đánh giá Mất mát (Loss)
+Người 1: Nhìn đồ thị Loss, đường Validation đi xuống cực kỳ điềm đạm ổn định, bám sát gót đường Training. Công lớn nhất thuộc về kỹ thuật Chuẩn hóa Hàng loạt nằm len lỏi ở mọi ngõ ngách trong các đường truyền.
+Người 2: Em hiểu rồi. Kiến trúc lặp vòng Ếch-xép-xần này thực sự nên đem làm khuôn vàng thước ngọc cho mọi dự án sau này. Quá hoàn hảo.
+
+Slide 27: Giao thời của Công nghệ (Beyond Convolution)
+Người 1: Khép lại thời đại của CNN. Suốt một thập kỷ 2010 CNN làm vua mảng Thị giác. Nhưng một con quái vật sinh năm 2017 đang xuất hiện: Vi-dần Chan-pho-mờ (Vision Transformers - ViTs).
+Người 2: Ơ, em nhớ Chan-pho-mờ dùng trong Xử lý ngôn ngữ tự nhiên để máy tính dịch chữ mà? Sao lại đem đi cho Thị giác?
+
+Slide 28: Nguyên lý Hoạt động của ViTs
+Người 1: Một thiên tài đã nảy ra ý tưởng táo bạo: Tại sao không coi bức ảnh như một Câu văn dài? Còn các chi tiết trong ảnh là Các từ vựng (Token). Máy tính cắt nát bức ảnh ra thành các hình vuông nhỏ xíu mười sáu nhân mười sáu.
+Người 2: Trải dài nó ra thành một Vector một chiều như một dòng chữ, và ném toàn bộ vào mạng Chan-pho-mờ dịch thuật! Quá sốc thưa thầy! Thế làm sao nó hiểu được?
+
+Slide 29: Sức mạnh của Self-Attention
+Người 1: Nó hiểu bằng Cơ chế Tự chú ý (Self-Attention). CNN có cửa sổ đèn pin quét ảnh quá bé, cái góc bên trái nhìn không thấu được cái đuôi con chó tuốt bên phải ảnh! Phải xếp sâu một trăm lớp nó mới hiểu.
+Người 2: Còn Cơ chế Tự chú ý của Chan-pho-mờ thì so sánh TẤT CẢ các hình vuông với mọi hình vuông khác ngay cùng một MÚC! Tức là ngay từ giây đầu tiên, nó đã biết sự tồn tại của Mọi vật trên bức tranh có mối quan hệ cự ly xa với nhau thế nào! Quá kinh khủng!
+
+Slide 30: Hạn chế của ViTs so với ConvNets
+Người 1: Tuy nhiên, nhược điểm chí mạng của Vi-Tê (ViTs) là Không gian giả thuyết rỗng! Vì nó không phải CNN, nó không biết luật "Mẫu cục bộ đứng ở đâu cũng như nhau". Nó phải học lại Vật lý từ số không.
+Người 2: Tức là em phải nhồi cho nó số lượng dữ liệu lớn gấp chục lần kho ImageNet để nó tự ngộ ra quy luật. Mà em thì tiền điện chưa đóng, chỉ có RAM 8 Gigabyte...
+Người 1: Nên hãy quên nó đi. Với doanh nghiệp có giới hạn dữ liệu nhỏ, CNN luôn luôn là vua.
+
+Slide 31: Tổng kết Chương 9
+Người 1: Tổng kết chương. Em đã biết thế nào là Kỹ thuật MHR xây Tháp. Em đã rèn đủ ba thanh bảo kiếm chém Overfitting: Kết nối Thặng dư (Residual), Chuẩn hóa Hàng loạt (Batch Normalization) và Tích chập Tách rời (Separable Conv). Rất tuyệt vời.
+Người 2: Ráp chúng lại, ta có mạng Xception thần thánh, đè bẹp các mạng tự code rác rưởi. Em cảm ơn thầy về buổi học hôm nay. Em sẽ đọc thật kỹ và viết nháp thử một vài lần cấu trúc này.
+Người 1: Rất đáng khen tinh thần của em. Xin chào, ta sẽ gặp lại ở chương sau.

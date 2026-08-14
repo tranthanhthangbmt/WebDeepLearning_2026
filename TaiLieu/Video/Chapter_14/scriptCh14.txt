@@ -1,0 +1,117 @@
+Slide 1: Phân loại Văn bản (Text Classification & NLP)
+Người 1: Chào các em. Ở bài trước ta đã dùng RNN để trị dữ liệu Chuỗi Thời tiết có tính thứ tự. Hôm nay, ta bước sang một loại Chuỗi còn kỳ diệu và phức tạp hơn rất nhiều: Chuỗi Ngôn ngữ con người.
+Người 2: Đó có phải là nền tảng của Cha-t Gờ-Bê-Tê (ChatGPT) lừng danh hiện nay không thưa thầy?
+
+Slide 2: Nội dung chương
+Người 1: Chính xác! ChatGPT nằm ở môn Xử lý Ngôn ngữ Tự nhiên (NLP). Chương 14 sẽ dẫn dắt các em vào thế giới NLP. Một là Tổng quan. Hai là Tiền xử lý văn bản (Text Pipeline). Ba là dùng Thuật toán Túi từ Bag-of-Words. Bốn là học khái niệm Nhúng từ Word Em-bết-đinh (Word Embeddings) cực kỳ quan trọng.
+
+Slide 3: Lịch sử và Bản chất của NLP
+Người 1: Ngôn ngữ tự nhiên Tiếng Anh Tiếng Việt rất mập mờ, đôi khi phá vỡ cả quy tắc ngữ pháp của chính nó. Ngày xưa thập niên 90 người ta dùng If Else để nhốt tiếng Anh vào bộ quy tắc, kết quả là thất bại thảm hại.
+Người 2: Sau này chuyển sang học Máy (Machine Learning) và học Thống kê tự bắt quy luật mới thành công rực rỡ như hiện nay đúng không ạ?
+
+Slide 4: Các Bài toán Cốt lõi của NLP
+Người 1: NLP có nhiều bài toán. Thứ nhất: Phân loại Text Classification (Lọc thư rác, cắn cấu cảm xúc). Thứ hai: Dịch Máy (Machine Translation) như Google Translate. Thứ ba là Mô hình Ngôn ngữ (Language Modeling) - Đỉnh cao nhất: Cho 1 câu hỏi, dự đoán Sinh ra câu trả lời (ChatGPT).
+
+Slide 5: Tại sao cần Tiền xử lý Văn bản?
+Người 1: Có một sự thật phũ phàng: Mạng Nơ-ron không biết đọc chữ A, chữ B. Nó chỉ biết nhai Ma trận và Tính Toán con số 1 2 3 thôi.
+Người 2: Nên nhiệm vụ đầu tiên của em là phải Dịch cái câu tiếng Việt thành một dãy mã Số cho Mạng Nơ-ron ăn. Em gọi quá trình đó là Text Pipeline.
+
+Slide 6: Text Pipeline: 3 Bước Bất di bất dịch
+Người 1: Text Pipeline gồm 3 bước bắt buộc. Một là Chuẩn hóa s-tăng-đạt (Standardize): Biến chữ Hoa thành chữ Thường, xóa hết dấu chấm phẩy rác. Hai là Tô-cân-nai (Tokenization): Cầm dao chặt câu văn thành các đơn vị Tô-cân (Tokens) rời rạc. Ba là In-đếch (Indexing): Lập quyển từ điển ánh xạ mỗi Tô-cân thành 1 con Số Duy nhất.
+
+Slide 7: Tokenization: Tách ký tự và Tách từ bằng Regex
+Người 1: Ví dụ dùng Hàm Ri-gếch (Regex) trong Python. Nếu em tách theo Ký tự, câu "The fox" chẻ thành chữ T, chữ h, chữ e. Nếu em tách theo Từ, nó chẻ thành cục "The", cục "fox". Rất dễ hình dung.
+
+Slide 8: Indexing: Xây dựng Từ điển (Vocabulary)
+Người 1: Sau khi chẻ xong. Ta gom TẤT CẢ TỪ VỰNG trên đời vào một cuốn Từ điển Vô-cáp (Vocabulary). Gắn số cho nó. Ví dụ The là số 1, fox là số 4. Những từ vựng Lạ không có trong Từ điển, ta gán cho số 0, gọi là Ăn-nôn U-N-K (Unknown).
+
+Slide 9: Nhược điểm của Tách Ký tự và Tách Từ
+Người 1: Nhưng chọn chẻ Ký tự hay chẻ Từ? Chẻ Ký tự thì Từ điển nhỏ xíu (bảng chữ cái), nhưng câu văn sẽ mất sạch ý nghĩa. Chẻ theo Từ thì giữ được Nghĩa, nhưng cuốn Từ điển sẽ phình to ra cả triệu từ, cực nặng máy!
+Người 2: Có cách nào đứng ở giữa, Vừa giữ được Nghĩa lại Vừa tiết kiệm Từ điển không thầy?
+
+Slide 10: Mã hóa từ phụ (Sub-word Tokenization) và BPE
+Người 1: Đó là Thuật toán Xắp-guốt (Sub-word Tokenization) Bê-Pê-E (BPE). Nó không chẻ hẳn ra Ký tự, không giữ nguyên Từ. Nó gộp các ký hiệu hay đi với nhau lại. Ví dụ "l" gộp với "o" thành "lo". Sau này "lo" gộp với "w" thành "low".
+Người 2: Thật tuyệt vời! Nhờ thế nó có thể phân tích được cả những từ lạ được ghép bằng tiền tố hậu tố mà từ điển vẫn cực kỳ nhỏ gọn. ChatGPT đang dùng thuật toán này!
+
+Slide 11: Tự động hóa với Keras TextVectorization
+Người 1: Trong Keras, thay vì hì hục gõ tay, ta lôi Lớp Tếch Véc-tơ-rai-zây-xần (TextVectorization) ra. Ép cho nó giới hạn 20 ngàn Từ vựng (max_tokens). Và tự động nó làm mượt 3 bước Cắt gọt - Băm từ - Lên từ điển luôn.
+
+Slide 12: Phương pháp Túi từ (Bag-of-Words)
+Người 1: Quay về lịch sử NLP đời đầu. Thuật toán Túi từ (Bag-of-Words). Thuật toán này Cực nhanh nhưng Cực ngu! Tại sao?
+Người 2: Vì nó lấy tất cả các chữ trong câu ném vào một cái Túi lộn xộn. Nó chỉ đếm sự Tồn tại của Chữ đó, hoàn toàn Vứt bỏ thứ tự! Do đó nó hiểu nhầm câu "Chó cắn người" và câu "Người cắn chó" là cùng mang một thông điệp như nhau (Vì trong Túi có chữ Người, có chữ Chó, có chữ Cắn). Trật lất rồi!
+
+Slide 13: Thuật toán TF-IDF (Term Frequency-Inverse Document Frequency)
+Người 1: Để cứu vớt Túi từ. Ta xài công thức Thống kê Tê-Ép I-Đê-Ép (TF-IDF). Tê Ép là Đếm số lần xuất hiện của từ. I-Đê-Ép là phạt nghịch đảo từ đó.
+Người 2: Nghĩa là những chữ rác như "cái", "thì", "là", "mà" xuất hiện cực nhiều sẽ bị phạt đưa điểm số về Số 0. Còn chữ quý hiếm mang tính Cốt lõi như "Deep Learning" xuất hiện ít sẽ được đẩy điểm số lên cực cao đúng không ạ?
+
+Slide 14: Áp dụng Bag-of-Words cho tập Dữ liệu IMDb
+Người 1: Chuẩn bị dữ liệu Phân tích Đánh giá Phim ảnh Ai-Em-Đi-Bi (IMDb). Cấu hình kiểu mưu-ti-hót (multi_hot). Một câu bình luận phim dài ngắn thế nào không cần biết. Đưa qua lớp này là biến thành Một mảng Zero dài 20000 ô. Từ nào xuất hiện thì ô số đó biến thành số 1!
+
+Slide 15: Xây dựng Linear Classifier cho Bag-of-Words
+Người 1: Vì mảng 20000 ô đó rất vô thưởng vô phạt. Ta chỉ cần một Mạng Nơ-ron bé hạt tiêu: Đúng 1 Lớp Đen-x (Dense) 1 Nơ-ron. Chạy hàm Xích-moi (Sigmoid) để nhả xác suất Cảm xúc Phim Tốt (1) hay Phim Xấu (0).
+Người 2: Mạng này có đúng 20000 tham số, siêu nhỏ! Dạy nó chắc chỉ mất 1 giây!
+
+Slide 16: Tiền xử lý hiệu quả với CPU và GPU
+Người 1: Chú ý luồng dữ liệu! Text Pipeline băm chặt chữ là đồ của CPU. Mạng Nơ-ron là đồ của GPU. Em phải dùng Tê-Ép Đát-Ta Đát-xét (tf.data.Dataset) để xài Multi-threading cho CPU, đảm bảo dòng chảy Data nhịp nhàng không để GPU ngồi chơi.
+
+Slide 17: Huấn luyện mô hình Bag-of-Words cơ bản
+Người 1: Chạy lệnh. Kết quả? Tét A-cu-ra-xi (Test Accuracy) đạt 88.38%!
+Người 2: Á! Thuật toán Túi từ ngốc nghếch vứt bỏ thứ tự thời gian, Mạng Nơ-ron nông choèn 1 Lớp, mà lại đạt 88.3% cơ ạ?
+Người 1: Đấy chính là sức mạnh của Thống kê trên Từ khóa. Với tác vụ Phân tích Cảm xúc dễ dãi, chỉ cần nhìn thấy chữ "Tuyệt vời", "Xuất sắc" thì 90% câu đó là câu khen, kệ xác thứ tự thời gian.
+
+Slide 18: Tối ưu hóa: Bigram Model (Lưu vết thứ tự cục bộ)
+Người 1: Nâng cấp Bag-of-words một chút bằng cặp Bi-g-ram (Bigrams). Tức là ta gộp 2 chữ đứng cạnh nhau vào chung 1 Túi. 
+Người 2: Tức là Túi bây giờ có thêm Cụm từ "Hoa Kỳ" phân biệt với chữ "Hoa" chữ "Kỳ". Như vậy nó giữ được một lượng cấu trúc thời gian bé bé xíu xíu. Accuracy lên 90.11% ngay lập tức. Đỉnh quá.
+
+Slide 19: Hiệu suất của Bag-of-Words
+Người 1: Chốt lại. Bag-of-words là mô hình Tập hợp (Set-based). Cực nhanh, rất hợp để lọc rác Spam Email hay Cảm xúc đơn giản khi tập dữ liệu nhỏ dưới một trăm ngàn. Lên Công ty làm là nã đạn Bag-of-words test trước tiên!
+
+Slide 20: Mô hình Trình tự (Sequence Models)
+Người 1: Bây giờ qua Mô hình thứ hai: Mô hình Trình tự (Sequence Models). Áp dụng cho RNN và LSTM. Vì xài mạch thời gian, nên các câu phải Có độ dài BẰNG NHAU.
+Người 2: Ép tất cả các câu về mác len (max_length = 600). Câu nào thiếu chữ thì lấy Số Không đệm Pát-đinh (Padding) vào. Câu nào dài quá thì cắt vứt đi. Cho nó vuông vức! Dễ hiểu.
+
+Slide 21: Khuyết điểm của One-hot Encoding
+Người 1: Câu hỏi triệu đô! Trước giờ một từ "Con Mèo" hay được mã hóa One-hot thành 1 cái mảng chứa toàn số 0 và đúng một con số 1.
+Người 2: Tức là Con Chó là [1 0 0], Con Mèo là [0 1 0], Cái Bàn là [0 0 1].
+Người 1: Đúng. Em tính Tích vô hướng (Khoảng cách) của Chó và Mèo xem bằng mấy? Bằng 0! Tính khoảng cách của Chó và Cái Bàn cũng bằng 0! Khái niệm Số 1 và Số 0 rời rạc này khiến Toán học vô dụng trong việc đánh giá ĐỘ TƯƠNG ĐỒNG của Ngữ nghĩa!
+
+Slide 22: Sự trỗi dậy của Word Embeddings (Nhúng từ)
+Người 1: Đây là cội nguồn của NLP hiện đại. Nhúng Từ (Word Embeddings). Không xài số 0 số 1 nữa. Xài MẢNG DÀY ĐẶC CÁC SỐ THỰC. Từ vựng "Con chó" biến thành một đám mây các con số thực trong không gian đa chiều (256 chiều). 
+Người 2: Ui cha! Em đoán là, con chó và con sói là động vật, nó sẽ bị nén lại GẦN NHAU trong góc không gian kia. Còn Cái Ô tô nó bị văng tuốt ra ngoài không gian khác vì không cùng Ngữ cảnh! Mô hình có khả năng hiểu sự liên kết!
+
+Slide 23: Đại số tuyến tính trong Không gian Ngữ nghĩa
+Người 1: Chính xác. Vì là Không gian Nhúng Số thực. NLP có thể Làm Toán trên Ngôn ngữ!
+Người 2: Trời ơi em thấy công thức Vua (King) trừ đi Nam (Man) cộng cho Nữ (Woman) bằng Nữ Hoàng (Queen). Ý nghĩa Toán học phản chiếu chính xác vào ý nghĩa Xã hội học một cách ma thuật thưa thầy!
+
+Slide 24: Lớp Embedding (Embedding Layer) trong Keras
+Người 1: Trong Keras, việc Nhúng từ này được thực thi bởi một Lớp Trọng số cực khổng lồ mang tên Lớp Em-bết-đinh (Embedding Layer). Em ném Index số 12 của chữ Quả Táo vào, nó sẽ tra bảng và móc ở hàng 12 ra một Vector số thực 256 phần tử ném lại cho LSTM học! Cái Bảng đó tự động Tối ưu hóa nhờ Backpropagation.
+
+Slide 25: Sử dụng layers.Embedding cho mô hình LSTM
+Người 1: Code thực hành: Đặt lớp Em-bết-đinh (Embedding Layer) đứng trước LSTM. Bật Mác-xê-rô bằng tru (mask_zero=True) để lớp này báo cho LSTM biết "Hễ thấy số 0 đệm Padding thì hãy mù đi, đừng tính toán tốn thời gian".
+
+Slide 26: Vấn đề Dữ liệu Nhãn (Labeled Data) bị hạn chế
+Người 1: Tuy nhiên. Lớp Embedding làm mô hình siêu nhẹ đi. Nhưng khi ráp Embedding chung với LSTM, Accuracy rớt thảm hại, thua cả Bag-of-words!
+Người 2: Tại sao Mạng khủng như LSTM mà lại thua ạ?
+Người 1: Vì Mạng Embedding + LSTM quá To. Mà dữ liệu Movie thì quá Nhỏ (2 vạn sample). Em bắt một đứa trẻ học thuộc Ngữ pháp của thế giới thông qua 2 vạn tờ giấy là nó tẩu hỏa nhập ma Overfitting ngay! 
+
+Slide 27: Kiến trúc học Nhúng: Word2Vec và CBOW
+Người 1: Giải pháp là: Xài Trọng số Tiền Huấn luyện (Pre-trained Word Embeddings). Tức là ta đi kiếm một Mạng Nơ-ron nào đó, bắt nó đọc toàn bộ bách khoa toàn thư Wikipedia để Tự nó học ra cái Lớp Em-bết-đinh cho chuẩn. Không cần ai gán nhãn! Nổi tiếng nhất là Word-Tu-Véc (Word2Vec) của Google.
+Người 2: Nhưng nó không có Nhãn (Unsupervised) thì Hàm Loss tính sai số kiểu gì thưa thầy?
+Người 1: Kỹ thuật Xi-Bâu (CBOW)! Máy tính tự động đục lỗ che mờ chữ Của ở giữa câu đi. Xong bắt cái Mạng đoán chữ ở giữa là chữ gì dựa vào các từ Ngữ cảnh xung quanh! Quá thông minh!
+
+Slide 28: Chuẩn bị dữ liệu Cửa sổ (Context Window) cho CBOW
+Người 1: Đoạn code này thiết lập Cửa sổ 8 chữ cho CBOW. Trượt trên cái cửa sổ. Cứ đè cổ chữ số 5 ở giữa ra làm Target Labels. Rất thủ công và hay.
+
+Slide 29: Xây dựng mô hình CBOW dự đoán nhãn
+Người 1: Mô hình CBOW cực dễ. Lấy Lớp Em-bết-đinh cần Dạy, ném 8 cái từ đó vào, nó nhả ra 8 Vector. Cho lây-ơ pu-ling (Pooling1D) tính trung bình trộn 8 khối đó lại rồi ném ra dự đoán bằng Sigmoid! Vector nào học sai thì Backprop ngược về chỉnh lại Không gian cho hợp lý.
+
+Slide 30: Sử dụng Pre-trained Embeddings
+Người 1: Chẳng ai rảnh mà cày lại CBOW. Ta lên mạng tải bộ Trọng số Pre-trained G-Lốp (GloVe) về. Cắm vào Lớp Em-bết-đinh, khóa cứng Lệnh trên-na-bô bằng Phô (trainable=False) để chặn không cho phá vỡ bộ từ điển khổng lồ này. Sau đó cho LSTM train như bình thường.
+
+Slide 31: Sự lựa chọn giữa Set-based và Sequence-based
+Người 1: Chốt lại: Lúc nào dùng Bag-of-words (Set-based), lúc nào dùng LSTM-Transformer (Sequence-based)?
+Người 2: Data nhỏ dưới một trăm ngàn, bài toán Phân tích Đơn giản thì nã đạn Bag-of-words cực nhanh, rẽ tiền. Còn Data to khổng lồ, bài toán Cấu trúc Thời gian (Dịch máy, Tạo văn bản) thì mới bật sức mạnh của Nhúng từ Word Embedding + Sequence lên!
+
+Slide 32: Tổng kết Chương 14
+Người 1: Một chương xuất sắc về NLP. Text Pipeline cắt chữ thành số, Bag-of-Words gom vào túi lộn xộn. Cuối cùng, Word Embeddings cắm rễ chữ vào Không gian Số thực, mang lại linh hồn Ngữ nghĩa tương đồng và kích hoạt Đại số tuyến tính cho Mạng LSTM.
+Người 2: NLP đã bước sang một thời đại rực rỡ và em đã sẵn sàng cho Transformer ở phần sau thưa thầy!

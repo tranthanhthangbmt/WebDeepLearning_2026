@@ -1536,4 +1536,9 @@ môi trường được lựa chọn - máy chủ web, thiết bị di động, 
   <iframe src="TaiLieu/slideDL/Chapter06.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
+
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_06/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
 <!-- tabs:end -->

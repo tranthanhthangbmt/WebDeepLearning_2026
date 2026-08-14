@@ -1,0 +1,115 @@
+Slide 1: Mô hình Ngôn ngữ & Kiến trúc Transformer
+Người 1: Chào các em. Chào mừng đến với bài học vĩ đại nhất của khóa. Phép màu đã khai sinh ra siêu AI ChatGPT. Đó là Kiến trúc T-ran-s-pho-mơ (Transformer).
+Người 2: Em vô cùng hồi hộp. Nghe nói thuật toán này đang thống trị toàn bộ thế giới AI hiện tại đúng không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Bài học gồm 4 nội dung cốt lõi: Một là Cơ chế Dịch máy Xếc-Tu-Xếc (Seq2Seq). Hai là Điểm nghẽn Cổ chai và sự ra đời của khái niệm Chú ý (Attention). Ba là Kỹ thuật Self-Attention. Bốn là Cấu trúc hoàn chỉnh của Transformer. Đi thôi!
+
+Slide 3: Language Model (Mô hình Ngôn ngữ) là gì?
+Người 1: Thế nào là "Sinh ra văn bản"? Rất đơn giản. Đầu tiên đọc 3 chữ: "Hôm nay trời". Áp dụng Phân phối Xác suất, ta thấy chữ "đẹp" có xác suất cao nhất. Bụp! Ghép nó vào. Thành câu "Hôm nay trời đẹp". Xong lại đọc 4 chữ đó để mớm chữ thứ 5. Quá trình này gọi là Lan-guếch Mô-đồ (Language Model).
+
+Slide 4: Chuẩn bị dữ liệu Sinh văn bản: Văn thơ Shakespeare
+Người 1: Thử làm nhà thơ Sếc-s-pia (Shakespeare) nhé! Tải toàn bộ truyện Sếc-s-pia về. Cắt thành các đoạn văn dài 100 ký tự. Lấy đoạn 100 chữ đó làm In-pút (Input).
+Người 2: Đoạn Output là gì ạ?
+Người 1: Là chính đoạn văn đó, nhưng Dịch lên trên một ký tự! Ví dụ Input là "Hôm nay trờ", Output mong muốn là "ôm nay trời". Cứ như vậy!
+
+Slide 5: Xây dựng Bộ từ điển Cấp độ Ký tự (Char-level)
+Người 1: Ta xài Từ điển Cấp độ Ký tự (Char-level). Nghĩa là Cắt vụn văn bản ra thành từng Chữ cái Một. Chữ A, chữ B, chữ C. Tổng cộng từ điển Sếc-s-pia chỉ có vỏn vẹn 67 chữ cái và dấu câu các loại! Nhỏ bé và gọn gàng.
+
+Slide 6: Xây dựng Mô hình Ngôn ngữ Thu nhỏ (GRU)
+Người 1: Thầy ném vào mạng Gờ-Rê-U (GRU) có 1024 trạng thái ẩn. Cuối cùng nhả Đầu ra Đen-x (Dense) là 67 nơ-ron tương ứng với 67 Ký tự. Ký tự nào có điểm số cao nhất (Softmax) thì nhặt lấy nó!
+
+Slide 7: Vòng lặp Sinh ký tự (Sampling Loop)
+Người 1: Quá trình vận hành Sinh chữ (Inference). Em phải viết một Vòng lặp For. Gọi hàm P-rị-đích (predict). Lấy cái Ký tự Vừa Sinh Ra đẩy ngược trở lại làm Đầu vào Input cho vòng lặp tiếp theo. Cơ chế này gọi là Tự Hồi Quy Au-tô-ri-g-rét-síp (Autoregressive).
+
+Slide 8: Kiến trúc Sequence-to-Sequence (Dịch máy)
+Người 1: Giờ ta qua bài toán Dịch máy. Tiếng Anh sang Tây Ban Nha. Có dịch từng từ được không? Chữ "The" dịch sang "El", "dog" sang "perro"?
+Người 2: Không được ạ! Vì Ngữ pháp hai ngôn ngữ lộn xộn khác nhau. Đại từ và Tính từ đứng đảo lộn. Phải Đọc Toàn Bộ Câu tiếng Anh xong thì mới Bắt đầu Nhả từ tiếng Tây Ban Nha đầu tiên thưa thầy!
+Người 1: Chuẩn. Gọi là Xếc-Tu-Xếc (Seq2Seq). Chuỗi sang Chuỗi.
+
+Slide 9: Chuẩn bị Dataset Đa đầu vào (Multi-Input Dataset)
+Người 1: Data của nó sẽ có 2 đầu vào: Câu gốc tiếng Anh, và Câu Đích tiếng Tây Ban Nha. Khúc sau y hệt trò làm thơ, Câu Label sẽ là Câu Tây Ban Nha Bị Dịch đi 1 chữ. Để ép mô hình Dự đoán chữ tiếp theo của ông Tây Ban Nha.
+
+Slide 10: Nút thắt cổ chai của Seq2Seq sử dụng RNN/LSTM
+Người 1: Mạng RNN Dịch máy hoạt động như sau: Có 2 bộ phận. En-cốt-đơ (Encoder - Bộ mã hóa) sẽ đọc nguyên 1 câu tiếng Anh. Cứ đọc đến cuối nó sẽ Nén ý nghĩa lại thành MỘT cái Véc-tơ Trạng thái cuối cùng. Ta vứt cái Véc-tơ đó sang cho bộ phận Đi-cốt-đơ (Decoder - Bộ giải mã). Đi-cốt-đơ ngậm cái Véc-tơ đó và từ từ Nhả ra từng chữ Tây Ban Nha.
+Người 2: Ơ thầy ơi. Nếu câu tiếng Anh dài 50 từ, mà NÉN TẤT CẢ VÀO ĐÚNG MỘT VÉC-TƠ thì dung lượng đâu mà chứa cho hết? Nó tràn RAM rớt chữ mất!
+Người 1: Em cực kì sắc bén! Véc-tơ Trạng thái đó bị gọi là Nút Thắt Cổ Chai (Bottleneck). Khuyết điểm chí mạng của RNN và LSTM khiến nó lụi tàn.
+
+Slide 11: Sự ra đời của Cơ chế Attention
+Người 1: Để đập tan cổ chai. Năm 2014 một nhóm nghiên cứu nghĩ ra trò này: Lúc Đi-cốt-đơ dịch chữ thứ nhất, TẠI SAO phải ngậm Véc-tơ cuối cùng? Lôi BẢN GỐC Tiếng Anh ra Nhìn lướt lại một lần nữa đi! Từ nào liên quan thì CHÚ Ý vào từ đó! 
+Người 2: Chà! Vậy là khái niệm CƠ CHẾ CHÚ Ý (Attention) ra đời. Nó làm biến mất hoàn toàn Nút thắt cổ chai vì lúc nào cũng được mở "sách giáo khoa" ra coi!
+
+Slide 12: Điểm Chú ý (Attention Scores)
+Người 1: Toán học của sự Chú ý. Ví dụ Đi-cốt-đơ đang nặn ra chữ E-x-ta-xi-ôn (Trạm). Nó lập tức nhìn bảng gốc tiếng Anh và Phát Điểm Chú Ý từ 0 đến 1. Chữ I 0.0. Chữ am 0.0. Chữ Station: Nhận điểm 0.95! Điểm chú ý cực lớn! 
+
+Slide 13: Trực quan hóa Ma trận Attention
+Người 1: Hãy nhìn ma trận Ánh sáng rực rỡ này. Chữ "Zone" của tiếng Anh nối thẳng tới chữ "Zone" của Pháp. Nhưng hãy nhìn chữ Đảo ngữ! Chữ "Economic" (Kinh tế) đứng TRƯỚC chữ Zone ở Tiếng Anh, nhưng khi dịch sang tiếng Pháp, Ma trận ánh sáng tự động Đánh Xéo nét đứt để chỉ đạo "Kinh tế phải nằm SAU cái Khu vực". Rất hoàn hảo!
+
+Slide 14: Truy vấn Cơ sở dữ liệu: Query, Key, Value
+Người 1: Để Toán học hóa Ma trận Ánh sáng kia. Người ta mượn 3 khái niệm của Ngành Dữ liệu: C-he-ri (Query - Q), Ki (Key - K) và Va-liu (Value - V). 
+Người 2: Q, K, V là gì thưa thầy?
+Người 1: Q (Truy vấn) là Từ hiện tại đang cố nặn ra. K (Chìa khóa) là Nhãn của các chữ trong câu gốc. Ta lấy Q So Khớp với toàn bộ K. Cái nào Giống Nhau thì Điểm Chú ý sẽ Cao. Điểm cao đó sẽ được nhân với Giá trị Thực Sự V (Value) để nạp vào!
+
+Slide 15: Phương trình Scaled Dot-Product Attention
+Người 1: Đây là phương trình Tỷ đô la. X-kêu Đót P-rồ-đất A-ten-xần (Scaled Dot-Product Attention).
+Người 2: Em thấy nó lấy Q nhân với Ma trận Chuyển vị K. Hai Véc-tơ nhân Vô hướng với nhau là để đo Độ Tương đồng Toán học đúng không thầy?
+Người 1: Giỏi lắm. Sau khi nhân độ tương đồng, chia cho Căn bậc hai của Độ dài để hãm Phanh (Scale) đạo hàm lại không cho nó nổ. Bỏ vào hàm Softmax lấy Xác suất. Cuối cùng Xác suất đó được nhân Tích chập với Value V. Tuyệt mỹ!
+
+Slide 16: Self-Attention (Tự Chú ý)
+Người 1: Nâng cấp tiếp. Nếu Q, K, V KHÔNG PHẢI lấy từ 2 câu Anh-Pháp. MÀ LẤY TỪ CHÍNH 1 CÂU DUY NHẤT. Thì gọi là Xeo A-ten-xần (Self-Attention - Tự Chú Ý). 
+Người 2: Tự câu văn đó Chú ý vào chính nó ạ? Để làm gì thưa thầy?
+Người 1: "The Bank of the River". Chữ Bank là Ngân hàng hay Bờ sông? Nhờ Tự Chú Ý, chữ Bank sẽ phóng Q đi khớp với Key của các từ trong câu. Gặp chữ River (Sông). Điểm Chú ý nổ tung! Vậy là chữ Bank TỰ BIẾT ĐỔI MÀU Ngữ nghĩa của chính nó thành "Bờ Sông"! Mạng hiểu được ngữ cảnh tầm xa!
+
+Slide 17: Multi-Head Attention (Chú ý Đa luồng)
+Người 1: Chưa hết. Nếu chỉ cho nó 1 luồng chú ý. Lỡ nó chú ý sai thì sao? Ta nhân bản Q-K-V lên thành 8 luồng song song! Gọi là Mưu-ti Hét A-ten-xần (Multi-Head Attention). 
+Người 2: Nghĩa là Cùng một câu, Cái Đầu Số 1 sẽ chú ý vào Ngữ Pháp, Cái Đầu Số 2 chú ý vào Đại Từ, Cái Đầu Số 3 chú ý vào Thời gian... Tổng hợp 8 cái đầu lại sẽ bắt được Trọn vẹn Ý Nghĩa Lập Thể của Câu văn đúng không ạ?
+
+Slide 18: Cài đặt khối Transformer Encoder
+Người 1: Lập trình Khối En-cốt-đơ (Encoder). Lấy Lớp Mưu-ti-hét xếp lên. Xong gắn Đen-x vào. Đừng quên Cấu trúc Đi tắt Cộng dồn của Rét-nét (Residual) để bảo vệ Đạo hàm qua nhiều lớp! Code y chang mạng ảnh.
+
+Slide 19: Sự khác biệt: Layer Normalization vs Batch Normalization
+Người 1: Chỉ có 1 khác biệt so với Nhận diện Ảnh. Xử lý ảnh ta xài Bát No-mờ (BatchNormalization) tính trung bình ngang các Tấm ảnh. Còn Xử lý Chuỗi chữ, ta xài Lây-ơ No-mờ (LayerNormalization) tính trung bình Dọc theo từng Chữ cái. Nhớ dùng đúng Lớp!
+
+Slide 20: Bài báo vĩ đại: "Attention Is All You Need" (2017)
+Người 1: Năm 2017, các Kỹ sư Google vỗ trán: Tại sao Attention hay thế mà vẫn phải ghép chung với cái xe rùa đứt xích RNN làm gì? Rút điện thằng RNN ra! Tạo ra một kiến trúc thuần túy 100% bằng Attention. Lịch sử sang trang! Khai sinh kiến trúc T-ran-s-pho-mơ (Transformer). "Chỉ cần Chú ý là đủ" (Attention Is All You Need).
+Người 2: Nó bỏ RNN tức là bỏ Vòng Lặp. Không còn vòng lặp thì GPU có thể Cắm Song Song tính toán TẤT CẢ các chữ trong câu Cùng MỘT LÚC! Tốc độ Train mô hình sẽ nhanh gấp hàng ngàn lần thưa thầy!
+
+Slide 21: Sơ đồ Kiến trúc Transformer
+Người 1: Sơ đồ kinh điển thế giới. Khối Encoder bên trái xài Xeo-A-ten-xần. Khối Decoder bên phải xài C-rốt A-ten-xần (Cross-Attention) để Bắt chéo móc nối 2 ngôn ngữ với nhau. Rất tinh xảo.
+
+Slide 22: Cài đặt khối Transformer Decoder
+Người 1: Code Khối giải mã Đi-cốt-đơ. Chú ý dòng code đầu có tham số Cố-zồ mác bằng Tru (use_causal_mask=True). Đây là Mặt nạ Che tương lai!
+
+Slide 23: Mặt nạ Causal Masking là gì?
+Người 1: Không có Vòng lặp RNN, máy tính nhìn cái là thấy ngay đáp án Tiếng Tây Ban Nha ở tương lai! Nhìn trộm thì học hành gì nữa. Ta phải quăng cái Ma trận Cố-zồ (Causal Mask) đầy những số 0 vào phần Tương Lai. Bịt mắt Đi-cốt-đơ lại! Chữ số 1 chỉ được nhìn thấy bản thân nó và số 0 ở quá khứ thôi. Cấm nhìn số 2!
+
+Slide 24: Mảnh ghép cuối: Positional Encoding (Mã hóa Vị trí)
+Người 1: Lại một lỗi nữa. Không có vòng lặp, toàn bộ câu văn chui vào ống song song cùng 1 lúc. Nó giống như Mớ Cơm Trộn lộn xộn, Máy sẽ bị Tẩu hỏa nhập ma chả biết Chữ nào Đứng trước Chữ nào! 
+Người 2: Ơ, mất Thứ tự Thời gian thì hỏng hết ạ. Khắc phục sao thầy?
+
+Slide 25: Cài đặt Lớp Positional Embedding
+Người 1: Bơm thêm Mã Hóa Vị Trí (Positional Encoding)! Ta sinh ra một cái Véc-tơ Vị trí số 0, số 1, số 2... xong đem CỘNG DÍNH nó vào Véc-tơ Chữ.
+Người 2: Em hiểu rồi. Kể cả Chữ Mèo có nằm lộn xộn ở góc nào, nó vẫn mang theo cái "Vân Tay Nhận Dạng" số thứ tự. Máy tính đọc cái vân tay là biết "À, thằng Mèo này đứng ở vị trí Thứ 2". Phép thuật Toán học!
+
+Slide 26: Ráp nối Kiến trúc Transformer Hoàn chỉnh
+Người 1: Lắp ráp hoàn chỉnh. Véc-tơ Vị trí Cộng Dồn, đi vào Mã Hóa, đi sang Giải mã với Mặt nạ Che Mắt, xuất ra Đen-x 1 chiều. Phức tạp nhưng Vĩ đại vô cùng!
+
+Slide 27: Kết quả Dịch máy Anh - Tây Ban Nha
+Người 1: Huấn luyện mạng lưới. 30 Kỷ nguyên trôi qua. Kết quả dịch câu "Sự giống nhau giữa 2 người đàn ông thật kỳ lạ" cực kỳ nuột nà. Sai số biến mất, độ chính xác tăng vọt lên 67%, đập chết các thuật toán cũ.
+
+Slide 28: Tại sao Transformer lại vượt trội so với RNN?
+Người 1: Lý do thứ 1: Song song hóa trên GPU! Đập tan Vòng lặp tuần tự chờ nhau của RNN. Tốc độ ánh sáng. Lý do thứ 2: Mạng lưới Toàn cầu! Chữ ở tận Đầu câu có thể bắn véc-tơ Attention giao tiếp Trực tiếp với chữ ở Tận Cuối Câu bằng Khái niệm Mức $O(1)$! Không hề bị Rớt Trí Nhớ như LSTM!
+
+Slide 29: Mô hình Ngôn ngữ Che giấu (Masked Language Model)
+Người 1: Dựa trên Transformer, các Biến thể ra đời. Không xài Sinh chữ nữa. Bớt (BERT) của Google xài trò: Đục Lỗ Che Giấu (Masked Language Model). Câu "Con chó cắn con mèo". Đục thủng chữ "Cắn". Bắt BERT phải đoán. Thế là BERT buộc phải dùng Attention liếc nhìn cả thằng Quá Khứ (Con Chó) và Thằng Tương Lai (Con Mèo) để tự đoán ra Chữ Cắn! Khả năng hiểu Ngữ Cảnh vô song.
+
+Slide 30: Kỷ nguyên của Pre-trained Transformers khổng lồ
+Người 1: Và đó là Khởi nguyên của Mạng Khổng Lồ Hàng Tỷ Tham Số (Billions). Ta lôi Rô-béc-ta Bết (roberta_base) 124 Triệu Tham số có sẵn của Keras Hub ra thử. Mô hình này đã nuốt trọn 160 Gigabytes dữ liệu Bách khoa toàn thư của nhân loại tốn hàng triệu Đô La tiền điện của Big Tech!
+
+Slide 31: Tinh chỉnh (Fine-tuning) RoBERTa
+Người 1: Ta đứng trên vai người khổng lồ. Cắt cái Đầu Rô-béc-ta ra, cắm cái Lớp Phân loại Cảm Xúc Phim (TextClassifier) vào đuôi nó. Ta chỉ cần Train Fine-tune bằng bộ não đã có sẵn Trí khôn của Rô-béc-ta. Tốn đúng 1 Kỷ nguyên (Epoch) là AI hiểu được Cảm xúc loài người! 
+
+Slide 32: Tổng kết Chương 15
+Người 1: Tổng kết. Em đã hoàn thành đỉnh cao chói lọi nhất của AI hiện đại: Transformer. Sự thay thế hoàn hảo cho RNN nhờ vứt bỏ Vòng lặp.
+Người 2: Với phương trình Scaled Dot-Product, Multi-head Self-Attention, và Positional Encoding. Cơ chế Che Tương Lai Causal Masking, tất cả ráp lại thành khối Rubic hoàn mỹ.
+Người 1: Xin chúc mừng em. Hãy nghỉ ngơi, chúng ta đã sẵn sàng để dấn thân vào những chủ đề AI sáng tạo (Generative AI) tuyệt vời ở phần sau.

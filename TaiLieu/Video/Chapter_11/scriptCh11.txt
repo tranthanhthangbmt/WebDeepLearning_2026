@@ -1,0 +1,115 @@
+Slide 1: Phân vùng Hình ảnh (Image Segmentation)
+Người 1: Chào các em. Ở các chương trước ta chỉ giải quyết bài toán dễ nhất của Thị giác Máy tính là gán nhãn cho cả một bức ảnh. Nhưng ngoài thực tế, xe ô tô tự lái không thể chỉ biết phía trước có người đi bộ, mà nó phải biết ranh giới chính xác đến từng milimet của người đó để đánh lái.
+Người 2: Đó là nội dung của Chương 11 hôm nay: Phân vùng hình ảnh, hay còn gọi là Xích-mên-tây-xần (Segmentation) phải không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Đúng vậy. Chương này có 4 phần. Một là khái niệm tổng quan. Hai là ta tự tay thiết kế và huấn luyện mô hình Mạng U-Nét (U-Net) phân vùng từ con số 0. Ba là ta diện kiến Siêu mô hình Nền tảng Xéc-mên E-ni-tinh (Segment Anything - SAM). Bốn là thực hành Kỹ nghệ Lệnh nhắc (Prompting) trên mô hình siêu khổng lồ này.
+
+Slide 3: Ba nhánh chính của Thị giác Máy tính
+Người 1: Nhìn vào hình, em mô tả 3 level của AI thị giác xem.
+Người 2: Cấp 1 là Phân loại: Nhìn bức ảnh phán ra chữ Mèo. Cấp 2 là Phát hiện vật thể (Object Detection): Đóng một cái hộp Bâu-đinh Bóc (Bounding Box) hình chữ nhật xung quanh con Mèo. Cấp 3 là Phân vùng (Segmentation): Cắt tô màu viền bao quanh hình dáng con mèo cong cong uốn lượn chính xác đến từng Điểm ảnh (Pixel). Rõ ràng cấp 3 là khó nhất.
+
+Slide 4: Phân loại Bài toán Image Segmentation
+Người 1: Trong nhánh Phân vùng, lại có 2 kiểu con. Xê-man-tích Xích-mên-tây-xần (Semantic Segmentation) nghĩa là tô màu theo Khái niệm. Có mười con Mèo thì nó đổ chung một màu vàng chóe lên mười con.
+Người 2: Còn In-sờ-tơn Xích-mên-tây-xần (Instance Segmentation) là bóc tách Cá thể. Nó phải nhận diện rạch ròi Mèo 1 màu vàng, Mèo 2 màu xanh, tách biệt độc lập với nhau. Bài này chắc chắn khó hơn rồi.
+
+Slide 5: Bài toán: Phân tách Tiền cảnh và Hậu cảnh
+Người 1: Bắt đầu đi code thực hành. Bài toán hôm nay ta làm Mức Xê-man-tích cơ bản: Phân tách chủ thể Tiền cảnh và Hậu cảnh trên bộ dữ liệu Chó Mèo Óc-phớt (Oxford).
+Người 2: Em thấy ảnh đầu vào là một con Mèo đứng trên cỏ. Vậy mục tiêu của máy tính là gọt con mèo ra khỏi bãi cỏ y hệt như dùng công cụ Cắt viền trong Photoshop?
+
+Slide 6: Tải Dữ liệu Oxford-IIIT Pets
+Người 1: Tải bộ ảnh trên Colab. Tải hai gói là gói I-mít (images) chứa ảnh gốc màu, và gói An-nô-tây-xần (annotations) chứa Mặt nạ. Dùng Pass-Líp (pathlib) quét sạch rác hệ thống để xếp lại danh sách hai tệp cho khớp.
+
+Slide 7: Khái niệm Mặt nạ (Mask)
+Người 1: Ở bài toán Phân loại, nhãn Ground Truth chỉ là con số 0 hoặc 1. Nhưng ở bài toán Phân vùng, Nhãn nó là một bức ảnh nguyên vẹn bằng kích thước ảnh gốc. Gọi là Mặt nạ (Mask).
+Người 2: Hình ảnh Mask kia nó có 3 phần. Em đoán Tiền Cảnh (Foreground) là vùng chứa con Mèo. Hậu Cảnh (Background) là bãi cỏ. Còn lại là cái viền mỏng mỏng giao nhau là Cơn-tua (Contour - Đường viền). 
+
+Slide 8: Hàm Load Ảnh và Mặt nạ
+Người 1: Chuẩn. Khi lập trình Load nhãn, chú ý chuyển ảnh Mask về dạng Thang xám C-lơ Mốt G-rây-xờ-kêu (color_mode="grayscale"). 
+Người 2: Em thấy thầy ép kiểu Xong lại đem Trừ đi một (Trừ 1)?
+Người 1: Bộ dữ liệu Oxford mặc định nó để giá trị 1 2 3. Mình trừ đi 1 để nó lùi về 0 1 2. Giúp việc sử dụng làm index tính Loss ở hàm Xót-mát dễ dàng hơn.
+
+Slide 9: Nạp Hình ảnh vào mảng NumPy
+Người 1: Viết script xào trộn trộn ngẫu nhiên đường dẫn (shuffle) để tránh máy học vẹt. Sau đó khai báo hai ma trận Nâm-pai Zê-rô cực khổng lồ để hứng dữ liệu. Ảnh gốc là kiểu số thực bờ-lốt-32 (float32). Mặt nạ là kiểu số nguyên u-in-8 (uint8) một kênh.
+
+Slide 10: Chia tập Huấn luyện và Xác thực
+Người 1: Tương tự như quy trình chuẩn quốc tế, xẻo ra một ngàn tấm (num_val_samples = 1000) làm tập Kiểm chứng (Validation), phần còn lại cho vào Lò luyện (Train).
+
+Slide 11: Kiến trúc Encoder - Decoder (U-Net style)
+Người 1: Xây dựng Bộ não. Mạng phân vùng nổi tiếng nhất mọi thời đại tên là U-Nét (U-Net), hình chữ U. Nửa chữ U đi xuống là En-cốt-đơ (Encoder - Mã hóa): Mạng Tích chập làm ảnh ngày càng teo nhỏ dần để chưng cất Đặc trưng "Con mèo có gì".
+Người 2: Vậy nửa chữ U đi lên là Đi-cốt-đơ (Decoder - Giải mã). Mạng sẽ nở to từ từ để Khôi phục lại kích thước 200 nhân 200 để tô màu lên đúng vị trí! Nó trả lời câu hỏi "Con mèo nằm ở tọa độ nào".
+
+Slide 12: Toán học của Transposed Convolution
+Người 1: Để tăng kích thước, ta xài phép Tích chập Chuyển vị (Transposed Convolution). Nó đảo ngược hoàn toàn Conv2D bình thường.
+Người 2: Nếu Conv2D bình thường gom 9 ô thành 1 ô, làm teo ảnh. Thì Tích chập Chuyển vị cầm 1 ô Pixel gốc, nhân với Bộ lọc rồi Bắn văng nó ra rải rác lên vùng 9 ô trống! Kiểu lấp đầy không gian. Rất thông minh!
+
+Slide 13: Định nghĩa Nửa thứ nhất - Encoder
+Người 1: Viết Code: Ở nửa thứ nhất (Hạ phân giải), thầy không dùng Mác-pu-ling (MaxPooling) như chương 8. Thầy dùng luôn tham số Bước nhảy bằng hai (strides=2) trong lớp Conv2D.
+Người 2: Tại sao vậy thầy?
+Người 1: MaxPooling rất bạo lực, nó chặt bỏ hoàn toàn Tọa độ Không gian. Nhớ rằng Bài toán Xích-mên-tây-xần sống chết phải giữ được Tọa độ Không gian để lát nữa còn vẽ viền. Nên xờ-troai (strides) giữ thông tin tốt hơn!
+
+Slide 14: Định nghĩa Nửa thứ hai - Decoder
+Người 1: Nửa giải mã, ta dùng lây-ơ Côn-vờ hai đê t-ran-spốt (layers.Conv2DTranspose), cũng xài xờ-troai bằng hai (strides=2) để bơm phồng ảnh. 
+Người 2: Đầu ra tầng cuối, thầy nhét hàm Xót-mát (softmax) ba biến tương ứng với Xác suất Tiền cảnh, Hậu cảnh, Đường viền cho TỪNG Pixel độc lập. Một mô hình thật công phu.
+
+Slide 15: Độ đo IoU (Intersection over Union)
+Người 1: Tính toán sai số. Cả giới học thuật dùng I Ô U. Giao chia cho Hợp. Độ trùng khớp của Mặt nạ thầy dự đoán so với Mặt nạ thực tế Ground Truth do con người tự vẽ tay. Trị số từ 0 đến 1. 
+
+Slide 16: Biểu đồ Loss trong Huấn luyện
+Người 1: Biên dịch và chạy máy. Hàm X-pác Cát-tê-gô-ri-cơn C-rốt-en-t-rô-py (sparse_categorical_crossentropy) sụt giảm rất đẹp ở các Epoch đầu.
+Người 2: Nhưng sau vòng 25, nó có dấu hiệu lội ngược dòng tăng trở lại, là Quá khớp rồi. Do dữ liệu mình ít, mô hình U-Net lại quá rỗng.
+
+Slide 17: Biên dịch và Huấn luyện (Train)
+Người 1: Đoạn code gọi fit này sử dụng Cơ chế Tự động Bắt Đáy (ModelCheckpoint). Nó sẽ chỉ cất vào két sắt Lưu lại Trọng số ở Vòng học mà có Validation Loss thấp nhất, vứt đi những vòng Overfitting rác! 
+
+Slide 18: Kết quả Dự đoán (Prediction)
+Người 1: Bật ảnh Test lên kiểm chứng. Máy tô màu rất chuẩn hình hài thân hình con mèo đỏ rực lên. Nhưng hãy nhìn kỹ, vùng ở viền rìa của con mèo bị mờ nhòe (Artifacts) và nó bị cắt mất mấy sợi râu. 
+Người 2: Nó làm em nhớ đến ứng dụng gỡ nền xóa phông của mấy hãng làm không xịn, tóc tơ dính vào nền bị cắt cụt ngủn nham nhở luôn thưa thầy. 
+
+Slide 19: Kỷ nguyên của Foundation Models trong CV
+Người 1: Để xóa phông xịn như tơ hồng, mô hình U-Net nhép này là không đủ. Tháng 4 năm 2023, thế giới đảo điên với sự xuất hiện của Mô hình Nền tảng (Foundation Model). Tên nó là Xéc-mên E-ni-tinh (Segment Anything) hay gọi là siêu thuật toán SAM của Mê-ta (Meta) AI.
+Người 2: Ý thầy là nó giống như Gờ Bê Tê Bốn (GPT-4) của ngôn ngữ, có thể làm mọi thứ không cần Train lại (Zero-shot)? Nó phân vùng được mọi vật luôn ạ?
+
+Slide 20: Kiến trúc của SAM
+Người 1: Đúng. Cấu tạo siêu việt gồm 3 lõi. Lõi 1 là Mô hình ViT khổng lồ chuyên giải nén Tinh hoa Bức ảnh. Lõi 2 là P-róm En-cốt-đơ (Prompt Encoder) dùng để phiên dịch ý định của người dùng (tọa độ điểm, hộp, hoặc cả chữ). Lõi 3 là Mác Đi-cốt-đơ (Mask Decoder) siêu nhẹ gộp Tinh hoa ảnh và Ý định lại để nhả ra cái Viền Mặt nạ!
+
+Slide 21: Siêu Dữ liệu SA-1B
+Người 1: Nó vô địch là nhờ Data! Kỹ sư Meta đã tự cày nát mười một triệu bức ảnh và tạo ra một tỷ cái Mặt nạ xịn xò (SA-1B). Lượng data khủng khiếp gấp bốn trăm lần quá khứ. Bảo sao nó quét sạch bảng xếp hạng.
+
+Slide 22: Khởi tạo SAM từ KerasHub
+Người 1: Tin vui: Trong KerasHub đã nhúng thẳng kho báu này. Gọi lệnh c-rát húp mô-đồ (keras_hub.models.ImageSegmenter) gọi P-ri-sét sam hiu ết a một b (sam_huge_sa1b). Máy sẽ cắm ống hút lên mạng kéo cục trọng số 641 triệu tham số về! Lớn nhất nãy giờ ta từng thấy.
+Người 2: Gần một tỷ con số cho một phương trình... Khoa học bây giờ quá khiếp đảm thưa thầy.
+
+Slide 23: Môi trường Thử nghiệm
+Người 1: Ta đem siêu cỗ máy này vào thực chiến. Chụp một bức ảnh bầy Trái Cây Chuối Đào Xoài lẫn lộn vào nhau, bóng đổ tùm lum. Rất khó.
+
+Slide 24: Tiền xử lý Ảnh cho SAM (Padding)
+Người 1: Mạng SAM bắt buộc nhận ảnh vuông một không hai tư (1024x1024). Em có được phép gọi hàm ép dãn ảnh về vuông làm méo vẹo quả chuối không?
+Người 2: Tuyệt đối Không! Đã làm Thị giác cắt ảnh thì một Pixel bóp méo là sai số cực lớn. Em dùng Hàm ốp i-mít rị-sai Pát tu a-s-pếch (ops.image.resize... pad_to_aspect_ratio=True). Hàm này nó giữ nguyên tỷ lệ, phần thừa không đủ nó bù dải đen (Padding) vào hai cạnh. Tỉ mỉ đến từng ly.
+
+Slide 25: Hàm tiện ích (Utilities)
+Người 1: Chuyên môn lập trình: Khai báo 3 hàm vẽ để biểu diễn lên Matplotlib. Vẽ ảnh gốc xâu i-mít (show_image). Vẽ Lệnh nhắc Điểm xâu P-hoi (show_points) chấm bằng một dấm hoa thị màu xanh lá. Vẽ Hộp Lệnh nhắc xâu Bóc (show_box) bằng dải chữ nhật đỏ.
+
+Slide 26: Hàm Trích xuất Mặt nạ (Get Mask)
+Người 1: Khi gọi lệnh AI, SAM nó không bao giờ tự cao tự đại bảo "Đây là đáp án 100% đúng". Nó luôn trả về cho em 4 sự lựa chọn. Em viết hàm get_mask lấy index bằng 0 là lấy Tấm có điểm Tự tin nhất. Đừng quên Cắt bỏ dải Đen (Padding) ép ngược lại bằng với khung hình gốc.
+
+Slide 27: Mặt nạ thay thế (Alternative Masks)
+Người 1: Thầy ví dụ. Khi em bảo AI SAM "Ê, cắt viền cho tôi cái thứ này", mà ngón tay em lại chọt chính giữa cuống của 3 quả chuối. Điểm mập mờ. SAM nó sẽ xuất 3 lựa chọn để chiều em. Lựa chọn 1: Cắt đúng quả chuối bên phải. Lựa chọn 2: Cắt cả cụm ba trái dính vào nhau!
+Người 2: Quá tinh tế! Nó giống như một nghệ sĩ giao tiếp được với ý định tiềm ẩn của con người vậy.
+
+Slide 28: Nhắc bằng Hộp giới hạn (Box Prompting)
+Người 1: Cách xài thứ hai: Box Prompting. Ta không chọt ngón tay vào, ta kéo chuột khoanh 1 cái Khung Bâu-đinh Bóc (Bounding Box) đỏ chót xung quanh khối màu vàng. Quăng vào AI.
+Người 2: Kinh khủng! Nó gọt viền trái xoài cực sắc lẹm không lệch một điểm ảnh, hoàn toàn bám sát đường cong tự nhiên và bỏ hết phần bóng râm hậu cảnh ra!
+
+Slide 29: Nhắc bằng Điểm đơn (Single Point Prompting)
+Người 1: Cách xài thứ ba. Xài Tọa độ Điểm x = 580, y = 450 nhét vào mảng in-pút po-in (input_point). Label (Nhãn) gán bằng số 1, ý bảo "Tao muốn lấy vùng màu ở đây là Tiền cảnh". Quăng vào AI.
+Người 2: Và bùm, trái Đào đã nằm gọn trong vòng tay của SAM, gọt dũa không sai một li. 
+
+Slide 30: Sức mạnh nội suy của Point Prompt
+Người 1: Thử nghiệm khắc nghiệt nhất. Thầy chọt một Điểm xanh ở giữa thân quả chuối đang bị che khuất và đứt khúc bởi một quả Đào đè lên trên. SAM ơi, cắt đi.
+Người 2: Ôi! Bộ não Transformer ViT của nó tự động Nội suy (Interpolate) vẽ một đường chân trời ảo ẩn bên dưới trái Đào để khép kín trái chuối đứt khúc đó lại! Đây là đẳng cấp hiểu quy luật vật lý của Mạng Foundation! Vô tiền khoáng hậu thưa thầy!
+
+Slide 31: Tổng kết Chương 11
+Người 1: Tổng kết Chương. Em nắm trong tay ba bài toán Hình ảnh. Cốt lõi của Phân vùng là Kiến trúc hình phễu Encoder-Decoder của U-Net với Tích chập Chuyển vị.
+Người 2: Và em được thưởng thức kiệt tác công nghệ SAM của Meta AI với khả năng phân vùng mọi vật chất trên Trái Đất (Zero-shot). Đúng là một thời đại bùng nổ của Trí tuệ Nhân tạo.
+Người 1: Chúc mừng em hoàn thành Chương 11. Hẹn gặp lại.

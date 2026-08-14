@@ -1,0 +1,98 @@
+Slide 1: Tổng kết Giáo trình (Conclusions)
+Người 1: Chào các em. Chào mừng đến với bài giảng cuối cùng của học phần Học sâu! Chương 20: Tổng kết Giáo trình.
+Người 2: Nhanh quá thầy nhỉ! Mới ngày nào em còn bỡ ngỡ với khái niệm Nơ-ron. Giờ thì đã đi hết chặng đường vĩ đại này rồi.
+
+Slide 2: Nội dung chương
+Người 1: Hôm nay chúng ta không học code mới. Chúng ta sẽ cùng nhau ôn tập lại Toàn bộ Bức Tranh Tổng Thể. Hệ thống hóa lại 5 bước quy trình làm AI chuẩn xác, và cùng điểm lại những hành trang Kỹ sư cần mang theo khi bước ra thế giới thực! Bắt đầu nhé!
+
+Slide 3: Khái niệm Trí tuệ nhân tạo (AI)
+Người 1: Đầu tiên. Khái niệm lớn nhất: Ây-Ai (AI). Khái niệm này xuất hiện từ thập niên 50. Cốt lõi của AI là Tự Động Hóa Quá Trình Nhận Thức. Bất cứ cái máy tính nào Biết Cộng Trừ Nhân Chia, Biết Gợi ý Lệnh Ìp Èo (If-Else) đều là AI cả! AI không hề bí ẩn!
+
+Slide 4: Khái niệm Machine Learning (Học máy)
+Người 1: Bên trong cái Túi AI to tướng đó, có một cái túi nhỏ hơn mang tên Mơ-xin Lớn-ninh (Machine Learning). Thay vì Lập trình viên phải Gõ Mọi Cái Quy Tắc If-Else Cứng ngắc. Người ta Đưa Data và Đưa Câu Trả Lời. Máy tính tự động Tìm Ra Quy Tắc. Thế là Máy Biết Học!
+
+Slide 5: Khái niệm Deep Learning (Học sâu)
+Người 1: Móc sâu vào túi Mơ-xin Lớn-ninh. Ta có Khái niệm Điếp Lớn-ninh (Deep Learning) - Học sâu. Cốt lõi của Học Sâu là xếp chồng các Lớp Nơ-ron (Layers). Cho chúng nó cắn rứt Hàm Loss. Bắt Tối Ưu Hóa Bằng Thuật Toán Tính Đạo Hàm Rét-đần Đì-sen (Gradient Descent)! 
+
+Slide 6: Khái niệm Generative AI (AI Tạo sinh)
+Người 1: Và trên đỉnh Kim tự tháp hiện nay: AI Tạo sinh (Generative AI). Không Dự đoán Class. Không Dự Đoán Số. Mà Dùng Mạng Khổng Lồ Tỷ Tham Số Để SINH RA Một thứ mới hoàn toàn (Văn Bản, Hình Ảnh, Video). Bắt đầu Kỷ nguyên ChatGPT mà chúng ta đang sống!
+
+Slide 7: Tại sao Deep Learning tạo nên bước ngoặt? (Phần 1)
+Người 1: Deep Learning tạo ra Bước Ngoặt Vũ Bão vì nó đã Đánh sập mọi Giới hạn của Nhận thức Máy Móc (Machine Perception). Mắt người nhìn thấy cái gì, AI giờ nhìn thấy cái đó. Tai người nghe thấy cái gì, AI nghe y hệt. Phá vỡ bài toán Bất Khả Thi của Kỷ nguyên Cũ.
+
+Slide 8: Tại sao Deep Learning tạo nên bước ngoặt? (Phần 2)
+Người 1: Nhờ Thành công tuyệt đối đó, Thế Giới Rót Hàng Nghìn Tỷ Đô La Vào Đầu Tư. Khác với những Mùa Đông AI trong lịch sử, Lần này AI đã đẻ ra TIỀN TỶ CHO CÁC DOANH NGHIỆP! Ngay cả khi Toán học AI không phát triển thêm, thì Ứng dụng hiện tại cũng quá đủ để Thay đổi Nền Kinh Tế Nhân Loại.
+
+Slide 9: Cách tư duy đúng về Deep Learning
+Người 1: Chốt lại tư duy. Deep Learning KHÔNG HỀ PHỨC TẠP! Nó chỉ làm rất NHIỀU Phép Tính Nhân Ma trận liên tục. Mọi thứ là Vector Hình Học. Mạng Nơ-ron là cỗ máy Gỡ Rối Tờ Giấy Vo Viên! Bỏ khái niệm Nơ-ron Sinh Học đi nhé!
+
+Slide 10: Bốn công nghệ hỗ trợ cuộc cách mạng AI
+Người 1: Thành công của AI Nhờ 4 Trụ Cột: Thuật Toán, Dữ Liệu Bích Đát-ta (Big Data), Cạc Đồ Họa Cờ-Pê-U (GPU), và Hệ Sinh Thái Lập trình (Kê-rát, TensorFlow, PyTorch). Thiếu 1 trong 4 thì AI mãi mãi chỉ nằm trên giấy nháp của nhà khoa học!
+
+Slide 11: Bước 1: Xác định Bài toán và Thước đo
+Người 1: Ôn lại Quy trình làm việc Chuẩn. Bước 1: Xác định Bài toán. Phân loại Cân bằng thì xài Độ Chính Xác (Accuracy). Bất Cân bằng thì phải xài C-rít-xi-sần (Precision) và AUC-ROC. Không được chọn nhầm Thước Đo nhé!
+
+Slide 12: Bước 2: Quy trình Đánh giá và Vector hóa
+Người 1: Bước 2: Chuẩn bị Dữ liệu. Chia tập Data làm 3 Khúc: Train, Validation và Test. 
+Người 2: Tuyệt đối không được Đụng tay vô Tập Test! Phải Cất kĩ trong két sắt chờ đến cuối dự án!
+Người 1: Chính xác 10 điểm! Sau đó Vector Hóa và Chuẩn hóa mọi thứ về Trục Số 0!
+
+Slide 13: Bước 3: Thiết lập Baseline và Overfitting
+Người 1: Bước 3: Đập ngay một con Mạng Rác rưởi nhỏ nhất có thể (Baseline) để xem Data có bị Ngu không. Thấy OK, Đập con Mạng To đùng vào, Train bạo lực tới mức Xé nát Validation, Bị Ô-vờ-phít-tinh (Overfitting) ngay Lập Tức để Tìm ra Điểm tới hạn!
+
+Slide 14: Bước 4: Tinh chỉnh mô hình (Regularization)
+Người 1: Bước 4: Gọt giũa Cắt tỉa (Regularization). Dùng E-li S-tóp-ping (Early Stopping) cúp cầu dao sớm. Dùng D-rốp-ao (Dropout) bắn bỏ ngẫu nhiên trọng số để tránh Học vẹt. Cắt tỉa riết thì ta chốt được con Model Tốt Nhất!
+
+Slide 15: Bước 5: Triển khai (Deployment)
+Người 1: Bước 5: Đem Triển khai Đép-loy (Deployment). Build nó thành cái API hoặc nhúng vào App Điện Thoại Mobile. Và nhớ Cắm Mắt Giám Sát liên tục xem AI nó có đoán bậy bạ để còn đem về Train Lại Update!
+
+Slide 16: Các loại Kiến trúc theo Dữ liệu
+Người 1: Ôn lại các loại Mạng. Gặp Bảng File Excel: Xài Mạng Dày Đặc. Gặp Hình Ảnh, Video: Xài Mạng Tích Chập Xin-En (CNN). Gặp Chữ Viết Văn Bản: Xài Mạng T-ran-s-pho-mơ (Transformer). Đừng xách Râu Ông Nọ Cắm Cằm Bà Kia!
+
+Slide 17: Mạng kết nối dày đặc (Densely Connected Networks)
+Người 1: Cú Pháp Xây Mạng File Excel Phân loại Nhị Phân 2 Lớp Bệnh. Lớp Dense Đầu Ra có Số Nơ-ron bằng 1. Đi với Hàm Síc-Moi (Sigmoid) và Loss Binary Crossentropy.
+
+Slide 18: Mạng kết nối dày đặc (Multi-class Classification)
+Người 1: Nếu phân loại Đa Lớp (Chó, Mèo, Gà, Vịt). Đầu ra có Số Nơ-ron Bằng Tổng Số Lớp! Đi với Hàm Sóp-Mắc (Softmax) và Loss Cát-tê-gô-ri-cồ Crossentropy (Categorical). Nằm lòng luôn nhé.
+
+Slide 19: Mạng Tích chập (ConvNets - CNN)
+Người 1: Mạng Tích Chập Xi-En-En (CNN). Có tính Bất Biến Dịch chuyển (Translation Invariant) Quét Kính lúp tịnh tiến. Học Trích xuất Đặc Trưng Lắp Ráp Nâng Cao. Trùm xử lý Hình Ảnh và Thị Giác Máy Tính.
+
+Slide 20: Mạng Hồi quy (Recurrent Neural Networks - RNN)
+Người 1: Mạng Hồi Quy (RNN). Chuyên Gia Trị Số Liệu Chứng khoán, Khí Hậu, Nhịp Tim. Xử lý Trạng Thái nhớ Tuần Tự. Với 2 Cấu trúc nổi tiếng khắc phục Trí Nhớ Kém là L-S-T-M và Cờ-Rờ-U (GRU).
+
+Slide 21: Kiến trúc Transformer
+Người 1: Siêu Não T-ran-s-pho-mơ (Transformer). Cấu trúc Trí Tuệ mạnh nhất Hành tinh ở thời điểm hiện tại. Giải quyết mọi điểm chết của RNN nhờ Cơ Chế Chú Ý (Neural Attention). Nhìn 1 phát hiểu Hết Ý Nghĩa Cả Bài Văn! Trái tim của Hệ Thống GPT.
+
+Slide 22: Xây dựng Transformer với Keras
+Người 1: Thư viện Kê-rát (Keras) gói luôn cả Khối Transformer En-Cốt-Đơ (Encoder) vào trong 1 Câu Lệnh Gọi Hàm Cực Gọn. Dùng kết hợp Lớp Nhúng Vị Trí Pô-zít-xần Êm-bét-đinh (Position Embedding) là Xong!
+
+Slide 23: Hạn chế cốt lõi của Deep Learning (Phần 1)
+Người 1: Đừng mù quáng tôn thờ. Nhược điểm số 1: AI Mù Quáng Trước Sự Mới Lạ. Thay đổi Quy Luật một chút nằm ngoài Vùng Train là Cỗ máy Sập Nguồn Hoàn Toàn!
+
+Slide 24: Hạn chế cốt lõi của Deep Learning (Phần 2)
+Người 1: Nhược điểm số 2: Nhạy Cảm Câu Lệnh, Không hề Biết Suy Luận Toán Học Logic Hay Giải Các Bài Tập Yêu cầu Viết Vòng Lặp. Bản chất chỉ là Một Hàm Trực Giác Lắp Ghép Lại Bằng Thống Kê.
+
+Slide 25: Sự nguy hiểm của việc nhân hóa AI (Anthropomorphization)
+Người 1: Đừng bao giờ Nghĩ Máy Tính Biết Buồn Biết Vui! Biết Ghi Nhớ Đau Khổ. Nó chỉ Đoán Chữ Tiếp Theo Dựa Trên Xác Suất Ma Trận! Đừng Ngộ Nhận Phim Viễn Tưởng Với Xác Suất Thống Kê!
+
+Slide 26: Tương lai của AI: Các mô hình Hệ thống Lai (Hybrid Models)
+Người 1: Tương lai của Trí Tuệ: Kết hợp Nửa Hình Học Deep Learning với Nửa Logic Của Phương Pháp Khác. Tạo Ra Mô hình Hai-Bờ-Rít (Hybrid Models). Mới có cửa Sinh Ra Khái Niệm Lập Kế Hoạch Cho AI!
+
+Slide 27: Tương lai của AI: Tổng hợp Chương trình và Recombination
+Người 1: Phương pháp Pro-Gờ-Ram Xin-Thê-xít (Program Synthesis) kết hợp Deep Learning Sẽ Đẻ Ra Dòng Code tự động. Và Tri Thức Sẽ Được Lưu Trữ Lắp Ghép Như Miếng Lắp Ráp Lê-gô.
+
+Slide 28: Rèn luyện thực chiến: Sân chơi Kaggle
+Người 1: Để luyện tập thành Thần: Hãy Lên Cát-Gồ (Kaggle). Đấu Trường AI lớn nhất hành tinh. Data Thực Tế Của Tập Đoàn. Tiền Thưởng Triệu Đô. Mọi Lời Giải Hay Nhất Đều Miễn Phí Trên Đây! 
+Người 2: Em sẽ đăng ký ngay một tài khoản để cày Cuộc thi Trên Đó ạ!
+
+Slide 29: Cập nhật tri thức mới nhất
+Người 1: Thế Giới AI trôi đi Tốc độ Tên Lửa. Sách Vở Không bao giờ Theo Kịp. Muốn Thành Chuyên Gia, Lên Hất-Gin-Phây (Hugging Face) tải Data, Mẫu AI Mới. Lên A-Rờ-Xi-Vờ (ArXiv) Đọc Bài Báo Luận Văn Nghiên cứu Khởi Nguồn Của Các Giáo Sư Của Harvard, Stanford Miễn phí!
+
+Slide 30: Tận dụng Hệ sinh thái Keras
+Người 1: Công cụ tuyệt vời nhất để biến Ý Tưởng Toán Học Thành Code Đời Thực: Là Hệ Sinh Thái Kê-Rát (Keras). Viết một Lần, Chạy Rào Rào Trên Cả Ba Siêu Nền Tảng. Đọc Doc Gốc Trên Keras.io để Không Phải Bỡ Ngỡ.
+
+Slide 31: Lời khuyên cuối giáo trình
+Người 1: Cuối cùng. Framework như áo mặc ngoài, Toán học mới là cốt tủy. Tương lai AI ở Việt Nam thuộc về các em. Cảm ơn các em đã theo dõi trọn vẹn Học Phần Học Sâu (Deep Learning) Của Đại học Đông Á!
+Người 2: Một hành trình đầy cảm xúc, mồ hôi và vinh quang thưa thầy. Em Cảm Ơn Thầy Rất Nhiều!
+Người 1: Tạm biệt các em. Chúc các em bước ra thế giới, Dùng Trí Tuệ Của Mình Để Thay Đổi Tương Lai!

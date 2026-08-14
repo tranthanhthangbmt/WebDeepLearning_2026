@@ -1,0 +1,163 @@
+Slide 1: Khái niệm Học sâu
+Người 1: Chào các em sinh viên. Hôm nay chúng ta bắt đầu môn học Học sâu, hay còn gọi là Deep Learning. Chương đầu tiên này mang tên "Khái niệm Học sâu", sẽ giúp các em có cái nhìn tổng quan nhất về lĩnh vực đang làm thay đổi thế giới này.
+Người 2: Dạ em chào thầy. Em thấy AI và Học sâu xuất hiện ở khắp mọi nơi trên mặt báo. Em rất mong chờ được tìm hiểu xem bản chất thực sự của chúng là gì ạ.
+
+Slide 2: Nội dung chương
+Người 1: Trong chương này, chúng ta sẽ đi qua 5 phần chính: Giới thiệu các khái niệm cơ bản; Học biểu diễn và Học quy tắc từ dữ liệu; Sự "sâu" trong Học sâu; Cơ chế hoạt động của mạng nơ-ron; và cuối cùng là Kỷ nguyên AI Tạo sinh cùng tương lai của nó.
+Người 2: Dạ vâng, cấu trúc bài học đi từ khái niệm nền tảng đến nguyên lý hoạt động và cuối cùng là xu hướng AI Tạo sinh rất rõ ràng ạ.
+
+Slide 3: Sự bùng nổ của Trí tuệ Nhân tạo (AI)
+Người 1: Như các em đã biết, thập kỷ qua chứng kiến sự bùng nổ của AI. Chúng ta nghe nói về chatbot, xe tự lái. Nhưng có sự phân cực trong góc nhìn: một bên lo sợ máy móc cướp việc, bên kia lại mơ về một tương lai con người không cần làm việc nữa.
+Người 2: Thật sự khi đọc báo em cũng hay bị nhiễu loạn thông tin. Vậy mục tiêu của chúng ta là gì thưa thầy?
+Người 1: Mục tiêu của chúng ta là lọc ra "tín hiệu" từ "tiếng ồn". Các em sẽ học cách đánh giá xem AI thực sự làm được gì, giới hạn ở đâu và tương lai thực tế sẽ đi về đâu, chứ không chỉ tin vào những lời quảng cáo cường điệu.
+
+Slide 4: Trí tuệ nhân tạo, Máy học và Học sâu
+Người 1: Trước tiên, ta cần phân biệt ba khái niệm AI, ML và DL. Hãy nhìn vào hình vẽ. AI, tức Trí tuệ nhân tạo, là lĩnh vực bao trùm nhất nhằm tự động hóa các công việc trí tuệ của con người. Bên trong AI là Máy học hay Machine Learning, và bên trong Máy học lại là Học sâu, hay Deep Learning.
+Người 2: À, như vậy chúng là những vòng tròn bao hàm nhau. Học sâu là một nhánh chuyên sâu của Máy học, và Máy học là một tập con của Trí tuệ nhân tạo.
+
+Slide 5: Lịch sử Trí tuệ Nhân tạo
+Người 1: Để hiểu hiện tại, ta quay về quá khứ. AI ra đời vào những năm một ngàn chín trăm năm mươi. Bước ngoặt là hội thảo Dartmouth năm một ngàn chín trăm năm mươi sáu do John McCarthy tổ chức. Thuật ngữ "Trí tuệ nhân tạo" chính thức ra đời tại đây.
+Người 2: Mục tiêu lúc đó của họ là gì ạ? Có giống như những gì ChatGPT đang làm bây giờ không thầy?
+Người 1: Mục tiêu ban đầu rất tham vọng: làm sao để máy mô phỏng được việc học, sử dụng ngôn ngữ và giải quyết các bài toán của con người. Dù hồi đó chưa làm được ngay, nhưng nó đã khởi động cả một cuộc cách mạng.
+
+Slide 6: AI Cổ điển (Symbolic AI)
+Người 1: Giai đoạn từ năm một ngàn chín trăm năm mươi đến một ngàn chín trăm tám mươi được gọi là AI Cổ điển hay Symbolic AI. Thời đó, con người phải tự tay lập trình ra vô số các quy tắc logic tường minh. Nếu có A thì làm B.
+Người 2: Có phải đó là Hệ chuyên gia, hay Expert Systems không ạ?
+Người 1: Chính xác. Nó đạt đỉnh cao vào thập niên tám mươi. AI cổ điển rất xuất sắc trong các bài toán có quy tắc rõ ràng như chơi cờ vua.
+
+Slide 7: Hạn chế của AI Cổ điển
+Người 1: Dù chơi cờ giỏi, nhưng AI Cổ điển lại bộc lộ điểm yếu chết người khi gặp bài toán thực tế, mơ hồ.
+Người 2: Tại sao lại như vậy thưa thầy?
+Người 1: Bởi vì các em không thể viết ra một bộ quy tắc logic rõ ràng để lập trình cho máy tính nhận dạng ra đâu là con chó, đâu là con mèo, hoặc để máy tính dịch được ngôn ngữ tự nhiên. Từ bế tắc đó, Máy học đã ra đời.
+
+Slide 8: Học máy (Machine Learning) - Nguồn gốc
+Người 1: Trước đây vào những năm một ngàn tám trăm bốn mươi, Ada Lovelace từng cho rằng máy móc không có khả năng sáng tạo. Nhưng đến năm một ngàn chín trăm năm mươi, Alan Turing đã đưa ra khái niệm Phép thử Turing và khẳng định máy tính có thể mô phỏng trí tuệ và có khả năng học tập.
+Người 2: Phép thử Turing thực sự đã vượt thời đại, nó mở đường cho ý tưởng rằng máy tính không chỉ thực thi lệnh mà còn tự học hỏi.
+
+Slide 9: Mô hình Lập trình Mới
+Người 1: Sự ra đời của Học máy thay đổi hoàn toàn mô hình lập trình. Ở Lập trình cổ điển, con người đưa "Dữ liệu" và "Quy tắc" vào máy, máy trả ra "Câu trả lời".
+Người 2: Vậy ở mô hình Học máy thì thứ tự bị đảo ngược đúng không ạ?
+Người 1: Đúng. Ở Học máy, chúng ta cung cấp "Dữ liệu" và "Câu trả lời dự kiến" vào máy, và máy tính sẽ tự động tìm ra "Quy tắc". Đây là bước nhảy vọt về tư duy.
+
+Slide 10: Đặc điểm cốt lõi của Học máy
+Người 1: Vì thế, đặc điểm cốt lõi của Học máy là hệ thống không được lập trình rõ ràng, mà nó được "huấn luyện". Càng cung cấp nhiều ví dụ, máy càng giỏi tìm ra các cấu trúc thống kê ẩn bên trong.
+Người 2: Vậy nó có giống với phân tích thống kê truyền thống không thầy?
+Người 1: Có liên quan, nhưng Học máy xử lý những dữ liệu khổng lồ và phức tạp hơn rất nhiều, ví dụ như hình ảnh hàng chục ngàn điểm ảnh. Nó mang tính ứng dụng kỹ thuật và thực nghiệm cao hơn lý thuyết thuần túy.
+
+Slide 11: Ba yếu tố thiết yếu của Học máy
+Người 1: Sang phần hai: Học biểu diễn và học quy tắc. Để học máy hoạt động, ta cần ba yếu tố. Một là Điểm dữ liệu đầu vào. Hai là Đầu ra dự kiến, hay nhãn.
+Người 2: Yếu tố thứ ba chắc chắn là công cụ để đo xem máy tính đang làm đúng hay sai, phải không ạ?
+Người 1: Rất chuẩn. Đó là Cách đo lường hiệu suất hay còn gọi là Hàm mất mát. Khoảng cách giữa dự đoán và thực tế là tín hiệu phản hồi để thuật toán điều chỉnh. Bước điều chỉnh đó chính là việc "học".
+
+Slide 12: Học biểu diễn (Learning representations)
+Người 1: Vấn đề trung tâm của Học máy là "Học biểu diễn", tức là tìm ra một cách chuyển đổi dữ liệu ban đầu thành một dạng mới có ý nghĩa hơn cho bài toán.
+Người 2: Thầy có thể cho ví dụ cụ thể về việc "chuyển đổi biểu diễn" không ạ?
+Người 1: Dễ hiểu thôi. Nếu em muốn lọc ra các điểm ảnh màu đỏ, dùng hệ màu RGB sẽ dễ dàng. Nhưng nếu em muốn chỉnh độ bão hòa màu sắc của bức ảnh, thì chuyển sang hệ màu HSV sẽ biểu diễn dữ liệu trực quan và dễ làm hơn rất nhiều.
+
+Slide 13: Ví dụ trực quan về Biểu diễn Không gian
+Người 1: Nhìn vào hình vẽ này, chúng ta có các điểm đen và trắng nằm lộn xộn trong mặt phẳng hai chiều theo trục x và y. Nhiệm vụ là phân loại chúng.
+Người 2: Trong hệ tọa độ gốc này, em không thể nào kẻ một đường thẳng đơn giản để tách hết điểm đen và điểm trắng ra khỏi nhau được.
+
+Slide 14: Biến đổi không gian tọa độ
+Người 1: Đúng, nhưng nếu chúng ta dùng một phép biến đổi toán học để bẻ cong không gian tọa độ như ở hình này.
+Người 2: Ồ! Lúc này các điểm đen đều chuyển sang khu vực có ích lớn hơn không, còn điểm trắng thì ích nhỏ hơn không. Quy tắc phân loại trở nên quá đơn giản!
+Người 1: Đó chính là bài học cốt lõi: Chuyển đổi biểu diễn làm thay đổi hoàn toàn mức độ phức tạp của bài toán gốc.
+
+Slide 15: Sự khó khăn của Trích xuất đặc trưng thủ công
+Người 1: Với bài toán điểm hai chiều trên, ta tự tay thiết kế phép biến đổi được. Khái niệm đó gọi là Kỹ thuật trích xuất đặc trưng hay Feature Engineering.
+Người 2: Nhưng với ảnh số viết tay thì sao ạ? Ảnh có hàng ngàn điểm ảnh thì con người đâu thể tìm ra quy tắc thủ công được.
+Người 1: Chính xác. Việc đếm số vòng lặp khép kín hay đếm đường cong bằng tay rất tốn thời gian, cứng nhắc và dễ thất bại khi gặp nét chữ lạ.
+
+Slide 16: Học tự động (Automated learning)
+Người 1: Giải pháp là cho hệ thống Học tự động. Ta cho phép máy tính tìm kiếm tự động qua hàng triệu phép biến đổi trong một không gian gọi là Không gian giả thuyết.
+Người 2: Tức là máy sẽ tự dò dẫm, lấy tín hiệu sai số làm điểm tựa để tìm ra cách biến đổi biểu diễn dữ liệu tốt nhất ạ?
+Người 1: Hoàn toàn chính xác. Đó là bản chất của Máy học.
+
+Slide 17: Học sâu (Deep Learning) là gì?
+Người 1: Giờ ta chuyển sang phần ba: Học sâu là gì? Chữ "sâu" ở đây không ám chỉ trí tuệ sâu xa, mà nó chỉ việc ta xếp chồng hàng chục, hàng trăm "lớp" biến đổi liên tiếp nhau.
+Người 2: Vậy các mô hình Học máy cổ điển như Cây quyết định hay SVM thì không có nhiều lớp như thế ạ?
+Người 1: Đúng. Chúng chỉ dùng một đến hai bước chuyển đổi, nên được gọi là "Học nông" - Shallow learning. Học sâu thì dùng đến hàng trăm lớp.
+
+Slide 18: Mạng nơ-ron (Neural Network)
+Người 1: Các lớp xếp chồng đó tạo thành Mạng nơ-ron. Các em lưu ý: dù tên gọi mượn từ sinh học thần kinh, nhưng Mạng nơ-ron không phải là giả lập bộ não người.
+Người 2: Vậy ta chỉ nên hiểu nó là một hệ thống toán học biến đổi dữ liệu nhiều tầng thôi đúng không thầy?
+Người 1: Rất đúng. Không có bằng chứng nào chứng minh não bộ chúng ta học bằng kỹ thuật lan truyền ngược giống mạng nơ-ron cả.
+
+Slide 19: Quá trình chắt lọc thông tin qua các lớp
+Người 1: Nhìn vào mạng nơ-ron sâu này, nó giống như một hệ thống chắt lọc thông tin. Dữ liệu thô đi vào, qua từng tầng, những chi tiết thừa sẽ bị lột bỏ, chỉ giữ lại những nét đặc trưng quan trọng nhất.
+Người 2: Ví dụ với ảnh chữ số thì nó sẽ gạn lọc dần từ điểm ảnh thành các đường nét, rồi từ đường nét thành các vòng cung đặc trưng của con số đúng không thầy?
+
+Slide 20: Minh họa biểu diễn qua từng lớp
+Người 1: Các em xem sự thay đổi hình ảnh qua các lớp. Lớp một dữ liệu vẫn còn nhiễu. Lớp hai các nét chữ lộ ra. Đến lớp cuối cùng, mạng phân loại hoàn hảo số đó là số mấy.
+Người 2: Dữ liệu đã được tinh lọc và tối ưu hóa ở mức tối đa phục vụ đúng cho bài toán đầu ra. Thật kỳ diệu.
+
+Slide 21: Điều gì làm Học sâu trở nên khác biệt?
+Người 1: Sự khác biệt vĩ đại nhất của Học sâu là nó tự động hóa hoàn toàn bước Trích xuất đặc trưng. 
+Người 2: Nghĩa là chúng ta không cần chuyên gia ngồi phân tích đặc trưng thủ công nữa, mà máy tự học từ đầu đến cuối luôn ạ?
+Người 1: Đúng vậy. Nó học mọi đặc trưng trong một đường ống xuyên suốt mà không cần sự can thiệp quy tắc từ con người.
+
+Slide 22: Ba tính chất ưu việt của Học sâu
+Người 1: Nhờ vậy, Học sâu có 3 tính chất ưu việt. Thứ nhất là Sự đơn giản nhờ loại bỏ khâu tiền xử lý phức tạp. Thứ hai là Khả năng mở rộng tốt.
+Người 2: Khả năng mở rộng là nhờ có thể huấn luyện trên phần cứng mạnh như đồ họa vi tính GPU bằng cách chia nhỏ dữ liệu thành các lô nhỏ đúng không thầy?
+Người 1: Rất chuẩn. Và thứ ba là tính linh hoạt. Một mô hình có thể tái sử dụng hoặc tinh chỉnh vào nhiều tác vụ khác mà không cần huấn luyện lại từ đầu.
+
+Slide 23: Thành phần cốt lõi của Mạng nơ-ron
+Người 1: Chúng ta sang phần bốn: Cơ chế hoạt động của mạng. Tại mỗi lớp, các phép biến đổi được quyết định bởi một bộ các con số, ta gọi là Trọng số.
+Người 2: Vậy việc "máy học" thực chất là tìm ra các con số Trọng số này sao cho nó chính xác nhất ạ?
+Người 1: Khái quát lại là như vậy. Một mạng có thể có hàng triệu, hàng tỷ trọng số cần phải tìm.
+
+Slide 24: Hàm mất mát (Loss Function)
+Người 1: Để điều chỉnh trọng số, ta dùng Hàm mất mát. Hàm này nhận vào dự đoán của mạng và đối chiếu với đáp án thật, sau đó tính ra một "điểm số khoảng cách".
+Người 2: Điểm số này càng thấp tức là mô hình dự đoán càng chính xác, càng gần với thực tế.
+
+Slide 25: Tín hiệu phản hồi
+Người 1: Điểm số từ Hàm mất mát chính là tín hiệu phản hồi duy nhất. Nhưng với hàng triệu trọng số, làm sao ta biết cái nào cần tăng, cái nào cần giảm để điểm số đó nhỏ đi?
+Người 2: Đúng là nếu mò mẫm từng số một thì sẽ tốn một lượng thời gian vô tận.
+
+Slide 26: Bộ tối ưu hóa (Optimizer)
+Người 1: Đây là lúc Bộ tối ưu hóa xuất hiện. Nó sử dụng giải thuật Lan truyền ngược. Thuật toán này có khả năng tính toán ngược từ kết quả lỗi về đầu vào để biết chính xác mỗi trọng số đã đóng góp bao nhiêu phần trăm vào sai số.
+Người 2: Nhờ vậy, Bộ tối ưu hóa sẽ điều chỉnh các trọng số đi đúng hướng để triệt tiêu dần sai số đó.
+
+Slide 27: Khởi tạo và Hội tụ
+Người 1: Ban đầu, ta gán trọng số ngẫu nhiên. Mạng dự đoán hoàn toàn sai, điểm trừ cực cao. Nhưng sau khi xử lý vô số mẫu dữ liệu, thuật toán sẽ nhích trọng số từng chút một.
+Người 2: Cuối cùng thì điểm trừ sẽ trượt xuống mức thấp nhất. Quá trình đó gọi là sự hội tụ, phải không thầy?
+Người 1: Rất tốt. Hội tụ là trạng thái mô hình học xong và đạt phong độ tối ưu nhất.
+
+Slide 28: Vòng lặp huấn luyện (Training loop)
+Người 1: Toàn bộ quá trình đó lặp đi lặp lại tạo thành Vòng lặp huấn luyện gồm bốn bước. Một: Rút một lô dữ liệu nhỏ. Hai: Chạy xuôi qua mạng lấy Dự đoán. Ba: Tính Hàm mất mát. Bốn: Chạy ngược qua bộ tối ưu hóa để cập nhật trọng số.
+Người 2: Vòng lặp bốn bước này liên tục diễn ra trên hàng triệu ví dụ cho đến khi mô hình hội tụ thành công.
+
+Slide 29: Kỷ nguyên AI Tạo sinh (Generative AI)
+Người 1: Phần cuối cùng, phần năm: Kỷ nguyên AI tạo sinh. Từ năm hai ngàn không trăm hai mươi hai, các mô hình như ChatGPT, Gemini nổi lên. Chúng không chỉ dự đoán mà còn sáng tạo ra văn bản, hình ảnh.
+Người 2: Việc AI có thể viết thơ, vẽ tranh thực sự làm mờ đi ranh giới giữa sáng tạo của con người và máy móc.
+
+Slide 30: Mô hình Nền tảng & Học tự giám sát
+Người 1: Các AI Tạo sinh này dựa trên Mô hình nền tảng. Thay vì con người phải ngồi dán nhãn dữ liệu, chúng dùng Học tự giám sát. Dữ liệu không cần gán nhãn, ví dụ, máy sẽ đọc một câu văn và tự dự đoán từ tiếp theo.
+Người 2: Bằng cách đó, người ta có thể nạp toàn bộ lượng văn bản khổng lồ trên Internet để huấn luyện mà không tốn công sức dán nhãn thủ công!
+Người 1: Đúng vậy, điều đó mở ra những mô hình hàng trăm tỷ tham số.
+
+Slide 31: Khai thác sức mạnh qua Nhắc lệnh (Prompting)
+Người 1: Với tri thức đồ sộ, ta tương tác với chúng bằng Ngôn ngữ tự nhiên. Việc các em gõ yêu cầu cho Chat Gờ Pê Tê được gọi là kỹ thuật Nhắc lệnh hay Prompting.
+Người 2: Nó giống như một "Cơ sở dữ liệu mờ" khổng lồ, chỉ cần đặt câu hỏi đúng là nó truy xuất ra kết quả phù hợp mà ta không cần lập trình lại hệ thống.
+
+Slide 32: Những thành tựu vĩ đại của Học sâu
+Người 1: Những thành tựu mà Học sâu đạt được là vô tiền khoáng hậu: Dịch ngôn ngữ tự nhiên thời gian thực, xe tự lái tại nhiều bang ở Mỹ, hay như AlphaFold đã giải mã được cấu trúc ba chiều của Protein.
+Người 2: AI cũng đã đánh bại con người trong các trò chơi phức tạp nhất như cờ vây hay Dota hai nữa ạ.
+
+Slide 33: Ảo tưởng và Cường điệu ngắn hạn
+Người 1: Tuy nhiên, đi kèm với thành tựu là làn sóng cường điệu. Rất nhiều người nói rằng AI sẽ thay thế hoàn toàn con người hay Trí tuệ tổng hợp sắp ra đời.
+Người 2: Vậy theo thầy, đó có phải là ảo tưởng không ạ?
+Người 1: Trong ngắn hạn thì đúng là ảo tưởng. Bản chất của AI hiện nay là Tự động hóa nhận thức. Nó làm cực tốt trên dữ liệu đã học, nhưng chưa hề có tự nhận thức hay khả năng ứng biến với điều kiện vô định như trí tuệ sinh học.
+
+Slide 34: Mùa đông AI (AI Winters)
+Người 1: Trong lịch sử, chúng ta đã từng trải qua hai "Mùa đông AI" vào thập niên bảy mươi và chín mươi. Khi kỳ vọng bị đẩy lên quá cao mà thực tế không đạt được, vốn đầu tư sẽ bị rút đi.
+Người 2: Tức là chúng ta phải tỉnh táo nhìn nhận cả ưu và nhược điểm của AI để tránh tạo ra một quả bóng bong bóng công nghệ.
+
+Slide 35: Tầm nhìn dài hạn và Lời hứa của AI
+Người 1: Dù vậy, tầm nhìn dài hạn rất tươi sáng. Giống như Internet cách đây hai mươi năm, AI sẽ len lỏi vào từng ngóc ngách của đời sống. AI sẽ không thay thế chúng ta ngay lập tức, mà trở thành công cụ khuếch đại năng lực của con người lên hàng vạn lần.
+Người 2: Việc xem AI là một người trợ lý đa năng và học cách sử dụng nó mới là định hướng đúng đắn nhất.
+
+Slide 36: Tổng kết Chương 1
+Người 1: Để tổng kết lại, Chương một đã cho chúng ta thấy: Trí tuệ nhân tạo, Máy học và Học sâu là 3 khái niệm bao hàm nhau. Học máy tự động trích xuất quy tắc từ dữ liệu nhờ Hàm mất mát. Học sâu lại tiến xa hơn nhờ việc tự động hóa trích xuất đặc trưng qua nhiều lớp biểu diễn.
+Người 2: Và cuối cùng, ta cần cẩn trọng trước sự cường điệu ngắn hạn, nhưng hãy lạc quan về tương lai dài hạn của AI Tạo sinh.
+Người 1: Chính xác. Cảm ơn các em, bài học đầu tiên kết thúc tại đây. Hãy ôn bài và chuẩn bị cho buổi học tiếp theo!

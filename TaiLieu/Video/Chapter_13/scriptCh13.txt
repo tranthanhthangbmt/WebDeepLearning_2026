@@ -1,0 +1,111 @@
+Slide 1: Dự báo Chuỗi thời gian (Timeseries Forecasting)
+Người 1: Chào các em. Chào mừng đến với Chương 13. Tất cả những bức ảnh chó mèo, xe cộ từ đầu khóa học đến giờ là các quan sát "độc lập". Nhưng hôm nay ta đối mặt với loại dữ liệu mới: Dữ liệu bị trói buộc bởi thời gian.
+Người 2: Có phải là dữ liệu của ngày mai thì phụ thuộc vào ngày hôm nay không thưa thầy? Em nghe nói dự báo chứng khoán là xài cái này!
+
+Slide 2: Nội dung chương
+Người 1: Rất chính xác. Chương này có 5 phần. Đầu tiên ta tìm hiểu bản chất của Chuỗi thời gian. Thứ hai, ta thiết lập các Mô hình cơ bản nhất (Baseline). Thứ ba, ta học Mạng truyền hồi A En En (RNN). Thứ tư là siêu kiến trúc Éo ét ti em (LSTM) để chống quên. Và thứ năm là các kỹ thuật Keras xịn sò.
+
+Slide 3: Chuỗi thời gian (Timeseries) là gì?
+Người 1: Chuỗi thời gian là các điểm dữ liệu đo đạc cách đều nhau. Yếu tố cốt lõi là Thứ Tự (Temporal Order). Dữ liệu này dùng để Dự Báo (Forecasting) Tương Lai. Ví dụ như Điện lực lấy mức tiêu thụ của 7 ngày trước để dự báo điện năng cho ngày mai.
+
+Slide 4: Khảo sát Dữ liệu Thời tiết Jena (Dài hạn)
+Người 1: Bộ dữ liệu huyền thoại zê-na (Jena Weather) của Đức. Cứ 10 phút trạm lại ghi 1 dòng nhiệt độ, áp suất, độ ẩm. Suốt từ 2009 đến 2016.
+Người 2: Nhìn biểu đồ nhiệt độ nhiều năm này, em thấy nó lặp lại một cái sóng chu kì rất hoàn hảo theo năm. Chắc chắn là mùa Đông rét mướt và mùa Hè nóng nực tuần hoàn nhau. Dễ đoán lắm.
+
+Slide 5: Khảo sát Dữ liệu Thời tiết Jena (Ngắn hạn)
+Người 1: Vậy em hãy nhìn vào zoom biểu đồ ngắn hạn 10 ngày này đi.
+Người 2: Ui, biểu đồ răng cưa lộn xộn quá. Mặc dù vẫn thấy ban ngày nóng ban đêm lạnh, nhưng thỉnh thoảng có ngày nó rớt không phanh hoặc có biến động cục bộ bất thình lình. Việc dự báo 24 giờ tiếp theo bằng mắt thường là bất khả thi.
+
+Slide 6: Tải và Đọc Dữ liệu Jena Weather
+Người 1: Mở file xi ét vi (CSV). Tách dòng, loại bỏ dòng Tiêu đề Hét-đơ (header). Mình thu được một danh sách dái dằng dặc 420 ngàn năm trăm (420551) dòng ghi chép.
+
+Slide 7: Chuyển đổi dữ liệu sang Numpy Array
+Người 1: Viết kịch bản móc ngoặc dữ liệu. Khai báo mảng tem-p-rơ-chơ (temperature) làm Mục Tiêu (Target). Còn mảng râu-đát-ta (raw_data) sẽ chứa toàn bộ 14 cột tính năng làm Tính Trạng Đầu Vào (Features). 
+
+Slide 8: Phân chia tập dữ liệu (Train/Val/Test)
+Người 1: Tuyệt đối ghi nhớ! Học máy thông thường thì phải xáo trộn trộn ảnh lên (Shuffle). Nhưng ở Chuỗi thời gian, em Có được phép xáo trộn quá khứ và tương lai lộn xộn vào nhau không?
+Người 2: Dạ Không! Luật nhân quả là Tương lai phải nằm sau Quá khứ. Nên mình cắt cái rụp: 50% thời gian đầu làm Huấn luyện (Train), Khúc giữa làm Xác Thực (Val), Khúc cuối làm Kiểm Chứng (Test). Không được trộn. 
+
+Slide 9: Chuẩn hóa Dữ liệu (Normalization)
+Người 1: Chuẩn hóa bằng Z-score: Trừ đi Giá trị trung bình Mean và chia cho Độ lệch chuẩn s-t-đ (std). Nhưng hãy chú ý dòng code của thầy: Thầy CHỈ dùng tập Train để tính Mean và Std. Tại sao?
+Người 2: Kỹ năng đỉnh cao! Nếu thầy lấy toàn bộ Dữ liệu để tính Mean, thì thầy đã lén lút ăn gian, tuồn trước "Thông tin của Tương lai" vào trong mạng! Gọi là Rò rỉ dữ liệu (Data Leakage)!
+
+Slide 10: Định nghĩa tham số Cửa sổ Thời gian (Time Window)
+Người 1: Xác định bài toán: Ta muốn dùng 5 ngày quá khứ để dự báo 24 giờ tương lai. Cứ 1 giờ có 6 mẫu (do 10 phút lấy 1 lần). Vậy Xê-quần Len (sequence_length) là 120 (Tương đương 5 ngày). Đi-lây (delay) của tương lai là 144 mẫu (Tương đương 24 giờ).
+
+Slide 11: Khởi tạo Timeseries Generator của Keras
+Người 1: Thay vì tạo các mảng Numpy khổng lồ làm sập RAM, mình dùng hàm Keras tai-m-sê-ri-đát-ta-xét (timeseries_dataset_from_array). Nó sẽ tự động cuộn cái Cửa sổ thời gian 120 giờ đó chạy dọc theo lịch sử. Tới đâu nó móc dữ liệu tống vào một cái Mẻ Batch 256 phần tử tới đó. Rất thông minh và tiết kiệm RAM!
+
+Slide 12: Một Baseline Suy luận Thông thường (Commonsense Baseline)
+Người 1: Trước khi dùng AI, ta xài Lẽ thường tình (Commonsense). Thời tiết thì ngày mai sẽ giống ngày hôm nay! Thầy viết hàm Baseline: Dự đoán luôn "Nhiệt độ tương lai" bằng đúng y "Nhiệt độ hiện tại".
+Người 2: Sai số Tuyệt đối Trung bình Em-A-E (MAE) của mẹo này là 2 chấm 44 (2.44) độ C! Một con số tham chiếu tuyệt vời. Mọi hệ thống AI nào có MAE lớn hơn 2.44 đều bị coi là đồ bỏ đi vì tệ hơn cả Lẽ thường tình!
+
+Slide 13: Sự thất bại của mạng Densely-connected Model
+Người 1: Thử mạng AI số 1: Mạng nơ-ron Đen-x cơ bản. Code gọi Lớp Ph-lát-tần (Flatten) đập bẹp toàn bộ chuỗi thời gian dính vào 1 chiều. Sau đó cho qua lớp Dense.
+
+Slide 14: Biểu đồ Loss của Densely-connected Model
+Người 1: Và kết quả, Validation MAE là 2 chấm 6 (2.6). Overfit trầm trọng. Nó bại trận thảm hại trước mẹo Baseline!
+Người 2: Tại sao AI lại thua Lẽ thường tình vậy thầy?
+Người 1: Tại thằng Đập bẹp! Em đập bẹp tức là em vứt sọt rác toàn bộ cái "Khái niệm Thứ tự Thời gian". Với mạng Dense, điểm dữ liệu thứ 1 và điểm dữ liệu thứ 100 nằm cùng 1 chỗ độc lập. Nó không hiểu quá khứ tương lai gì cả!
+
+Slide 15: Thử nghiệm với Mạng 1D Convolution
+Người 1: Thử mạng AI số 2: Mạng Tích chập một chiều (1D ConvNet). Ở chương Xử lý ảnh ta xài 2 chiều. Ở đây thời gian là một dải băng dài, ta xài Lớp Côn-vờ Một Đê (Conv1D) quét cái kính lúp đọc dọc theo dòng thời gian! Kèm theo hàm Băm cực đại Mác Pua-ling (MaxPooling1D).
+
+Slide 16: Biểu đồ Loss của Mạng 1D Convolution
+Người 1: Thất bại toàn tập tập hai! MAE còn lên tới 2 chấm 9 (2.9). Càng thông minh càng ngu đi! Tại sao Conv1D lại chết thảm?
+Người 2: Hình như nó dùng quy tắc Tịnh tiến Bất biến (Translation Invariance) ở môn Ảnh! Nghĩa là cái tai Mèo nằm ở góc nào thì cũng là cái tai Mèo.
+Người 1: Đúng. Nó ngây thơ cho rằng Khí hậu của Ngày thứ 1 cũng có giá trị giống hệt Khí hậu của Ngày thứ 100! Trong khi thực tế, thời tiết Càng sát với Hiện tại thì Càng quan trọng! Conv1D và MaxPooling lại tàn nhẫn xóa bỏ thứ tự đó.
+
+Slide 17: Khái niệm Mạng Nơ-ron Truyền hồi (RNN)
+Người 1: Đây là lúc anh hùng xuất hiện! Mạng truyền hồi (Recurrent Neural Networks - RNN). Nó hoàn toàn mô phỏng bộ não người.
+Người 2: Ý thầy là sự ghi nhớ? Khi em đọc một chữ, em phải nhớ các chữ đọc trước đó thì mới ghép thành câu có nghĩa được?
+Người 1: Chuẩn xác! RNN có một vòng lặp kín gọi là Trạng Thái Xờ-tết (State). Đọc điểm số 1, tạo ra Trạng thái. Đọc điểm số 2, dùng chung với Trạng thái của số 1, sinh ra Trạng thái mới. Nó ghi nhớ liên tục!
+
+Slide 20: Vấn đề cốt lõi: Vanishing Gradients (Triệt tiêu Đạo hàm)
+Người 1: Xin lỗi, slide 18 và 19 thầy bỏ qua vì nó là code ví dụ SimpleRNN. SimpleRNN ở thực tế là một mô hình vô dụng vì bị dính Lời nguyền Triệt tiêu Đạo hàm (Vanishing Gradients).
+Người 2: Lời nguyền đó là sao ạ? 
+Người 1: Em tưởng tượng RNN phải nhân ma trận liên tiếp 100 lần để truyền Trí nhớ từ quá khứ tới hiện tại. Nếu ma trận toàn số 0.9, nhân 100 lần nó ra số 0 tròn trĩnh! RNN bị mất trí nhớ ngắn hạn. Quên sạch thông tin ở đầu chuỗi.
+
+Slide 21: Giải pháp LSTM: Bổ sung Trạng thái Tế bào (Cell State)
+Người 1: Để chữa chứng mất trí nhớ, năm 1997 người ta phát minh ra thuật toán Long Short-Term Memory (LSTM). Bộ nhớ Dài Ngắn hạn. Nó thêm một cái Băng chuyền chạy dọc ở trên cùng gọi là Tế bào Trạng thái Cell State Xê (C_t). Băng chuyền này chạy thẳng băng, ít bị nhân chia, nên thông tin quá khứ đi trên đó không bao giờ bị biến mất!
+
+Slide 22: LSTM (Phần 1): Trạng thái mang theo
+Người 1: Cấu tạo Toán học của băng chuyền LSTM rất vi diệu. Tại thời điểm t, LSTM nhận Đầu vào X-t (X_t), và Trạng thái ẩn từ hôm qua H-t-trừ-1 (H_{t-1}). Nó trộn 2 cái này lại.
+
+Slide 23: LSTM (Phần 2): Forget Gate và Input Gate
+Người 1: Quan trọng nhất là Hệ thống Cổng (Gates). Cổng thứ nhất: Cổng Quên (Forget Gate - f). Nó dùng hàm Xích-moi (Sigmoid) khóa van từ 0 đến 1. Băng chuyền đi qua đây, nếu f bằng 0 là Băng chuyền sẽ "Xóa ký ức". Nếu bằng 1 là Giữ lại trọn vẹn. 
+Người 2: Hay quá. Còn Cổng Vào (Input Gate - i) kết hợp Cổng k là để tổng hợp dữ liệu mới X-t của Hiện tại xong Bơm nó vào lại cái Băng chuyền Xê-tê (C_t)! Mạng được làm tươi ký ức!
+
+Slide 24: LSTM (Phần 3): Output Gate
+Người 1: Và cuối cùng Cổng Ra (Output Gate - o). LSTM nó quyết định sẽ xuất cái lượng Trạng Thái Ẩn Hát-tê (H_t) nào ra bên ngoài cho Trạm tiếp theo dùng. Bằng cách lấy băng chuyền ốp vào hàm tanh để vắt nước tinh hoa ra. Mọi thứ hoạt động nhịp nhàng!
+
+Slide 25: Xây dựng mô hình LSTM với Keras
+Người 1: Nghe Toán học của Hệ thống Cổng ghê gớm vậy. Nhưng anh em Keras đã đóng gói nó cực gọn. Kéo Kê-rát Chấm Lây-ơ Chấm Éo-ét-ti-em (keras.layers.LSTM) là xong! Toàn bộ quá trình Cổng quên, cổng nhớ, băng chuyền đều tự động chạy ngầm trong GPU. 
+
+Slide 26: Hiệu suất Đột phá của LSTM
+Người 1: Chạy mô hình! MAE giảm sốc xuống còn 2 chấm 39 (2.39). Chính thức vượt mốc Lẽ thường tình (2.44)! Lịch sử ghi nhận AI đã thắng kinh nghiệm thời tiết của người nông dân! Nhưng niềm vui không lâu, Epoch thứ 5 nó bắt đầu quặp ngược lên (Overfit). Cần tinh chỉnh.
+
+Slide 27: Kỹ thuật 1: Recurrent Dropout (Chống Overfitting)
+Người 1: Tinh chỉnh số 1: Tắt nơ-ron ngẫu nhiên (Dropout). Nhưng phải cẩn thận, tắt nơ-ron thời gian mà xài Dờ-róp-ao bình thường là hỏng bét mạch thời gian! Tác giả Y-an Ga (Yarin Gal) đã sáng tạo ra Ri-cớ-rân Dờ-róp-ao (recurrent_dropout) để làm điều đó một cách chuẩn xác cho LSTM! 
+
+Slide 28: Biểu đồ sức mạnh của Recurrent Dropout
+Người 1: Hiệu quả tức thì. Lưới Validation và Training bám sát nhau đồng điệu. Mô hình hội tụ sâu hơn về MAE 2 chấm 27 (2.27). Vững như bàn thạch không bị quặp ngược lên nữa.
+
+Slide 29: Kỹ thuật 2: Xếp chồng RNN (Stacked GRU)
+Người 1: Thừa thắng xông lên. Ta chồng mạng này lên mạng kia để tăng độ nhạy. Kỹ thuật Stacked RNN! Nhớ phải bật cờ Lệnh rị-tơn xê-quần bằng tru (return_sequences=True) ở lớp dưới để nó nhả chuỗi lên cho lớp trên. Ở đây thầy thay LSTM bằng Gờ-Rê-U (GRU) - Một biến thể giản lược của LSTM cho máy nhẹ nhàng hơn.
+
+Slide 30: Biểu đồ Xếp chồng GRU + Dropout
+Người 1: Kết quả khá tốt, có cải thiện thêm một chút xíu nho nhỏ. Khái niệm này gọi là Lợi tức giảm dần (Diminishing Returns) - Mạng đã sát với ngưỡng cực hạn, ném thêm lớp vào chỉ tốn sức mà ít ăn thua. 
+
+Slide 31: Kỹ thuật 3: Mạng truyền hồi Hai chiều (Bidirectional RNN)
+Người 1: Siêu kỹ thuật cuối cùng. Bai Đai Rếc Xần (Bidirectional RNN). Nghĩa là Mạng 2 chiều! Cài một con RNN đi Xuôi từ Quá khứ tới Hiện tại. Cài thêm một con RNN đi Ngược từ Hiện tại lội lùi về Quá khứ. 
+Người 2: Ui, lội ngược để làm gì ạ?
+Người 1: Em đọc câu tiếng Anh: "He is a bank manager". Chữ Bank có thể là ngân hàng hoặc bờ sông. Chỉ khi em đọc từ Manager đằng sau, em lội ngược lại mới hiểu được Bank là Ngân hàng! Mạng này sinh ra là vua của Xử lý Ngôn ngữ Tự nhiên NLP!
+
+Slide 32: Xây dựng Bidirectional LSTM
+Người 1: Lớp Bi-Đai-Rếc-Xần (Bidirectional) trong Keras sẽ bao bọc thằng LSTM lại. Nhưng trong bài toán Dự báo Thời tiết thì thằng này phế vật nhé em! Vì nó cắm đầu đi lội ngược từ tương lai về, lội dính các thông tin không có thật, làm phá vỡ toàn bộ mạch logic nhiệt độ. NLP thì dùng, Thời tiết thì vứt!
+
+Slide 33: Tổng kết Chương 13
+Người 1: Chúc mừng em hoàn thành Chương 13. Khái niệm khó nhất của Deep Learning: Trí nhớ! Dense và Conv1D không thể có trí nhớ.
+Người 2: RNN có trí nhớ nhưng dễ bị Triệt tiêu Đạo hàm (Vanishing Gradient). Giải pháp Cứu tinh vĩ đại nhất là mô hình Tế bào Băng chuyền LSTM cùng hệ thống Cổng của nó!
+Người 1: Rất chuẩn. Hẹn gặp lại em ở những chương tiếp theo khi ta áp dụng RNN vào ngôn ngữ loài người.

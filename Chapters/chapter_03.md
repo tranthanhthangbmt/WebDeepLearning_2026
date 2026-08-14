@@ -3838,4 +3838,9 @@ dự đoán về đầu vào mới.
   </ul>
 </div>
 
+
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_03/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
 <!-- tabs:end -->

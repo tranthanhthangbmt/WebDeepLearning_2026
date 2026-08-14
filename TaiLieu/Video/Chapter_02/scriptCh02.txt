@@ -1,0 +1,147 @@
+Slide 1: Các khối xây dựng toán học của Mạng Nơ-ron
+Người 1: Chào các em. Hôm nay chúng ta bước sang Chương hai: Các khối xây dựng toán học của Mạng Nơ-ron. Ở chương này, chúng ta sẽ bắt tay vào việc mổ xẻ xem một mạng nơ-ron thực sự hoạt động như thế nào thông qua toán học.
+Người 2: Dạ chào thầy. Em đã nghe nhắc nhiều về Toán học trong AI như đạo hàm, ma trận, véc-tơ. Chắc hôm nay chúng ta sẽ làm rõ những khái niệm đó phải không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng vậy. Nội dung chương sẽ đi qua năm phần. Đầu tiên, ta sẽ xem xét qua một ví dụ thực tế về mạng nơ-ron. Thứ hai, tìm hiểu về Bộ căng, hay Tensor, biểu diễn dữ liệu như thế nào. Thứ ba là các phép toán hình học trên Tensor. Thứ tư là cơ chế tối ưu hóa dựa trên Gradient. Và cuối cùng là Thuật toán Lan truyền ngược.
+Người 2: Có vẻ như đi từ thực hành trực quan rồi mới quay lại giải thích lý thuyết bên dưới. Em nghĩ cách này sẽ dễ tiếp thu hơn ạ.
+
+Slide 3: Ví dụ kinh điển: Tập dữ liệu MNIST
+Người 1: Để có cái nhìn đầu tiên, ta sẽ xem xét tập dữ liệu ảnh chữ số viết tay tên là Em-nít (MNIST). Đây là "chương trình Xin chào thế giới" (Hello World) của Học sâu. Bộ dữ liệu này có sáu mươi ngàn ảnh huấn luyện và mười ngàn ảnh kiểm tra, mỗi ảnh kích thước hai mươi tám nhân hai mươi tám điểm ảnh.
+Người 2: Ở đây thầy có nhắc đến các thuật ngữ Lớp, Mẫu và Nhãn. Lớp (Class) tức là mười loại chữ số từ không đến chín. Mẫu là một bức ảnh, và Nhãn là kết quả con số tương ứng của bức ảnh đó, đúng không thầy?
+Người 1: Rất chính xác. Hãy nhớ ba thuật ngữ này vì chúng ta sẽ dùng chúng liên tục.
+
+Slide 4: Tải dữ liệu MNIST trong Keras
+Người 1: Trong Keras, tập dữ liệu MNIST được tải sẵn thành bốn mảng Numpy. Bốn mảng đó là: hình ảnh huấn luyện, nhãn huấn luyện, hình ảnh kiểm tra và nhãn kiểm tra. 
+Người 2: Chúng ta dùng tập huấn luyện để dạy cho mô hình, còn tập kiểm tra dùng để làm gì ạ?
+Người 1: Tập kiểm tra giống như bài thi cuối kỳ vậy, dùng để đánh giá xem mô hình có thực sự hiểu bài hay không, dựa trên những dữ liệu nó chưa từng thấy qua.
+
+Slide 5: Khám phá hình dạng dữ liệu
+Người 1: Các mảng Numpy được dùng để lưu trữ dữ liệu. Hãy xem cấu trúc của tập huấn luyện. Lệnh chấm shape trả về mảng có kích thước: sáu mươi ngàn, hai mươi tám, hai mươi tám.
+Người 2: Tức là có sáu mươi ngàn bức ảnh, mỗi ảnh là một ma trận hai chiều có hai mươi tám hàng và hai mươi tám cột ạ.
+
+Slide 6: Xem xét một mẫu dữ liệu (Sample)
+Người 1: Đúng vậy. Ở slide này, thầy biểu diễn mẫu thứ tư trong tập dữ liệu. Các em có thể thấy bức ảnh chữ số chín thực chất là một ma trận các số nguyên có giá trị từ không đến hai trăm năm mươi lăm, tương ứng từ màu trắng đến màu đen.
+Người 2: Máy tính nhìn ảnh không phải dưới dạng màu sắc như mắt người mà là dưới dạng các con số ma trận này.
+
+Slide 7: Kiến trúc của mô hình mạng nơ-ron
+Người 1: Giờ ta xây dựng kiến trúc mạng. Khối cốt lõi của mạng nơ-ron là các "lớp" (layer). Trong đoạn mã này, thầy tạo một mô hình tuần tự gồm hai lớp tên là Đen-x (Dense). Lớp đầu tiên có năm trăm mười hai nơ-ron.
+Người 2: Lớp cuối cùng là sốp-mác (softmax) có mười chiều. Em đoán là nó sẽ trả ra mười điểm xác suất tương ứng với khả năng bức ảnh đó thuộc về mười chữ số từ không đến chín đúng không ạ?
+Người 1: Hoàn toàn chính xác.
+
+Slide 8: Biên dịch (Compile) và Tiền xử lý dữ liệu
+Người 1: Trước khi huấn luyện, ta cần biên dịch mô hình với ba yếu tố: Bộ tối ưu hóa (optimizer), Hàm mất mát (loss), và Thang đo (metrics) để theo dõi. Đồng thời, ảnh kích thước hai mươi tám nhân hai mươi tám được duỗi thẳng thành một véc-tơ bảy trăm tám mươi tư chiều, và chuẩn hóa giá trị về khoảng từ không đến một.
+Người 2: Chuẩn hóa về khoảng từ không đến một giúp cho các trọng số trong mạng nơ-ron dễ dàng tính toán và hội tụ nhanh hơn phải không thầy?
+
+Slide 9: Huấn luyện (Training) và Đánh giá (Evaluation)
+Người 1: Đúng vậy. Bây giờ ta gọi lệnh chấm fit (fit) để bắt đầu huấn luyện. Mô hình sẽ lặp qua tập dữ liệu. Sau đó, ta đánh giá bằng lệnh chấm e-va-lu-ết (evaluate) trên tập kiểm tra. Điểm độ chính xác (accuracy) thường đạt khoảng chín mươi bảy phẩy tám phần trăm.
+Người 2: Nếu điểm trên tập kiểm tra mà thấp hơn nhiều so với tập huấn luyện thì sao ạ?
+Người 1: Đó chính là hiện tượng Quá khớp (Overfitting), tức là mô hình học thuộc lòng dữ liệu thay vì hiểu quy luật chung. Chúng ta sẽ giải quyết nó ở các chương sau.
+
+Slide 10: Định nghĩa Tensor (Bộ căng)
+Người 1: Giờ ta quay lại phần lý thuyết cốt lõi: Bộ căng hay Tensor. Trong học sâu, mọi dữ liệu đều được lưu trong các mảng đa chiều này. Tensor không chiều, hay Tensor Không-D, là một con số duy nhất. Tensor Một-D là một véc-tơ. Tensor Hai-D là một ma trận có hàng và cột.
+Người 2: Vậy Tensor Ba-D là khi ta đóng gói các ma trận Hai-D lại thành một hình khối, giống như một khối rubik ạ?
+Người 1: Một cách hình tượng rất hay. Ta còn có cả Tensor Bốn-D, Năm-D ứng dụng cho chuỗi hình ảnh hay video.
+
+Slide 11: Các thuộc tính chính của Tensor
+Người 1: Một Tensor luôn được xác định bởi ba thuộc tính. Thứ nhất là số trục hay thứ hạng (rank). Thứ hai là hình dạng (shape), quy định số chiều dọc theo mỗi trục. Và thứ ba là kiểu dữ liệu, ví dụ số thực ba mươi hai bit (float32).
+Người 2: Ví dụ mảng hình ảnh MNIST lúc nãy có shape là sáu mươi ngàn phẩy hai mươi tám phẩy hai mươi tám thì số trục của nó là ba, kiểu dữ liệu là số nguyên tám bit ạ.
+
+Slide 12: Thao tác với Tensor: Cắt (Slicing) và Khái niệm Lô (Batch)
+Người 1: Khi xử lý dữ liệu, ta hay dùng kỹ thuật cắt Tensor (Slicing). Ví dụ lấy mẫu từ số mười đến số chín mươi chín. Hoặc cắt bớt viền của hình ảnh đi bảy điểm ảnh mỗi bên.
+Người 2: Em thấy trục đầu tiên (trục không) thường được gọi là trục Lô (batch axis). Nó có ý nghĩa gì ạ?
+Người 1: Mạng nơ-ron không bao giờ xử lý toàn bộ sáu mươi ngàn ảnh cùng lúc, mà chia thành từng mẻ nhỏ, mỗi mẻ gọi là một lô (batch), ví dụ một trăm hai mươi tám mẫu. Trục đầu tiên chứa số lượng mẫu trong một lô đó.
+
+Slide 13: Ví dụ thực tế: Vector và Dữ liệu Chuỗi thời gian
+Người 1: Ứng dụng trong thực tế, dữ liệu chuỗi thời gian như giá cổ phiếu được lưu trong Tensor Ba chiều. Trục đầu là số mẫu, trục hai là thời gian, trục ba là các đặc trưng.
+Người 2: Như trong ví dụ, theo dõi giá cổ phiếu hai trăm năm mươi ngày, mỗi ngày ba trăm chín mươi phút, mỗi phút lưu ba giá trị. Hình dạng Tensor sẽ là hai trăm năm mươi, ba trăm chín mươi, ba đúng không ạ?
+
+Slide 14: Ví dụ thực tế: Dữ liệu Ảnh
+Người 1: Tiếp theo là ảnh màu kỹ thuật số. Ảnh màu có thêm một chiều là Kênh màu (RGB). Nên một lô ảnh sẽ tạo thành Tensor Bốn chiều: Mẫu, Chiều cao, Chiều rộng, và Kênh màu.
+Người 2: Với một lô gồm một trăm hai mươi tám bức ảnh màu, kích thước hai trăm năm mươi sáu nhân hai trăm năm mươi sáu, thì hình dạng Tensor Bốn-D sẽ là một trăm hai mươi tám, hai trăm năm mươi sáu, hai trăm năm mươi sáu, ba.
+
+Slide 15: Ví dụ thực tế: Dữ liệu Video
+Người 1: Cuối cùng, phức tạp nhất là Video. Video là một chuỗi các khung hình, mà mỗi khung hình đã là Tensor Ba chiều. Vậy nên một lô video sẽ cần Tensor Năm chiều: Mẫu, Khung hình, Chiều cao, Chiều rộng, Kênh màu.
+Người 2: Kích thước dữ liệu cho video chắc chắn rất khủng khiếp. Một lô nhỏ thôi mà đã lên đến hàng trăm Mega byte bộ nhớ rồi.
+
+Slide 16: Phép toán Tensor: Element-wise và Broadcasting
+Người 1: Sang phần ba: Phép toán Tensor. Có hai khái niệm. Một là phép toán theo từng phần tử (Element-wise) như cộng, trừ, hay áp dụng hàm phi tuyến tính, diễn ra song song và độc lập. Hai là cơ chế Phát sóng (Broadcasting).
+Người 2: Phát sóng nghĩa là nếu ta cộng một ma trận lớn với một véc-tơ nhỏ, hệ thống sẽ tự động sao chép véc-tơ nhỏ đó lặp lại dọc theo các hàng để khớp kích thước rồi mới cộng đúng không thầy?
+Người 1: Hoàn toàn chính xác, nó giúp tiết kiệm thời gian và bộ nhớ khai báo.
+
+Slide 17: Sản phẩm Tensor (Tích vô hướng - Dot Product)
+Người 1: Khác với phép cộng, phép nhân Tensor hay Tích vô hướng (Dot Product) là phép toán phổ biến nhất. Ký hiệu là chấm matmul. Nó tổ hợp các hàng của ma trận thứ nhất với cột của ma trận thứ hai.
+Người 2: Theo quy tắc nhân ma trận ở đại số tuyến tính, thì số lượng cột của ma trận thứ nhất bắt buộc phải bằng số lượng hàng của ma trận thứ hai thì mới nhân được. Kích thước kết quả thu được sẽ là a nhân c.
+
+Slide 18: Định hình lại Tensor (Reshaping & Transposing)
+Người 1: Đôi khi ta cần thay đổi hình dạng cấu trúc của Tensor, gọi là Reshape, sắp xếp lại hàng và cột nhưng không làm mất phần tử nào. Chuyển vị (Transpose) là hoán đổi hàng thành cột.
+Người 2: Ví dụ ma trận ba nhân hai khi chuyển vị sẽ biến thành ma trận hai nhân ba.
+
+Slide 19: Ý nghĩa Hình học (1): Hàm số và Tính liên tục
+Người 1: Mọi phép toán Tensor đều có ý nghĩa biến đổi hình học. Hãy coi một mạng nơ-ron là một hàm toán học khổng lồ nhận vào một điểm trong không gian và trả ra một điểm khác. Hàm số này bắt buộc phải liên tục và trơn.
+Người 2: Hàm trơn và liên tục nghĩa là nếu đầu vào thay đổi một chút xíu, thì đầu ra cũng chỉ thay đổi một chút xíu, không bị đứt gãy đứt đoạn đúng không ạ?
+Người 1: Chính xác. Điều này rất quan trọng để có thể áp dụng đạo hàm sau này.
+
+Slide 20: Ý nghĩa Hình học (2): Tịnh tiến, Phóng to, Quay
+Người 1: Các phép toán ta vừa học ứng với ba phép biến đổi hình học cơ bản. Phép cộng véc-tơ tương đương với Tịnh tiến hình ảnh. Phép nhân ma trận tương đương với Quay hình học hoặc Thu phóng hình.
+Người 2: Thật thú vị, các con số khô khan hóa ra đều là các lệnh nhào nặn không gian hình học.
+
+Slide 21: Ý nghĩa Hình học (3): Phép biến đổi Affine & Dense layer
+Người 1: Khi kết hợp phép nhân ma trận trọng số Vê-kép (W) và phép cộng véc-tơ 편 kiến (b), ta có Phép biến đổi Affine, tương ứng với lớp Dense trong mạng. Sau đó, ta đưa qua Hàm kích hoạt phi tuyến tính, ví dụ Hàm Rê-lu (ReLU).
+Người 2: Nếu không có Hàm phi tuyến tính thì sao ạ?
+Người 1: Nếu không có nó, dù mạng có hàng trăm lớp thì gộp lại vẫn chỉ tương đương với một phép biến đổi tuyến tính đơn thuần. Hàm phi tuyến giúp mạng bóp méo không gian, tạo ra khả năng giải quyết các bài toán phức tạp.
+
+Slide 22: Ý nghĩa Hình học (4): Gỡ rối dữ liệu
+Người 1: Nhìn vào hình này, Học sâu giống như việc các em cầm một tờ giấy có hai màu xanh đỏ bị vò nát. Mỗi lớp trong mạng nơ-ron sẽ dần dần vuốt phẳng một phần của tờ giấy đó.
+Người 2: Cho đến lớp cuối cùng, tờ giấy hoàn toàn phẳng phiu, ta chỉ cần vạch một đường thẳng là phân chia được màu xanh và màu đỏ ra hai phía. Cách diễn giải hình học này dễ hiểu quá ạ.
+
+Slide 23: Vòng lặp Đào tạo (Training Loop)
+Người 1: Phần bốn: Tối ưu hóa. Vòng lặp đào tạo diễn ra qua bốn bước. Rút lô dữ liệu. Chạy mô hình để dự đoán (Lan truyền thuận). Tính Hàm mất mát. Và cuối cùng: cập nhật tất cả trọng số theo hướng giảm Mất mát.
+Người 2: Câu hỏi là: làm sao để mạng biết cập nhật trọng số theo hướng nào thì Mất mát sẽ giảm ạ? Chẳng lẽ lại đi thử từng hướng một?
+
+Slide 24: Khái niệm Đạo hàm (Derivative)
+Người 1: Trả lời cho câu hỏi đó chính là khái niệm Đạo hàm. Đạo hàm của một hàm số biểu diễn độ dốc của tiếp tuyến tại một điểm. Nếu đạo hàm lớn hơn không, tăng x thì y tăng. Đạo hàm nhỏ hơn không, tăng x thì y giảm.
+Người 2: A, như vậy nếu em muốn Hàm mất mát (y) giảm xuống, em chỉ cần di chuyển x ngược hướng với dấu của đạo hàm là được!
+
+Slide 25: Đạo hàm của Tensor: Gradient
+Người 1: Đúng. Khi ta áp dụng đạo hàm vào không gian có nhiều biến (nhiều tham số trọng số), ta gọi đó là Gra-đi-en (Gradient). Gra-đi-en là véc-tơ chỉ hướng mà Hàm Mất mát tăng nhanh nhất.
+Người 2: Vậy mình chỉ cần di chuyển ngược hướng với véc-tơ Gra-đi-en, là ta đang tìm được con đường dốc nhất, ngắn nhất để đi xuống đáy của thung lũng Mất mát.
+
+Slide 26: Cực tiểu Toàn cục và Cực tiểu Cục bộ
+Người 1: Dưới đáy thung lũng, độ dốc bằng không, đó là điểm Cực tiểu. Ta muốn tìm Cực tiểu toàn cục, nơi sai số là thấp nhất. Nhưng bề mặt Mất mát rất gồ ghề, mô hình có thể bị mắc kẹt vào các hố lõm nhỏ gọi là Cực tiểu cục bộ.
+Người 2: Vậy làm sao để mô hình thoát khỏi những cái hố nhỏ đó để tìm được cái hố sâu nhất ạ?
+
+Slide 27: Thuật toán SGD và Momentum
+Người 1: Đó là nhờ thuật toán Hạ Gradient ngẫu nhiên, viết tắt là Ét-Gờ-Đê (SGD). Ta cập nhật trọng số bằng cách lấy Trọng số cũ trừ đi Tốc độ học nhân với Gra-đi-en. Ngoài ra, ta áp dụng kỹ thuật Động lượng (Momentum).
+Người 2: Động lượng giống như việc lăn một quả bóng. Nếu nó đã có đà trôi, cái đà đó sẽ giúp nó bay xuyên qua những cái hố nhỏ cục bộ mà không bị kẹt lại đúng không thầy?
+Người 1: Một sự so sánh rất sinh động và chính xác.
+
+Slide 28: Đồ thị Tính toán (Computation Graph)
+Người 1: Sang phần năm: Lan truyền ngược. Mạng có hàng triệu trọng số, làm sao tính đạo hàm cho tất cả chúng thật nhanh? Chúng ta dùng Đồ thị tính toán. Các biến số và phép toán được biểu diễn thành các đỉnh (node) và cạnh, tạo ra một sơ đồ.
+Người 2: Tức là máy tính sẽ chuyển các công thức toán học khô khan thành một cấu trúc đồ thị luồng dữ liệu để dễ quản lý.
+
+Slide 29: Ví dụ lan truyền thuận (Forward Pass)
+Người 1: Lấy ví dụ hàm i dài bằng tích x với w cộng b. Quá trình tính toán từ đầu vào đến kết quả i dài được gọi là Lan truyền thuận. 
+Người 2: Em thấy ở bước này, các giá trị cụ thể được tính toán và lưu nháp ngay trên các cạnh của đồ thị.
+
+Slide 30: Lan truyền ngược (Backpropagation) & Quy tắc Chuỗi
+Người 1: Sau khi có kết quả lỗi, ta dùng Lan truyền ngược. Đây là ứng dụng của Quy tắc Chuỗi (Chain Rule) trong toán học: đạo hàm của hàm hợp bằng tích các đạo hàm bên trong nó.
+Người 2: Ý thầy là ta sẽ xuất phát từ kết quả Lỗi ở cuối, đi ngược lại, nhân dồn các đạo hàm cục bộ nằm trên các cạnh với nhau là sẽ ra được đạo hàm tổng tác động lên trọng số ban đầu?
+Người 1: Đúng. Nó giống như việc truy vết xem mỗi trọng số ban đầu đã góp phần bao nhiêu phần trăm lỗi vào kết quả cuối cùng.
+
+Slide 31: Tự động phân biệt với TensorFlow GradientTape
+Người 1: Trong thực tế, các em không cần phải viết tay quy tắc đạo hàm này. TensorFlow có cơ chế Phân biệt tự động (Automatic Differentiation) bằng công cụ Băng ghi (GradientTape).
+Người 2: Công cụ này đóng vai trò tự động ghi lại toàn bộ thao tác trong quá trình lan truyền thuận, rồi sau đó tự động tính ngược ra đạo hàm khi được gọi lệnh. Quá tiện lợi ạ.
+
+Slide 32: Thực hành (Từ đầu): NaiveDense
+Người 1: Để hiểu sâu hơn, chúng ta hãy tự lập trình một lớp mạng đơn giản từ đầu, gọi là lớp NaiveDense. Hàm khởi tạo sẽ tạo một ma trận trọng số Vê-kép và véc-tơ độ lệch b. Hàm gọi (Call) sẽ thực hiện phép nhân ma trận cộng độ lệch, và đưa qua hàm phi tuyến.
+Người 2: Đoạn mã này thực chất đã thâu tóm toàn bộ ý nghĩa của Phép biến đổi Affine mà chúng ta học lúc trước.
+
+Slide 33: Thực hành (Từ đầu): Vòng lặp Huấn luyện
+Người 1: Và đây là Vòng lặp huấn luyện đầy đủ. Một là: Chạy xuôi qua mô hình lấy dự đoán và tính hàm Mất mát. Hai là: Dùng Băng ghi (GradientTape) để tính Gra-đi-en. Ba là: Dùng thuật toán Tối ưu hóa để cập nhật các trọng số.
+Người 2: Ba bước trên lặp đi lặp lại sẽ làm điểm sai số giảm dần về 0. Khái quát hóa quá trình này bằng code trông thật đơn giản thưa thầy.
+
+Slide 34: Tổng kết Chương 2
+Người 1: Cuối cùng là tổng kết chương. Chúng ta đã biết Tensor là dữ liệu mảng nhiều chiều; các phép toán Tensor giúp gỡ rối dữ liệu theo không gian hình học.
+Người 2: Hàm mất mát đo lường sai số. Các Bộ tối ưu hóa hạ Gra-đi-en sẽ hướng dẫn cập nhật Trọng số. Thuật toán Lan truyền ngược sẽ tự động hóa việc tính toán đạo hàm ngược về quá khứ nhờ cơ chế Đồ thị tính toán.
+Người 1: Rất xuất sắc. Các em đã nắm vững trái tim toán học của Học sâu. Buổi sau chúng ta sẽ vào ứng dụng thực tế. Chào các em!

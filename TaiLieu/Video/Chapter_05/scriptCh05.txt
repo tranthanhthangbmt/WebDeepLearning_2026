@@ -1,0 +1,149 @@
+Slide 1: Nền tảng của Học máy (Fundamentals of ML)
+Người 1: Chào các em. Hôm nay chúng ta bước sang Chương năm: Nền tảng của Học máy. Đây là chương thiên hoàn toàn về tư duy thuật toán, tập trung vào việc làm sao để tạo ra một mô hình vừa đủ thông minh mà không bị học vẹt.
+Người 2: Dạ em chào thầy. Tức là chương này sẽ giải quyết triệt để cái hiện tượng Quá khớp (Overfitting) mà chương trước ta liên tục gặp phải đúng không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng vậy. Chúng ta sẽ trải qua bảy phần. Bắt đầu từ nguyên lý giằng co cốt lõi, tìm hiểu nguyên nhân sinh ra quá khớp, các giao thức tách tập đánh giá chuẩn mực. Và cuối cùng là các thủ thuật tối tân nhất để kháng lại hiện tượng học vẹt này.
+Người 2: Nghe có vẻ rất nặng về tư duy kỹ thuật và toán học thống kê.
+
+Slide 3: Sự giằng co cốt lõi trong Học máy
+Người 1: Trong Học máy, luôn tồn tại một cuộc giằng co sinh tử giữa hai thái cực. Một bên là Tối ưu hóa (Optimization): tức là cố gắng ép mạng học sao cho sai số trên tập Huấn luyện thấp nhất có thể.
+Người 2: Và bên kia là Khái quát hóa (Generalization): tức là khả năng dự đoán đúng trên tập dữ liệu Kiểm tra chưa từng thấy.
+Người 1: Chính xác. Mâu thuẫn ở chỗ, khi Tối ưu hóa quá tốt, đạt điểm tuyệt đối, thì Khái quát hóa lại tụt dốc thảm hại.
+
+Slide 4: Hiện tượng Underfitting và Overfitting
+Người 1: Nhìn vào ba biểu đồ này. Bên trái là Chưa khớp (Underfitting), mô hình đường thẳng quá ngu ngốc không thể hiểu được đường phân bố parabol của dữ liệu. Ở giữa là Khớp chuẩn (Robust Fit), đường cong uốn lượn đúng xu hướng.
+Người 2: Còn hình bên phải, mô hình cố gắng chạy lắt léo uốn éo qua từng điểm dữ liệu một. Đây chính là Quá khớp (Overfitting). Nó học thuộc lòng cả những điểm nhiễu lệch lạc, nên khi có điểm mới xuất hiện, đường cong này sẽ phán đoán sai bét.
+
+Slide 5: Vòng đời điển hình của mô hình (Universal Overfitting)
+Người 1: Đây là vòng đời kinh điển của mọi mô hình Học sâu. Ở giai đoạn đầu, cả sai số Mất mát (Loss) trên tập Huấn luyện và Xác thực cùng giảm. Đây là giai đoạn mạng đang khám phá xu hướng.
+Người 2: Nhưng sau vòng lặp thứ năm, đường Xác thực nét đứt bắt đầu tăng vọt lên, trong khi đường Huấn luyện vẫn cắm đầu giảm. Mạng đã chính thức bước vào giai đoạn Overfitting. Nhiệm vụ của ta là kéo dài thời gian ở giai đoạn Khớp chuẩn càng lâu càng tốt.
+
+Slide 6: Dữ liệu không hợp lệ (Invalid Inputs)
+Người 1: Vậy tại sao lại có Quá khớp? Nguyên nhân đầu tiên đến từ Dữ liệu. Dữ liệu thực tế vô cùng bẩn. Ví dụ như tập ảnh chữ số em niết (MNIST), có những hình bị nhòe nhẹt mà ngay cả con người nhìn vào cũng không biết đó là số mấy.
+Người 2: Và nếu mạng nơ-ron có trí nhớ siêu phàm, nó sẽ dùng một phần tài nguyên Nơ-ron của nó để ghi nhớ cấu trúc nhiễu của những bức ảnh hỏng đó, thay vì học cách nhận diện nét bút.
+
+Slide 7: Dữ liệu bị gán nhãn sai (Mislabeled Data)
+Người 1: Nguyên nhân thứ hai: Do con người dán Nhãn sai. Nhìn bức ảnh số bốn rõ rành rành này, nhưng người nhập liệu lại gõ nhầm thành số chín.
+Người 2: Em hiểu, để mạng nơ-ron có thể "phân loại đúng" tấm ảnh đó thành số chín theo yêu cầu của hàm mất mát, nó buộc phải bóp méo không gian toán học của nó. Từ đó về sau, nó sẽ gọi tất cả các số bốn tương tự là số chín. Quả là tai họa.
+
+Slide 8: Sự phình to của Kênh Nhiễu (Noise Channels)
+Người 1: Nguyên nhân thứ ba vô cùng thú vị. Thầy làm thí nghiệm: nối thêm một bức ảnh chứa toàn hạt nhiễu trắng vào bức ảnh số ban đầu.
+Người 2: Khi đưa vào huấn luyện, dù bức ảnh số gốc vẫn rõ nét, nhưng độ chính xác lại tụt thê thảm. Tại sao vậy thưa thầy?
+Người 1: Vì mạng nơ-ron rất "lười biếng", nó sẽ vô tình dò thấy một đặc trưng sai lệch ngẫu nhiên nào đó trong đám nhiễu trắng. Nó dùng luôn đặc trưng đó để phân loại cho nhanh, dẫn đến kết quả sai hoàn toàn ở tập thực tế.
+
+Slide 9: Ngoại lai (Outliers) và Sự quá khớp
+Người 1: Tất cả những điểm dữ liệu hỏng, nhãn sai, hay nhiễu đó được gọi chung là các điểm Ngoại lai (Outliers). Nó là điểm khác biệt chui tọt vào lãnh địa của lớp khác.
+Người 2: Nhìn biểu đồ bên phải, để ôm được điểm ngoại lai màu vàng, đường phân loại màu xanh bị méo xẹo, góc cạnh đâm thẳng vào giữa. Nếu cứ ép sai số Huấn luyện bằng không thì ranh giới sẽ càng nham nhở.
+
+Slide 10: Đặc trưng mơ hồ (Ambiguous features)
+Người 1: Thậm chí, không chỉ Ngoại lai, mà ngay cả vùng ranh giới chuẩn cũng có Sự mơ hồ. Một điểm nằm ngay chính giữa có xác suất năm mươi phần trăm là lớp A, năm mươi phần trăm là lớp B.
+Người 2: Nếu bị Quá khớp, đường ranh giới sẽ tạo thành hình răng cưa cố lách qua từng điểm một ở vùng này. Biện pháp là ta phải học cách chấp nhận mô hình sẽ luôn phạm lỗi, không bao giờ được ép sai số bằng không.
+
+Slide 11: Chia 3 tập: Train, Validation và Test
+Người 1: Để đánh giá mô hình, tại sao ta không cắt đôi dữ liệu thành hai phần Train và Test, mà bắt buộc phải chia làm ba tập Train, Validation và Test?
+Người 2: À, vì khi ta điều chỉnh số lớp, tốc độ học để tăng điểm trên tập Validation, mô hình sẽ gián tiếp "học lỏm" luôn cấu trúc của tập Validation. Vì thế ta cần tập Test thứ ba hoàn toàn biệt lập để làm bài thi cuối cùng.
+Người 1: Cực kỳ chính xác. Hiện tượng đó gọi là Information Leak, Rò rỉ thông tin đánh giá.
+
+Slide 12: Tách tập Validation đơn giản (Hold-out Validation)
+Người 1: Có hai cách chia tập. Cách một là Hold-out Validation, giữ lại một phần. Xáo trộn toàn bộ dữ liệu, rồi bốc ngẫu nhiên hai mươi phần trăm cất ra làm tập Xác thực.
+Người 2: Cách này nhanh, gọn nhẹ, dễ code. Nhưng nhược điểm là nếu dữ liệu quá ít, ví dụ chỉ có một trăm tấm ảnh, thì bốc ra hai mươi tấm ảnh sẽ không đủ mang tính đại diện thống kê cho quần thể.
+
+Slide 13: Mã nguồn: Hold-out Validation
+Người 1: Nhìn vào mã nguồn, thuật toán gọi háp nâm bai chấm ran đôm chấm sấp phồ (np.random.shuffle) để xáo trộn. Cắt ra mười ngàn mẫu làm Xác thực bằng cú pháp mảng Python.
+Người 2: Sau khi huấn luyện trên tập Train, lấy ra đánh giá. Ở cuối cùng, khi đã chốt được kiến trúc tốt nhất, ta ghép nối Train và Validation lại bằng hàm cờn kết ti nết (concatenate) để huấn luyện mô hình chung cuộc.
+
+Slide 14: Đánh giá chéo K-Lần (K-Fold Validation)
+Người 1: Ở chương bốn ta đã làm quen với K-Fold Validation để trị dữ liệu quá nhỏ. Chia dữ liệu làm Ca phần. Huấn luyện Ca lần khác nhau. Ở mỗi lần lấy một phần khác nhau làm Validation.
+Người 2: Đánh giá cuối cùng là trung bình cộng của Ca kết quả. Nó tốn kém tài nguyên gấp Ca lần so với phương pháp Hold-out, nhưng độ tin cậy mang lại thì gần như tuyệt đối, không bị thiên lệch bởi phép cắt mẫu ngẫu nhiên.
+
+Slide 15: Mã nguồn: K-Fold Validation
+Người 1: Đây là vòng lặp for của phương pháp Ca bằng bốn phần. Ở mỗi vòng lặp, ta nhớ phải khởi tạo lại mô hình bằng hàm ghép mô đô (get_model) để lấy mạng lưới mới tinh chưa từng có trí nhớ.
+Người 2: Vâng, nếu không thì trọng số từ vòng trước lại bị mang sang vòng sau huấn luyện tiếp, kết quả sẽ sai bét. Thuật toán khá dễ lập trình.
+
+Slide 16: Xử lý khi Validation Loss không chịu giảm
+Người 1: Chúng ta sang phần nâng cao chất lượng mô hình. Khi mới thiết kế mạng, đôi lúc khi chạy hàm phít, Loss hoàn toàn không suy suyển, Accuracy nằm im ở ngưỡng thấp. Mô hình bị "chết lâm sàng".
+Người 2: Thường thì nguyên nhân số một nằm ở đâu thưa thầy?
+Người 1: Nằm ở Tốc độ học (Learning Rate). Nếu các em đặt tốc độ khổng lồ như một phẩy không, điểm tọa độ sẽ bay loạn xạ trên hàm Mất mát, văng xa khỏi điểm cực tiểu tối ưu.
+
+Slide 17: Điều chỉnh Learning Rate và Batch Size
+Người 1: Giải pháp rất đơn giản. Mở hàm ốp-ti-mai-zơ lên, cấu hình lại Learning Rate xuống các mức tiêu chuẩn như mười mũ trừ hai (1e-2), hoặc mười mũ trừ ba (1e-3).
+Người 2: Nếu hạ Learning Rate mà vẫn không được, thì ta thử tăng kích thước lô Batch Size lên đúng không thầy? Lô một trăm hai mươi tám mẫu sẽ cung cấp véc-tơ đạo hàm chính xác và ít nhiễu hơn lô tám mẫu.
+
+Slide 18: Dung lượng Mô hình (Model Capacity) là gì?
+Người 1: Tiếp theo là Dung lượng mô hình (Model Capacity). Đây là đại lượng tỷ lệ thuận với số lượng tham số Trọng số trong mô hình, tức là số lớp và số Nơ-ron.
+Người 2: Vậy mạng càng khổng lồ, dung lượng não càng to, thì sức mạnh Ghi nhớ của nó càng mạnh, nên nó càng dễ sinh ra Quá khớp. Mục tiêu của kỹ sư là tìm ra dung lượng "vừa khít" nhất.
+
+Slide 19: Khi Dung lượng Mô hình Không Đủ (Insufficient)
+Người 1: Để hiểu rõ, ta xem đồ thị này khi Mạng quá nhỏ, dung lượng yếu. Nó chỉ là mạng Logistic chạy thẳng ra lớp Sốp-mác.
+Người 2: Đường Validation Loss trên hình bắt đầu nằm ngang ở giá trị không phẩy hai sáu và không thể đâm đầu xuống được nữa. Mạng này bị Underfitting (Chưa khớp) nặng, trí thông minh của nó đã chạm trần giới hạn vật lý.
+
+Slide 20: Khi Dung lượng Mô hình Quá Lớn (Excessive)
+Người 1: Giờ thầy gắn cho nó một siêu mạng với hai ngàn không trăm bốn mươi tám nơ-ron mỗi lớp, khổng lồ cỡ chục triệu tham số. Các em nhìn đường Validation Loss xem.
+Người 2: Trời ơi, nó chạm đáy ngay tại vòng lặp đầu tiên, rồi vọt lên cực kỳ dốc. Thậm chí đường nét còn bị nhiễu răng cưa rất mạnh. Não của nó quá to nên nó nhớ thuộc lòng cả tập huấn luyện trong vài giây và đứt gãy sự tổng quát hóa ngay lập tức!
+
+Slide 21: Dung lượng Mô hình Lý Tưởng (Correct Capacity)
+Người 1: Và đây là mô hình chuẩn mực: hai lớp ẩn, mỗi lớp một trăm hai mươi tám Nơ-ron.
+Người 2: Đường cong Loss đi xuống vô cùng êm ái, trượt dài chạm đáy tối thiểu, và đi ngang thư giãn rất lâu trước khi mới chớm ngóc đầu lên ở vòng lặp thứ tám. Thật hoàn hảo!
+
+Slide 22: So sánh trên bài toán IMDB (Phân tích cảm xúc)
+Người 1: Giờ ta sẽ thực hành thay đổi dung lượng trên bài toán A E Em Đi Bi. Mạng gốc ở chương bốn là mười sáu Nơ-ron. Thầy sẽ tạo ra một mạng siêu nhỏ bốn Nơ-ron. Và một siêu mạng năm trăm mười hai Nơ-ron.
+Người 2: Chúng ta sẽ chạy thử ba bản kiến trúc này trên dữ liệu để quan sát sự khác biệt khi thay đổi độ rộng của não bộ.
+
+Slide 23: Trực quan: Mạng Gốc (16 units) vs Mạng Nhỏ Hơn (4 units)
+Người 1: Ở biểu đồ này, đường có dấu chấm tròn (Dots) là Mạng mười sáu nơ-ron. Đường có dấu cộng vắt chéo (Crosses) là Mạng bốn nơ-ron bé xíu.
+Người 2: Em thấy đường dấu cộng kháng cự lại sự Quá khớp lâu hơn hẳn. Nó đi ngang đến tận vòng thứ sáu mới bắt đầu vọt lên, và độ dốc của nó cũng thoai thoải hơn nhiều. Thu nhỏ mạng thực sự là cách kiềm chế Overfitting.
+
+Slide 24: Trực quan: Mạng Gốc (16 units) vs Mạng Lớn Hơn (512 units)
+Người 1: Ngược lại, biểu đồ này so sánh Mạng gốc dấu chấm tròn và Mạng khổng lồ dấu cộng. Mạng khổng lồ ghi nhớ thần tốc. Ở ngay vòng lặp số một nó đã Quá khớp và dựng đứng lên tận giá trị ba chấm không.
+Người 2: Rõ ràng không phải cứ nhồi thật nhiều Nơ-ron là tốt. Dùng dao mổ trâu để giết gà chỉ khiến hệ thống sụp đổ thưa thầy.
+
+Slide 25: Weight Regularization (Phạt Trọng Số L1 / L2)
+Người 1: Chúng ta đi vào phần năm: Các phương pháp Regularization. Nguyên lý Ockham's razor nói rằng: Lời giải thích đơn giản hơn thường có xu hướng đúng. Một mô hình có các trọng số siêu nhỏ phân bố đều thì tốt hơn một mô hình chứa các điểm dị thường khổng lồ.
+Người 2: Do đó, ta sẽ cộng thêm một mức Phạt vào Hàm mất mát. Có Lờ một (L1) là phạt dựa trên trị tuyệt đối của trọng số, ép nhiều trọng số về đúng không. Còn Lờ hai (L2) là phạt dựa trên bình phương trọng số, ép tất cả trọng số về tiệm cận không.
+
+Slide 26: Hiệu quả của Phạt trọng số L2
+Người 1: Việc lập trình rất đơn giản, chỉ cần thêm tham số kơ-nồ rế-gu-la-rai-dơ (kernel_regularizer) bằng lờ hai của không phẩy không không hai. Ở biểu đồ, đường dùng Lờ hai là đường dấu cộng.
+Người 2: Oa, Mạng Lờ hai vẫn duy trì được Loss cực thấp và nằm ngang phè ra tới tận vòng thứ hai mươi, không hề bị dựng ngược lên. Thuật toán Lờ hai thực sự làm đường ranh giới trở nên mượt mà.
+
+Slide 27: Kỹ thuật Dropout (Ngắt Nơ-ron Ngẫu nhiên)
+Người 1: Kỹ thuật Regularization đỉnh cao nhất là Rốp-ao (Dropout), do giáo sư Geoffrey Hinton phát minh. Rất bạo lực: Ở mỗi vòng lặp, ta ngắt điện và tắt ngẫu nhiên một nửa số Nơ-ron.
+Người 2: Vô hiệu hóa phân nửa bộ não lúc đang học? Tư duy này thật kỳ lạ.
+Người 1: Mục đích là phá vỡ sự Đồng thích nghi (Co-adaptation). Tránh tình trạng các Nơ-ron ỷ lại, dựa dẫm vào nhau. Khi bị cắt ngẫu nhiên, từng Nơ-ron phải tự túc nỗ lực trích xuất được đặc trưng hữu ích.
+
+Slide 28: Cơ chế cân bằng Toán học của Dropout
+Người 1: Trong Keras, ta dùng đối tượng lây-ơ chấm rốp-ao (layers.Dropout). Một điểm lưu ý chết người: Rốp-ao chỉ hoạt động lúc Huấn luyện, còn lúc Kiểm tra thì tắt hoàn toàn. 
+Người 2: Ơ, nếu lúc học ngắt một nửa, lúc thi lại huy động một trăm phần trăm Nơ-ron thì tổng xung năng lượng tỏa ra bị vọt lên gấp đôi, mô hình sẽ bị quá tải mất ạ.
+Người 1: Nên Keras tự động Scale-up (Nhân đôi) năng lượng kích hoạt ở các mạng còn sống lúc huấn luyện, để bù đắp sự chênh lệch đó. Rất thông minh.
+
+Slide 29: Hiệu quả của Dropout
+Người 1: Các em xem kết quả khi dùng Rốp-ao. Đường dấu cộng (Crosses) đã đè bẹp sự Quá khớp. Cùng một dung lượng mô hình, nhưng nó ổn định và kéo dài chu kỳ Khớp chuẩn gấp mười lần so với không dùng.
+Người 2: Quá tuyệt vời! Chắc chắn từ nay em sẽ luôn kẹp thêm một lớp Dropout ở sau lưng mỗi lớp Nơ-ron ẩn.
+
+Slide 30: Kỹ thuật tính năng (Feature Engineering)
+Người 1: Phần sáu, Kỹ thuật tính năng. Đây là quá trình con người dùng quy luật chuyên gia (Domain Knowledge) để biến đổi dữ liệu thô sao cho mô hình dễ học nhất, thay vì quăng nguyên cục bắt nó tự làm.
+Người 2: Học sâu (Deep Learning) không phải là tự động trích xuất tính năng sao thầy?
+Người 1: Đúng. Nhưng nếu tập dữ liệu của em quá nhỏ, hoặc thiếu tài nguyên tính toán, thì một chút tư duy Kỹ thuật tính năng sẽ cứu mạng cả hệ thống.
+
+Slide 31: Ví dụ: Bài toán đọc Đồng hồ
+Người 1: Lấy ví dụ muốn máy tính đọc giờ từ bức ảnh đồng hồ kim. Nếu em quăng nguyên bức ảnh pích-xeo ảnh màu và dùng Mạng chập siêu cấp, nó sẽ tốn hàng ngàn giờ huấn luyện vô ích.
+Người 2: Thay vì thế, em code Python một đoạn tìm ra tọa độ X Y của đầu kim đồng hồ. Cho mô hình học tọa độ thôi là xong.
+Người 1: Thậm chí, em đổi X Y sang hệ tọa độ cực lấy Góc Tê-ta (Theta), bài toán chỉ còn là phép chia làm tròn, trí tuệ nhân tạo trở nên thừa thãi. Sự tinh tế của kỹ sư là ở đó.
+
+Slide 32: Giả thuyết Đa tạp (The Manifold Hypothesis) là gì?
+Người 1: Phần cuối cùng: Trái tim toán học của Học sâu. Các em biết không, một bức ảnh màu tạo ra một không gian lên tới hàng tỷ tỷ chiều. Lấy random ngẫu nhiên tọa độ thì chắc chắn ảnh tạo ra là ảnh nhiễu vỡ vụn vô nghĩa.
+Người 2: Vậy tại sao thuật toán lại phân loại được mặt người hay chữ số ạ?
+Người 1: Giả thuyết Đa tạp nói rằng: Dữ liệu tự nhiên có nghĩa không nằm phân tán ngẫu nhiên, mà nó nằm quy tụ vào một "hòn đảo", hay một mặt phẳng uốn lượn liên tục gọi là Đa tạp (Manifold). Trí tuệ AI là quá trình vuốt phẳng cái mặt Đa tạp đó ra.
+
+Slide 33: Nội suy Tuyến tính vs Nội suy Đa tạp
+Người 1: Hình này rất trực quan. Nếu ta Nội suy tuyến tính, kẻ một đường thẳng băng qua không gian từ số ba tới số bảy, ta đâm thủng ra ngoài không gian Đa tạp. Kết quả là ảnh bị nhiễu vỡ vụn vô nghĩa (Hình trái).
+Người 2: Nhưng Học sâu thì khác, nó bám chặt dọc theo đường cong Đa tạp uốn lượn để biến đổi. Ảnh số ba được nắn nót, xoay chuyển từ từ cực mượt mà thành hình số bảy, không hề có điểm nhiễu nào! (Hình phải). Đỉnh cao thật sự!
+
+Slide 34: Mật độ Lấy mẫu (Dense Sampling)
+Người 1: Bản chất của Học sâu chỉ là nội suy khớp đường cong. Muốn khớp được một cái Đa tạp mặt cong phức tạp đến vậy, ta bắt buộc phải có Dữ liệu dày đặc (Dense Sampling) bao phủ khắp bề mặt đó.
+Người 2: Hình ở dưới là Đa tạp của bộ dữ liệu số viết tay, nó tự động gom các ảnh có chung chữ số thành từng mảng đảo liên kết chặt chẽ với nhau trên một dải không gian uốn lượn. Nó giải thích được bản chất của AI.
+
+Slide 35: Tổng kết Chương 5
+Người 1: Khép lại chương này. Trận chiến lớn nhất của Học máy là duy trì ranh giới mỏng manh giữa Tối ưu hóa trên tập Huấn luyện và Sự Quá khớp đánh mất sự Khái quát hóa.
+Người 2: Bắt buộc phải có tập Xác thực chia theo K-Fold hoặc Hold-out. Nếu bị Quá khớp, hãy Thu nhỏ mô hình lại, hoặc ném vào đó thuật toán Phạt trọng số Lờ hai và Kỹ thuật ngắt điện ngẫu nhiên Rốp-ao.
+Người 1: Chuẩn xác. Không thuật toán tối tân nào có thể bù đắp được dữ liệu thưa thớt. Hẹn gặp lại các em trong bài học Keras nâng cao vào buổi sau!

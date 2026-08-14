@@ -1,0 +1,105 @@
+Slide 1: Tương lai của Trí tuệ Nhân tạo (The Future of AI)
+Người 1: Chào các em. Hành trình Kỹ thuật Deep Learning đã khép lại ở chương 18. Chương 19 này, ta sẽ ngồi lại với nhau. Cùng nhìn sâu vào bản chất triết học của AI. Liệu những cỗ máy ta tạo ra có thực sự thông minh? Hay chúng ta đang bị ảo tưởng?
+
+Slide 2: Nội dung chương
+Người 1: Ta sẽ đi qua 5 phần: Một là Những giới hạn không thể chối cãi của Deep Learning. Hai là Sự lầm tưởng về "Mở rộng quy mô". Ba là Thước đo ARC đánh sập các Siêu AI hiện nay. Bốn là Hai thái cực trừu tượng của trí tuệ. Và Năm là Tương lai thực sự của AI sẽ đi về đâu.
+
+Slide 3: Bản chất thực sự của Deep Learning
+Người 1: Thức tỉnh nào! Deep Learning KHÔNG HỀ SUY NGHĨ. Nó chỉ là một Hệ thống Nội suy Tĩnh (Static Interpolative Database). Nghĩa là em ném cho nó hàng tỷ dữ liệu. Nó kẻ một Đường Cong Tham số khổng lồ đi qua các điểm dữ liệu đó. Khi dự đoán, nó chiếu cái Tọa độ lên Đường cong để lấy kết quả. 
+Người 2: Vậy hóa ra nó giống một dạng cơ sở dữ liệu tra cứu cực kỳ tinh vi thôi ạ?
+
+Slide 4: Sự mù lòa trước cái mới (Novelty)
+Người 1: Đúng thế. Điểm yếu cốt tử của hệ thống Tra Cứu là: SỰ MÙ LÒA TRƯỚC CÁI MỚI. Hãy nhìn bài test này, tô màu theo logic ma trận rất đơn giản. Đứa trẻ 6 tuổi làm được rẹt rẹt. Nhưng GPT-4 lại làm sai Bét Nhè. Vì trong cơ sở dữ liệu khổng lồ của GPT không có bài test này. AI rất thông thái, nhưng KHÔNG THÔNG MINH.
+
+Slide 5: Vấn đề "Học vẹt" ở Large Language Models
+Người 1: Hiện tượng Học Vẹt. Em mang bài toán kinh điển Môn-ti Hô-l (Monty Hall) ra hỏi Chatbot, nó lập tức đọc một tràng công thức xác suất giải cực chuẩn.
+Nhưng... Nếu em đổi câu hỏi là: "Một cánh cửa làm bằng Cửa Kính Trong Suốt có thể nhìn xuyên thấu phần thưởng bên trong". Con AI vẫn nhắm mắt nhắm mũi đọc Lại Cái Lời Giải Cũ! Nó Không hề Hiểu Ngữ Cảnh Vật Lý!
+
+Slide 6: Nhạy cảm với cách diễn đạt (Prompt Sensitivity)
+Người 1: Chính vì bản chất Tra cứu (Retrieval) bằng Tương đồng Từ Khóa. Nên mô hình rất Nhạy Cảm với Câu Lệnh P-róm (Prompt). Đổi cấu trúc câu một chút, nó sẽ rẽ sang Vùng Không gian Tọa độ khác và trả lời sai. Nên mới sinh ra cái nghề P-róm En-gi-nia-ring (Prompt Engineering) để dỗ ngọt AI.
+
+Slide 7: Gót chân Achilles: Mẫu đối kháng (Adversarial Examples)
+Người 1: Lỗ hổng A-c-sin (Achilles): Mẫu Đối Kháng (Adversarial Examples). Đưa cái ảnh con Heo. AI báo là con Heo. Nhỏ thêm vài Giọt Nhiễu Vô hình. Mắt người vẫn thấy con Heo rành rành. Nhưng AI tuyên bố 99 phần trăm đây là Máy Bay! Vì nó học điểm ảnh Toán học chứ chả hiểu cấu trúc sinh học con lợn là cái gì!
+
+Slide 8: Rủi ro của việc nhân hóa AI (Anthropomorphizing AI)
+Người 1: Do AI ăn nói quá lưu loát, con người mắc Căn bệnh Nhân Hóa AI. Tự ảo tưởng gán ghép cho nó có Niềm tin, Cảm xúc, và Tri thức. Xin nhắc lại: Cỗ máy Không có trải nghiệm giác quan không gian thời gian. Đừng lãng mạn hóa Toán học Thống kê!
+
+Slide 9: Ảo tưởng về Scaling Laws (Định luật mở rộng)
+Người 1: Người ta bảo cứ Cấp thêm Tiền, Cấp thêm Data, Cấp thêm GPU thì AI sẽ tự Thông minh lên! Đó là Ảo tưởng của Định Luật Mở Rộng S-kêu-linh Lo (Scaling Laws). Bạn nhồi nhét càng nhiều thì nó Học thuộc lòng càng trâu, điểm thi càng cao. Nhưng Gặp Bài Mới Lạ là Nó vẫn Chết Đứng!
+
+Slide 10: Bộ máy tự động hóa (Automaton) vs Tác nhân thông minh (Intelligent Agent)
+Người 1: Phân biệt rõ. Mô hình AI hiện tại là Một Bộ Máy Tự Động Âu-tô-ma-tơn (Automaton). Cài sẵn bánh răng thì chạy rào rào. Nhưng Đích đến của Trí tuệ Nhân tạo phải là Tác nhân Thông minh (Intelligent Agent) - Quăng vào rừng sâu không có bản đồ vẫn tự thích nghi và sinh tồn được!
+
+Slide 11: Deep Learning chỉ là quá trình Nội suy
+Người 1: Xin chốt lại: Deep Learning chỉ là quá trình Nội Suy theo Đường Cong Toán học. Khớp dữ liệu chuẩn thì tốt. Rớt ra ngoài biên của dữ liệu thì Nhảm Nhí Vô Nghĩa!
+
+Slide 12: Tổng quát hóa: Local vs Extreme Generalization
+Người 1: Hiện tại AI đang ở mức Lô-cồ Gen-nơ-rô-lai-zây-xần (Local Generalization): Tổng quát hóa cục bộ trong mớ Data nó được học. Đích đến cuối cùng là Éc-s-Tờ-rim (Extreme Generalization): Tự Thích nghi Ngay Lập Tức trong Môi trường Chưa từng được Học! (Ví dụ: Một con Robot chưa từng tập lái xe, nhưng thấy đường trơn trượt tự động biết cách phanh gắt).
+
+Slide 13: Trí tuệ là gì? (Skill vs Information)
+Người 1: Trí Tuệ Tối Cao Không Phải Là Nhớ Nhiều Thông tin (Information). Bạn thuộc nguyên cái Bách Khoa Toàn Thư thì cũng chả giúp bạn Sống sót trên Đảo hoang. Trí tuệ thật sự là Kỹ Năng Giải Quyết Vấn Đề (Skill) trong môi trường thiếu thốn thông tin!
+
+Slide 14: Quy tắc Đi tắt (The Shortcut Rule) trong AI
+Người 1: Quy tắc Đi Tắt (Shortcut). Kêu AI chơi trò đua xe tránh chướng ngại vật. Thay vì học cách lái xe, nó đi tìm cái Lỗi Game (Bug) đâm vô bức tường để văng về đích nhận 1000 điểm! AI chỉ nhăm nhăm bú điểm chứ chả quan tâm đến Logic. Rất ma lanh!
+
+Slide 15: Mục tiêu mới: Thích ứng tức thời (On-the-fly adaptation)
+Người 1: Mục tiêu tối thượng của Kỷ nguyên mới không phải là Dạy AI Thuộc bài. Mà là Dạy AI Cách Thích Ứng Tức Thời On-đờ-F-lai A-đáp-tây-xần (On-the-fly adaptation)!
+
+Slide 16: Thước đo Trí tuệ: ARC Benchmark
+Người 1: Và để lột mặt nạ các siêu AI. Tiến sĩ François Chollet, tác giả của Keras, đã tạo ra bài kiểm tra Trí tuệ A-Rờ-Cê (ARC Benchmark). Dựa trên khả năng Khái quát Hóa Cực đoan (Extreme Generalization).
+
+Slide 17: AI SOTA vẫn thất bại trước ARC
+Người 1: A-Rờ-Cê bắt con AI nhìn 3 tấm lưới 2D. Tự tìm quy luật Logic trừu tượng rồi tự Điền Màu cho Tấm Lưới số 4. Kết quả? OpenAI, Claude, LLaMa... Tắt nắng hết! Càng chứng minh Deep Learning mù lòa trước cái mới.
+Người 2: Ảo thật đấy! Bài Toán Nhìn Khung Hình Điền Màu này ngày xưa em thi Test IQ vào công ty làm hoài!
+
+Slide 18: Sự phân cực trong ARC
+Người 1: ARC tạo ra Phân Cực kinh khủng. Có những bài Con Người mất 1 giây để hiểu Quy luật. AI ngốn chục tỷ phép tính Vẫn Làm Sai. Bản ARC phiên bản 2 ra đời vừa đánh sập nỗ lực "Hack" điểm bằng phần cứng của các công ty Big Tech.
+
+Slide 19: Bài học từ sinh học: Giun C. elegans
+Người 1: Nhìn sang Sinh học. Con Giun Xi E-lê-gần (C. elegans) có Đúng 300 cái Tế Bào Thần Kinh Nơ-ron. Mà nó tự Bò, tự đi Kiếm Ăn, tự né Kẻ Thù. Còn con AI tỷ đô la Mỹ có Trăm Tỷ Nơ-ron... Không có code mớm cho là Đứng Chết Trân. Đủ thấy con đường tạo ra Trí Tuệ của Sinh học Vi diệu tới cỡ nào!
+
+Slide 20: Bùng nổ tổ hợp (Combinatorial Explosion) và Kính vạn hoa
+Người 1: Lý thuyết Kính vạn hoa C-lây-đo-x-cốp (Kaleidoscope). Cầm cái Kính vạn hoa xoay 1 vòng, các mảnh kính nhỏ Tự Tổ Hợp lại thành Tỷ tỷ tỷ tỷ bức tranh khác nhau. Sự đa dạng của Vũ trụ là Vô Hạn. Mọi mô hình Deep Learning Cố Gắng Học Thuộc Vũ Trụ Đều Là Dã Tràng Xe Cát.
+
+Slide 21: Trừu tượng hóa theo giá trị (Value-Centric Abstraction)
+Người 1: Trí tuệ có 2 nửa. Nửa Số 1: Trừu tượng hóa theo Giá Trị (Value-centric Abstraction). Nghĩa là Dựa Vào Khoảng Cách Tương Đồng. Thấy quả Cam giống quả Chanh, Thấy chó giống Cáo. Đây là Lãnh Địa Của Deep Learning và Hình Học. Nó mang lại Trực Giác Cảm Tính.
+
+Slide 22: Trừu tượng hóa theo Chương trình (Program-Centric Abstraction)
+Người 1: Nửa Số 2: Trừu tượng hóa theo Chương Trình (Program-centric Abstraction). Nghĩa là Dựa Vào Cấu Trúc Khớp Hoàn Toàn. Giống như viết Hàm (Function) trong Lập trình. 
+Nó mang lại Suy luận Logic Chặt Chẽ, Toán Học và Lập Kế Hoạch. Đây là lỗ hổng to đùng của AI.
+
+Slide 23: Bảng so sánh: Value-Centric vs Program-Centric
+Người 1: Nhìn Bảng So Sánh. Một bên là Trực giác Hình Học mượt mà mờ ảo. Một bên là Logic Rời Rạc sắt đá chính xác! Hai thái cực này Không thể thay thế cho nhau.
+
+Slide 24: Tại sao Deep Learning không đủ?
+Người 1: Bảo con AI Deep Learning Nhận Diện chó mèo, Nó làm 1 nốt nhạc. Bắt nó Sắp Xếp Dãy Số từ nhỏ đến lớn 100% đúng? Nó khóc thét! Trong khi Code Python chỉ tốn đúng 1 Lệnh. Logic là thứ Không Thể Học Thuộc Lòng!
+
+Slide 25: Sự kết hợp giữa 2 thái cực nhận thức
+Người 1: Bộ Não Con Người Đỉnh vì kết hợp cả 2 Thứ. Thấy bóng đen lao tới: Trực giác cẩn thận (Value-centric). Bắt đầu suy luận: Chắc là Xe Tải, phải nhảy tránh (Program-centric). Tương lai AI PHẢI Kết hợp được hai hệ thống này lại với nhau!
+
+Slide 26: Tổng hợp Chương trình (Program Synthesis)
+Người 1: Thế giới AI đang chuyển mình sang Pro-gờ-ram Xin-thê-xít (Program Synthesis). AI Không Tính Toán Câu Trả Lời. AI Đi VIẾT CODE ĐỂ GIẢI BÀI TOÁN. AI tự động gõ Code ra, xong lấy Máy tính chạy cái Đoạn Code đó. Kết quả đúng 100% bằng Toán Học!
+
+Slide 27: Hệ thống Tổng hợp Chương trình linh hoạt
+Người 1: Tức là không đi Dò Đạo Hàm Trọng Số nữa. Đi dò các Cấu trúc Rẽ Nhánh Lệnh If, Vòng lặp For. Dùng Thuật Toán Di Truyền (Genetic) để chọn lọc ra Đoạn Code Khỏe Nhất, thông minh nhất!
+
+Slide 28: Hòa trộn Deep Learning và Program Synthesis
+Người 1: Nhược điểm của Viết Code Tự Động là Không Gian Hàm Logic là Vô Tận, mò chừng nào mới ra cái Thuật toán đúng?
+Người 2: Có phải ta sẽ dùng Trực Giác của Deep Learning để "Linh cảm" khoanh vùng cái Thuật toán trước không thầy?
+
+Slide 29: Sử dụng Deep Learning để dẫn đường cho Program Search
+Người 1: Quá xuất sắc! Dùng Deep Learning đứng bên ngoài Bơm Trực Giác: "Ê tao nghĩ mầy nên xài Vòng For chỗ này, Lệnh If chỗ kia". Sau đó Hệ Thống Viết Code Nhảy Vào Chạy Tìm Kiếm (Search) ở cái vùng đó. Sự kết hợp hoàn mỹ giữa Cảm Tính Hình học và Lý Trí Toán Học!
+
+Slide 30: Khái niệm Meta-learning (Học cách học)
+Người 1: Tương lai thứ 2 là Mê-ta Lớn-ninh (Meta-learning). Học Cách Học! Huấn luyện một cỗ máy mà Chỉ Cần Nhìn 2 Ví Dụ Của Trò Chơi Mới, Nó Tự Động Rút Ra Quy Luật Chơi Ngay Lập Tức. Giống như Trí Tuệ Con Người vậy!
+
+Slide 31: Mô hình hệ thống lai (Hybrid Models)
+Người 1: Mô hình Lai Hai-bờ-rít (Hybrid Models). Bao gồm Khối Nhận thức Giác quan và Khối Não bộ Lập Trình. Cứ mỗi lần giải quyết 1 vấn đề, AI sẽ Gói Gọn Thuật Toán đó lại và Nạp vào Tàng Kinh Các Toàn Cầu.
+
+Slide 32: Lifelong Learning và Sự tái sử dụng Subroutine
+Người 1: Quá trình đó gọi là Học Tập Suốt Đời (Lifelong Learning). Những Thuật toán (Subroutine) đóng gói đó sẽ được tái sử dụng để Lắp Ráp Giống Xếp Hình Lê-gô để giải các siêu bài toán. Khái niệm AI quên kiến thức sẽ hoàn toàn tuyệt chủng. Tri thức được Kế Thừa Mãi Mãi.
+
+Slide 33: AGI và Đích đến cuối cùng
+Người 1: Và đó là Đích đến cuối cùng: Siêu Trí Tuệ Nhân Tạo A-Gi-Ai (AGI). Không phải một con Lờ-Lờ-M (LLM) Đọc hết Chữ trên Internet. Mà là một Cơ Chế Tự Viết Lệnh Tổng Hợp Chương Trình, có Khả Năng Thích Ứng Khái Quát Hóa Cực Đoan!
+Người 2: Em nổi da gà thật sự. Deep Learning mới chỉ là Khởi đầu. Thế giới AGI rộng lớn đến nhường nào.
+Người 1: Đúng vậy! AGI vẫn còn nằm nguyên trong Trứng Nước. Cơ hội thay đổi thế giới đang nằm trong tay thế hệ các em. Chúc các em thành công! Tạm biệt!

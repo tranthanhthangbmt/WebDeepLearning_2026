@@ -1,0 +1,115 @@
+Slide 1: Kỹ năng Thực chiến & Tối ưu hóa Mô hình
+Người 1: Chào các em! Đây là chương cuối cùng của giáo trình Deep Learning chuyên nghiệp. Chương 18: Kỹ năng thực chiến và Tối ưu hóa hệ thống.
+Người 2: Ui, nghe có vẻ giống các thao tác của một Kỹ sư Machine Learning đi làm thực tế trên công ty đúng không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Chuẩn luôn! Hôm nay chúng ta sẽ nạp 4 kỹ năng hạng nặng: Một là Dò tìm Siêu tham số. Hai là Kỹ năng Tổ hợp En-xem-bô (Ensemble). Ba là Huấn luyện phân tán trên Siêu máy tính (Distributed Training). Và Bốn là Tối ưu RAM bằng Mix-Precision và Lượng tử hóa. Khởi động thôi!
+
+Slide 3: Tham số và Siêu tham số
+Người 1: Phân biệt hai khái niệm. Trọng số $W$ và Độ lệch $B$ mà cỗ máy TỰ HỌC được bằng Đạo hàm thì gọi là THAM SỐ (Parameters). Còn những thứ do CON NGƯỜI cài đặt bằng tay như: Cho mạng này mấy Lớp? Lớp này mấy Nơ-ron? Lớn-ninh Rết (Learning Rate) bằng bao nhiêu? thì gọi là SIÊU THAM SỐ (Hyperparameters). Nhớ chưa?
+Người 2: Dạ rõ! Siêu tham số thì không có đạo hàm, nên không thể dùng Gradient Descent để tối ưu nó được ạ.
+
+Slide 4: Các chiến lược tìm kiếm Siêu tham số
+Người 1: Vậy lỡ cài tay siêu tham số bị Ngu thì sao? Ta phải Nhờ Cỗ máy DÒ TÌM dùm! Có 3 kiểu dò: Một là Lưới Rít-xợt (Grid Search) - Duyệt cạn mọi trường hợp, bao chậm! Hai là Răn-đôm (Random) - Chọn bốc bừa hên xui. Ba là Bết-zơ (Bayesian) - Dùng Thống kê Học từ kết quả cũ để Tự dự đoán Siêu tham số mới xịn hơn. Đỉnh cao nhất!
+
+Slide 5: Công cụ tự động hóa: KerasTuner
+Người 1: Đi làm không ai đi gõ tay đâu. Ta xài Thư viện Kê-rát Tiu-nơ (KerasTuner). Chỉ cần khoanh vùng: "Ê máy, tao muốn thử từ 2 đến 5 lớp Dense, Learning Rate từ $0.001$ đến $0.01$". Bấm nút chạy, máy tự động đi thử hàng trăm Mô hình rồi nhả ra cái Mô hình Đỉnh Nhất (Best Model)! 
+
+Slide 6: Ứng dụng KerasTuner cho Kiến trúc SOTA
+Người 1: Keras Tuner có thể dùng cho những mạng Sô-ta (SOTA) mạnh nhất thế giới. Em gọi Hại-pơ Rết-nét (HyperResNet). Nó sẽ tự biết nới rộng Thu hẹp kích cỡ các cục Rết-nét (ResNet) mà không làm nát cái Mạch Residual của người ta! Khỏe re!
+
+Slide 7: Mã nguồn: Truy vấn cấu hình và Epoch tốt nhất
+Người 1: Code thực chiến. Hàm này chạy dò tìm để xem cái Tổ hợp Siêu Tham số kia khi Train thì Hội tụ DỪNG ĐẸP NHẤT ở Vòng Kỷ nguyên Ê-pốc (Epoch) thứ mấy. 
+
+Slide 8: Mã nguồn: Huấn luyện mô hình siêu tham số tối ưu
+Người 1: Sau khi biết được cái cấu hình đó Dừng Đẹp ở Epoch 50 chẳng hạn. Ta gom TẤT CẢ Dữ liệu Train và Validation lại làm một Cục To Hơn. Ném vào Train lại đúng 50 Vòng. Xuất xưởng!
+
+Slide 9: Rủi ro: Overfitting trên Validation Set
+Người 1: Khoan. Phải cảnh giác cạm bẫy chết người! Cạm bẫy Ô-vờ-phít-tinh Va-li-đây-xần (Overfitting Validation Set)!
+Người 2: Ơ, em tưởng chỉ có Ô-vờ-phít-tinh trên tập Train thôi chứ thầy?
+Người 1: Sai. Khi em chạy dò Siêu tham số, em LUÔN CHỌN cấu hình có điểm Validation cao nhất. Hành động đó lặp lại hàng trăm lần, em vô tình khiến cái Kiến trúc Học thuộc lòng luôn cái Tập Validation! Khi đem ra triển khai thực tế Model sẽ chạy siêu Tệ! Do đó, LUÔN CẤT GIẤU MỘT TẬP TEST ĐỘC LẬP không được cho Tiu-nơ (Tuner) đụng vào!
+
+Slide 10: Triết lý Ensemble: Suy diễn Đám đông
+Người 1: Kỹ năng thứ 2. Tổ hợp En-xem-bô (Ensembling). Nguyên lý Thầy Bói Xem Voi. Thầy sờ đuôi thì bảo con voi là cái chổi. Thầy sờ tai thì bảo cái quạt. Hai thầy cãi nhau loạn xạ. Nhưng nếu gom 5 ông thầy lại BẦU CỬ, bức tranh con Voi sẽ cực chuẩn! 
+Người 2: Á! Ý thầy là ta Train 5 cái Mô hình khác nhau, cho nó dự đoán rồi Trung bình cộng các kết quả lại với nhau ạ?
+
+Slide 11: Mã nguồn: Kỹ thuật Averaging (Trung bình hóa dự đoán)
+Người 1: Chính xác! Đó gọi là A-vờ-rây (Averaging). Lấy kết quả Mô hình A cộng B cộng C cộng D, chia cho 4. Kết quả cuối cùng GẦN NHƯ CHẮC CHẮN sẽ chính xác hơn bất kỳ con Mô hình lẻ tẻ nào ở trên! Sức mạnh của Đám đông!
+
+Slide 12: Mã nguồn: Kỹ thuật Trung bình có Trọng số (Weighted Average)
+Người 1: Nâng cao hơn: Weighted Average (Trung bình có Trọng số). Trong 4 ông thầy bói có 1 ông Đỉnh hơn mấy ông kia. Ta nhân Trọng số Kết quả của ông đó lên gấp 3 lần, mấy ông kia nhân Hệ số nhỏ thôi. Sức mạnh Tổ hợp còn trâu bò hơn nữa! 
+
+Slide 13: Đa dạng hóa - Chìa khóa của Ensembling
+Người 1: Nguyên tắc Sống Còn của En-xem-bô: SỰ ĐA DẠNG. Em mà đi hỏi 5 ông thầy bói HỌC CÙNG MỘT LỚP, DÙNG CHUNG MỘT KIẾN TRÚC, thì 5 ông chém gió ra kết quả Y hệt nhau! Chả ích gì!
+Người 2: À! Vậy mình phải trộn: 1 con Transformer, 1 con CNN, 1 con Random Forest đúng không thầy?
+Người 1: Rất thông minh! Bất đẳng thức Toán học Den-xen (Jensen) bảo kê cho chuyện này.
+
+Slide 14: Tại sao cần Huấn luyện phân tán?
+Người 1: Kỹ năng thứ 3. Distributed Training. Mạng Transformer Khổng lồ mà chạy trên 1 cái Cạc Đồ Họa Cờ-Pơ-U (GPU) thì tốn 10,000 năm mới xong! Ta phải gom 2048 cái GPU thành Cụm Siêu Máy Tính C-lớt-tơ (Cluster) để Train xong trong 2 tuần!
+
+Slide 15: Phân tán Dữ liệu vs Phân tán Mô hình
+Người 1: Có 2 kiểu chia. Đát-ta Pa-ra-léo-lích (Data Parallelism - Phân tán Dữ liệu): Chẻ Dữ liệu nhỏ ra, nhét mỗi GPU 1 khúc Data, kiến trúc Mô hình thì copy Y hệt cho các GPU. 
+Người 2: Thế Mô-đồ Pa-ra-léo-lích (Model Parallelism) là gì thưa thầy?
+Người 1: Là cái Con Mô hình TO QUÁ, RAM của 1 cái GPU nhét Không Lọt! Nên ta phải Lấy dao Chặt Đôi cái Mô Hình ra, Quăng nửa trên qua GPU 1, Nửa dưới qua GPU 2! Đó là Phân tán Mô Hình.
+
+Slide 16: Mã nguồn: Khởi tạo Data Parallelism bằng JAX backend
+Người 1: Code thực hành siêu dễ bằng Zác (JAX). Gọi Lệnh Cài đặt Môi trường Bằng Đát-ta Pa-ra-léo (DataParallel). Nó tự động bật tất cả GPU lên chạy song song!
+
+Slide 17: Đồng bộ hóa Gradient (All-Reduce Algorithm)
+Người 1: Vấn đề Cực Nguy Hiểm: 8 cái GPU nhận 8 phần Data khác nhau. Lúc tính Đạo hàm, nó sẽ nhả ra 8 cái Đạo hàm khác nhau! Nếu để nó tự update Trọng số, 8 cái GPU sẽ biến thành 8 Mô hình Khác nhau hoàn toàn! 
+Người 2: Ui! Thế phải làm sao ạ?
+Người 1: Thuật toán On Ri-điêu (All-Reduce)! Tới cuối vòng lặp, Ép 8 thằng Dừng Lại! Truyền cái Đạo Hàm qua Mạng LAN cho nhau. Bắt TÍNH TRUNG BÌNH CỘNG CỦA 8 THẰNG rồi mới cho Update! Cực kỳ kỷ luật!
+
+Slide 18: Mã nguồn: API DeviceMesh phân bổ hệ thống GPU
+Người 1: Code API xịn xò. Thiết lập Đi-vai-x Mát-x (DeviceMesh). Gom 8 con GPU thành 1 tấm Lưới Tọa độ 2 nhân 4. Một chiều phục vụ chia Data, một chiều phục vụ chia Mô Hình.
+
+Slide 19: Mã nguồn: Phân vùng LayoutMap (Model Parallelism)
+Người 1: Dùng Lây-ao Máp (LayoutMap) để ra lệnh cho Lớp Dense 1 nằm ở Cụm GPU này, Lớp Dense 2 nằm ở Cụm GPU kia. Code rất thanh lịch.
+
+Slide 20: Mã nguồn: Tối ưu hoá TPU (Tensor Processing Unit)
+Người 1: Tối ưu cho Tê-Pê-U (TPU) của Google. Con Chip này tính toán Quá Nhanh. Nếu CPU đẩy Data lên không kịp, TPU sẽ Ngáp Ruồi Chờ (Nút thắt cổ chai IO). Em phải Xài Lệnh Cát-xợt (Cache) nhét sẵn Data vào RAM Tê-Pê-U. Và ép nó Chạy dính lẹo (steps_per_execution) 8 vòng For rồi mới nhả kết quả về cho CPU một lần!
+
+Slide 21: Biểu diễn dấu phẩy động trong Khoa học Máy tính
+Người 1: Kỹ năng cuối cùng. Tối Ưu RAM Bằng Toán Học. Bình thường Máy lưu số thực bằng Đai F-lót-32 (Float32). Tốn 4 Byte một con số. Nhưng AI có hàng tỷ con số.
+Người 2: Vậy ta ép nó xuống Cỡ Nhỏ Hơn là F-lót-16 (Float16) để Giảm Nhẹ Bằng Phân Nửa đúng không ạ?
+
+Slide 22: So sánh cấu trúc Float16 và Bfloat16
+Người 1: Chuẩn. Nhưng có 2 kiểu 16. Float16 truyền thống có 5 bit Mũ, 10 bit Thập Phân (Định trị). Nó chi tiết, nhưng Dải biểu diễn Quá Bé, Đạo hàm bự lên chút là Bị Tràn Số Nổ Tung (Overflow).
+Người 2: Còn Bê-F-lót-16 (Bfloat16 - Brain Float) thì sao ạ?
+Người 1: Lấy bớt bit Thập Phân bù qua cho Bit Mũ. Số bit Mũ lên tới 8 bit. Dải biểu diễn Rộng như Biển TBD (Bằng y chang Float32). Nhưng độ chi tiết bị giảm đi! Rất phù hợp cho AI chạy trên Tê-Pê-U!
+
+Slide 23: Mã nguồn: Kích hoạt Float16 Inference
+Người 1: Code ép hệ thống chạy mặc định bằng Float16. Giúp giảm 2 lần RAM và chạy Dự đoán P-rị-đích (Predict) cực nhanh trên thiết bị yếu.
+
+Slide 24: Kỹ thuật Mixed-Precision Training
+Người 1: Cẩn thận. Nếu đem Float16 đi Train (Huấn luyện). Mạng sẽ chết ngay lập tức!
+Người 2: Ơ, sao vậy thầy? Tràn số ạ?
+Người 1: Không. Bị Tụt Số Oăn-đơ-p-lâu (Underflow)! Mấy cái Đạo Hàm Nhỏ Quá Cỡ 10 mũ trừ 6. Máy cắt mẹ nó đi biến thành Số 0 Lòng Tròn luôn! Đạo hàm bằng 0 thì Mạng Chết Cứng! Phải dùng Míc M-pờ-rê-xi-zần (Mixed-Precision). Lấy F-lót-16 để Nhân Ma trận cho Nhanh. Nhưng Lưu Cái Đạo Hàm Lớn ở Băng Float32! Rất vi diệu!
+
+Slide 25: Mã nguồn: Kích hoạt Mixed-Precision trong Keras
+Người 1: Code bật Míc Phờ-Lót-16 (mixed_float16). Ngoài ra nhét thêm cái Lóc S-kêu Óp-ti-mai-zơ (LossScaleOptimizer) để phóng to hàm Loss lên tránh bị cắt thành Số 0.
+
+Slide 26: Cấu hình Float8
+Người 1: Hiện nay với con chip H-100 của NVIDIA trị giá tỷ bạc, giới AI đã ép nổi Mô hình Tỷ tham số xuống tận 8 Bít (Float8). Nó tính toán bằng Toán học Lượng Tử kinh hoàng lắm.
+
+Slide 27: Lượng tử hóa (Quantization)
+Người 1: Và đó là Tương lai: Lượng Tử Hóa C-hoan-tai-zây-xần (Quantization). Nén 4 Lần Trọng Số. Biến số Thập Phân Cồng Kềnh thành Số Nguyên (Int8) chẵn tròn từ âm 127 đến dương 127.
+
+Slide 28: Mã nguồn: Mô phỏng thuật toán Abs-Max Lượng tử hoá INT8
+Người 1: Khái niệm C-hoan-tai-zây-xần Rất dễ hiểu. Lấy giá trị Bự nhất của Ma trận. Tính Hệ số S-kêu (Scale) chia đều thành 256 nấc. Xong rải Đám Trọng số Float32 vào các nấc đó, ép kiểu về INT8. 
+
+Slide 29: Mất mát thông tin do Lượng tử hóa
+Người 1: Nhưng bị chặt cụt thập phân như vậy AI sẽ bị Khờ đi 1 xíu. Đem con AI Float32 đang ngon lành mà Chặt xuống INT8 thì gọi là Lượng tử hóa Hậu Kỳ P-T-Q (PTQ). 
+Người 2: Làm sao để nó khỏi khờ đi ạ?
+Người 1: Lượng tử Nhận Thức Q-A-T (QAT). LÚC ĐANG TRAIN thì giả bộ Nhét thêm Cục Nhiễu Chặt Cụt vào luôn. Thế là AI Tự Động Học Cách Thích Nghi với Sự Mất Mát đó từ trong Trứng Nước! Cắt xuống INT8 chạy Y chang bản gốc không sai số!
+
+Slide 30: Mã nguồn: API Int8 Quantization trong Keras
+Người 1: Cú pháp nén Int8 trong Keras chỉ bằng 1 dòng Code Lượng tử hoá c-hoan-tai-zờ (quantize). Bùmmm! Nén 4 lần, đẩy thẳng lên app Điện thoại di động nhúng vô Smartphone nhẹ tựa lông hồng.
+
+Slide 31: Vòng lặp Tiến bộ (The Loop of Progress)
+Người 1: Nhìn chung, Tối ưu hệ thống không phải để Lấy Lệ. Máy Chạy Nhanh hơn nghĩa là Vòng Lặp Huấn Luyện của Kỹ sư xoay nhanh hơn. Ý tưởng Nảy sinh nhanh hơn. Mô hình ra lò xuất sắc hơn.
+
+Slide 32: Tổng kết Khóa học
+Người 1: Tựu chung lại. Hành trình Deep Learning của chúng ta đã trải qua hàng vạn dặm. Từ cái Mạng Dày Đặc ngớ ngẩn, Thị Giác CNN kỳ vĩ, Chuỗi RNN phức tạp, Siêu não Transformer Sinh Ngôn Ngữ, và Cuối cùng là Kỹ Năng Tối Ưu Phân tán của Một chuyên gia S-L-M.
+Người 2: Em thực sự cảm ơn thầy vì một giáo trình Đỉnh cao, Khổng lồ nhưng lại Gần Gũi và Sống Động đến vậy.
+Người 1: Chúc em vững bước và Kiến tạo nên Kỷ nguyên AI của riêng mình. Tạm biệt!
