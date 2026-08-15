@@ -967,4 +967,8 @@ Cuộc cách mạng AI, từng là một tầm nhìn xa vời, giờ đây đang
 
 <iframe src="TaiLieu/Video/Chapter_01/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
 
+#### **📝 Bài tập Trắc nghiệm**
+
+<iframe src="quizzes/Chapter01/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
+
 <!-- tabs:end -->

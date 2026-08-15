@@ -1,0 +1,58 @@
+# Lập kế hoạch: Thêm Tab Bài tập Trắc nghiệm (Interactive Quiz) cho Chương 3
+
+Dựa trên yêu cầu, hệ thống bài tập trắc nghiệm Chương 3 ("Giới thiệu về TensorFlow, PyTorch, JAX và Keras") sẽ được xây dựng gồm tối thiểu 30 câu hỏi. Toàn bộ nội dung kiến thức để soạn câu hỏi sẽ được trích xuất **chính xác và trực tiếp** từ tài liệu Tiếng Việt của Chương 3 như sau:
+
+## Nguồn tài liệu tham khảo chính
+1. **Nội dung lý thuyết Tiếng Việt:** `Chapters/chapter_03.md` (Tab "Tiếng Việt")
+
+## Phạm vi kiến thức bao phủ (từ nguồn trên)
+1. **Sơ lược về lịch sử của các framework deep learning**
+2. **Các khung này liên quan với nhau như thế nào**
+3. **Giới thiệu về TensorFlow**
+4. **Giới thiệu về PyTorch**
+5. **Giới thiệu về JAX**
+6. **Giới thiệu về Keras**
+7. **Bản tóm tắt**
+
+## Proposed Changes
+
+Tôi sẽ tạo một trang HTML chứa tối thiểu 30 câu hỏi trắc nghiệm và nhúng nó vào file `Chapters/chapter_03.md`.
+
+### Khởi tạo thư mục và file Quiz
+#### [NEW] `quizzes/Chapter03/index.html`
+- **Thiết kế giao diện:** Tái sử dụng form giao diện, màu sắc, và cấu trúc điều khiển (HTML/CSS/JS) chuẩn như đã áp dụng cho các học phần khác (như môn Máy học) để đảm bảo tính nhất quán và chuyên nghiệp.
+- **Biên soạn câu hỏi:** Dựa vào nội dung `Chapters/chapter_03.md`, sinh tối thiểu 30 câu hỏi bám sát các mục lý thuyết kể trên. Đảm bảo đa dạng các loại câu hỏi (gồm: Trắc nghiệm đa lựa chọn - MCQ, Ghép nối - Matching, Sắp xếp thứ tự - Sorting, Điền từ vào chỗ trống/Kéo thả - Drag & Drop). Đồng thời, mỗi câu hỏi phải được phân loại và ghi rõ mức độ khó (Dễ, Trung bình, Khó).
+
+### Tiêu chuẩn UX/UI Điều hướng & Học tập tương tác
+Kế thừa thành công từ Chương 1 và Chương 2, hệ thống Quiz Chương 3 phải đảm bảo:
+1. **Thanh điều hướng 3 nút chuẩn mực:** 
+   - `[< Câu trước ]`: Đặt bên trái, hiển thị từ câu thứ 2.
+   - `[ Kiểm tra ]`: Nằm chính giữa, dùng cho các dạng câu hỏi cần thao tác nhiều bước (Điền từ, Sắp xếp, Ghép nối).
+   - `[ Câu sau > ]`: Đặt bên phải, luôn hiển thị để sinh viên có thể bỏ qua (skip) câu hỏi khó.
+2. **Practice Mode cho dạng Trắc nghiệm (MCQ):**
+   - Ẩn hoàn toàn nút `Kiểm tra`.
+   - Chấm điểm và đổi màu (Đỏ = Sai, Xanh = Đúng) ngay lập tức khi người học click vào đáp án.
+   - **Được phép đoán lại:** Nếu chọn sai, người học vẫn được chọn tiếp đến khi đúng.
+   - Bảng **💡 Giải thích** chỉ hiển thị khi chọn đúng đáp án. Điểm số chỉ được ghi nhận nếu chọn đúng ngay từ lần đầu tiên.
+
+### Tiêu chuẩn tối ưu hóa MCQ (Chuẩn MIT)
+Trong quá trình biên soạn, đặc biệt là các câu hỏi đa lựa chọn (MCQ), cần phải tuân thủ nghiêm ngặt các quy tắc sau để đảm bảo chất lượng bài thi và tránh tình trạng sinh viên đoán được đáp án bằng mẹo:
+1. **Độ dài cân bằng tuyệt đối:** Chiều dài của đáp án đúng **TUYỆT ĐỐI KHÔNG** được dài bất thường hoặc khác biệt rõ rệt so với các đáp án sai (Distractors). Phải đảm bảo người làm bài không thể dùng mẹo "câu dài nhất là câu đúng".
+2. **Cắt tỉa ngữ pháp thông minh (Smart NLP Truncation):** Tuyệt đối **không** sử dụng dấu ba chấm (`...`) để rút gọn câu. Nếu đáp án đúng quá dài, hãy cắt câu tại các ranh giới ngữ pháp tự nhiên.
+3. **Giữ nguyên kiến thức trong Giải thích:** Phần nội dung dài dòng bị cắt đi khỏi đáp án đúng phải được di chuyển toàn bộ xuống phần **Giải thích (Explanation)** để hệ thống hiển thị sau khi sinh viên trả lời đúng.
+
+### Cập nhật File Markdown
+#### [MODIFY] `Chapters/chapter_03.md`
+Thêm tab mới vào cuối file, ngay trước `<!-- tabs:end -->`:
+
+```markdown
+#### ** 📝 Bài tập Trắc nghiệm **
+
+<iframe src="quizzes/Chapter03/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
+```
+
+## Verification Plan
+- Viết nội dung mã tạo câu hỏi và giao diện `quizzes/Chapter03/index.html`.
+- Mở và cập nhật file `Chapters/chapter_03.md`.
+- Tải lại trang web chính trên trình duyệt tại đường dẫn `/#/Chapters/chapter_03` và chuyển sang tab **Bài tập Trắc nghiệm**.
+- Kiểm tra tính năng tương tác (chọn đáp án, chuyển câu, nộp bài, xem kết quả đúng/sai).

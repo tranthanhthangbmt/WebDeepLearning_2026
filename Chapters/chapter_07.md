@@ -3896,4 +3896,8 @@ theo cách phụ trợ gốc. Điều này rất hữu ích cho các nhà nghiê
 
 <iframe src="TaiLieu/Video/Chapter_07/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
 
+#### ** 📝 Bài tập Trắc nghiệm **
+
+<iframe src="quizzes/Chapter07/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
+
 <!-- tabs:end -->
