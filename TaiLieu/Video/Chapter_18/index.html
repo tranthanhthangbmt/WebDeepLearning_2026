@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Trình phát Bài giảng — Auto-Scroll Bật Sẵn</title>
+  <title>Trình phát Bài giảng — Auto‑Scroll Bật Sẵn</title>
   <style>
     :root {
       --bar-bg: rgba(0, 0, 0, 0.7);
@@ -26,230 +26,193 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
-      background: transparent;
+      background: #000;
       overflow: hidden;
+      /* trải nghiệm xem slide */
+    }
+
+    .player-container {
+      background: #fff;
+      width: 100vw;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
-    }
-
-    /* Container hiển thị slide: cuộn mượt và ẩn thanh cuộn */
-    #slide-viewer {
-      flex: 1;
-      overflow-y: auto;
-      scroll-behavior: smooth;
       position: relative;
+      /* để đặt thanh điều khiển */
     }
 
-    #slide-viewer::-webkit-scrollbar {
-      display: none;
+    /* Fallback cho Zalo/WebView không hỗ trợ API Fullscreen */
+    .player-container.pseudo-fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99999;
+      width: 100%;
+      height: 100%;
+      background: #000;
     }
 
-    #slide-image {
-      display: block;
+    /* 🔥 FORCE LANDSCAPE MODE (Cho Mobile Portrait) */
+    .player-container.force-landscape {
+      position: fixed;
+      top: 0;
+      left: 100vw;
+      /* Đẩy sang mép phải để xoay về */
+      width: 100vh;
+      height: 100vw;
+      z-index: 99999;
+      background: #000;
+      transform-origin: top left;
+      transform: rotate(90deg);
+      /* Ẩn thanh cuộn mặc định nếu có */
+      overflow: hidden;
+    }
+
+    .slide-viewer {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow-y: auto;
+      flex-grow: 1;
+      position: relative;
+      background: #000;
+    }
+
+    .slide-viewer img {
       width: 100%;
       height: auto;
-      object-fit: contain;
+      display: block;
     }
 
-    /* Lớp phủ Video (Video Overlay) */
-    #video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      display: none; /* Ẩn mặc định */
-      z-index: 10;
-    }
-
-    #video-overlay video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      /* Tắt auto-fullscreen trên iOS */
-    }
-
-    /* Nút đóng/bỏ qua video */
-    #close-video-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 11;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      backdrop-filter: blur(4px);
-      transition: background 0.3s;
-    }
-
-    #close-video-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    /* Thanh Control Bar cố định bên dưới */
-    #control-bar {
-            height: 60px;
-      background: var(--bar-bg);
-      color: var(--bar-fg);
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      gap: 10px;
-      user-select: none;
-      position: relative;
-      z-index: 5;
-    }
-
-    .btn {
-      background: transparent;
-      border: none;
-      color: inherit;
-      font-size: 20px;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background 0.2s;
-    }
-
-    .btn:active {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    /* Container thanh tiến trình nhỏ xíu */
-    #progress-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #progress-bar-wrapper {
-      flex: 1;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
-      cursor: pointer;
-      position: relative;
+    /* Chế độ Fit (không cuộn) */
+    .slide-viewer.fit-mode {
       overflow: hidden;
     }
 
-    #progress-bar {
+    .slide-viewer.fit-mode img {
+      width: 100%;
       height: 100%;
+      object-fit: contain;
+    }
+
+    /* Thanh điều khiển dưới cùng */
+    .bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px;
+      /* Tăng padding bottom cho các dòng iPhone đời mới */
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, var(--bar-bg), transparent);
+      transition: transform 0.35s ease-in-out;
+      transform: translateY(0);
+      color: var(--bar-fg);
+    }
+
+    /* Ẩn thanh khi không tương tác */
+    .player-container.inactive .bottom-bar {
+      transform: translateY(100%);
+    }
+
+    .timeline-container {
+      width: 100%;
+      padding: 4px 0;
+      margin-bottom: 6px;
+    }
+
+    .progress-bar-wrapper {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .progress-bar {
       background: var(--accent);
       width: 0%;
-      pointer-events: none;
+      height: 8px;
+      border-radius: 5px;
+      transition: width 0.1s linear;
     }
 
-    #current-time {
-      font-size: 12px;
-      min-width: 40px;
-      text-align: right;
-    }
-
-    #slide-counter {
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
-      min-width: 50px;
-      text-align: center;
-    }
-
-    /* Nút Auto-scroll với màu xanh nổi bật báo hiệu đang bật */
-    #autoscroll-btn {
-      font-size: 14px;
-      padding: 0 12px;
-      border-radius: 16px;
-      background: var(--ok);
-      width: auto;
-      font-weight: 500;
-    }
-
-    #autoscroll-btn.disabled {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: #ccc;
-    }
-
-    /* Nút scale hình ảnh (Fit / Fill) */
-    #scale-btn {
-      font-size: 16px;
-    }
-
-    /* Nút chọn giọng đọc (nếu dùng) */
-    #voice-btn {
-      font-size: 18px;
-      position: relative;
-    }
-
-    /* Menu chọn giọng đọc */
-    #voice-menu {
-      position: absolute;
-      bottom: 70px;
-      right: 10px;
-      background: rgba(30, 30, 30, 0.95);
-      border-radius: 8px;
-      padding: 8px 0;
-      display: none;
-      flex-direction: column;
-      min-width: 150px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      z-index: 20;
-    }
-
-    #voice-menu.show {
+    .time-display {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-top: 4px;
+      text-shadow: 1px 1px 2px #000;
     }
 
-    .voice-option {
-      background: none;
-      border: none;
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      width: 100%;
+      padding: 0 20%;
+      /* Squeeze content to the center */
+      box-sizing: border-box;
+      /* Ensure padding is included in width */
+    }
+
+    .controls button {
       color: #fff;
-      padding: 10px 16px;
-      text-align: left;
-      font-size: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
       cursor: pointer;
-      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s;
     }
 
-    .voice-option:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .controls button:hover {
+      background: rgba(0, 0, 0, 0.45);
     }
 
-    .voice-option.active {
-      color: var(--accent);
-      font-weight: bold;
+    #play-pause-btn {
+      background: var(--ok);
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
     }
 
-    /* Loading Overlay */
-    #loading-overlay {
+    .slide-counter {
+      flex: 1;
+      text-align: center;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    /* ===================== CSS MỚI CHO LOADING ===================== */
+    .loading-overlay {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 50;
-      font-size: 18px;
-      display: none;
+      color: #fff;
+      z-index: 10;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .loading-overlay.visible {
+      visibility: visible;
+      opacity: 1;
     }
 
     .spinner {
@@ -258,8 +221,8 @@
       border: 4px solid rgba(255, 255, 255, 0.3);
       border-top-color: #fff;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
+      animation: spin 1s infinite linear;
+      margin-bottom: 10px;
     }
 
     @keyframes spin {
@@ -268,69 +231,190 @@
       }
     }
 
-    
+    .loading-text {
+      font-size: 14px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    /* ===================== VIDEO OVERLAY ===================== */
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 200000;
+      /* Must be higher than force-landscape (99999) */
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    /* Force Landscape for Video Overlay (Similar to Player Container) */
+    .video-overlay.force-landscape {
+      width: 100vh;
+      height: 100vw;
+      top: 0;
+      left: 100vw;
+      transform-origin: top left;
+      transform: rotate(90deg);
+    }
+
+    .video-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .video-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-container iframe,
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: none;
+      background: #000;
+      outline: none;
+    }
+
+    .video-controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      /* Moved to Left to avoid conflicts */
+      width: auto;
+      height: auto;
+      background: transparent;
+      border: none;
+      z-index: 20002;
+      pointer-events: auto;
+      /* Ensure clickable */
+    }
+
+    /* Manual Play Button for Mobile */
+    .video-play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 20001;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .video-play-overlay.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .big-play-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      font-size: 40px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-video-btn {
+      padding: 8px 16px;
+      background: rgba(40, 167, 69, 0.8);
+      /* Semi-transparent Green */
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .close-video-btn:hover {
+      background: rgba(40, 167, 69, 1);
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
   </style>
 </head>
 
 <body>
-  
-
-  <div id="main-content" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-    <!-- Vùng hiển thị ảnh / video -->
-    <div id="slide-viewer">
-      <img id="slide-image" src="" alt="Slide Image" />
-
-      <!-- Lớp phủ Video -->
-      <div id="video-overlay">
-        <button id="close-video-btn" title="Bỏ qua Video">Bỏ qua (Skip)</button>
-        <!-- Thêm playsinline để tương thích iOS -->
-        <video id="slide-video" playsinline preload="metadata">
-          <source id="video-source" src="" type="video/mp4" />
-          Trình duyệt của bạn không hỗ trợ thẻ video.
-        </video>
-      </div>
-
-      <!-- Màn hình Loading -->
-      <div id="loading-overlay">
+  <div id="player-container" class="player-container">
+    <div id="slide-viewer" class="slide-viewer" aria-label="Khu vực hiển thị slide" tabindex="0">
+      <img id="slide-image" src="" alt="Slide" />
+      <!-- Loading Overlay -->
+      <div id="loading-overlay" class="loading-overlay">
         <div class="spinner"></div>
-        <div id="loading-text">Đang tải dữ liệu...</div>
+        <div id="loading-text" class="loading-text">Đang tải dữ liệu...</div>
       </div>
     </div>
 
-    <!-- Thanh Control Bar -->
-    <div id="control-bar">
-      <!-- Nút Previous -->
-      <button class="btn" id="prev-btn" title="Slide trước">&#9194;</button>
-      <!-- Nút Play/Pause (hiển thị Play/Pause cho Audio) -->
-      <button class="btn" id="play-pause-btn" title="Phát / Tạm dừng">▶️</button>
-      <!-- Nút Next -->
-      <button class="btn" id="next-btn" title="Slide sau">&#9193;</button>
 
-      <!-- Chỉ báo số slide -->
-      <div id="slide-counter">1 / 1</div>
 
-      <!-- Thanh tiến trình Audio -->
-      <div id="progress-container">
-        <div id="progress-bar-wrapper">
-          <div id="progress-bar"></div>
+    <div class="bottom-bar">
+      <div class="timeline-container">
+        <div id="progress-bar-wrapper" class="progress-bar-wrapper">
+          <div id="progress-bar" class="progress-bar"></div>
         </div>
-        <div id="current-time">00:00</div>
+        <div class="time-display">
+          <span id="current-time">00:00</span>
+          <span id="total-duration">00:00</span>
+        </div>
       </div>
 
-      <!-- Nút cuộn tự động (Auto-scroll) -->
-      <button class="btn" id="autoscroll-btn" title="Cuộn hình ảnh theo nhịp">A-Scroll</button>
-
-      <!-- Nút Scale Hình ảnh: Fit (chứa trọn) / Fill (phủ kín) -->
-      <button class="btn" id="scale-btn" title="Thay đổi chế độ xem ảnh">&#128269;</button>
-
-      <!-- Nút Fullscreen (toàn màn hình trình duyệt) -->
-      <button class="btn" id="fullscreen-btn" title="Toàn màn hình">&#x26F6;</button>
+      <div class="controls">
+        <button id="prev-btn" title="Slide trước">⏪</button>
+        <button id="play-pause-btn" title="Phát/Tạm dừng">▶️</button>
+        <div id="slide-counter" class="slide-counter">— / —</div>
+        <button id="next-btn" title="Slide tiếp theo">⏩</button>
+        <button id="autoscroll-btn" title="Bật/Tắt Tự cuộn">🔄</button>
+        <button id="scale-btn" title="Chế độ xem">⛶</button>
+        <button id="fullscreen-btn" title="Toàn màn hình">🖼️</button>
+      </div>
     </div>
+
+    <!-- Audio Element ẩn -->
+    <audio id="slide-audio" preload="auto"></audio>
   </div>
 
-  <!-- Audio element ảo (không hiển thị), preload auto để sẵn sàng -->
-  <!-- Chỉ dùng để phát âm thanh của slide -->
-  <audio id="slide-audio" preload="auto"></audio>
+  <!-- Video Overlay (MOVED OUTSIDE) -->
+  <div id="video-overlay" class="video-overlay">
+    <div class="video-container">
+      <!-- Native Video Element -->
+      <video id="video-element" controls playsinline disablepictureinpicture controlsList="nodownload"></video>
+
+      <!-- Manual Play Overlay -->
+      <div id="video-play-overlay" class="video-play-overlay">
+        <button id="big-play-btn" class="big-play-btn">▶</button>
+      </div>
+    </div>
+    <div class="video-controls">
+      <button id="close-video-btn" class="close-video-btn">Next &gt;&gt;</button>
+    </div>
+  </div>
 
   <script>
     /* ===================== CẤU HÌNH ===================== */
@@ -439,33 +523,53 @@
         ]);
       }
 
-      // Đã tắt Blob caching để tránh giật lag video và quá tải bộ nhớ
+      // MỚI: Tải Video MP4 vào Cache (Blob)
       loadVideo(url) {
-        return Promise.resolve(url);
+        // Zalo Fallback: Skip Blob, use Direct Stream to avoid errors
+        if (this.isZalo) {
+          console.log("[Video] Zalo detected. Skipping prefetch:", url);
+          return Promise.resolve(url);
+        }
+
+        if (this.cache.has(url)) return this.cache.get(url);
+
+        console.log("[Video] Prefetching:", url);
+        const promise = fetch(url)
+          .then(res => {
+            if (!res.ok) throw new Error("Video load failed");
+            return res.blob();
+          })
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            this.blobs.set(url, blobUrl); // Store for retrieval
+            return blobUrl;
+          })
+          .catch(err => {
+            console.warn("[Video] Prefetch failed:", err);
+            return url; // Fallback to original URL on error
+          });
+
+        this.cache.set(url, promise);
+        return promise;
       }
     }
 
+    /* ==================== BIẾN TOÀN CỤC ==================== */
     const resourceManager = new ResourceManager();
-
-    /* ==================== DANH SÁCH VIDEO TÙY CHỈNH ==================== */
-    // Map lưu trữ: key là số thứ tự slide, value là URL video
-    const videoMap = new Map();
-    // Ví dụ: Tại slide 3, sẽ ngừng hình ảnh/audio và bật video
-    // videoMap.set(3, 'https://www.w3schools.com/html/mov_bbb.mp4');
-
-
-    /* ==================== BIẾN TOÀN CỤC & DOM ==================== */
+    const playerContainer = document.getElementById('player-container');
     const slideViewer = document.getElementById('slide-viewer');
     const slideImage = document.getElementById('slide-image');
     const slideAudio = document.getElementById('slide-audio');
-
-    const videoOverlay = document.getElementById('video-overlay');
-    const slideVideo = document.getElementById('slide-video');
-    const videoSource = document.getElementById('video-source');
-    const closeVideoBtn = document.getElementById('close-video-btn');
-
     const loadingOverlay = document.getElementById('loading-overlay');
     const loadingText = document.getElementById('loading-text');
+
+    // Video Elements
+    const videoOverlay = document.getElementById('video-overlay');
+    const videoElement = document.getElementById('video-element');
+    const closeVideoBtn = document.getElementById('close-video-btn');
+    const videoPlayOverlay = document.getElementById('video-play-overlay');
+    const bigPlayBtn = document.getElementById('big-play-btn');
+    const videoMap = new Map();
 
     const autoscrollBtn = document.getElementById('autoscroll-btn');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -477,380 +581,439 @@
     const progressBarWrap = document.getElementById('progress-bar-wrapper');
     const progressBar = document.getElementById('progress-bar');
     const currentTimeEl = document.getElementById('current-time');
+    const totalDurationEl = document.getElementById('total-duration');
 
-    let currentSlideIndex = 1;
-    let isPlaying = false; // Trạng thái phát của Audio
-    let isVideoPlaying = false; // Đang trong chế độ video hay không
-
-    let isAutoScroll = true;
+    let isFitMode = false;
     let scrollAnimationId = null;
-    let isFitMode = true; // true: object-fit contain, false: auto width 100%
+    let currentSlideIndex = 1; // Slide bắt đầu từ 1
+    let isAutoscrollEnabled = true;
 
-    // --- Media Session Metadata Setup --- //
-    function updateMediaSession(index, isVideo = false) {
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: `Slide ${index} / $32 ${isVideo ? '(Video)' : ''}`,
-          artist: 'Bài giảng'
-        });
-        
-        navigator.mediaSession.setActionHandler('play', () => {
-          if (isVideo) { slideVideo.play(); } else { slideAudio.play(); }
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-          if (isVideo) { slideVideo.pause(); } else { slideAudio.pause(); }
-        });
-        navigator.mediaSession.setActionHandler('previoustrack', () => {
-          if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1, true);
-        });
-        navigator.mediaSession.setActionHandler('nexttrack', () => {
-          if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1, true);
-        });
+    /* ================= UI HELPER ================= */
+    function showLoading(show, message = "Đang tải...") {
+      loadingText.textContent = message;
+      if (show) loadingOverlay.classList.add('visible');
+      else loadingOverlay.classList.remove('visible');
+    }
+
+    function syncAutoscrollUI() {
+      autoscrollBtn.classList.toggle('active', isAutoscrollEnabled);
+    }
+
+    /* ================= VIDEO LOGIC ================= */
+    const FALLBACK_VIDEO_DATA = ``;
+
+    function parseVideoData(text) {
+      const lines = text.split('\n');
+      /* ... skipped unchanged regex logic ... */
+      let currentSlide = null;
+
+      lines.forEach(line => {
+        line = line.trim();
+        if (!line) return;
+
+        // Match "Slide 12:"
+        const slideMatch = line.match(/^Slide\s+(\d+)[:\s]*/i);
+        if (slideMatch) {
+          currentSlide = parseInt(slideMatch[1]);
+          if (!videoMap.has(currentSlide)) {
+            videoMap.set(currentSlide, { url: '', duration: 0, title: '' });
+          }
+        }
+        else if (currentSlide !== null) {
+          if (line.startsWith('http')) {
+            let url = line;
+            // MP4 Links: Direct use
+            // Drive Links: Keep existing conversion logic just in case
+            if (url.includes('drive.google.com') && url.includes('/view')) {
+              url = url.replace('/view', '/preview');
+            }
+            const data = videoMap.get(currentSlide);
+            if (data) data.url = url;
+          }
+          // ... duration logic remains same
+          else if (line.match(/^Duration[:\s]+/i)) {
+            /* ... */
+            const data = videoMap.get(currentSlide);
+            if (data) {
+              // Try "1:58"
+              const timeMatch = line.match(/Duration[:\s]+(\d+):(\d+)/i);
+              if (timeMatch) {
+                const m = parseInt(timeMatch[1]);
+                const s = parseInt(timeMatch[2]);
+                data.duration = m * 60 + s;
+              } else {
+                const secMatch = line.match(/Duration[:\s]+(\d+)/i);
+                if (secMatch) {
+                  data.duration = parseInt(secMatch[1]);
+                }
+              }
+            }
+          }
+          else {
+            /* ... title logic ... */
+            const data = videoMap.get(currentSlide);
+            if (data && !data.title && !line.startsWith('Duration')) {
+              data.title = line;
+            }
+          }
+        }
+      });
+      console.log("Loaded Videos:", videoMap);
+    }
+
+    async function loadVideoLinks() {
+      try {
+        const response = await fetch('videoLink.txt');
+        if (!response.ok) throw new Error("Cannot fetch videoLink.txt");
+        const text = await response.text();
+        parseVideoData(text);
+      } catch (e) {
+        console.warn("Fetch failed (likely CORS), using fallback data:", e);
+        parseVideoData(FALLBACK_VIDEO_DATA);
       }
     }
 
+    let videoTimer = null;
 
-    /* ==================== HÀM TIỆN ÍCH ==================== */
-    function formatTime(seconds) {
-      const s = Math.floor(seconds);
-      const m = Math.floor(s / 60);
-      const sec = s % 60;
-      return `${m < 10 ? '0' + m : m}:${sec < 10 ? '0' + sec : sec}`;
-    }
+    async function playVideo(videoData) {
+      let url = videoData.url;
+      console.log("Preparing Video:", url);
 
-    function showLoading(show, text = "Đang tải dữ liệu...") {
-      if (show) {
-        loadingText.textContent = text;
-        loadingOverlay.style.display = 'flex';
-      } else {
-        loadingOverlay.style.display = 'none';
+      // Check Cache First
+      if (resourceManager.blobs.has(url)) {
+        console.log("🚀 Using Cached MP4 Blob!");
+        url = resourceManager.blobs.get(url);
+      } else if (resourceManager.cache.has(url)) {
+        // Waiting for pending fetch
+        try {
+          console.log("⏳ Waiting for pending download...");
+          url = await resourceManager.cache.get(url);
+        } catch (e) { /* Error handled in cached promise */ }
       }
-    }
 
-    // Auto-scroll tính toán cuộn hình ảnh cho vừa khớp thời lượng audio
-    function updateScroll() {
-      if (!isAutoScroll || isFitMode || isVideoPlaying) {
-        cancelAnimationFrame(scrollAnimationId);
-        return;
-      }
-      if (slideAudio.paused || slideAudio.ended || slideAudio.duration <= 0) {
-        cancelAnimationFrame(scrollAnimationId);
-        return;
-      }
-      const scrollHeight = slideViewer.scrollHeight - slideViewer.clientHeight;
-      if (scrollHeight > 0) {
-        const progress = slideAudio.currentTime / slideAudio.duration;
-        slideViewer.scrollTop = progress * scrollHeight;
-      }
-      scrollAnimationId = requestAnimationFrame(updateScroll);
-    }
+      videoElement.src = url;
+      videoOverlay.classList.add('active');
+      videoPlayOverlay.classList.remove('visible'); // Hide manual play button initially
 
-    /* ==================== XỬ LÝ VIDEO ==================== */
-    function playVideo(videoUrl, autoPlay = true) {
-      isVideoPlaying = true;
-      slideAudio.pause(); // Dừng audio nếu đang chạy
+      slideAudio.pause();
       cancelAnimationFrame(scrollAnimationId);
 
-      // Hiển thị Overlay Video
-      videoOverlay.style.display = 'block';
-      showLoading(true, "Đang tải Video...");
+      // Setup Manual Play Interaction
+      const triggerPlay = async (e) => {
+        // Fail-safe: Hide overlay IMMEDIATELY so user can access native controls if script fails
+        videoPlayOverlay.classList.remove('visible');
 
-      // Không dùng Blob cache nữa, gán thẳng URL
-      videoSource.src = videoUrl;
-      slideVideo.load();
-      updateMediaSession(currentSlideIndex, true);
+        if (e && e.stopPropagation) e.stopPropagation();
 
-      // Khi video sẵn sàng
-      slideVideo.onloadeddata = () => {
-        showLoading(false);
-        if (autoPlay) {
-          slideVideo.play().catch(e => console.warn("Lỗi autoplay video:", e));
-          playPauseBtn.innerHTML = '⏸️';
-        } else {
-          playPauseBtn.innerHTML = '▶️';
+        try {
+          await videoElement.play();
+        } catch (e) {
+          console.error("Play failed (User can now use native controls)", e);
         }
       };
 
-      // Đồng bộ thanh tiến trình cho Video thay vì Audio
-      slideVideo.ontimeupdate = () => {
-        if (!isNaN(slideVideo.duration) && slideVideo.duration > 0) {
-          const pct = (slideVideo.currentTime / slideVideo.duration) * 100;
-          progressBar.style.width = `${pct}%`;
-          currentTimeEl.textContent = formatTime(slideVideo.currentTime);
+      videoPlayOverlay.onclick = triggerPlay;
+      bigPlayBtn.onclick = triggerPlay;
+
+      // Play Logic with Muted Fallback
+      try {
+        await videoElement.play();
+      } catch (e) {
+        console.warn("Autoplay with sound failed. Retrying muted...", e);
+        try {
+          // Mobile Browser often allow autoplay if MUTED
+          videoElement.muted = true;
+          await videoElement.play();
+          console.log("Muted autoplay started.");
+          videoPlayOverlay.classList.remove('visible'); // Success! Hide overlay
+        } catch (errMuted) {
+          console.error("Muted autoplay also failed.", errMuted);
+          // Only NOW show the big manual play button
+          videoPlayOverlay.classList.add('visible');
         }
-      };
+      }
 
-      slideVideo.onpause = () => {
-        playPauseBtn.innerHTML = '▶️';
-      };
-
-      slideVideo.onplay = () => {
-        playPauseBtn.innerHTML = '⏸️';
-        updateMediaSession(currentSlideIndex, true);
-      };
-
-      // Khi video kết thúc, quay lại flow bình thường
-      slideVideo.onended = () => {
+      // Native Auto-Advance
+      videoElement.onended = () => {
+        console.log("Video ended. Auto-advancing.");
         closeVideo();
-        if (currentSlideIndex < TOTAL_SLIDES) {
-          showSlide(currentSlideIndex + 1, true);
-        }
       };
 
-      // Xử lý lỗi
-      slideVideo.onerror = (e) => {
-        console.error("Lỗi phát video:", e);
-        alert("Lỗi phát video, chuyển sang slide tiếp theo.");
-        closeVideo();
-        if (currentSlideIndex < TOTAL_SLIDES) {
-          showSlide(currentSlideIndex + 1, true);
-        }
+      videoElement.onplay = () => {
+        videoPlayOverlay.classList.remove('visible');
       };
     }
 
     function closeVideo() {
-      slideVideo.pause();
-      slideVideo.ontimeupdate = null; // Gỡ event
-      videoOverlay.style.display = 'none';
-      isVideoPlaying = false;
-      videoSource.src = "";
+      videoOverlay.classList.remove('active');
+      videoElement.pause();
+      videoElement.src = ""; // Stop buffering
+      videoElement.onended = null; // Cleanup listener
+
+      // Chuyển slide tiếp theo
+      if (currentSlideIndex < TOTAL_SLIDES) {
+        showSlide(currentSlideIndex + 1);
+      }
     }
 
+    closeVideoBtn.addEventListener('click', closeVideo);
 
-    /* ==================== ĐIỀU CHUYỂN SLIDE ==================== */
-    async function showSlide(index, autoPlay = true) {
+    /* ================= LOGIC CHÍNH ================= */
+    async function showSlide(index) {
+      // Validate index
       if (index < 1) index = 1;
       if (index > TOTAL_SLIDES) index = TOTAL_SLIDES;
-
       currentSlideIndex = index;
-      window.location.hash = `#${index}`;
 
-      // Reset UI state
-      slideImage.src = "";
-      slideViewer.scrollTop = 0;
-      progressBar.style.width = `0%`;
-      currentTimeEl.textContent = "00:00";
-      slideCounter.textContent = `${index} / $32`;
+      // Stop current playback
+      slideAudio.pause();
+      cancelAnimationFrame(scrollAnimationId);
+      showLoading(true, `Đang tải slide ${index}...`);
+
+      // Update nút điều hướng
       prevBtn.disabled = (index === 1);
       nextBtn.disabled = (index === TOTAL_SLIDES);
+      slideCounter.textContent = `${index} / ${TOTAL_SLIDES}`;
 
-      // Đóng video nếu đang mở để chuyển sang trạng thái mới
-      if (isVideoPlaying) {
-        closeVideo();
-      }
+      try {
+        // 1. Tải resources của slide hiện tại (hoặc lấy từ cache)
+        await resourceManager.loadSlide(index);
 
-      showLoading(true, `Đang tải Slide ${index}...`);
-
-      // Nếu có video được map tại slide này thì tải và phát video
-      if (videoMap.has(index)) {
-        try {
-          const url = await resourceManager.loadVideo(videoMap.get(index));
-          playVideo(url, autoPlay);
-        } catch (e) {
-          console.error("Lỗi preload video:", e);
-          playVideo(videoMap.get(index), autoPlay); // Fallback URL
-        }
-        return; // Thoát hàm để Video xử lý phần còn lại
-      }
-
-      // Xử lý Audio/Image thông thường
-      const audioUrl = `${AUDIO_PREFIX}${index}${AUD_EXT}`;
-      slideAudio.src = audioUrl;
-
-      // 1. Gán source Audio và phát NGAY LẬP TỨC trên thẻ <audio> chính.
-      // Tuyệt đối không await việc tải Ảnh ở đây, vì khi tắt màn hình, 
-      // trình duyệt (đặc biệt iOS/Android) sẽ ngưng tải Image khiến Audio không bao giờ được play.
-      updateMediaSession(index, false);
-      
-      if (autoPlay) {
-        slideAudio.play().then(() => {
-          playPauseBtn.innerHTML = '⏸️';
-          if (isAutoScroll && !isFitMode) {
-            cancelAnimationFrame(scrollAnimationId);
-            scrollAnimationId = requestAnimationFrame(updateScroll);
-          }
-        }).catch(err => {
-          console.warn("Autoplay block hoặc lỗi:", err);
-          playPauseBtn.innerHTML = '▶️';
-        });
-      } else {
-        playPauseBtn.innerHTML = '▶️';
-      }
-
-      // 2. Tải ảnh chạy ngầm, xong lúc nào thì hiển thị lúc đó
-      resourceManager.loadImage(index).then(() => {
+        // 2. Gán source (lúc này đã nằm trong cache trình duyệt)
         slideImage.src = `${IMAGE_PREFIX}${index}${IMG_EXT}`;
+        slideAudio.src = `${AUDIO_PREFIX}${index}${AUD_EXT}`;
+
+        // 3. Reset view
         slideViewer.scrollTop = 0;
         showLoading(false);
-      }).catch(err => {
-        console.warn("Lỗi tải ảnh:", err);
-        showLoading(false);
-      });
 
-      // 3. Vẫn tải audio vào cache manager để tương thích
-      resourceManager.loadAudio(index).catch(e => {});
+        // 4. Phát audio & Auto-scroll
+        try {
+          await slideAudio.play();
+          startAutoScrollIfNeeded();
+        } catch (err) {
+          console.log("Autoplay blocked or waiting for interaction", err);
+          playPauseBtn.innerHTML = '▶️'; // Hiển thị nút play
+        }
 
-      // 4. Preload các slide tiếp theo
-      preloadNext(index);
+        // 5. Preload các slide tiếp theo (Chiến lược thông minh)
+        preloadNextSlides(index);
+
+      } catch (error) {
+        console.error(error);
+        showLoading(true, "Mạng không ổn định. Đang thử lại...");
+        // Tự động thử lại sau 3s nếu lỗi
+        setTimeout(() => showSlide(index), 3000);
+      }
     }
 
-    function preloadNext(currentIndex) {
-      // Preload 2 slide tiếp theo
+    function preloadNextSlides(currentIndex) {
+      // 1. Preload 2 slide tiếp theo (Ảnh + Audio)
       for (let i = 1; i <= 2; i++) {
         const nextIdx = currentIndex + i;
         if (nextIdx <= TOTAL_SLIDES) {
-          if (videoMap.has(nextIdx)) {
-            resourceManager.loadVideo(videoMap.get(nextIdx)).catch(e => console.warn(e));
-          } else {
-            resourceManager.loadSlide(nextIdx).catch(e => console.warn(`Preload lỗi slide ${nextIdx}`));
-          }
+          resourceManager.loadSlide(nextIdx).catch(err => console.log(`Preload failed for ${nextIdx}`, err));
+        }
+      }
+
+      // 2. Preload Video (nếu có ở slide kế tiếp)
+      const nextSlideIndex = currentIndex + 1;
+      if (videoMap.has(nextSlideIndex)) {
+        const vidData = videoMap.get(nextSlideIndex);
+        if (vidData && vidData.url && vidData.url.endsWith('.mp4')) {
+          resourceManager.loadVideo(vidData.url);
         }
       }
     }
 
+    /* ================== AUTO SCROLL & AUDIO ================== */
+    function startAutoScrollIfNeeded() {
+      if (isAutoscrollEnabled && !isFitMode && !slideAudio.paused && !slideAudio.ended) {
+        cancelAnimationFrame(scrollAnimationId);
+        scrollAnimationId = requestAnimationFrame(autoScroll);
+      }
+    }
 
-    /* ==================== SỰ KIỆN AUDIO & GIAO DIỆN ==================== */
+    function autoScroll() {
+      if (!isAutoscrollEnabled || isFitMode || slideAudio.paused || slideAudio.ended) return;
+      const dur = slideAudio.duration || 0;
+      const cur = slideAudio.currentTime || 0;
+      if (dur > 0) {
+        const scrollable = slideViewer.scrollHeight - slideViewer.clientHeight;
+        const top = (cur / dur) * scrollable;
+        slideViewer.scrollTop = top;
+      }
+      scrollAnimationId = requestAnimationFrame(autoScroll);
+    }
+
+    /* ================= LISTENERS ================= */
     slideAudio.addEventListener('play', () => {
       playPauseBtn.innerHTML = '⏸️';
-      if (isAutoScroll && !isFitMode && !isVideoPlaying) {
-        cancelAnimationFrame(scrollAnimationId);
-        scrollAnimationId = requestAnimationFrame(updateScroll);
-      }
-      updateMediaSession(currentSlideIndex, false);
+      startAutoScrollIfNeeded();
     });
-
     slideAudio.addEventListener('pause', () => {
       playPauseBtn.innerHTML = '▶️';
       cancelAnimationFrame(scrollAnimationId);
     });
-
     slideAudio.addEventListener('ended', () => {
-      if (currentSlideIndex < TOTAL_SLIDES) {
-        showSlide(currentSlideIndex + 1, true);
+      // Kiểm tra xem slide hiện tại có video link không
+      if (videoMap.has(currentSlideIndex)) {
+        playVideo(videoMap.get(currentSlideIndex));
+      } else {
+        // Normal flow
+        if (currentSlideIndex < TOTAL_SLIDES) {
+          showSlide(currentSlideIndex + 1);
+        }
       }
     });
 
-    // Cập nhật thanh tiến trình
+    // Time Update & Progress Bar
     slideAudio.addEventListener('timeupdate', () => {
-      if (!isVideoPlaying && !isNaN(slideAudio.duration) && slideAudio.duration > 0) {
+      if (!isNaN(slideAudio.duration) && slideAudio.duration > 0) {
         const pct = (slideAudio.currentTime / slideAudio.duration) * 100;
         progressBar.style.width = `${pct}%`;
         currentTimeEl.textContent = formatTime(slideAudio.currentTime);
       }
     });
+    slideAudio.addEventListener('loadedmetadata', () => {
+      if (!isNaN(slideAudio.duration)) totalDurationEl.textContent = formatTime(slideAudio.duration);
+    });
 
-    /* ==================== ĐIỀU KHIỂN ==================== */
+    // Seek
+    progressBarWrap.addEventListener('click', (ev) => {
+      if (!slideAudio.duration) return;
+      const rect = progressBarWrap.getBoundingClientRect();
+      const ratio = (ev.clientX - rect.left) / rect.width;
+      slideAudio.currentTime = ratio * slideAudio.duration;
+    });
+
+    // Buttons
     playPauseBtn.addEventListener('click', () => {
-      if (isVideoPlaying) {
-        if (slideVideo.paused) slideVideo.play();
-        else slideVideo.pause();
-      } else {
-        if (slideAudio.paused) slideAudio.play();
-        else slideAudio.pause();
-      }
+      if (slideAudio.paused) slideAudio.play();
+      else slideAudio.pause();
     });
 
     prevBtn.addEventListener('click', () => {
-      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1, true);
+      if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1);
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1, true);
+      if (currentSlideIndex < TOTAL_SLIDES) showSlide(currentSlideIndex + 1);
     });
 
-    closeVideoBtn.addEventListener('click', () => {
-      closeVideo();
-      if (currentSlideIndex < TOTAL_SLIDES) {
-        showSlide(currentSlideIndex + 1, true);
-      }
-    });
-
-    // Tua (Seek) khi bấm vào thanh tiến trình
-    progressBarWrap.addEventListener('click', (e) => {
-      const rect = progressBarWrap.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const pct = clickX / rect.width;
-
-      if (isVideoPlaying) {
-        if (!isNaN(slideVideo.duration) && slideVideo.duration > 0) {
-          slideVideo.currentTime = pct * slideVideo.duration;
-        }
-      } else {
-        if (!isNaN(slideAudio.duration) && slideAudio.duration > 0) {
-          slideAudio.currentTime = pct * slideAudio.duration;
-          // Cập nhật lại scroll ngay lập tức
-          if (isAutoScroll && !isFitMode) {
-            const scrollHeight = slideViewer.scrollHeight - slideViewer.clientHeight;
-            if (scrollHeight > 0) slideViewer.scrollTop = pct * scrollHeight;
-          }
-        }
-      }
-    });
-
-    // Toggle Auto-scroll
     autoscrollBtn.addEventListener('click', () => {
-      isAutoScroll = !isAutoScroll;
-      if (isAutoScroll) {
-        autoscrollBtn.classList.remove('disabled');
-        if (!slideAudio.paused && !isVideoPlaying && !isFitMode) {
-          cancelAnimationFrame(scrollAnimationId);
-          scrollAnimationId = requestAnimationFrame(updateScroll);
-        }
-      } else {
-        autoscrollBtn.classList.add('disabled');
-        cancelAnimationFrame(scrollAnimationId);
-      }
+      isAutoscrollEnabled = !isAutoscrollEnabled;
+      syncAutoscrollUI();
+      if (isAutoscrollEnabled) startAutoScrollIfNeeded();
+      else cancelAnimationFrame(scrollAnimationId);
     });
 
-    // Toggle Scale (Fit/Fill)
     scaleBtn.addEventListener('click', () => {
       isFitMode = !isFitMode;
-      if (isFitMode) {
-        slideImage.style.objectFit = 'contain';
-        slideImage.style.height = '100%';
-        slideImage.style.width = '100%';
-      } else {
-        // Chế độ Fill (để đọc văn bản dọc theo ảnh)
-        slideImage.style.objectFit = 'cover';
-        slideImage.style.width = '100%';
-        slideImage.style.height = 'auto'; // Cho phép cuộn dọc
-      }
-
-      if (!isFitMode && isAutoScroll && !slideAudio.paused && !isVideoPlaying) {
-        cancelAnimationFrame(scrollAnimationId);
-        scrollAnimationId = requestAnimationFrame(updateScroll);
-      } else {
-        cancelAnimationFrame(scrollAnimationId);
-      }
+      slideViewer.classList.toggle('fit-mode', isFitMode);
+      scaleBtn.innerHTML = isFitMode ? '↕️' : '⛶';
+      if (isFitMode) cancelAnimationFrame(scrollAnimationId);
+      else startAutoScrollIfNeeded();
     });
 
-    // Toàn màn hình
-    fullscreenBtn.addEventListener('click', () => {
+    // Fullscreen logic cải tiến cho Zalo
+    function toggleFullscreen() {
+      // Kiểm tra xem có đang ở chế độ pseudo-fullscreen không
+      const isPseudo = playerContainer.classList.contains('pseudo-fullscreen');
+      const isNative = !!document.fullscreenElement;
+
+      if (!isNative && !isPseudo) {
+        // Thử bật fullscreen native
+        document.documentElement.requestFullscreen()
+          .then(() => {
+            // Thành công native
+            screen.orientation.lock('landscape').catch(() => { });
+          })
+          .catch(err => {
+            console.log("Fullscreen native bị chặn, chuyển sang chế độ giả lập (Zalo/Webview)", err);
+            // Fallback: Maximize container bằng CSS
+            playerContainer.classList.add('pseudo-fullscreen');
+            fullscreenBtn.innerHTML = 'X';
+
+            // Ép xoay ngang nếu có thể
+            if (screen.orientation && typeof screen.orientation.lock === 'function') {
+              screen.orientation.lock('landscape').catch(() => { });
+            }
+          });
+      } else {
+        // Đang full (native hoặc pseudo) -> Thoát
+        if (isNative) {
+          document.exitFullscreen();
+        }
+        playerContainer.classList.remove('pseudo-fullscreen');
+        fullscreenBtn.innerHTML = '🖼️';
+
+        if (screen.orientation && typeof screen.orientation.unlock === 'function') {
+          screen.orientation.unlock();
+        }
+      }
+    }
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    // Lắng nghe thay đổi native để cập nhật nút và class
+    document.addEventListener('fullscreenchange', () => {
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.warn("Fullscreen error:", err);
-        });
+        // Người dùng thoát bằng nút ESC hoặc vuốt
+        playerContainer.classList.remove('pseudo-fullscreen');
+        fullscreenBtn.innerHTML = '🖼️';
       } else {
-        document.exitFullscreen();
+        fullscreenBtn.innerHTML = 'X';
       }
     });
 
-    // Hash link support (khi refesh trang hoặc share link #3)
-    window.addEventListener('hashchange', () => {
-      const h = parseInt(window.location.hash.replace('#', ''));
-      if (!isNaN(h) && h >= 1 && h <= TOTAL_SLIDES && h !== currentSlideIndex) {
-        showSlide(h, true);
+    // Controls Visibility
+    let inactivityTimer;
+    function showControlsAndResetTimer() {
+      playerContainer.classList.remove('inactive');
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        if (!slideAudio.paused) playerContainer.classList.add('inactive');
+      }, 3000);
+    }
+    playerContainer.addEventListener('mousemove', showControlsAndResetTimer);
+    playerContainer.addEventListener('click', showControlsAndResetTimer);
+    playerContainer.addEventListener('touchstart', showControlsAndResetTimer);
+
+    // Helpers
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    /* ================= 🔥 TỰ ĐỘNG XOAY NGANG (FORCED LANDSCAPE) ================= */
+    function checkOrientation() {
+      // Phát hiện thiết bị di động cơ bản
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      // Nếu là mobile VÀ màn hình đang ở chiều dọc (cao > rộng)
+      if (isMobile && window.innerHeight > window.innerWidth) {
+        playerContainer.classList.add('force-landscape');
+        videoOverlay.classList.add('force-landscape');
+      } else {
+        playerContainer.classList.remove('force-landscape');
+        videoOverlay.classList.remove('force-landscape');
       }
-    });
+    }
+
+    // Lắng nghe sự kiện xoay và resize
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
 
     /* ================= INIT ================= */
-    let startIdx = 1;
-    if (window.location.hash) {
-      const h = parseInt(window.location.hash.replace('#', ''));
-      if (!isNaN(h) && h >= 1 && h <= TOTAL_SLIDES) startIdx = h;
-    }
-    showSlide(startIdx, false);
-
+    window.addEventListener('load', () => {
+      loadVideoLinks(); // Tải link video
+      showControlsAndResetTimer();
+      syncAutoscrollUI();
+      checkOrientation(); // Kiểm tra hướng ngay khi tải
+      // Bắt đầu
+      showSlide(currentSlideIndex);
+    });
   </script>
 </body>
 
