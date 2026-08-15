@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz: Chương 12</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- SortableJS for Sorting questions -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <div class="header">
+      <h2>📝 Bài tập Trắc nghiệm - Chương 12</h2>
+      <div id="progress-text" style="font-weight: 500; color: var(--text-muted);">Câu hỏi 1 / 30</div>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div id="quiz-main">
+      <div class="question-area" id="question-area">
+        <!-- Question content injected by JS -->
+      </div>
+      
+      <div style="padding: 0 24px;">
+        <div class="explanation-box" id="explanation-box">
+          <div class="explanation-title">💡 Giải thích:</div>
+          <div id="explanation-text" style="line-height: 1.5;"></div>
+        </div>
+      </div>
+
+      <div class="controls" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1;">
+          <button class="btn btn-outline" id="prev-btn" style="display: none;">&lt; Câu trước</button>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <button class="btn btn-primary" id="check-btn" disabled>Kiểm tra</button>
+        </div>
+        <div style="flex: 1; text-align: right;">
+          <button class="btn btn-outline" id="next-btn" style="display: none;">Câu sau &gt;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-screen" id="result-screen">
+      <h2 style="font-size: 1.75rem; color: var(--text-main); margin-bottom: 30px;">Hoàn thành Bài tập!</h2>
+      <div class="score-circle" id="score-circle">
+        <div class="score-text" id="score-text">0/30</div>
+      </div>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px;">Bạn đã hoàn thành bài kiểm tra kiến thức Chương 12.</p>
+      <button class="btn btn-primary" onclick="location.reload()">Làm lại bài thi</button>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

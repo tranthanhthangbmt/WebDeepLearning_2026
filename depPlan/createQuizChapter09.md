@@ -1,46 +1,30 @@
-# Lập kế hoạch: Thêm Tab Bài tập Trắc nghiệm (Interactive Quiz) cho Chương 9
+# Kế hoạch tạo bài tập trắc nghiệm (Interactive Quiz) cho Chương 9
 
-Dựa trên yêu cầu, hệ thống bài tập trắc nghiệm Chương 9 ("Các mẫu kiến ​​trúc ConvNet") sẽ được xây dựng gồm tối thiểu 30 câu hỏi. Toàn bộ nội dung kiến thức để soạn câu hỏi sẽ được trích xuất **chính xác và trực tiếp** từ tài liệu Tiếng Việt của Chương 9 như sau:
+## 1. Mục tiêu
+- Xây dựng hệ thống câu hỏi trắc nghiệm tương tác cho **Chương 9: Các mẫu kiến trúc ConvNet**.
+- Tích hợp giao diện UI tương tự như đã làm ở các chương trước vào bài học Markdown, giúp sinh viên củng cố kiến thức trực tiếp.
 
-## Nguồn tài liệu tham khảo chính
-1. **Nội dung lý thuyết Tiếng Việt:** `Chapters/chapter_09.md` (Tab "Tiếng Việt")
+## 2. Chủ đề câu hỏi (30 câu)
+Dựa trên nội dung của Chương 9, các câu hỏi sẽ xoay quanh các chủ đề:
+1. **Tính mô đun, phân cấp và tái sử dụng (MHR):** Khái niệm, cách thức tổ chức cấu trúc của deep learning, sự phát triển phân cấp đặc trưng.
+2. **Kết nối dư (Residual connections):** Vấn đề biến mất đạo hàm (vanishing gradients), cấu trúc residual block, shortcut, chiếu tuyến tính (linear projection) với Conv 1x1.
+3. **Chuẩn hóa hàng loạt (Batch Normalization):** Khái niệm, tác dụng (giảm covariant shift, lan truyền gradient), vị trí đặt BatchNormalization (trước/sau Activation), thuộc tính use_bias.
+4. **Tích chập có thể phân tách theo chiều sâu (Depthwise Separable Convolutions):** Cấu tạo (depthwise + pointwise 1x1), ưu điểm (giảm tham số, nhẹ hơn), giả định tính độc lập giữa các kênh (channels).
+5. **Kiến trúc Xception & Mini Xception:** Sự kết hợp các kiến thức trên vào một mô hình thực tế.
+6. **Vision Transformers (ViTs):** Sự khác biệt giữa ViT và ConvNet, xử lý tuần tự patch hình ảnh, lượng dữ liệu yêu cầu.
 
-## Phạm vi kiến thức bao phủ (từ nguồn trên)
-1. **Tính mô đun, phân cấp và tái sử dụng**
-2. **Kết nối dư**
-3. **Chuẩn hóa hàng loạt**
-4. **Các kết cấu có thể phân tách theo chiều sâu**
-5. **Kết hợp mọi thứ lại với nhau: Một mô hình nhỏ giống như Xception**
-6. **Ngoài tích chập: Vision Transformers**
-7. **Bản tóm tắt**
+## 3. Cấu trúc và Giao diện (Thư mục `quizzes/Chapter09`)
+- **`index.html`**: File giao diện chính, được nhúng qua iframe vào `Chapters/chapter_09.md`. Cập nhật tiêu đề thành Chương 9.
+- **`style.css`**: Dùng chung phong cách (giữ nguyên).
+- **`script.js`**: Logic xử lý UI (giữ nguyên).
+- **`questions.js`**: Chứa 30 câu hỏi dưới định dạng mảng JSON. 
+  - Tuân thủ nguyên tắc: **Chiều dài các đáp án phải tương đương nhau**. Giải thích cực kỳ chi tiết cho đáp án đúng.
+  - Phân bổ: 25 Multiple Choice (MCQ), 2 Matching, 1 Sorting, 2 Fill-in-the-blank.
+  - Phải có dòng `export default questions;` ở cuối.
 
-## Proposed Changes
-
-Tôi sẽ tạo một trang HTML chứa tối thiểu 30 câu hỏi trắc nghiệm và nhúng nó vào file `Chapters/chapter_09.md`.
-
-### Khởi tạo thư mục và file Quiz
-#### [NEW] `quizzes/Chapter09/index.html`
-- **Thiết kế giao diện:** Tái sử dụng form giao diện, màu sắc, và cấu trúc điều khiển (HTML/CSS/JS) chuẩn như đã áp dụng cho các học phần khác (như môn Máy học) để đảm bảo tính nhất quán và chuyên nghiệp.
-- **Biên soạn câu hỏi:** Dựa vào nội dung `Chapters/chapter_09.md`, sinh tối thiểu 30 câu hỏi bám sát các mục lý thuyết kể trên. Đảm bảo đa dạng các loại câu hỏi (gồm: Trắc nghiệm đa lựa chọn - MCQ, Ghép nối - Matching, Sắp xếp thứ tự - Sorting, Điền từ vào chỗ trống/Kéo thả - Drag & Drop). Đồng thời, mỗi câu hỏi phải được phân loại và ghi rõ mức độ khó (Dễ, Trung bình, Khó).
-
-### Tiêu chuẩn tối ưu hóa MCQ (Chuẩn MIT)
-Trong quá trình biên soạn, đặc biệt là các câu hỏi đa lựa chọn (MCQ), cần phải tuân thủ nghiêm ngặt các quy tắc sau để đảm bảo chất lượng bài thi và tránh tình trạng sinh viên đoán được đáp án bằng mẹo:
-1. **Độ dài cân bằng:** Chiều dài của đáp án đúng không được dài vượt quá **1.5 lần** chiều dài trung bình của các đáp án sai (Distractors).
-2. **Cắt tỉa ngữ pháp thông minh (Smart NLP Truncation):** Tuyệt đối **không** sử dụng dấu ba chấm (`...`) để rút gọn câu. Nếu đáp án đúng quá dài, hãy cắt câu tại các ranh giới ngữ pháp tự nhiên (như trước các từ nối `vì`, `thay vì`, `nhưng`, `do đó`, `giúp`, `để`, `nghĩa là`, `trong đó` hoặc các dấu câu `,`, `:`, `;`, `-`). **Không bao giờ** cắt ở giữa một cặp ngoặc đơn `( )` để bảo toàn tính toàn vẹn ngữ nghĩa.
-3. **Giữ nguyên kiến thức trong Giải thích:** Phần nội dung dài dòng bị cắt đi khỏi đáp án đúng phải được di chuyển toàn bộ, trơn tru xuống phần **Giải thích (Explanation)** để hệ thống hiển thị sau khi sinh viên trả lời xong.
-
-### Cập nhật File Markdown
-#### [MODIFY] `Chapters/chapter_09.md`
-Thêm tab mới vào cuối file, ngay trước `<!-- tabs:end -->`:
-
-```markdown
-#### ** 📝 Bài tập Trắc nghiệm **
-
-<iframe src="quizzes/Chapter09/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
-```
-
-## Verification Plan
-- Viết nội dung mã tạo câu hỏi và giao diện `quizzes/Chapter09/index.html`.
-- Mở và cập nhật file `Chapters/chapter_09.md`.
-- Tải lại trang web chính trên trình duyệt tại đường dẫn `/#/Chapters/chapter_09` và chuyển sang tab **Bài tập Trắc nghiệm**.
-- Kiểm tra tính năng tương tác (chọn đáp án, chuyển câu, nộp bài, xem kết quả đúng/sai).
+## 4. Các bước thực hiện
+1. Tạo thư mục `quizzes/Chapter09`.
+2. Sao chép `index.html`, `style.css`, `script.js` từ `Chapter08` sang `Chapter09` và điều chỉnh nội dung text HTML.
+3. Tạo file `questions.js` với 30 câu hỏi chi tiết về Chương 9.
+4. Cập nhật `Chapters/chapter_09.md` bằng cách chèn thẻ `iframe` của quiz vào cuối phần "Tiếng Việt", ngay trước thẻ `<!-- tabs:end -->`.
+5. Kiểm tra tính toàn vẹn (syntax lỗi, lỗi logic nếu có).
