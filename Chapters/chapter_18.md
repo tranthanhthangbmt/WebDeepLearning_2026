@@ -2120,4 +2120,8 @@ tăng tốc độ tốt mà hầu như không mất phí.
 
 <iframe src="TaiLieu/Video/Chapter_18/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
 
+#### ** 📝 Bài tập trắc nghiệm **
+
+<iframe src="quizzes/Chapter18/index.html" width="100%" height="800px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>
+
 <!-- tabs:end -->

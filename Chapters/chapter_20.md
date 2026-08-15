@@ -1061,4 +1061,8 @@ và Keras Hub có thể được tìm thấy tại <https://github.com/keras-tea
 
 <iframe src="TaiLieu/Video/Chapter_20/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
 
+#### ** 📝 Bài tập trắc nghiệm **
+
+<iframe src="quizzes/Chapter20/index.html" width="100%" height="800px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe>
+
 <!-- tabs:end -->

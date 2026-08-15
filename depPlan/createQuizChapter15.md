@@ -1,45 +1,30 @@
-# Lập kế hoạch: Thêm Tab Bài tập Trắc nghiệm (Interactive Quiz) cho Chương 15
+# Kế hoạch phát triển: Bộ câu hỏi trắc nghiệm Chương 15 (Mô hình ngôn ngữ và Transformer)
 
-Dựa trên yêu cầu, hệ thống bài tập trắc nghiệm Chương 15 ("Mô hình ngôn ngữ và Transformer") sẽ được xây dựng gồm tối thiểu 30 câu hỏi. Toàn bộ nội dung kiến thức để soạn câu hỏi sẽ được trích xuất **chính xác và trực tiếp** từ tài liệu Tiếng Việt của Chương 15 như sau:
+## 1. Mục tiêu
+- Xây dựng 30 câu hỏi trắc nghiệm tương tác cho Chương 15 (Mô hình ngôn ngữ và Transformer).
+- Giúp sinh viên ôn tập và kiểm tra kiến thức về các mô hình tạo văn bản, dịch máy (Seq2Seq, RNN Encoder-Decoder), cơ chế Attention (Chú ý) và kiến trúc Transformer.
+- Tích hợp bài trắc nghiệm vào cuối tài liệu `Chapters/chapter_15.md`.
 
-## Nguồn tài liệu tham khảo chính
-1. **Nội dung lý thuyết Tiếng Việt:** `Chapters/chapter_15.md` (Tab "Tiếng Việt")
+## 2. Cấu trúc câu hỏi (30 câu)
+- **15 câu Trắc nghiệm nhiều lựa chọn (MCQ):** Kiểm tra kiến thức về các khái niệm cơ bản (Language Model, Seq2Seq, Encoder, Decoder, Attention, Transformer, Multi-Head Attention, Query-Key-Value). Đảm bảo tính cân bằng về chiều dài của các đáp án đúng để tránh bộc lộ mẹo làm bài.
+- **5 câu Điền từ vào chỗ trống (Fill-in-the-blank):** Điền các thuật ngữ chính xác như "Encoder", "Decoder", "Attention", "Transformer", "Seq2Seq".
+- **5 câu Ghép nối (Matching):** Ghép nối các thành phần của kiến trúc Transformer (ví dụ: Query, Key, Value) với ý nghĩa hoặc ví dụ cụ thể của chúng.
+- **5 câu Sắp xếp thứ tự (Sorting):** Sắp xếp quá trình giải mã (decoding) một câu trong mô hình seq2seq hoặc các bước thực hiện quá trình Self-attention.
 
-## Phạm vi kiến thức bao phủ (từ nguồn trên)
-1. **Mô hình ngôn ngữ**
-2. **Học theo trình tự**
-3. **Kiến trúc máy biến áp**
-4. **Phân loại bằng máy biến áp đã huấn luyện trước**
-5. **Điều gì làm cho Transformer có hiệu quả?**
-6. **Bản tóm tắt**
+## 3. Các bước thực hiện
+1. **Tạo thư mục và file:**
+   - Tạo thư mục `quizzes/Chapter15/`.
+   - Copy các file `index.html`, `style.css`, `script.js` từ `quizzes/Chapter14/` sang `quizzes/Chapter15/`.
+   - Cập nhật tiêu đề trong `index.html` thành "Bài tập Trắc nghiệm Chương 15".
+2. **Soạn thảo dữ liệu câu hỏi:**
+   - Tạo file `questions.js` trong `quizzes/Chapter15/` chứa mảng đối tượng câu hỏi với từ khóa xuất (export default).
+   - Viết 30 câu hỏi tuân thủ đúng yêu cầu chất lượng (đặc biệt là yêu cầu về độ dài đáp án MCQ).
+3. **Tích hợp vào tài liệu:**
+   - Mở file `Chapters/chapter_15.md`.
+   - Tìm đến thẻ `<!-- tabs:end -->` ở phần cuối.
+   - Chèn iframe tab Bài tập Trắc nghiệm nhúng vào `quizzes/Chapter15/index.html`.
 
-## Proposed Changes
-
-Tôi sẽ tạo một trang HTML chứa tối thiểu 30 câu hỏi trắc nghiệm và nhúng nó vào file `Chapters/chapter_15.md`.
-
-### Khởi tạo thư mục và file Quiz
-#### [NEW] `quizzes/Chapter15/index.html`
-- **Thiết kế giao diện:** Tái sử dụng form giao diện, màu sắc, và cấu trúc điều khiển (HTML/CSS/JS) chuẩn như đã áp dụng cho các học phần khác (như môn Máy học) để đảm bảo tính nhất quán và chuyên nghiệp.
-- **Biên soạn câu hỏi:** Dựa vào nội dung `Chapters/chapter_15.md`, sinh tối thiểu 30 câu hỏi bám sát các mục lý thuyết kể trên. Đảm bảo đa dạng các loại câu hỏi (gồm: Trắc nghiệm đa lựa chọn - MCQ, Ghép nối - Matching, Sắp xếp thứ tự - Sorting, Điền từ vào chỗ trống/Kéo thả - Drag & Drop). Đồng thời, mỗi câu hỏi phải được phân loại và ghi rõ mức độ khó (Dễ, Trung bình, Khó).
-
-### Tiêu chuẩn tối ưu hóa MCQ (Chuẩn MIT)
-Trong quá trình biên soạn, đặc biệt là các câu hỏi đa lựa chọn (MCQ), cần phải tuân thủ nghiêm ngặt các quy tắc sau để đảm bảo chất lượng bài thi và tránh tình trạng sinh viên đoán được đáp án bằng mẹo:
-1. **Độ dài cân bằng:** Chiều dài của đáp án đúng không được dài vượt quá **1.5 lần** chiều dài trung bình của các đáp án sai (Distractors).
-2. **Cắt tỉa ngữ pháp thông minh (Smart NLP Truncation):** Tuyệt đối **không** sử dụng dấu ba chấm (`...`) để rút gọn câu. Nếu đáp án đúng quá dài, hãy cắt câu tại các ranh giới ngữ pháp tự nhiên (như trước các từ nối `vì`, `thay vì`, `nhưng`, `do đó`, `giúp`, `để`, `nghĩa là`, `trong đó` hoặc các dấu câu `,`, `:`, `;`, `-`). **Không bao giờ** cắt ở giữa một cặp ngoặc đơn `( )` để bảo toàn tính toàn vẹn ngữ nghĩa.
-3. **Giữ nguyên kiến thức trong Giải thích:** Phần nội dung dài dòng bị cắt đi khỏi đáp án đúng phải được di chuyển toàn bộ, trơn tru xuống phần **Giải thích (Explanation)** để hệ thống hiển thị sau khi sinh viên trả lời xong.
-
-### Cập nhật File Markdown
-#### [MODIFY] `Chapters/chapter_15.md`
-Thêm tab mới vào cuối file, ngay trước `<!-- tabs:end -->`:
-
-```markdown
-#### ** 📝 Bài tập Trắc nghiệm **
-
-<iframe src="quizzes/Chapter15/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
-```
-
-## Verification Plan
-- Viết nội dung mã tạo câu hỏi và giao diện `quizzes/Chapter15/index.html`.
-- Mở và cập nhật file `Chapters/chapter_15.md`.
-- Tải lại trang web chính trên trình duyệt tại đường dẫn `/#/Chapters/chapter_15` và chuyển sang tab **Bài tập Trắc nghiệm**.
-- Kiểm tra tính năng tương tác (chọn đáp án, chuyển câu, nộp bài, xem kết quả đúng/sai).
+## 4. Yêu cầu kỹ thuật & UX/UI
+- Tính tương tác tốt, phản hồi màu sắc rõ ràng (xanh - đỏ) kèm ô giải thích sau khi trả lời.
+- Giao diện có thanh điều hướng các câu.
+- Cấu trúc export chuẩn ES6 module cho file `questions.js`.

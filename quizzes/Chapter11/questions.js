@@ -274,7 +274,7 @@ const questions = [
   },
   {
     type: "mcq",
-    question: "Trong kết quả trả về của SAM, mảng `"masks"` có kích thước (1, 4, 256, 256). Con số '4' ở đây đại diện cho điều gì?",
+    question: "Trong kết quả trả về của SAM, mảng 'masks' có kích thước (1, 4, 256, 256). Con số '4' ở đây đại diện cho điều gì?",
     options: [
       "Bốn kênh màu Red, Green, Blue và Alpha (độ trong suốt) của bức ảnh.",
       "Bốn mặt nạ ứng cử viên (candidate masks) khác nhau để giải quyết sự mơ hồ của lời nhắc.",

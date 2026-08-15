@@ -1,4 +1,4 @@
-import quizData from './questions.js';
+﻿import quizData from './questions.js';
 
 let currentQuestion = 0;
 // userAnswers[i] will store state: { wrongSelections: [], isCorrect: boolean, ... }
@@ -120,7 +120,7 @@ function loadQuestion() {
     });
 
     if (isFullyAnswered) {
-      options[q.correctAnswer].classList.add('correct');
+      options[(q.correctAnswer !== undefined ? q.correctAnswer : q.answer)].classList.add('correct');
     } else {
       options.forEach(opt => {
         opt.addEventListener('click', () => {
@@ -130,7 +130,7 @@ function loadQuestion() {
           
           if (state.wrongSelections.includes(selectedIndex)) return; // Ignore if already clicked wrong
 
-          if (selectedIndex === q.correctAnswer) {
+          if (selectedIndex === (q.correctAnswer !== undefined ? q.correctAnswer : q.answer)) {
             state.isCorrect = true;
             // Record points only if no wrong attempts were made
             state.earnedPoint = state.wrongSelections.length === 0;
@@ -284,3 +284,4 @@ prevBtn.addEventListener('click', () => {
 
 // Initialize
 loadQuestion();
+
