@@ -428,6 +428,23 @@
       window.$docsify.plugins || []
     );
   </script>
+
+  <script>
+    window.togglePracticeLang = function(lang) {
+      const vnList = document.getElementById('notebook-list-VN');
+      const enList = document.getElementById('notebook-list-EN');
+      const btnVn = document.getElementById('btn-vn');
+      const btnEn = document.getElementById('btn-en');
+      
+      if(vnList) vnList.style.display = lang === 'VN' ? 'block' : 'none';
+      if(enList) enList.style.display = lang === 'EN' ? 'block' : 'none';
+      
+      if(btnVn && btnEn) {
+         btnVn.style.opacity = lang === 'VN' ? '1' : '0.5';
+         btnEn.style.opacity = lang === 'EN' ? '1' : '0.5';
+      }
+    }
+  </script>
 </body>
 
 </html>
