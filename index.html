@@ -236,10 +236,48 @@
     @media (max-width: 600px) {
       .notebooklm-btn {
         bottom: 90px;
-        /* Safe area above mobile APlayer */
         right: 15px;
-        padding: 10px 18px;
-        font-size: 14px;
+        padding: 12px;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+      }
+      .notebooklm-btn-text {
+        display: none;
+      }
+      .notebooklm-btn svg {
+        margin: 0;
+      }
+      
+      /* Default Video iframe to 16:9 on mobile to fix the huge gap */
+      .video-mobile-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        left: 50%;
+        transform: translateX(-50%);
+        overflow: hidden;
+        margin-top: 10px;
+        background: #000;
+      }
+      
+      .video-mobile-wrapper iframe[src*="Video/"] {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 100vh !important;
+        height: 100vw !important;
+        transform: translate(-50%, -50%) rotate(90deg) !important;
+        border-radius: 0 !important;
+        max-width: none !important;
+        max-height: none !important;
+      }
+
+      /* Hide APlayer when Video tab is active on mobile */
+      body.video-tab-active .aplayer {
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
       }
     }
   </style>
@@ -312,7 +350,7 @@
       <path
         d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z" />
     </svg>
-    Hỏi đáp với AI
+    <span class="notebooklm-btn-text">Hỏi đáp với AI</span>
   </a>
 
   <!-- APlayer Container -->
@@ -361,6 +399,12 @@
       preload: 'auto', // Đổi thành auto để trình duyệt buffer trước, tránh ngắt quãng giữa chừng
       audio: playlist
     });
+
+    if (window.innerWidth <= 600) {
+      setTimeout(() => {
+        ap.setMode('mini');
+      }, 500);
+    }
 
     // Xử lý lỗi khi audio bị ngắt giữa chừng do mạng hoặc lỗi file
     ap.audio.addEventListener('error', function() {
@@ -423,10 +467,37 @@
               }
             }
           }
+
+          // 3. Auto rotate Video iframes on mobile
+          if (isMobile) {
+            document.querySelectorAll('iframe[src*="Video/"]').forEach(function(iframe) {
+              if (!iframe.parentElement.classList.contains('video-mobile-wrapper')) {
+                let wrapper = document.createElement('div');
+                wrapper.className = 'video-mobile-wrapper';
+                iframe.parentNode.insertBefore(wrapper, iframe);
+                wrapper.appendChild(iframe);
+              }
+            });
+          }
         });
       },
       window.$docsify.plugins || []
     );
+
+    // Track if video tab is active to hide APlayer
+    setInterval(function() {
+      if (window.innerWidth <= 600) {
+        // Find the active tab button in docsify-tabs
+        let activeTabBtn = document.querySelector('.docsify-tabs__tab--active') || document.querySelector('.docsify-tabs__tab[aria-selected="true"]');
+        
+        // If the active tab's text contains 'Video', we consider the video tab active
+        if (activeTabBtn && activeTabBtn.textContent.includes('Video')) {
+          document.body.classList.add('video-tab-active');
+        } else {
+          document.body.classList.remove('video-tab-active');
+        }
+      }
+    }, 500);
   </script>
 
   <script>

@@ -1624,7 +1624,9 @@ cho phép nó phát hiện chính xác hơn các vật thể có kích thước 
 
 #### ** 🎥 Video **
 
+<div class="video-mobile-wrapper">
 <iframe src="TaiLieu/Video/Chapter_12/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+</div>
 
 #### ** 📝 Bài tập trắc nghiệm **
 
