@@ -3875,6 +3875,14 @@ theo cách phụ trợ gốc. Điều này rất hữu ích cho các nhà nghiê
   <iframe src="TaiLieu/slideDL/Chapter07.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_07/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
+#### ** 📝 Bài tập Trắc nghiệm **
+
+<iframe src="quizzes/Chapter07/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
+
 #### ** 💻 Luyện tập **
 
 <div class="practice-container" style="background: #f8faff; border: 1px solid #cce0ff; border-radius: 8px; padding: 20px; margin-top: 15px;">
@@ -3905,14 +3913,5 @@ theo cách phụ trợ gốc. Điều này rất hữu ích cho các nhà nghiê
     </li>
   </ul>
 </div>
-
-
-#### ** 🎥 Video **
-
-<iframe src="TaiLieu/Video/Chapter_07/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
-
-#### ** 📝 Bài tập Trắc nghiệm **
-
-<iframe src="quizzes/Chapter07/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
 
 <!-- tabs:end -->

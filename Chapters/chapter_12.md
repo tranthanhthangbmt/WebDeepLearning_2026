@@ -1622,6 +1622,14 @@ cho phép nó phát hiện chính xác hơn các vật thể có kích thước 
   <iframe src="TaiLieu/slideDL/Chapter12.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_12/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
+#### ** 📝 Bài tập trắc nghiệm **
+
+<iframe src="quizzes/Chapter12/index.html" width="100%" height="800px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
 #### ** 💻 Luyện tập **
 
 <div class="practice-container" style="background: #f8faff; border: 1px solid #cce0ff; border-radius: 8px; padding: 20px; margin-top: 15px;">
@@ -1652,14 +1660,5 @@ cho phép nó phát hiện chính xác hơn các vật thể có kích thước 
     </li>
   </ul>
 </div>
-
-
-#### ** 🎥 Video **
-
-<iframe src="TaiLieu/Video/Chapter_12/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
-
-#### ** 📝 Bài tập trắc nghiệm **
-
-<iframe src="quizzes/Chapter12/index.html" width="100%" height="800px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
 
 <!-- tabs:end -->

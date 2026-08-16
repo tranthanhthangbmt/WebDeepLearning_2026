@@ -1102,6 +1102,14 @@ Phần này kết thúc phần giới thiệu của chúng tôi về các phươ
   <iframe src="TaiLieu/slideDL/Chapter09.pdf#view=FitH" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
+#### ** 🎥 Video **
+
+<iframe src="TaiLieu/Video/Chapter_09/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+
+#### ** 📝 Bài tập Trắc nghiệm **
+
+<iframe src="quizzes/Chapter09/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
+
 #### ** 💻 Luyện tập **
 
 <div class="practice-container" style="background: #f8faff; border: 1px solid #cce0ff; border-radius: 8px; padding: 20px; margin-top: 15px;">
@@ -1132,14 +1140,5 @@ Phần này kết thúc phần giới thiệu của chúng tôi về các phươ
     </li>
   </ul>
 </div>
-
-
-#### ** 🎥 Video **
-
-<iframe src="TaiLieu/Video/Chapter_09/index.html" width="100%" height="600px" style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" allowfullscreen></iframe>
-
-#### ** 📝 Bài tập Trắc nghiệm **
-
-<iframe src="quizzes/Chapter09/index.html" style="width: 100%; min-height: 700px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></iframe>
 
 <!-- tabs:end -->
