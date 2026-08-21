@@ -1,24 +1,22 @@
 # Trang chủ
 
-Chào mừng đến với trang web môn học **Trí tuệ nhân tạo** (Artificial Intelligence).
+Chào mừng đến với trang web môn học **Học sâu** (Deep Learning).
 
 ## Giới thiệu môn học
-Môn học cung cấp các kiến thức nền tảng và chuyên sâu về Trí tuệ nhân tạo, bao gồm tìm kiếm, suy diễn logic, học máy, lập kế hoạch, và các ứng dụng thực tế. 
+Môn học cung cấp các kiến thức nền tảng và chuyên sâu về Học sâu, bao gồm mạng nơ-ron nhân tạo, thị giác máy tính, xử lý ngôn ngữ tự nhiên, học sinh sản và các ứng dụng thực tế.
 
-Tài liệu học tập chính được xây dựng dựa trên cuốn sách **"Artificial Intelligence: A Modern Approach"** của tác giả Stuart J. Russell và Peter Norvig.
+Tài liệu học tập chính được xây dựng dựa trên cuốn sách **"Deep Learning with Python, Second Edition"** của tác giả François Chollet.
 
 ## Nội dung website
 Trang web này được chia thành các chương học. Mỗi chương bao gồm các tài liệu sau:
-- **Tiếng Việt**: Phiên bản dịch sang tiếng Việt của sách giáo trình.
-- **Tiếng Anh**: Bản gốc PDF (tiếng Anh) của chương.
+- **Lý thuyết**: Nội dung bài giảng tóm tắt bằng tiếng Việt.
 - **Slide**: Slide bài giảng tương ứng.
 - **Trắc nghiệm**: Câu hỏi trắc nghiệm ôn tập.
-- **Pseudocode**: Mã giả thuật toán.
-- **Python**: Mã nguồn Python cài đặt các thuật toán.
+- **Jupyter Notebook (Python)**: Mã nguồn cài đặt các mô hình và thuật toán học sâu.
 - **Bài tập**: Bài tập thực hành của chương.
 
 ## Tài liệu đính kèm
-- [Đề cương học phần (PDF)](TaiLieu/Đề%20cương%20_CNTT.2024.56.%20Trí%20tuệ%20nhân%20tạo.pdf)
-- Sách gốc: [Stuart J. Russell, Peter Norvig - Artificial Intelligence_ A Modern Approach (2021).pdf](TaiLieu/Stuart%20J.%20Russell,%20Peter%20Norvig%20-%20Artificial%20Intelligence_%20A%20Modern%20Approach%20(2021).pdf)
+- Đề cương học phần môn Học sâu: Đang cập nhật.
+- Sách gốc: **Deep Learning with Python, Second Edition** - François Chollet.
 
 Bắt đầu bằng cách chọn một chương từ menu bên trái.
