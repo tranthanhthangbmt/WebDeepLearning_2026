@@ -7,6 +7,10 @@ Môn học cung cấp các kiến thức nền tảng và chuyên sâu về Họ
 
 Tài liệu học tập chính được xây dựng dựa trên cuốn sách **"Deep Learning with Python, Second Edition"** của tác giả François Chollet.
 
+Để giúp sinh viên có thể xem lại những kiến thức nền tảng, dưới đây là các trang web của những môn học trước đó:
+- **Trí tuệ nhân tạo**: [https://tranthanhthangbmt.github.io/webTTNT_2026A/](https://tranthanhthangbmt.github.io/webTTNT_2026A/) (Mật khẩu đăng nhập: **UDA**)
+- **Máy học**: [https://tranthanhthangbmt.github.io/M-n-M-y-h-c_2026/](https://tranthanhthangbmt.github.io/M-n-M-y-h-c_2026/) (Mật khẩu đăng nhập: **UDA**)
+
 ## Nội dung website
 Trang web này được chia thành các chương học. Mỗi chương bao gồm các tài liệu sau:
 - **Lý thuyết**: Nội dung bài giảng tóm tắt bằng tiếng Việt.
