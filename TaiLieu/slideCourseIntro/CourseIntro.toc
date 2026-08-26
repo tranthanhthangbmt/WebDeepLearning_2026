@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Mở đầu: Bản đồ Tri thức Môn Học Sâu}{3}{0}{1}
+\beamer@sectionintoc {2}{Phần 1: Bản đồ Tri thức nền tảng (Prior Knowledge)}{8}{0}{2}
+\beamer@sectionintoc {3}{Phần 2: Hành trình Chinh phục Học sâu (Chương 1-12)}{23}{0}{3}
+\beamer@sectionintoc {4}{Phần 3: Dòng chảy Thời gian, NLP \& AI Tạo sinh}{34}{0}{4}

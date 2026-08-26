@@ -1,0 +1,159 @@
+Slide 1: Học Sâu (Deep Learning) - Cẩm nang Học tập: Từ Nền tảng đến AI Tạo sinh
+Người 1: Chào các em sinh viên. Hôm nay chúng ta sẽ bắt đầu môn học Học sâu (Deep Learning). Slide này đóng vai trò như một cẩm nang học tập, giúp các em có cái nhìn từ những kiến thức nền tảng nhất cho đến các mô hình AI Tạo sinh hiện đại.
+Người 2: Dạ chào thầy. Môn Học sâu là một môn rất hấp dẫn, em rất mong chờ được biết lộ trình chúng ta sẽ học những gì ạ.
+
+Slide 2: Nội dung chương
+Người 1: Để có cái nhìn toàn cảnh, nội dung chương này được chia làm 3 phần chính. Phần 1: Bản đồ Tri thức nền tảng. Phần 2: Hành trình Chinh phục Học sâu từ Chương 1 đến 12. Phần 3: Dòng chảy Thời gian, NLP & AI Tạo sinh.
+Người 2: Vâng, chia làm 3 phần thế này giúp chúng em dễ dàng hình dung được bức tranh tổng thể của môn học ạ.
+
+Slide 3: Bài toán sư phạm trong Học Sâu
+Người 1: Trước khi bước vào môn học, chúng ta cần giải quyết một bài toán sư phạm. Cuốn sách "Deep Learning with Python" có lượng kiến thức khổng lồ. Làm sao để các em không bị ngợp và thấy được sợi dây liên kết với các môn tiền đề đã học?
+Người 2: Đúng là khối lượng kiến thức rất lớn thưa thầy. Việc thấy được sự liên kết với Trí tuệ nhân tạo, Học máy hay Thị giác máy tính sẽ giúp chúng em học dễ hơn rất nhiều.
+
+Slide 4: Hướng tiếp cận: Tree of Thought
+Người 1: Chính vì vậy, thầy sử dụng hướng tiếp cận Tree of Thought, tức là Cây tư duy, để phân rã lộ trình thành 3 phần chính có tính logic và kết nối hữu cơ với nhau.
+Người 2: Phương pháp này giúp chúng em định vị được mình đang ở đâu trên bản đồ tri thức trong suốt quá trình học.
+
+Slide 5: Giới thiệu Phần 1: Bản đồ Tri thức nền tảng
+Người 1: Ở Phần 1, chúng ta sẽ kích hoạt lại vùng bộ nhớ với 3 trụ cột tri thức: Trí tuệ Nhân tạo (AI), Học máy (ML), và Thị giác Máy tính (CV).
+Người 2: Dạ, hệ thống hóa lại "những gì đã biết" sẽ giúp chúng em hiểu rõ nhu cầu tất yếu dẫn đến sự ra đời của Học sâu.
+
+Slide 6: Giới thiệu Phần 2: Hành trình Chinh phục Học sâu - Tập 1
+Người 1: Phần 2 sẽ chinh phục từ Chương 1 đến 12. Trọng tâm là nền tảng mạng nơ-ron, các framework như Keras/TensorFlow/PyTorch/JAX và giải quyết bài toán Thị giác máy tính như phân loại, phân đoạn ảnh.
+Người 2: Thật thú vị! Chúng em sẽ được thực hành phân loại và phát hiện đối tượng thực tế phải không ạ?
+
+Slide 7: Giới thiệu Phần 3: Hành trình Chinh phục Học sâu - Tập 2
+Người 1: Sang Phần 3, từ Chương 13 đến 20, chúng ta sẽ tiến vào các mô hình tuần tự, xử lý ngôn ngữ tự nhiên (NLP) với Transformers và các kiến trúc AI Tạo sinh tiên tiến như LLMs hay GPT.
+Người 2: Đây toàn là những công nghệ đang làm mưa làm gió hiện nay. Em rất mong chờ được học cách đưa các mô hình này ra thực tế.
+
+Slide 8: PHẦN 1: BẢN ĐỒ TRI THỨC NỀN TẢNG
+Người 1: Vậy chúng ta cùng đi sâu vào Phần 1: Bản đồ Tri thức nền tảng. Đây là bệ đỡ giúp các em hiểu tại sao Học sâu lại hoạt động theo cách hiện tại.
+Người 2: Dạ, việc ôn lại kiến thức tiền đề rất quan trọng trước khi bắt đầu những khái niệm phức tạp hơn thưa thầy.
+
+Slide 9: Trụ cột 1: Trí tuệ Nhân tạo (Artificial Intelligence)
+Người 1: Trụ cột đầu tiên là Trí tuệ nhân tạo. Tài liệu hệ thống của chúng ta là cuốn "Artificial Intelligence: A Modern Approach". Chúng ta đã học triết lý xây dựng các hệ thống nhận thức và hành động thông qua Tác tử hợp lý (Rational Agent).
+Người 2: Vâng, tác tử hợp lý là trung tâm để thiết kế các hệ thống AI mô phỏng nhận thức của con người.
+
+Slide 10: Tác tử và Môi trường
+Người 1: Cụ thể, một tác tử nhận thông tin qua cảm biến và tác động lại môi trường qua bộ chấp hành. Sự hợp lý của nó phụ thuộc vào hàm đo lường hiệu quả để đưa ra quyết định tối ưu.
+Người 2: Nghĩa là hệ thống luôn hướng tới việc tối đa hóa điểm thưởng hoặc hiệu suất đạt được ạ.
+
+Slide 11: Giải quyết vấn đề bằng Tìm kiếm (Search)
+Người 1: Về giải quyết vấn đề, các em đã học tìm kiếm mù và tìm kiếm kinh nghiệm như thuật toán A* để khám phá trong không gian trạng thái phức tạp.
+Người 2: A* kết hợp giữa chi phí đường đi và hàm Heuristic giúp việc tìm kiếm nhanh và tối ưu hơn rất nhiều.
+
+Slide 12: Ra quyết định và Học tăng cường cơ bản
+Người 1: Cuối cùng trong trụ cột AI là ra quyết định bất định dựa trên thuyết xác suất, và Học tăng cường cơ bản (RL). Tác tử học qua cơ chế thưởng phạt từ môi trường bằng Quá trình quyết định Markov.
+Người 2: Tức là máy tính tự trải nghiệm, sai thì bị phạt, đúng thì được thưởng để dần tìm ra chiến thuật hoàn hảo.
+
+Slide 13: Trụ cột 2: Học máy (Machine Learning)
+Người 1: Trụ cột thứ hai là Học máy (Machine Learning) với bộ công cụ Scikit-Learn và PyTorch. Nếu AI là tư duy hệ thống thì ML cung cấp công cụ toán học để máy tự học quy luật từ dữ liệu.
+Người 2: Thay vì lập trình luật thủ công, máy tính sẽ tự động tìm ra luật từ dữ liệu và đáp án thưa thầy.
+
+Slide 14: Quy trình chuẩn và Học có giám sát (Supervised)
+Người 1: Chúng ta đã học quy trình chuẩn từ làm sạch dữ liệu, chuẩn hóa đến xây dựng Pipeline. Với Học có giám sát, các em làm quen với Hồi quy dự đoán giá trị liên tục và Phân loại dự đoán nhãn rời rạc.
+Người 2: Quá trình chuẩn bị dữ liệu rất quan trọng, vì dữ liệu sạch mới giúp mô hình phân loại hay hồi quy chính xác.
+
+Slide 15: Đánh giá và Học không giám sát
+Người 1: Để đánh giá phân loại ta có ma trận nhầm lẫn, Precision, Recall. Trong khi đó, Học không giám sát tập trung vào Phân cụm như K-Means và Giảm chiều dữ liệu với PCA.
+Người 2: Học không giám sát giúp tự tìm cấu trúc ẩn trong dữ liệu khi chúng ta hoàn toàn không có nhãn đầu vào ạ.
+
+Slide 16: Tinh chỉnh và Kiểm soát mô hình
+Người 1: Việc tinh chỉnh mô hình đòi hỏi các em dùng Đánh giá chéo và tìm kiếm siêu tham số. Phải kiểm soát cẩn thận sự đánh đổi Bias/Variance và bẫy Overfitting bằng Regularization L1/L2.
+Người 2: Điều chỉnh các siêu tham số giúp mô hình cân bằng, tránh học vẹt dữ liệu huấn luyện mà mất đi tính tổng quát.
+
+Slide 17: Khối chuyển tiếp sang Mạng nơ-ron (PyTorch)
+Người 1: Khối chuyển tiếp là bước nhảy từ ML cổ điển sang Mạng nơ-ron với PyTorch. Các em đã biết cấu trúc Perceptron, Multilayer Perceptron (MLP) và thuật toán Lan truyền ngược (Backpropagation).
+Người 2: Đây là thuật toán cốt lõi giúp cập nhật trọng số và giảm sai số cho các mạng nơ-ron sâu thưa thầy.
+
+Slide 18: Trụ cột 3: Thị giác Máy tính (Computer Vision)
+Người 1: Trụ cột thứ ba là Thị giác máy tính. Chúng ta biến máy tính thành một hệ thống biết "nhìn" và "hiểu" ảnh thông qua lộ trình: Ảnh thô -> Tiền xử lý -> Trích chọn đặc trưng -> Nhận dạng.
+Người 2: Vâng, ảnh thực chất chỉ là một mảng dữ liệu đa chiều đối với máy tính.
+
+Slide 19: Tiền xử lý và Phân đoạn ảnh
+Người 1: Trong môn này, chúng ta đã dùng các bộ lọc Gaussian, Sobel để lọc nhiễu và phát hiện biên. Tiếp đến là phân đoạn ảnh bằng cắt ngưỡng Otsu hay thuật toán Watershed.
+Người 2: Phân đoạn giúp tách biệt rõ ràng vật thể và nền để dễ dàng nhận dạng ở bước sau.
+
+Slide 20: Phát hiện đặc trưng và Phân lớp cổ điển
+Người 1: Sau đó, chúng ta dùng SIFT, HOG để trích xuất điểm đặc trưng bất biến và mô tả cấu trúc vật thể, cuối cùng đưa vào bộ phân lớp mạnh như SVM hay KNN để nhận diện.
+Người 2: Nhưng phương pháp cổ điển này đòi hỏi con người phải tự thiết kế bộ trích chọn đặc trưng rất thủ công và vất vả ạ.
+
+Slide 21: Chuyển dịch sang Deep Learning trong CV
+Người 1: Chính xác. Vì vậy ta có sự chuyển dịch sang Deep Learning với mạng CNN và Transfer Learning từ AlexNet, VGG16. Việc phát hiện vật thể giờ dùng YOLO hay SSD để vẽ Bounding Box thời gian thực.
+Người 2: Deep learning tự động hóa hoàn toàn bước trích chọn đặc trưng, mang lại hiệu suất vượt trội.
+
+Slide 22: Sợi dây liên kết: Tại sao cần Học sâu?
+Người 1: Vậy sợi dây liên kết ở đây là gì? Tại sao có HOG, SIFT hay mạng Bayes rồi mà vẫn cần Học sâu? Đó là do bản chất của Học biểu diễn (Representation Learning). Mô hình học sâu tự động bóc tách các lớp biểu diễn từ thô đến tinh mà không cần con người can thiệp.
+Người 2: Nghĩa là chúng ta tiết kiệm được công sức thiết kế đặc trưng, và mô hình tối ưu hóa bằng toán học thuần túy trên khối dữ liệu lớn thưa thầy.
+
+Slide 23: PHẦN 2: HÀNH TRÌNH CHINH PHỤC HỌC SÂU (Chương 1-12)
+Người 1: Từ đây, chúng ta chính thức bước sang Phần 2: Hành trình Chinh phục Học sâu từ Chương 1 đến 12, để chuyển hóa tư duy từ ML cổ điển sang Học sâu với Keras 3.
+Người 2: Em đã sẵn sàng để viết những dòng code mạng nơ-ron đầu tiên ạ.
+
+Slide 24: Phần 2: Mục tiêu và Lộ trình
+Người 1: Mục tiêu của phần này là nắm vững Keras 3 qua 4 cột mốc: Từ Toán học đến Code, Lập trình dự án, Khám phá CNNs và Thế giới Thị giác nâng cao.
+Người 2: Việc chia thành 4 cột mốc rõ ràng giúp chúng em dễ dàng theo sát tiến độ học tập.
+
+Slide 25: Cột mốc 1: Xây dựng nền móng (Ch 1-3)
+Người 1: Cột mốc 1 giúp xây dựng nền móng. Chúng ta sẽ làm rõ sự khác biệt bản chất của Học sâu, hiểu về cấu trúc Tensor đa chiều và các phép toán nền tảng như Gradient Descent và Backpropagation.
+Người 2: Học sâu bản chất cũng từ các khối toán học kết hợp lại với nhau qua các phép tối ưu hóa.
+
+Slide 26: Hệ sinh thái Frameworks (Chương 3)
+Người 1: Ở Chương 3, các em làm quen với TensorFlow, PyTorch và JAX. Keras 3 đóng vai trò là giao diện thống nhất mượt mà trên cả 3 backend này, giúp việc xây dựng mạng dễ dàng hơn rất nhiều.
+Người 2: Quá tuyệt! Dùng Keras 3 chúng em có thể linh hoạt chuyển đổi backend mà không phải viết lại code.
+
+Slide 27: Cột mốc 2: Thực chiến Dự án & Quy trình chuẩn (Ch 4-7)
+Người 1: Cột mốc 2 là thực chiến. Các em sẽ xây dựng mô hình cho 3 bài toán kinh điển: phân loại nhị phân IMDb, phân loại đa lớp Reuters và hồi quy giá nhà California.
+Người 2: Vừa có nền tảng lý thuyết, vừa được thực hành trên các bộ dữ liệu nổi tiếng thì sẽ rất dễ hiểu bài ạ.
+
+Slide 28: Chinh phục Tổng quát hóa (Chương 5)
+Người 1: Ở Chương 5, chúng ta giải quyết bài toán chống Overfitting để đạt được khả năng Tổng quát hóa. Phương pháp sử dụng bao gồm Regularization L1/L2, Early stopping và cơ chế Dropout.
+Người 2: Vâng, đích đến không phải là độ chính xác 100% trên tập train, mà là mô hình hoạt động tốt trên dữ liệu thực tế thưa thầy.
+
+Slide 29: Quy trình Học máy & Keras chuyên sâu (Ch 6-7)
+Người 1: Chương 6 và 7 sẽ huấn luyện các em theo một quy trình thực tế chuẩn mực. Từ việc định nghĩa bài toán, phát triển mô hình cơ bản, đến việc làm chủ các API của Keras như Sequential, Functional và Subclassing.
+Người 2: Functional API và Subclassing sẽ giúp chúng em thiết kế được những mạng có đồ thị phức tạp hơn.
+
+Slide 30: Cột mốc 3: Kỷ nguyên CV - Sự tích chập (Ch 8-10)
+Người 1: Sang Cột mốc 3, chúng ta khám phá sức mạnh của mạng tích chập (CNN). Phép toán tích chập và Max-pooling giúp mô hình tự học và phát hiện các đặc trưng cục bộ có tính bất biến dịch chuyển.
+Người 2: Bằng cách sử dụng các cửa sổ trượt, mô hình có thể phát hiện các góc, cạnh bất kể vị trí của chúng trong ảnh.
+
+Slide 31: Kiến trúc & Trực quan hóa ConvNet (Ch 9-10)
+Người 1: Chúng ta sẽ học các thiết kế kiến trúc nâng cao như Residual connections và Batch normalization. Đồng thời, qua Grad-CAM ta có thể trực quan hóa và giải mã "hộp đen" của ConvNet để hiểu mô hình thực sự đang nhìn vào đâu.
+Người 2: Xóa bỏ được tính hộp đen giúp chúng em giải thích được quyết định của AI, tăng độ tin cậy của mô hình ạ.
+
+Slide 32: Cột mốc 4: Thị giác nâng cao (Ch 11-12)
+Người 1: Cột mốc 4 là đoạt đỉnh với Thị giác máy tính nâng cao. Các em sẽ làm chủ bài toán Phân đoạn ảnh (Image segmentation) với kiến trúc Encoder-Decoder và Phát hiện đối tượng (Object detection) như xây dựng mạng YOLO.
+Người 2: Nhận diện và vẽ khung bao đối tượng thời gian thực là ứng dụng cực kì phổ biến trong các hệ thống camera an ninh và xe tự lái.
+
+Slide 33: Chuyển tiếp sang Phần 3
+Người 1: Đến đây, các em đã làm chủ dữ liệu ảnh và dữ liệu dạng vector tĩnh. Tuy nhiên, thế giới thực vận hành theo thời gian và ngôn ngữ. Vì vậy, ta cần chuyển tiếp sang Phần 3.
+Người 2: Vâng, xử lý chuỗi thời gian và ngôn ngữ tự nhiên chắc chắn đòi hỏi những mô hình chuyên biệt hơn thưa thầy.
+
+Slide 34: PHẦN 3: DÒNG CHẢY THỜI GIAN, NLP & AI TẠO SINH
+Người 1: Ở Phần 3, chúng ta sẽ làm việc với dữ liệu có tính thứ tự, mạng RNN, Transformers và các mô hình sinh dữ liệu mới như LLMs và mô hình khuếch tán.
+Người 2: Đây là phần em mong đợi nhất, để hiểu được "phép thuật" đằng sau ChatGPT và Midjourney.
+
+Slide 35: Phần 3: Mục tiêu và Lộ trình
+Người 1: Lộ trình phần này gồm 4 cột mốc cuối: Dòng chảy Thời gian & Chữ viết, Kỷ nguyên Transformers, Thế giới AI Tạo ảnh và Nâng cấp Chuẩn Sản xuất để đưa AI ra thực tế.
+Người 2: Bốn cột mốc này sẽ giúp chúng em hoàn thiện toàn bộ bộ kỹ năng về Học sâu thưa thầy.
+
+Slide 36: Cột mốc 5: Dòng chảy Thời gian & Chữ viết (Ch 13-14)
+Người 1: Ở Cột mốc 5, chúng ta dùng mạng LSTM và GRU để dự báo chuỗi thời gian. Đối với chữ viết, ta học cách Tokenization để biến ngôn ngữ thành vector số học qua Word Embeddings.
+Người 2: Việc nhúng từ giúp mô hình biểu diễn được khoảng cách ngữ nghĩa giữa các từ trong không gian hình học đa chiều.
+
+Slide 37: Cột mốc 6: Kỷ nguyên Transformers & GPT (Ch 15-16)
+Người 1: Cột mốc 6 đánh dấu bước ngoặt với cơ chế Self-Attention thay thế mạng hồi quy. Các em sẽ học cấu trúc Encoder, Decoder của Transformer và thực hành tự xây dựng một mô hình sinh văn bản mini-GPT.
+Người 2: Cơ chế Tự chú ý thật tuyệt vời khi nó cho phép mô hình nắm bắt toàn bộ ngữ cảnh trong câu cùng một lúc.
+
+Slide 38: Cột mốc 7: Thế giới Mê hoặc của AI Tạo ảnh (Ch 17)
+Người 1: Cột mốc 7 đưa các em vào không gian tiềm ẩn (Latent spaces). Từ mạng VAEs đến các Mô hình khuếch tán (Diffusion models), hệ thống sẽ học cách khử nhiễu từng bước để tạo ra những bức tranh nghệ thuật xuất sắc.
+Người 2: Khử nhiễu để sinh ảnh, một ý tưởng toán học độc đáo nhưng lại tạo ra những tác phẩm không ngờ!
+
+Slide 39: Cột mốc 8: Nâng cấp Chuẩn Sản xuất (Ch 18-20)
+Người 1: Cuối cùng, Cột mốc 8 trang bị các kỹ thuật tối ưu như KerasTuner, Model ensembling và Mixed-precision để đưa mô hình ra thực tế. Chúng ta cũng sẽ nhìn nhận về ranh giới hiện tại của Học sâu để không ảo tưởng sức mạnh.
+Người 2: Làm kỹ sư AI thì ngoài việc tạo mô hình giỏi, tối ưu hóa để triển khai trên các thiết bị giới hạn cũng rất quan trọng ạ.
+
+Slide 40: Kết luận: Khởi hành
+Người 1: Tổng kết lại, các em đã có 70% gốc rễ từ AI, ML, CV. Giờ là lúc chúng ta thực chiến với Keras 3 và vươn tới đỉnh cao công nghệ LLMs. Sự nghiệp kỹ sư AI của các em bắt đầu từ hôm nay. Chúc các em học tập hiệu quả!
+Người 2: Dạ, cảm ơn thầy. Chúng em đã sẵn sàng cho một hành trình đầy thử thách và thú vị này ạ!

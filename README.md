@@ -11,6 +11,10 @@ Tài liệu học tập chính được xây dựng dựa trên cuốn sách **"
 - **Trí tuệ nhân tạo**: [https://tranthanhthangbmt.github.io/webTTNT_2026A/](https://tranthanhthangbmt.github.io/webTTNT_2026A/) (Mật khẩu đăng nhập: **UDA**)
 - **Máy học**: [https://tranthanhthangbmt.github.io/M-n-M-y-h-c_2026/](https://tranthanhthangbmt.github.io/M-n-M-y-h-c_2026/) (Mật khẩu đăng nhập: **UDA**)
 
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 10px; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+  <iframe src="TaiLieu/slideCourseIntro/index.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+</div>
+
 ## Nội dung website
 Trang web này được chia thành các chương học. Mỗi chương bao gồm các tài liệu sau:
 - **Lý thuyết**: Nội dung bài giảng tóm tắt bằng tiếng Việt.

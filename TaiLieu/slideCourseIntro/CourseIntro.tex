@@ -1,0 +1,565 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+\setbeamertemplate{caption}[numbered]
+\renewcommand{\figurename}{Hình}
+\renewcommand{\thefigure}{1.\arabic{figure}}
+
+\title[Tổng quan Học Sâu]{Học Sâu (Deep Learning) \\ \vspace{0.5cm} \Large Cẩm nang Học tập: Từ Nền tảng đến AI Tạo sinh}
+\author{Đại học Đông Á}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Nội dung chương}
+    \tableofcontents[hideallsubsections]
+\end{frame}
+
+% ==============================
+\section{Mở đầu: Bản đồ Tri thức Môn Học Sâu}
+% ==============================
+
+\begin{frame}{Bài toán sư phạm trong Học Sâu}
+    \begin{itemize}
+        \item \textbf{Thách thức cốt lõi:} Cuốn sách \textit{Deep Learning with Python} (2025) chứa một lượng kiến thức khổng lồ.
+        \item \textbf{Nguy cơ:} Sinh viên dễ bị ngợp và mất phương hướng nếu chỉ tiếp cận tuần tự mà không có bức tranh tổng thể.
+        \item \textbf{Mục tiêu:} Xây dựng một lộ trình tóm tắt giúp sinh viên:
+        \begin{itemize}
+            \item Không bị choáng ngợp trước khối lượng kiến thức.
+            \item Thấy rõ sợi dây liên kết logic với các môn học tiền đề đã hoàn thành (AI, ML, CV).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hướng tiếp cận: Tree of Thought}
+    \begin{itemize}
+        \item Áp dụng mô hình \textbf{Tree of Thought} (Cây tư duy) để phân rã và thiết kế lộ trình.
+        \item Lộ trình được chia thành \textbf{3 Phần chính}, kết nối hữu cơ với nhau.
+    \end{itemize}
+    \begin{center}
+        \begin{tcolorbox}[width=0.8\textwidth, colback=blue!5, colframe=blue!40!black, title=Bản đồ Tri thức]
+            \begin{itemize}
+                \item \textbf{Phần 1:} Bản đồ Tri thức nền tảng
+                \item \textbf{Phần 2:} Học sâu cơ bản \& Thị giác
+                \item \textbf{Phần 3:} Chuỗi thời gian, NLP \& AI Tạo sinh tiên tiến
+            \end{itemize}
+        \end{tcolorbox}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Giới thiệu Phần 1: Bản đồ Tri thức nền tảng}
+    \begin{itemize}
+        \item \textbf{Nội dung:} Tóm tắt lại 3 trụ cột tri thức đã học.
+        \begin{itemize}
+            \item Trí tuệ Nhân tạo (AI)
+            \item Học máy (ML)
+            \item Thị giác Máy tính (CV)
+        \end{itemize}
+        \item \textbf{Mục tiêu:} Giúp sinh viên hệ thống hóa \textit{“những gì đã biết”} và thấy được nhu cầu tất yếu dẫn đến Học sâu.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Giới thiệu Phần 2: Hành trình Chinh phục Học sâu - Tập 1}
+    \begin{itemize}
+        \item \textbf{Nội dung:} Chinh phục Chương 1 đến Chương 12 của cuốn sách.
+        \item \textbf{Trọng tâm:}
+        \begin{itemize}
+            \item Nền tảng mạng nơ-ron.
+            \item Thư viện Keras / TensorFlow / PyTorch / JAX.
+            \item Các bài toán cốt lõi của Thị giác Máy tính.
+        \end{itemize}
+        \item \textbf{Ứng dụng:} Phân loại ảnh, Phân đoạn ảnh, Phát hiện đối tượng.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Giới thiệu Phần 3: Hành trình Chinh phục Học sâu - Tập 2}
+    \begin{itemize}
+        \item \textbf{Nội dung:} Chinh phục Chương 13 đến Chương 20 của cuốn sách.
+        \item \textbf{Trọng tâm:}
+        \begin{itemize}
+            \item Các mô hình tuần tự.
+            \item Xử lý ngôn ngữ tự nhiên (NLP) với Transformers.
+            \item Các kiến trúc AI tạo sinh (VAE, Diffusion, LLMs/GPT).
+        \end{itemize}
+        \item \textbf{Kỹ năng:} Thực chiến đưa mô hình ra thực tế.
+    \end{itemize}
+\end{frame}
+
+% ==============================
+\section{Phần 1: Bản đồ Tri thức nền tảng (Prior Knowledge)}
+% ==============================
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}\Large PHẦN 1: BẢN ĐỒ TRI THỨC NỀN TẢNG
+    \end{beamercolorbox}
+    \vspace{0.5cm}
+    \textit{Kích hoạt lại vùng bộ nhớ của ba môn học nền tảng đã tích lũy.}
+    \vfill
+\end{frame}
+
+\begin{frame}{Trụ cột 1: Trí tuệ Nhân tạo (Artificial Intelligence)}
+    \begin{itemize}
+        \item \textbf{Tài liệu hệ thống:} \textit{Artificial Intelligence: A Modern Approach} (Stuart J. Russell, Peter Norvig).
+        \item Mở ra thế giới quan tổng quan nhất về AI.
+        \item \textbf{Khái niệm cốt lõi:} Tác tử hợp lý (Rational Agent) — Mô hình chuẩn (Standard Model).
+        \item \textbf{Triết lý:} Xây dựng các hệ thống có khả năng nhận thức môi trường và đưa ra hành động tối ưu nhất.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tác tử và Môi trường}
+    \begin{itemize}
+        \item Một thực thể nhận thông tin đầu vào (Percepts) qua \textbf{cảm biến} (Sensors).
+        \item Tác động ngược lại môi trường qua \textbf{bộ chấp hành} (Actuators).
+        \item \textbf{Sự hợp lý (Rationality):} Phụ thuộc vào hàm đo lường hiệu quả (Performance measure), tri thức nền tảng và chuỗi thông tin nhận được.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Giải quyết vấn đề bằng Tìm kiếm (Search)}
+    \begin{itemize}
+        \item \textbf{Tìm kiếm mù (Uninformed Search):} BFS, DFS, Uniform-cost.
+        \item \textbf{Tìm kiếm kinh nghiệm (Heuristic search):} Sử dụng hàm Heuristic để hướng dẫn quá trình tìm kiếm.
+        \item \textbf{Ví dụ nổi bật:} Giải thuật $A^*$ trong tìm kiếm không gian trạng thái phức tạp.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ra quyết định và Học tăng cường cơ bản}
+    \begin{itemize}
+        \item \textbf{Ra quyết định bất định:}
+        \begin{itemize}
+            \item Thuyết xác suất và Thuyết hữu dụng (Utility theory).
+            \item Tối đa hóa độ hữu dụng kỳ vọng. Tiền đề cho Mạng Bayes.
+        \end{itemize}
+        \item \textbf{Học tăng cường (RL):}
+        \begin{itemize}
+            \item Quá trình quyết định Markov (MDPs).
+            \item Học qua cơ chế thưởng/phạt từ môi trường để tìm \textbf{Chính sách (Policy)} tối ưu.
+        \end{itemize}
+        \item \textbf{Sự dịch chuyển lịch sử:} Từ hệ chuyên gia (expert systems) sang tác tử tự học hỏi.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Trụ cột 2: Học máy (Machine Learning)}
+    \begin{itemize}
+        \item \textbf{Tài liệu hệ thống:} \textit{Hands-On Machine Learning with Scikit-Learn and PyTorch} (Aurélien Géron).
+        \item AI cho tư duy hệ thống, ML cung cấp bộ công cụ toán học và lập trình thực chiến.
+        \item Máy tính tự học các quy luật từ dữ liệu mà không cần lập trình tường minh.
+        \item \textbf{Hai khối cốt lõi:} ML cổ điển (Scikit-Learn) và Chuyển tiếp (PyTorch).
+    \end{itemize}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{example-image} % TODO: Thay ảnh ML bằng đường dẫn: D:\DongAUniversity\TÀI LIỆU DẠY HỌC_2024-2025\Môn Máy học_2026\machineLearningWeb\...
+        \caption{Quy trình Học máy cơ bản}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Quy trình chuẩn và Học có giám sát (Supervised)}
+    \begin{itemize}
+        \item \textbf{Quy trình chuẩn:}
+        \begin{itemize}
+            \item Khảo sát, làm sạch (Cleaning).
+            \item Chuẩn hóa tính năng (Feature Scaling).
+            \item Đường ống xử lý (Pipelines).
+        \end{itemize}
+        \item \textbf{Các bài toán cốt lõi:}
+        \begin{itemize}
+            \item \textbf{Hồi quy (Regression):} Dự đoán giá trị liên tục (Linear Regression, Random Forests).
+            \item \textbf{Phân loại (Classification):} Dự đoán nhãn (SVM, SGDClassifier).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Đánh giá và Học không giám sát}
+    \begin{itemize}
+        \item \textbf{Đánh giá mô hình phân loại:} Ma trận nhầm lẫn (Confusion Matrix), Precision, Recall.
+        \item \textbf{Học không giám sát (Unsupervised):}
+        \begin{itemize}
+            \item \textbf{Phân cụm (Clustering):} K-Means, DBSCAN.
+            \item \textbf{Giảm chiều dữ liệu (Dimensionality Reduction):} PCA giải quyết ``lời nguyền chiều dữ liệu''.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tinh chỉnh và Kiểm soát mô hình}
+    \begin{itemize}
+        \item \textbf{Tinh chỉnh:}
+        \begin{itemize}
+            \item Đánh giá chéo (Cross-validation).
+            \item Tìm kiếm siêu tham số: Grid Search, Randomized Search.
+        \end{itemize}
+        \item \textbf{Bẫy Overfitting \& Underfitting:}
+        \begin{itemize}
+            \item Sự đánh đổi Bias/Variance (Độ chệch \& Phương sai).
+            \item Sử dụng Regularization (L1/L2) để kiểm soát sức mạnh mô hình.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Khối chuyển tiếp sang Mạng nơ-ron (PyTorch)}
+    \begin{itemize}
+        \item \textbf{Perceptron và MLP:} Đi từ cấu trúc nơ-ron sinh học sang nơ-ron nhân tạo và mạng MLP (Multilayer Perceptron).
+        \item \textbf{Huấn luyện mạng sâu:}
+        \begin{itemize}
+            \item Lan truyền ngược (Backpropagation).
+            \item Hiện tượng triệt tiêu/bùng nổ gradient.
+            \item Các bộ khởi tạo trọng số (Glorot/He).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Trụ cột 3: Thị giác Máy tính (Computer Vision)}
+    \begin{itemize}
+        \item Giúp máy tính ``nhìn'' và ``hiểu'' thông qua camera.
+        \item Lộ trình chuyển hóa:
+        \begin{center}
+            \textbf{Ảnh thô $\rightarrow$ Tiền xử lý $\rightarrow$ Trích chọn đặc trưng $\rightarrow$ Nhận dạng}
+        \end{center}
+        \item \textbf{Biểu diễn ảnh số:} Ảnh là mảng đa chiều (Arrays), mô hình camera vật lý.
+    \end{itemize}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{example-image} % TODO: Thay ảnh CV bằng đường dẫn: D:\DongAUniversity\TÀI LIỆU DẠY HỌC_2024-2025\Trí tuệ nhân tạo_UDA_2025\webTTNT_2026\...
+        \caption{Ví dụ về xử lý Thị giác máy tính}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Tiền xử lý và Phân đoạn ảnh}
+    \begin{itemize}
+        \item \textbf{Tiền xử lý \& Lọc nhiễu:}
+        \begin{itemize}
+            \item Phép toán điểm ảnh, Cân bằng Histogram.
+            \item Bộ lọc Gaussian (Làm mờ), Sobel, Laplace (Phát hiện biên).
+        \end{itemize}
+        \item \textbf{Phân đoạn ảnh:}
+        \begin{itemize}
+            \item Phân tách nền bằng ngưỡng Otsu.
+            \item Thuật toán Watershed (phân tách vật thể chồng lấn).
+            \item Thuật toán tương tác GrabCut.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Phát hiện đặc trưng và Phân lớp cổ điển}
+    \begin{itemize}
+        \item \textbf{Phát hiện \& Mô tả đặc trưng:}
+        \begin{itemize}
+            \item Trích xuất điểm bất biến: Harris Corner, SIFT, SURF, ORB.
+            \item Mô tả cấu trúc: HOG, LBP.
+            \item So khớp (Feature Matching): KNN, FLANN.
+        \end{itemize}
+        \item \textbf{Phân lớp ảnh cổ điển:}
+        \begin{itemize}
+            \item Kết hợp Bag-of-Visual-Words với các bộ phân lớp mạnh (SVM, KNN) để nhận diện vật thể.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Chuyển dịch sang Deep Learning trong CV}
+    \begin{itemize}
+        \item Mạng tích chập CNN (Convolutional Neural Networks).
+        \item Kỹ thuật \textbf{Transfer Learning} với các mạng nổi tiếng (AlexNet, VGG16, ResNet).
+        \item \textbf{Phát hiện \& Đánh giá chuyển động:}
+        \begin{itemize}
+            \item Vẽ khung bao (Bounding Box) thời gian thực: YOLO, SSD, Faster R-CNN.
+            \item Phép biến đổi Homography.
+            \item Tính toán Luồng quang (Optical Flow) bằng thuật toán Lucas-Kanade.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Sợi dây liên kết: Tại sao cần Học sâu?}
+    \begin{itemize}
+        \item \textbf{Câu hỏi:} Nếu đã có SIFT, HOG (ảnh), mạng Bayes (văn bản)... tại sao lại cần DL?
+        \item \textbf{Bản chất vấn đề cũ:} Con người phải tự thiết kế bộ trích chọn đặc trưng $\rightarrow$ Tốn công, không tối ưu cho dữ liệu khổng lồ.
+        \item \textbf{Giải pháp Học sâu:} \textbf{Học biểu diễn (Representation Learning)}.
+        \begin{itemize}
+            \item Mô hình \textit{tự động} bóc tách các lớp biểu diễn từ thô đến tinh.
+            \item Sử dụng các bộ lọc tham số được tối ưu bằng toán học (Lan truyền ngược).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% ==============================
+\section{Phần 2: Hành trình Chinh phục Học sâu (Chương 1-12)}
+% ==============================
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}\Large PHẦN 2: HÀNH TRÌNH CHINH PHỤC HỌC SÂU
+    \end{beamercolorbox}
+    \vspace{0.5cm}
+    \textit{Chương 1 - 12: Từ cơ bản Keras đến các mạng tích chập CV tiên tiến.}
+    \vfill
+\end{frame}
+
+\begin{frame}{Phần 2: Mục tiêu và Lộ trình}
+    \begin{itemize}
+        \item \textbf{Mục tiêu:} Chuyển hóa tư duy từ Học máy cổ điển sang Học sâu thông qua thư viện Keras 3.
+        \item \textbf{Cấu trúc (4 Cột mốc):}
+        \begin{enumerate}
+            \item Từ Toán học đến Code (Ch 1-3)
+            \item Lập trình dự án \& Kiểm soát Overfitting (Ch 4-7)
+            \item Vén màn hộp đen của CNNs (Ch 8-10)
+            \item Thế giới Thị giác nâng cao (Ch 11-12)
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 1: Xây dựng nền móng (Ch 1-3)}
+    \begin{itemize}
+        \item \textbf{Chương 1: Học sâu là gì?}
+        \begin{itemize}
+            \item \textit{Sự dịch chuyển biểu diễn:} Lập trình cổ điển (nhập luật) vs ML (tự tìm luật) vs DL (tự học biểu diễn đa tầng).
+            \item Cảnh báo bong bóng truyền thông, khẳng định giá trị thực của mạng nơ-ron.
+        \end{itemize}
+        \item \textbf{Chương 2: Các khối toán học}
+        \begin{itemize}
+            \item \textbf{Tensors:} Scalars, Vectors, Matrices.
+            \item \textbf{Tensor Operations:} Cộng, Broadcasting, Dot product, Reshaping.
+            \item \textbf{Động cơ Tối ưu hóa:} Gradient, SGD, Backpropagation (Tự code vòng lặp từ đầu).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hệ sinh thái Frameworks (Chương 3)}
+    \begin{itemize}
+        \item \textbf{TensorFlow, PyTorch, JAX:}
+        \begin{itemize}
+            \item TensorFlow: Mạnh về deploy công nghiệp.
+            \item PyTorch: Tiêu chuẩn học thuật (Hugging Face).
+            \item JAX: Hiệu năng cao cho tính toán khoa học.
+        \end{itemize}
+        \item \textbf{Keras 3 - Kẻ thống nhất:}
+        \begin{itemize}
+            \item Giao diện API cấp cao chạy mượt trên cả 3 backend.
+            \item Khái niệm: Lớp (Layers), Mô hình, Compile (Loss, Optimizer), fit().
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 2: Thực chiến Dự án \& Quy trình chuẩn (Ch 4-7)}
+    \begin{itemize}
+        \item \textbf{Chương 4: Phân lớp \& Hồi quy (Dữ liệu Vector)}
+        \begin{itemize}
+            \item \textit{Phân loại nhị phân (IMDb):} Cấu hình ngõ ra Sigmoid + Binary Crossentropy.
+            \item \textit{Phân loại đa lớp (Reuters):} Ngõ ra Softmax + Categorical Crossentropy.
+            \item \textit{Hồi quy (California Housing):} Không có hàm kích hoạt cuối, dùng MSE \& K-fold.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Chinh phục Tổng quát hóa (Chương 5)}
+    \begin{itemize}
+        \item \textbf{Optimization vs Generalization:}
+        \begin{itemize}
+            \item Độ chính xác 100\% trên tập train thường là dấu hiệu của Overfitting thảm họa.
+        \end{itemize}
+        \item \textbf{Đánh giá mô hình:} Tách biệt Training, Validation, Test. Mốc baseline.
+        \item \textbf{Vũ khí chống Overfitting:}
+        \begin{itemize}
+            \item Regularization (L1/L2)
+            \item Early stopping
+            \item \textbf{Dropout} (Xóa ngẫu nhiên các nơ-ron).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Quy trình Học máy \& Keras chuyên sâu (Ch 6-7)}
+    \begin{itemize}
+        \item \textbf{Chương 6: Universal Workflow}
+        \begin{itemize}
+            \item 1. Định nghĩa bài toán \& thước đo.
+            \item 2. Phát triển mô hình: Xây baseline $\rightarrow$ Overfit cố ý $\rightarrow$ Tối ưu hóa (Regularization).
+            \item 3. Triển khai (Deploy): Đóng gói, đẩy lên server/mobile, giám sát data drift.
+        \end{itemize}
+        \item \textbf{Chương 7: Đi sâu vào Keras}
+        \begin{itemize}
+            \item 3 API: Sequential, Functional (Mạng đồ thị phức tạp), Subclassing.
+            \item Callbacks, TensorBoard, Custom Training Loops.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 3: Kỷ nguyên CV - Sự tích chập (Ch 8-10)}
+    \begin{center}
+        \textbf{Ảnh thô $\rightarrow$ Tích chập/Pooling $\rightarrow$ Đặc trưng hình học $\rightarrow$ Phân lớp}
+    \end{center}
+    \begin{itemize}
+        \item \textbf{Chương 8: Giới thiệu ConvNets}
+        \begin{itemize}
+            \item \textit{Tích chập (Convolution):} Tự động học cửa sổ trượt (kernels) phát hiện đặc trưng (tính bất biến dịch chuyển).
+            \item \textit{Max-pooling:} Giảm chiều, tăng trường thụ cảm (receptive field).
+            \item \textit{Dữ liệu nhỏ:} Data Augmentation, Feature Extraction, Fine-tuning.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Kiến trúc \& Trực quan hóa ConvNet (Ch 9-10)}
+    \begin{itemize}
+        \item \textbf{Chương 9: Mẫu thiết kế (Patterns)}
+        \begin{itemize}
+            \item \textit{Residual connections:} Tạo đường tắt tránh triệt tiêu gradient.
+            \item \textit{Batch normalization:} Ổn định và tăng tốc độ hội tụ.
+            \item \textit{Depthwise separable convolutions:} Tách tích chập không gian \& kênh, giảm tham số (MobileNet).
+        \end{itemize}
+        \item \textbf{Chương 10: Xóa bỏ ``hộp đen''}
+        \begin{itemize}
+            \item Trực quan hóa các kích hoạt trung gian (Intermediate activations).
+            \item Trực quan hóa bộ lọc (Filters visualization) bằng Gradient Ascent.
+            \item \textbf{Grad-CAM:} Tạo biểu đồ nhiệt chỉ ra vùng pixel quyết định kết quả.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 4: Thị giác nâng cao (Ch 11-12)}
+    \begin{itemize}
+        \item \textbf{Chương 11: Phân đoạn ảnh (Image Segmentation)}
+        \begin{itemize}
+            \item Bóc tách ranh giới pixel của từng vật thể.
+            \item \textit{Encoder-Decoder:} Nén ngữ cảnh $\rightarrow$ Giải nén (Conv2DTranspose) gán nhãn pixel.
+            \item \textit{Segment Anything Model (SAM):} Mô hình nền tảng, điều khiển bằng prompt.
+        \end{itemize}
+        \item \textbf{Chương 12: Phát hiện đối tượng (Object Detection)}
+        \begin{itemize}
+            \item Vẽ khung bao (Bounding boxes).
+            \item \textit{Single-stage (YOLO, SSD)} vs \textit{Two-stage (R-CNN)}.
+            \item Thực hành tự xây dựng YOLO, dự đoán xác suất qua các grid cells.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Chuyển tiếp sang Phần 3}
+    \begin{itemize}
+        \item Cuối Chương 12: Làm chủ \textbf{Dữ liệu Vector} (Ch 4-7) \& \textbf{Ảnh tĩnh} (Ch 8-12).
+        \item Nhưng thế giới thực vận hành theo \textbf{dòng chảy thời gian} (tài chính, IoT) và \textbf{ngôn ngữ tự nhiên}.
+        \item Đã đến lúc chuyển sang Dữ liệu tuần tự (RNN, Transformers) và AI Tạo sinh.
+    \end{itemize}
+\end{frame}
+
+% ==============================
+\section{Phần 3: Dòng chảy Thời gian, NLP \& AI Tạo sinh}
+% ==============================
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}\Large PHẦN 3: DÒNG CHẢY THỜI GIAN, NLP \& AI TẠO SINH
+    \end{beamercolorbox}
+    \vspace{0.5cm}
+    \textit{Chương 13 - 20: LSTM, Attention, Transformers, LLMs và Diffusion.}
+    \vfill
+\end{frame}
+
+\begin{frame}{Phần 3: Mục tiêu và Lộ trình}
+    \begin{itemize}
+        \item \textbf{Mục tiêu:} Tiếp cận những kiến trúc hiện đại nhất định hình cách mạng AI.
+        \item \textbf{Cấu trúc (4 Cột mốc):}
+        \begin{enumerate}
+            \setcounter{enumi}{4}
+            \item Dòng chảy Thời gian \& Chữ viết (Ch 13-14)
+            \item Kỷ nguyên Transformers \& GPT (Ch 15-16)
+            \item Thế giới AI Tạo ảnh (Ch 17)
+            \item Đưa AI ra Thực tế \& Tương lai (Ch 18-20)
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 5: Dòng chảy Thời gian \& Chữ viết (Ch 13-14)}
+    \begin{itemize}
+        \item \textbf{Chương 13: Dự báo chuỗi thời gian}
+        \begin{itemize}
+            \item Tính tuần tự và phụ thuộc thời gian (ví dụ: thời tiết).
+            \item \textbf{Mạng RNNs:} Đặc biệt là \textbf{LSTM} và \textbf{GRU} — cấu trúc cổng kiểm soát giúp lưu giữ thông tin dài hạn.
+            \item Dropout chuyên dụng cho dữ liệu chuỗi.
+        \end{itemize}
+        \item \textbf{Chương 14: Phân lớp văn bản}
+        \begin{itemize}
+            \item \textbf{Tokenization:} Biến ngôn ngữ thành số học.
+            \item Bag-of-words (thống kê) vs Sequence models (ngữ cảnh).
+            \item \textbf{Word Embeddings (Nhúng từ):} Không gian hình học của ngữ nghĩa (khoảng cách vector tương đồng nghĩa).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 6: Kỷ nguyên Transformers \& GPT (Ch 15-16)}
+    \begin{itemize}
+        \item \textbf{Chương 15: Mô hình ngôn ngữ \& Transformer}
+        \begin{itemize}
+            \item Bản chất mô hình ngôn ngữ: Dự đoán từ tiếp theo.
+            \item \textbf{Cơ chế Self-Attention (Tự chú ý):} Nhìn vào toàn bộ câu để bắt ngữ cảnh cùng một lúc (thay thế RNNs).
+            \item Kiến trúc Transformer: Encoder, Decoder, Positional embedding.
+        \end{itemize}
+        \item \textbf{Chương 16: Sinh văn bản (Text Generation)}
+        \begin{itemize}
+            \item Huấn luyện mini-GPT từ đầu (Decoder-only).
+            \item \textbf{Chiến lược lấy mẫu:} Greedy, Random, Top-K (Tạo sinh tự nhiên, không lặp).
+            \item Tinh chỉnh chỉ dẫn (Instruction fine-tuning) \& RLHF.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 7: Thế giới Mê hoặc của AI Tạo ảnh (Ch 17)}
+    \begin{itemize}
+        \item \textbf{Không gian tiềm ẩn (Latent spaces):}
+        \begin{itemize}
+            \item Nén ảnh thành vector, biến đổi tọa độ để thay đổi thuộc tính (thêm kính, đổi nụ cười).
+        \end{itemize}
+        \item \textbf{VAEs (Variational Autoencoders):}
+        \begin{itemize}
+            \item Mã hóa thành phân phối xác suất, giải mã sinh ảnh mới.
+        \end{itemize}
+        \item \textbf{Diffusion models (Mô hình Khuếch tán):}
+        \begin{itemize}
+            \item Phép thuật của Midjourney, Stable Diffusion.
+            \item Học cách loại bỏ nhiễu (denoising) từng bước từ nhiễu hạt hoàn toàn dựa trên Text-to-image.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cột mốc 8: Nâng cấp Chuẩn Sản xuất (Ch 18-20)}
+    \begin{itemize}
+        \item \textbf{Chương 18: Kỹ thuật thực chiến}
+        \begin{itemize}
+            \item Tối ưu hóa siêu tham số bằng \textbf{KerasTuner}.
+            \item Kết hợp mô hình (Ensembling), Huấn luyện phân tán, Mixed-precision.
+            \item Lượng tử hóa (Quantization) cho thiết bị yếu.
+        \end{itemize}
+        \item \textbf{Chương 19: Tương lai của AI}
+        \begin{itemize}
+            \item Hạn chế: Mạng nơ-ron thực chất là Nội suy (Interpolation), yếu về suy luận logic (Extrapolation).
+            \item Hướng mới: ARC-AGI, Tổng hợp chương trình (Program Synthesis).
+        \end{itemize}
+        \item \textbf{Chương 20: Tổng kết hành trình}
+        \begin{itemize}
+            \item Liên kết hệ thống: Dense $\leftrightarrow$ ConvNets $\leftrightarrow$ RNNs $\leftrightarrow$ Transformers.
+            \item Học suốt đời: arXiv, Kaggle.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Kết luận: Khởi hành}
+    \begin{itemize}
+        \item \textbf{1. Niềm tin nền tảng:} Các em đã nắm 70\% gốc rễ từ AI, ML, CV.
+        \item \textbf{2. Hành động thực chiến:} Làm chủ Keras 3 \& CV sâu sắc.
+        \item \textbf{3. Mở rộng tầm nhìn:} Đỉnh cao công nghệ (LLMs, Diffusion).
+        \item Sự nghiệp kỹ sư AI bắt đầu từ hôm nay. Chúc các em học tập hiệu quả!
+    \end{itemize}
+\end{frame}
+
+\end{document}
