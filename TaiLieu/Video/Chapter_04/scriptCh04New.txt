@@ -1,0 +1,141 @@
+Slide 1: Học Sâu (Deep Learning) - Chương 4: Bắt đầu với Mạng Nơ-ron (Phân loại và Hồi quy)
+Người 1: Chào các em sinh viên. Hôm nay chúng ta bước sang Chương bốn. Ở chương này, chúng ta sẽ ứng dụng tất cả những lý thuyết về Tensor và Keras vào ba bài toán kinh điển nhất của Học sâu: Phân loại nhị phân, Phân loại đa lớp, và Hồi quy vô hướng.
+Người 2: Dạ chào thầy. Vậy là hôm nay chúng ta sẽ được lập trình giải quyết các bài toán thực tế luôn phải không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng vậy. Nội dung chương có bốn phần. Phần đầu tiên, ta thống nhất các thuật ngữ cốt lõi. Sau đó, ta lần lượt đi vào ba bài toán thực hành: Phân loại tình cảm bình luận phim A E Em Đi Bi (IMDb); Phân loại chủ đề tin tức Reuters; và Dự đoán giá nhà Boston.
+Người 2: Cấu trúc rất rõ ràng thưa thầy. Em rất mong chờ phần dự đoán giá nhà.
+
+Slide 3: Khái niệm Cơ bản
+Người 1: Trước tiên, ta cần thống nhất thuật ngữ. Mẫu (Sample) là một điểm dữ liệu đầu vào, ví dụ một bức ảnh. Mục tiêu (Target) là kết quả chuẩn xác kỳ vọng. Dự đoán (Prediction) là kết quả đầu ra thực tế từ mô hình của các em.
+Người 2: Và Giá trị mất mát (Loss value) chính là khoảng cách đo lường độ chênh lệch giữa cái Dự đoán và cái Mục tiêu đúng không thầy?
+Người 1: Chính xác.
+
+Slide 4: Thuật ngữ về Nhãn (Labels) & Lô (Batches)
+Người 1: Tiếp theo, Lớp (Class) là danh sách các danh mục khả dĩ của bài toán, ví dụ phân loại Chó và Mèo thì có hai Lớp. Nhãn (Label) là một danh mục cụ thể được gán cho một Mẫu. Sự thật gốc (Ground-truth) là toàn bộ bộ Nhãn do con người đánh dấu chuẩn xác.
+Người 2: Thầy nhắc đến khái niệm Lô, hay Mi-ni bát (Mini-batch) là tập hợp nhỏ các mẫu được xử lý cùng lúc để tính đạo hàm. Thường kích thước là luỹ thừa của hai để tối ưu bộ nhớ cho đồ họa vi tính GPU đúng không ạ?
+Người 1: Đúng vậy.
+
+Slide 5: Phân loại các bài toán Học máy cơ bản
+Người 1: Dữ liệu dạng bảng véc-tơ thường gặp ba bài toán chính. Một là Phân loại nhị phân (Binary): phân loại đầu vào thành hai nhóm độc quyền. Hai là Phân loại đa lớp (Multiclass): phân thành nhiều hơn hai nhóm. Nếu mỗi mẫu chỉ thuộc một danh mục, ta gọi là Đơn nhãn đa lớp.
+Người 2: Bài toán thứ ba là Hồi quy vô hướng (Scalar Regression). Thay vì đưa ra một danh mục, thì kết quả trả về là dự đoán một giá trị mục tiêu liên tục như giá nhà, nhiệt độ phải không ạ?
+
+Slide 6: Chuẩn bị dữ liệu (Data Preprocessing)
+Người 1: Điểm cực kỳ quan trọng: Mạng nơ-ron không nhận dữ liệu thô như chuỗi văn bản có độ dài khác nhau. Ta phải biến chúng thành các Tensor. Giải pháp thường dùng là Mã hóa đa điểm (Multi-hot Encoding).
+Người 2: Nhìn sơ đồ này em có thể hiểu. Nó biến danh sách thành các vector 0 và 1. Ví dụ mảng đầu vào có số tám và số năm, ta sẽ tạo ra một véc-tơ toàn số không, ngoại trừ chỉ số 5 và 8 là 1.
+
+Slide 7: Mã hóa đa điểm (Mã Code)
+Người 1: Chính xác. Và đây là đoạn mã Python thực hiện việc đó. Ta định nghĩa hàm Mã hóa đa điểm bằng cách tạo một ma trận toàn số không với thư viện Numpy, số hàng là độ dài danh sách văn bản và số cột là số từ vựng.
+Người 2: Dạ vâng, sau đó dùng một vòng lặp duyệt qua từng mảng, và gán giá trị 1 chấm 0 tại các vị trí từ vựng xuất hiện. Việc này khá đơn giản.
+
+Slide 8: Bài toán Đánh giá Cảm xúc (IMDb Dataset)
+Người 1: Bắt đầu với bài toán số một: Phân loại nhị phân. Tập dữ liệu là năm mươi ngàn bài bình luận phim của trang A E Em Đi Bi, chia đều cho train và test. Mục tiêu là đánh giá xem bình luận đó là Tích cực, nhãn một, hay Tiêu cực, nhãn không.
+Người 2: Ở đây từ ngữ được mã hóa thành số nguyên và thầy giới hạn chỉ giữ lại mười ngàn từ xuất hiện phổ biến nhất để loại bỏ những từ quá hiếm đúng không ạ?
+Người 1: Chính xác.
+
+Slide 9: Tải và Khám phá tập dữ liệu IMDb
+Người 1: Dữ liệu đã được Keras mã hóa sẵn. Hàm lốt đa-ta (load_data) trả về các mẫu dưới dạng chuỗi số nguyên. Ta không phải xử lý văn bản thô từ đầu.
+Người 2: Nhìn vào kết quả, mẫu đầu tiên có nhãn là một, tức là bài đánh giá tích cực.
+
+Slide 10: Chuẩn bị Dữ liệu (Vector hóa)
+Người 1: Tuy nhiên chuỗi số nguyên này có độ dài thay đổi, ta không thể đưa trực tiếp vào mạng Nơ-ron. Ta gọi hàm Mã hóa đa điểm vừa viết ở trên để biến toàn bộ tập đầu vào thành véc-tơ mười ngàn chiều.
+Người 2: Với Nhãn, vì nó đã là số nguyên 0 hoặc 1, ta chỉ cần ép kiểu nó sang số thực ép ba mươi hai (float32) là xong.
+
+Slide 11: Kiến trúc Mạng Nơ-ron 3 Lớp
+Người 1: Giờ ta xây dựng mô hình. Mạng có cấu trúc gồm hai lớp ẩn, mỗi lớp mười sáu nơ-ron dùng để trích xuất đặc trưng và phân tích quan hệ phức tạp.
+Người 2: Một lớp đầu ra có đúng một Nơ-ron. Nó sẽ đóng vai trò tổng hợp kết quả để dự đoán xác suất vô hướng cho bài toán.
+
+Slide 12: Định nghĩa Mô hình trong Keras
+Người 1: Ta triển khai kiến trúc đó bằng Keras xê-quen-xô (Sequential) để chồng các lớp liên tiếp nhau. Ta gọi hai lớp Dense (Đen-x) mười sáu nơ-ron, đi kèm một hàm kích hoạt phi tuyến tính là Rê-lu (relu). Lớp đầu ra một nơ-ron dùng hàm xích-moi (sigmoid).
+Người 2: Đoạn mã rất dễ hiểu và thể hiện đúng như cấu trúc chúng ta đã vẽ.
+
+Slide 13: Hàm kích hoạt (Activation): ReLU
+Người 1: Ta đi sâu vào cơ chế của Rê-lu. Hàm bằng Mắc của không và ích. Nó loại bỏ giá trị âm bằng cách trả về 0, và giữ nguyên giá trị dương.
+Người 2: Vai trò cốt lõi của nó là tạo tính phi tuyến đúng không thưa thầy?
+Người 1: Đúng vậy. Nếu không có hàm kích hoạt phi tuyến, mạng nhiều lớp cũng chỉ tương đương một lớp tuyến tính, không thể giải quyết bài toán phức tạp.
+
+Slide 14: Lớp Output: Hàm Sigmoid
+Người 1: Ở đầu ra, ta dùng hàm Xích-moi (Sigmoid). Đầu ra của mạng có thể là số thực bất kỳ từ âm vô cùng đến dương vô cùng, hàm này có nhiệm vụ ép mọi giá trị đó về miền xác suất từ không đến một.
+Người 2: A, như vậy nếu mô hình in ra kết quả không phẩy chín, tức là nó có chín mươi phần trăm tự tin rằng đây là bình luận Tích cực.
+
+Slide 15: Biên dịch, Đánh giá và Hiện tượng Overfitting
+Người 1: Giờ ta biên dịch mô hình với Hàm mất mát bai-nơ-ri cờ-rót én-tờ-rô-pi. Ta huấn luyện hai mươi vòng lặp (epochs). Cùng nhìn đồ thị Loss. Training Loss nét đứt liên tục giảm chứng tỏ đang học rất tốt. Nhưng Validation Loss nét liền thì giảm đến vòng bốn rồi đột ngột tăng lại.
+Người 2: Hiện tượng này chính là Quá khớp (Overfitting). Mô hình học thuộc lòng dữ liệu train nhưng không có khả năng tổng quát hóa dữ liệu chưa từng thấy.
+
+Slide 16: Đánh giá Huấn luyện: Biểu đồ Accuracy
+Người 1: Hiện tượng này cũng thể hiện rõ trên biểu đồ Accuracy. Training Accuracy tiến sát mức hoàn hảo một trăm phần trăm. Nhưng Validation Accuracy chỉ đạt đỉnh khoảng tám mươi tám phần trăm ngay tại vòng 4, sau đó giảm dần.
+Người 2: Giải pháp là ta sẽ áp dụng Dừng sớm (Early Stopping) bằng cách huấn luyện lại mô hình mới và chốt lại tại vòng số bốn để lấy kết quả tối ưu nhất.
+
+Slide 17: Dự đoán Dữ liệu Mới (Predictions)
+Người 1: Đúng thế. Sau khi có mô hình, ta sử dụng hàm p-rề-díc (predict) để đánh giá dữ liệu mới ngoài thực tế.
+Người 2: Em thấy có những mẫu đạt cực kỳ tự tin như không phẩy chín chín là Rất tích cực, hoặc không phẩy không hai là Rất tiêu cực. Nhưng cũng có mẫu lưỡng lự ở không phẩy sáu lăm, chưa rõ ràng và cần thêm dữ liệu để tinh chỉnh.
+
+Slide 18: Bài toán Reuters: Phân loại Đa lớp (Multiclass Classification)
+Người 1: Chúng ta sang bài toán thứ hai: Phân loại Đa lớp với bộ dữ liệu Reuters. Mục tiêu là phân loại các bản tin của hãng thông tấn Reuters vào bốn mươi sáu chủ đề khác nhau. Mỗi bài báo chỉ thuộc duy nhất một chủ đề.
+Người 2: Về tiền xử lý dữ liệu đầu vào text, mình vẫn sử dụng Mã hóa đa điểm tương tự như bài toán A E Em Đi Bi phải không ạ?
+Người 1: Chính xác.
+
+Slide 19: Mã hóa Nhãn: One-Hot Encoding
+Người 1: Nhưng Nhãn thì khác. Khác với IMDb chỉ có hai nhãn nguyên, Reuters có tới bốn mươi sáu chủ đề. Cần biến đổi mảng nhãn thành dạng véc-tơ phân loại bằng hàm chu ca-tê-gô-ri-cồ (to_categorical).
+Người 2: Ví dụ, nhãn số ba sẽ được chuyển thành một véc-tơ gồm bốn mươi lăm số 0 và duy nhất số 1 tại vị trí có chỉ số 3.
+
+Slide 20: Kiến trúc Mô hình & Nút thắt Cổ chai Thông tin
+Người 1: Về kiến trúc, lớp Đen-x mười sáu Nơ-ron là quá nhỏ để truyền tải bốn mươi sáu chủ đề. Nó sẽ gây ra hiện tượng Thắt cổ chai thông tin (Information Bottleneck) làm mất mát thông tin vĩnh viễn. Bắt buộc phải tăng lên sáu mươi tư Nơ-ron.
+Người 2: Ở lớp đầu ra, ta sẽ dùng bốn mươi sáu Nơ-ron đại diện cho các chủ đề, kết hợp với hàm kích hoạt Sốp-mác (Softmax) ạ.
+
+Slide 21: Biên dịch Mô hình Đa lớp
+Người 1: Đúng. Hàm Sốp-mác sẽ xuất ra một phân phối xác suất gồm bốn mươi sáu chiều, đảm bảo tổng xác suất luôn bằng một.
+Người 2: Do đó hàm mất mát cũng đổi thành Ca-tê-gô-ri-cồ cờ-rót én-tờ-rô-pi (categorical_crossentropy) chuyên dụng để đo lường khoảng cách giữa hai phân phối xác suất đa chiều.
+
+Slide 22: Hàm mất mát & Biểu đồ Loss
+Người 1: Chúng ta xem xét biểu đồ Loss. Hàm Loss đo lường sự sai lệch giữa dự đoán và thực tế. Hiện tượng Overfitting vẫn xảy ra. Điểm bùng phát nằm ở vòng lặp thứ chín, khi Loss trên tập validation giảm dần nhưng sau đó lại đảo chiều tăng mạnh.
+Người 2: Lại là Quá khớp. Ta lại phải cắt quá trình học ở điểm vòng thứ chín để lấy mô hình tốt nhất.
+
+Slide 23: Đánh giá Đỉnh Accuracy
+Người 1: Ở biểu đồ Độ chính xác, Đỉnh Accuracy đạt cao nhất khoảng tám mươi phần trăm tại vòng lặp thứ chín, trước khi bị quá khớp.
+Người 2: Đạt mức tám mươi phần trăm trong bài toán bốn mươi sáu lớp là một kết quả tuyệt vời. Vì theo đường cơ sở, xác suất chọn ngẫu nhiên đoán bừa chỉ được khoảng mười chín phần trăm mà thôi.
+
+Slide 24: Nhưng 80% đã là con số thực?
+Người 1: Khoan đã, thực tế tin tức là một bài báo có thể liên quan tới cả 2, 3 chủ đề đan xen. Do đó, ta định nghĩa Top-3: Đo lường xem tỷ lệ nhãn thật có nằm trong ba phán đoán có xác suất cao nhất hay không.
+Người 2: Giá trị cốt lõi là nếu dự đoán đúng xếp thứ hai hoặc ba, đó vẫn là thông tin có giá trị. Và chỉ số Top-3 này có thể lên tới hơn chín mươi phần trăm!
+
+Slide 25: Bài toán Boston Housing (Hồi quy Vô hướng - Scalar Regression)
+Người 1: Giờ sang bài toán cuối cùng: Bài toán Boston Housing, Hồi quy vô hướng. Dự đoán giá nhà trung bình tại vùng ngoại ô Boston thập niên 1970 dựa trên mười ba đặc trưng. Bản chất đầu ra KHÔNG phải xác suất hay lớp, mà là một con số vô hướng liên tục.
+Người 2: Thách thức lớn nhất là tập dữ liệu cực kỳ nhỏ, chỉ có năm trăm lẻ sáu mẫu. 
+
+Slide 26: Tiền xử lý: Chuẩn hóa Dữ liệu (Feature Scaling)
+Người 1: Các đặc trưng như tội phạm, diện tích có thang đo hoàn toàn khác nhau. Đưa trực tiếp vào mạng nơ-ron sẽ gây khó khăn cho việc hội tụ trọng số. Tiền xử lý bắt buộc là Chuẩn hóa Dữ liệu (Normalization).
+Người 2: Theo công thức chuẩn hóa, ta sẽ trừ đi giá trị trung bình và chia cho độ lệch chuẩn. Và chú ý là cần phải chuẩn hóa tập test theo trung bình của tập train.
+
+Slide 27: Xây dựng Mạng lưới Hồi quy
+Người 1: Xây dựng mạng lưới hồi quy: do dữ liệu quá ít, mạng nơ-ron phải nhỏ với hai lớp ẩn sáu mươi tư units để tránh Overfitting mạnh.
+Người 2: Và Lớp Linear đầu ra mang kích thước 1, KHÔNG có hàm kích hoạt. Loss chuyển để tính lỗi hồi quy là MSE, và dùng Metric MAE để đo Sai số tuyệt đối trung bình cho con người dễ đọc.
+
+Slide 28: Đặc thù Dữ liệu Nhỏ & K-Fold Cross-Validation
+Người 1: Với vỏn vẹn bốn trăm lẻ bốn mẫu huấn luyện, việc tách ngẫu nhiên một phần nhỏ làm tập Validation gây ra phương sai sai số lớn, phụ thuộc vào việc bốc trúng dữ liệu dễ hay khó.
+Người 2: Giải pháp là thuật toán K-Fold. Tách tập train làm K phần bằng nhau. Mỗi lần dùng 1 phần để validation, K trừ 1 phần kia để train. Kết quả cuối cùng là trung bình của K vòng chạy.
+
+Slide 29: Cài đặt K-Fold Validation
+Người 1: Mã nguồn thực thi vòng lặp tách dữ liệu thành K phần (ở đây K bằng bốn) và ghép các phần còn lại để làm tập huấn luyện. Ở mỗi vòng lặp for, ta tạo tập validation, và ghép mảng train bằng lệnh còn-kết-ti-nết (concatenate).
+Người 2: Nó sẽ train bốn lần mô hình khác nhau. Kỹ thuật này sẽ cho ra kết quả đáng tin cậy.
+
+Slide 30: Đánh giá Hiệu suất Hồi quy (MAE Plot)
+Người 1: Khác biệt Metric: Trái với Accuracy, giá trị MAE biểu thị cho sai số trung bình nên càng thấp càng tốt. Ý nghĩa thực tế: MAE bằng 0 chấm 5 tương đương mô hình dự đoán sai lệch khoảng năm trăm Đô la so với giá trị thực.
+Người 2: Đặc điểm đồ thị trực quan hóa giá trị trung bình MAE qua K-folds trên năm trăm epochs có độ rung nhiễu rất cao ở những vòng đầu tiên trước khi dần ổn định.
+
+Slide 31: Phân tích chuyên sâu: Xác định điểm dừng tối ưu trên đồ thị hồi quy
+Người 1: Phân tích chuyên sâu, ta bỏ qua mười epochs đầu tiên vì sai số quá lớn làm lệch thang đo biểu đồ. Đồng thời vẽ đường làm trơn bằng Trung bình động hàm mũ (Exponential Moving Average) để quan sát rõ hơn xu hướng học.
+Người 2: Đồ thị chạm đáy tối ưu ở khoảng vòng 120 đến 140, sau đó bắt đầu tăng vọt, thể hiện sự Overfitting trên tập dữ liệu hồi quy.
+
+Slide 32: Triển khai thực tế: Huấn luyện chung cuộc và Dự đoán
+Người 1: Sau khi xác định được vòng 130 là điểm tốt nhất, ta khởi tạo lại mô hình và huấn luyện trên toàn bộ tập dữ liệu huấn luyện với số lượng epochs đã được tối ưu hóa.
+Người 2: Đánh giá hiệu suất mô hình trên tập dữ liệu kiểm tra cho kết quả khoảng hai phẩy lăm, tức là sai lệch hai ngàn năm trăm Đô la. Và cuối cùng, sử dụng mô hình để dự đoán giá trị mục tiêu cho dữ liệu mới.
+
+Slide 33: Bảng tổng kết tra cứu nhanh cấu trúc Output
+Người 1: Khi bắt đầu dự án Học máy Vector (Bảng), hãy tuân theo bảng tra cứu nhanh này. Phân loại nhị phân: sigmoid 1 unit, loss binary_crossentropy, metric accuracy. Phân loại đa lớp: softmax N units, loss categorical_crossentropy, metric accuracy.
+Người 2: Và Hồi quy vô hướng: Output Tuyến tính (Linear), loss MSE, metric MAE. 
+
+Slide 34: Bài học cốt lõi rút ra từ Chương 4
+Người 1: Bài học cốt lõi. Dữ liệu thô luôn phải được Tiền xử lý mã hóa dạng One-hot hoặc Chuẩn hóa. Cẩn trọng Nút thắt cổ chai thông tin ở các mạng đa lớp lớn nếu chọn lớp ẩn quá nhỏ.
+Người 2: Khắc tinh Overfitting: Mạng nơ-ron LUÔN LUÔN bị quá khớp, cần theo dõi biểu đồ Loss để biết thời điểm nên Dừng sớm. Và cuối cùng, dữ liệu quá nhỏ thì dùng K-Fold Cross Validation.
+Người 1: Chính xác. Cảm ơn các em đã theo dõi bài giảng. Chương bốn kết thúc tại đây.
