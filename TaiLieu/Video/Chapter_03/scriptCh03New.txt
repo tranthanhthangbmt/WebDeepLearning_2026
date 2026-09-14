@@ -1,0 +1,156 @@
+Slide 1: Chương 3: Giới thiệu TensorFlow, PyTorch, JAX và Keras
+Người 1: Chào các em. Hôm nay chúng ta sẽ bắt đầu Chương ba: Giới thiệu TensorFlow, PyTorch, JAX và Keras. Đây là chương cực kỳ quan trọng vì nó chuyển từ lý thuyết khô khan sang các công cụ phần mềm thực tế mà các em sẽ dùng để lập trình Học sâu.
+Người 2: Dạ chào thầy. Em nghe nói lập trình AI bây giờ rất dễ vì đã có các thư viện hỗ trợ tận răng. Chắc hôm nay mình sẽ tìm hiểu những thư viện đó đúng không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng vậy. Nội dung chương ba gồm sáu phần. Chúng ta sẽ xem lịch sử phát triển của các bộ khung phần mềm hay còn gọi là Framework Học sâu. Sau đó đi sâu vào ba ông lớn: TensorFlow, PyTorch, JAX. Kế tiếp là Keras, và cuối cùng ta sẽ tự xây dựng một bộ phân loại tuyến tính từ con số không.
+Người 2: Việc tìm hiểu cả lịch sử lẫn nguyên lý hoạt động của từng Framework sẽ giúp bọn em biết nên chọn công cụ nào cho dự án sau này.
+
+Slide 3: Kỷ nguyên khởi nguyên (Trước 2009)
+Người 1: Quay lại thời trước năm hai ngàn lẻ chín, khi đó làm Học sâu là một cực hình. Các nhà nghiên cứu phải tự viết tay logic tính toán đạo hàm bằng ngôn ngữ Xi cộng cộng (C++).
+Người 2: Lúc đó GPU programming gần như bất khả thi do chưa có kiến trúc hỗ trợ tốt đúng không ạ?
+Người 1: Đúng. Năm hai ngàn lẻ sáu, NVIDIA đã ra mắt CUDA, nhưng chủ yếu phục vụ mô phỏng vật lý chứ chưa phải Machine Learning.
+
+Slide 4: Sự ra đời của các Framework đầu tiên (2009 - 2015)
+Người 1: Bước ngoặt đến vào năm hai ngàn lẻ chín với Theano. Đây là Framework đầu tiên hỗ trợ tự động tính đạo hàm (autograd) và tính toán GPU. Nó được coi là tổ tiên của mọi framework hiện đại.
+Người 2: Sau đó thì sự kiện nào làm bùng nổ các framework tiếp theo thưa thầy?
+Người 1: Đó là cuộc thi ImageNet năm hai ngàn không trăm mười hai. Nó thúc đẩy các framework như Torch 7 và Caffe. Đầu năm hai ngàn không trăm mười lăm, Keras ra mắt với tư cách là thư viện cấp cao, dễ sử dụng, được xây dựng trên nền Theano.
+
+Slide 5: Kỷ nguyên hiện đại (Cuối 2015 - Nay)
+Người 1: Cuối năm hai ngàn không trăm mười lăm, Google tung ra TensorFlow, hỗ trợ huấn luyện quy mô lớn. Ngay sau đó, cuối năm hai ngàn không trăm mười sáu, Meta (Facebook) phát triển PyTorch để đối trọng, nổi bật với tính linh hoạt (Dynamic Computation Graph).
+Người 2: Vậy còn JAX là gì ạ? Em mới nghe tên JAX dạo gần đây.
+Người 1: JAX ra đời năm hai ngàn không trăm mười tám. Nó là một hệ thống gọn nhẹ từ Google kết hợp Autograd và trình biên dịch XLA, tối ưu vô cùng mạnh mẽ cho GPU và TPU.
+
+Slide 6: Ba tính năng cốt lõi của một Framework
+Người 1: Để huấn luyện Deep Learning hiện đại, mọi framework đều phải giải quyết tốt 3 bài toán. Một là Khả năng tự động tính đạo hàm cho các hàm phức tạp. Hai là Khả năng tính toán số học tensor cực nhanh trên GPU/TPU thay vì CPU.
+Người 2: Bài toán thứ ba là khả năng phân tán tính toán trên nhiều thiết bị Multi-GPU/TPU hoặc nhiều máy tính đúng không thầy?
+Người 1: Rất chuẩn xác.
+
+Slide 7: Tương lai của hệ sinh thái Frameworks
+Người 1: Tương lai của hệ sinh thái Frameworks: Ngôn ngữ Python đang thống trị hoàn toàn. Chúng ta đang sống trong thế giới Đa-Framework: TensorFlow, PyTorch, JAX đều có chỗ đứng riêng.
+Người 2: Vậy nếu học cả ba thì sẽ rất mất thời gian. Có cách nào học một mà dùng được cả ba không ạ?
+Người 1: Giá trị của Keras 3.0 là ở đó. Giúp nhà phát triển chỉ cần viết mã một lần, có thể linh hoạt chuyển đổi backend chạy trên bất kỳ framework nào.
+
+Slide 8: Giới thiệu TensorFlow
+Người 1: Sang phần giới thiệu TensorFlow. Nó không chỉ là một thư viện, mà là một hệ sinh thái mã nguồn mở đồ sộ của Google. Hệ sinh thái Doanh nghiệp gồm TFX quản lý workflow, TF Serving triển khai API, TF Lite cho di động, và TensorFlow.js cho trình duyệt.
+Người 2: Tức là nó phù hợp cho việc đưa sản phẩm AI ra môi trường thực tế (Production-grade) đúng không ạ?
+Người 1: Chính xác.
+
+Slide 9: Tensors và Variables trong TensorFlow
+Người 1: Trong TensorFlow, Tensors là hằng số, không thể gán lại giá trị. Các em nhìn đoạn mã: hàm ti-ép chấm ones tạo ma trận toàn số một, ti-ép chấm zeros tạo ma trận không, hay tf chấm constant để tạo từ mảng.
+Người 2: Còn khởi tạo ngẫu nhiên thì mình dùng hàm ti-ép chấm random đúng không ạ? Ví dụ chuẩn hóa normal hoặc phân phối đều uniform.
+Người 1: Hoàn toàn chính xác.
+
+Slide 10: Sử dụng tf.Variable
+Người 1: Vấn đề là TensorFlow tensors là không thể gán (immutable). Nhưng để huấn luyện cập nhật trọng số, ta phải dùng tf chấm Variable.
+Người 2: Nhìn đoạn mã, em thấy khi cập nhật biến số thì mình phải dùng lệnh chấm ơ-sai (assign). Hoặc cập nhật cộng trừ thì dùng assign_add hay assign_sub.
+
+Slide 11: Toán học Tensor (Operations) trong TensorFlow
+Người 1: Về toán học Tensor, TensorFlow hỗ trợ mọi phép toán. tf chấm square là bình phương, tf chấm sqrt là căn bậc 2. Còn cộng từng phần tử (element-wise) thì dùng dấu cộng trực tiếp.
+Người 2: Còn nhân ma trận Dot product thì dùng tf chấm matmul. Muốn ghép nối thì dùng tf chấm concat với tham số axis. Cú pháp khá giống với numpy.
+
+Slide 12: Tự động tính đạo hàm với GradientTape
+Người 1: Giờ là phần quan trọng: Tự động tính đạo hàm với GradientTape. Khi dùng khối lốc GradientTape, TensorFlow sẽ theo dõi các phép toán. Sau đó gọi tape chấm gradient để tính đạo hàm.
+Người 2: Em thấy ví dụ tính đạo hàm của hàm y bằng x bình phương. Đạo hàm tại x bằng 3 trả về kết quả là 6 chấm 0. Rất trực quan.
+Người 1: Lưu ý là GradientTape mặc định chỉ theo dõi các tf chấm Variable có khả năng huấn luyện nhé.
+
+Slide 13: Đạo hàm cấp 2 với TensorFlow
+Người 1: Các em có thể lồng các GradientTape để tính đạo hàm cấp cao trong TensorFlow. Giống như đạo hàm cấp một của vị trí theo thời gian là vận tốc, đạo hàm cấp hai sẽ ra gia tốc.
+Người 2: Kỹ thuật lồng ghép inner_tape và outer_tape này rất thông minh để giải các phương trình đạo hàm phức tạp ạ.
+
+Slide 14: Biên dịch để tăng tốc (Just-In-Time Compilation)
+Người 1: Thực thi mặc định của Python khá chậm. Có thể dùng đề can a còng tf chấm function để biên dịch hàm Python thành một Đồ thị tính toán tối ưu bằng XLA (Just-In-Time Compilation).
+Người 2: Ưu điểm là cực nhanh, nhưng nhược điểm là khó sửa lỗi (debug) hơn vì mã chạy không còn là Python nguyên bản đúng không thầy?
+Người 1: Đúng vậy.
+
+Slide 15: Giới thiệu PyTorch
+Người 1: Giờ sang phần Giới thiệu PyTorch. Framework này đang thống trị mảng Nghiên cứu (Research). Hơn bảy mươi phần trăm các bài báo khoa học AI mới đều sử dụng PyTorch do sự thân thiện với lập trình viên.
+Người 2: Có phải vì tính Pythonic cao, cú pháp rất gần gũi với NumPy không ạ?
+Người 1: Đúng thế. Và quan trọng nhất là Đồ thị tính toán Động (Dynamic Computation Graph). Đồ thị được xây dựng on-the-fly, cực dễ chèn các lệnh print để debug.
+
+Slide 16: Tensors, PyTorch, JAX, Keras
+Người 1: Qua đó, ta sẽ cùng khám phá và so sánh cách hoạt động của ba Framework Deep Learning Hiện đại này.
+Người 2: Dạ vâng, em rất háo hức muốn xem cú pháp của chúng khác biệt ra sao.
+
+Slide 17: Tensors trong PyTorch
+Người 1: Bắt đầu với Tensors trong PyTorch. Cách khởi tạo cơ bản rất giống Numpy. Thay vì dùng ti-ép thì ta dùng torch. Ví dụ torch chấm ones, torch chấm zeros, torch chấm tensor.
+Người 2: Riêng phần khởi tạo ngẫu nhiên thì dùng hàm torch chấm normal hoặc rand, cú pháp hơi khác biệt một chút ạ.
+
+Slide 18: Gán Tensor và nn.Parameter
+Người 1: Khác với TensorFlow, PyTorch Tensors có thể trực tiếp gán giá trị bằng dấu bằng. Nhưng để theo dõi đạo hàm, ta sử dụng thuộc tính requires_grad bằng True.
+Người 2: Hoặc khi viết Module, ta bọc Tensor đó vào bên trong hàm Nờ Nờ chấm Parameter (nn.Parameter) đúng không ạ?
+
+Slide 19: Tính toán Gradient bằng .backward()
+Người 1: Tính toán Gradient bằng chấm backward(). Cú pháp đạo hàm của PyTorch đơn giản hơn, không cần context manager GradientTape. Gọi backward để tính đạo hàm cho toàn bộ đồ thị.
+Người 2: Sau đó, để xem đạo hàm của kết quả theo biến x, em chỉ cần in ra x chấm grad. Cú pháp này rõ ràng và dễ nhớ hơn hẳn.
+
+Slide 20: Tổ chức code với nn.Module
+Người 1: Tổ chức code với nn chấm Module. Đây là cách thiết kế hướng đối tượng. Khởi tạo trạng thái Initialization ở hàm init, và khai báo luồng xử lý Execution hay Forward Pass ở hàm forward.
+Người 2: Cách viết này giúp mã nguồn rất gọn gàng và dễ bảo trì khi mô hình ngày càng lớn.
+
+Slide 21: Giới thiệu JAX
+Người 1: Sang phần Giới thiệu JAX. Nó là sự kết hợp của thư viện số Numpy, tính năng đạo hàm Autograd và trình biên dịch XLA. JAX cực kỳ phổ biến ở Google DeepMind, Midjourney, Anthropic do khả năng chạy cực lớn trên cụm TPU.
+Người 2: Lập trình hàm không trạng thái (Stateless) ở đây nghĩa là sao ạ?
+Người 1: Nghĩa là mọi hàm đều trong suốt (pure functions), không sử dụng biến toàn cục. Điều này giúp JAX cực kỳ an toàn khi chạy song song.
+
+Slide 22: jax.numpy và PRNG Keys
+Người 1: JAX tái tạo 99% API của Numpy thông qua jax.numpy, thường gán tên là jnp. Đặc biệt với PRNG Keys, JAX tạo số ngẫu nhiên không trạng thái. Ta phải tạo "chìa khóa" (key) để random.
+Người 2: Và để lấy random tiếp theo, phải tạo key mới bằng lệnh jax chấm random chấm split đúng không ạ?
+
+Slide 23: Gán Tensor trong JAX
+Người 1: Gán Tensor trong JAX. Giống TensorFlow, JAX tensor không thể gán trực tiếp. Các em phải dùng cú pháp chấm ết chấm xét (at[].set) để trả về một Tensor mới. Việc gán bằng dấu bằng sẽ báo lỗi.
+Người 2: Việc liên tục tạo bản sao như vậy là để tuân thủ tính phi trạng thái của ngôn ngữ hàm ạ.
+
+Slide 24: Tính toán Gradient bằng jax.grad()
+Người 1: Tính toán Gradient bằng jax chấm grad(). JAX sử dụng phương pháp "siêu lập trình" (hàm trả về hàm) để tính đạo hàm. Truyền hàm loss qua jax.grad để lấy hàm tính đạo hàm là grad_fn.
+Người 2: Sau đó, gọi hàm grad_fn với dữ liệu đầu vào để in ra kết quả đạo hàm. Rất tuyệt vời.
+
+Slide 25: Trả về cả Loss và Gradient
+Người 1: Trả về cả Loss và Gradient. Thực tế, ta thường cần cả giá trị Loss và cấu trúc Gradient. JAX cung cấp hàm value_and_grad() để giải quyết việc này.
+Người 2: Nó sẽ tính toán đồng thời và trả về cả biến loss cùng với grads để cập nhật mô hình.
+
+Slide 26: Biên dịch hàm cực nhanh với @jax.jit
+Người 1: Biên dịch hàm cực nhanh với a còng jax chấm jit (@jax.jit). JAX biên dịch hàm này thành mã máy XLA siêu tốc.
+Người 2: Nhưng ràng buộc là hàm phải phi trạng thái, không sửa đổi biến ngoài, và cập nhật tensor thì phải trả về tensor đó ạ.
+
+Slide 27: Keras: High-Level API cho Deep Learning
+Người 1: Sang Keras: High-Level API cho Deep Learning. Keras ra đời năm 2015 để giúp lập trình Deep Learning giống như chơi "lắp ghép LEGO". Nó che đi toàn bộ sự phức tạp của Low-level API.
+Người 2: Nó uy tín đến mức được sử dụng bởi Google, Netflix, Uber, Waymo trong môi trường công nghiệp thực tế.
+
+Slide 28: Kiến trúc đa Backend của Keras
+Người 1: Nhìn vào biểu đồ Kiến trúc đa Backend của Keras 3.0, Keras nằm trên cùng cho việc phát triển mô hình (layers, models, optimizers). Tầng giữa là Backend framework: TensorFlow, PyTorch, JAX để thao tác tensor và đạo hàm tự động.
+Người 2: Cuối cùng, tầng dưới cùng là phần cứng Hardware execution gồm CPU, GPU hoặc TPU để thực thi. 
+
+Slide 29: Layer cơ sở: Thiết kế theo hướng Đối tượng
+Người 1: Layer cơ sở được thiết kế theo hướng Đối tượng. Trong Keras, Layer là khối xây dựng cơ bản, gồm trạng thái (weights) và tính toán (forward pass). Hàm build được gọi một lần duy nhất, hàm call để thực thi tính toán.
+Người 2: Lợi ích của hàm build là cho phép Keras tự động suy diễn hình dạng (shape inference). Bạn không cần quan tâm lớp trước truyền vào bao nhiêu unit, mạng Sequential sẽ tự động khớp.
+
+Slide 30: Ôn tập toán học: Đường thẳng và Siêu phẳng
+Người 1: Ôn tập toán học: Đường thẳng và Siêu phẳng. Mục tiêu là xây dựng bộ phân loại tuyến tính (Linear Classifier) từ con số 0 để hiểu cơ chế lõi của học sâu. Phương trình dự đoán là y_pred bằng W nhân x cộng b.
+Người 2: Trong đó W là Trọng số quyết định độ nghiêng của đường thẳng, còn b là Độ lệch quyết định vị trí tịnh tiến của đường thẳng so với gốc toạ độ.
+
+Slide 31: Khởi tạo dữ liệu giả lập (Point Clouds)
+Người 1: Khởi tạo dữ liệu giả lập (Point Clouds). Ta tạo hai cụm điểm phân bố ngẫu nhiên trong không gian 2D: Cụm 1 có Nhãn 0 và Cụm 2 có Nhãn 1.
+Người 2: Bài toán của ta là dùng thuật toán Gradient Descent để vẽ một đường thẳng tách biệt chính xác hai cụm điểm này trên biểu đồ.
+
+Slide 32: Dự đoán ban đầu (Khởi tạo ngẫu nhiên)
+Người 1: Dự đoán ban đầu (Khởi tạo ngẫu nhiên). Khi mô hình phân loại vừa được tạo ra, W và b được khởi tạo ngẫu nhiên rất nhỏ, gần bằng 0.
+Người 2: Do đó, đường thẳng lúc đầu rất vô nghĩa, cắt ngang lung tung nên điểm MSE Loss rất cao.
+
+Slide 33: Hàm mất mát (MSE) và Vòng lặp huấn luyện
+Người 1: Hàm mất mát (MSE) và Vòng lặp huấn luyện. Ta viết một vòng lặp for. Ở mỗi bước, GradientTape sẽ tính predictions, tính loss bằng MSE, sau đó tape chấm gradient sẽ tính đạo hàm.
+Người 2: Sau cùng, chúng ta cập nhật W và b dựa trên đạo hàm nhân với hệ số học learning_rate bằng hàm assign_sub.
+
+Slide 34: Kết quả sau Vòng lặp huấn luyện
+Người 1: Kết quả sau Vòng lặp huấn luyện. Sau nhiều bước cập nhật trọng số, bộ phân loại tuyến tính đã tự động xoay và tịnh tiến đường thẳng cắt qua khoảng trống tối ưu.
+Người 2: Biểu đồ cho thấy đường thẳng phân chia sau khi huấn luyện đã tách bạch hoàn toàn 2 cụm điểm. Thuật toán Gradient Descent đã hội tụ!
+
+Slide 35: Ứng dụng mở rộng: Kiến trúc phức tạp
+Người 1: Ứng dụng mở rộng: Kiến trúc phức tạp. Mạng nơ-ron thực tế kết hợp hàng nghìn phép toán Wx + b đan xen với hàm phi tuyến (ReLU, Softmax).
+Người 2: Có nghĩa là các kiến trúc khổng lồ như Transformer thực chất vẫn sử dụng nguyên lý Backpropagation và Gradient Descent này để học phải không ạ?
+Người 1: Chính xác. Nguyên lý lõi không thay đổi.
+
+Slide 36: Tổng kết Chương 3
+Người 1: Tổng kết Chương 3. TensorFlow, PyTorch, JAX là ba cột trụ cung cấp sức mạnh tính toán tự động đạo hàm cực lớn trên GPU/TPU. Keras là API thượng lượng tầng kết nối và chuẩn hóa chúng thành các khối.
+Người 2: Và Core Logic bản chất vẫn là một vòng tuần hoàn: Tính Loss, Lấy Gradient, Cập nhật W và b.
+Người 1: Cảm ơn các em! Chương ba kết thúc tại đây, hẹn gặp lại các em vào buổi sau.
