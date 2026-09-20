@@ -1,0 +1,141 @@
+Slide 1: Quy trình Phổ quát của Học máy
+Người 1: Chào các em. Từ chương một đến chương năm, chúng ta tập trung toàn lực vào cách viết mã, cách xây dựng các lớp Nơ-ron và giải quyết hàm đạo hàm. Nhưng ở môi trường doanh nghiệp thực tế, viết mã chỉ chiếm chưa tới hai mươi phần trăm công sức.
+Người 2: Hôm nay mình sẽ học về tám mươi phần trăm khối lượng công việc còn lại phải không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Chương sáu có tiêu đề là Quy trình phổ quát của Học máy. Cụ thể, ta sẽ đi qua năm phần. Phần một là tầm quan trọng của quy trình này. Sau đó là ba giai đoạn khổng lồ: Định nghĩa bài toán, Phát triển mô hình, và Triển khai mô hình. Cuối cùng là tổng kết chương.
+Người 2: Cấu trúc này giống như quy trình vòng đời phát triển phần mềm trong môn Kỹ nghệ phần mềm, nhưng dành riêng cho Trí tuệ nhân tạo!
+
+Slide 3: Vượt ra ngoài Tập dữ liệu có sẵn
+Người 1: Trong môi trường học thuật của các chương trước, khi giải bài toán, các em luôn có sẵn những bộ dữ liệu chuẩn chỉnh sạch sẽ như bộ ảnh số viết tay Mờ Nít (MNIST) hay dữ liệu đánh giá phim IMDB. Các em chỉ cần nhập lệnh Keras Data set để tải về dùng ngay.
+Người 2: Thực tế ở công ty thì không bao giờ có sẵn file dữ liệu hoàn hảo như vậy đúng không ạ?
+Người 1: Chính xác. Ở thực tế, khởi điểm của em không phải là Dữ liệu, mà là một Vấn đề kinh doanh cần giải quyết. Ta cần một quy trình làm việc phổ quát gồm ba phần chính.
+
+Slide 4: 3 Giai đoạn của Học máy (MLOps Workflow)
+Người 1: Quy trình hoàn chỉnh này thường được gọi là Em Eo Ốp (MLOps). Gồm ba giai đoạn chính. Giai đoạn một: Định nghĩa bài toán, hiểu nghiệp vụ, thu thập dữ liệu và chọn thước đo. Giai đoạn hai: Phát triển mô hình, bao gồm tạo đường cơ sở, đẩy mô hình tới mức Quá khớp, rồi tinh chỉnh lại.
+Người 2: Giai đoạn ba là Triển khai, đưa mô hình lên web hoặc điện thoại di động, sau đó phải giám sát hiệu suất thực tế và huấn luyện lại. Một vòng lặp khép kín!
+
+Slide 5: Khung bài toán (Framing the problem) - Phần 1
+Người 1: Ở giai đoạn một, các em phải ngồi với các bên liên quan (Stakeholders) để chốt các câu hỏi cốt lõi. Đầu tiên: Dữ liệu đầu vào là gì, và Mục tiêu dự đoán là gì?
+Người 2: Nếu giám đốc bảo "Hãy làm công cụ nhận diện giọng nói", nhưng công ty lại không có file ghi âm nào và cũng không có nhãn văn bản, thì không thể làm được đúng không ạ?
+Người 1: Đúng vậy. Chỉ có thể dự đoán nếu em có dữ liệu huấn luyện. Tiếp theo, em phải xác định bài toán thuộc loại nào: Phân loại nhị phân, Hồi quy vô hướng, Phân loại đa lớp, hay Phân đoạn hình ảnh.
+
+Slide 6: Khung bài toán (Framing the problem) - Phần 2
+Người 1: Tiếp theo, phải xem xét khách hàng đang dùng giải pháp gì. Họ đang dùng hệ thống cũ với lệnh Íp Eo (if-else) chằng chịt, hay đang dùng nhân sự dán nhãn thủ công? Hơn nữa, ta phải tìm hiểu các hạn chế cụ thể.
+Người 2: Các hạn chế này có thể là Mã hóa đầu cuối, nghĩa là mô hình phải nằm trên điện thoại người dùng chứ không được gửi dữ liệu lên máy chủ. Hoặc là yêu cầu về Độ trễ, ví dụ hệ thống lọc bánh quy hỏng ở nhà máy phải phản hồi trong vài phần nghìn giây!
+
+Slide 7: Các Ứng dụng Thực tế - Phần 1
+Người 1: Ta thử áp dụng lý thuyết để phân loại một số bài toán thật. Tìm kiếm ảnh cá nhân hóa bằng cách nhập từ khóa "đám cưới" thuộc loại bài toán gì?
+Người 2: Một tấm ảnh có thể thuộc nhiều danh mục cùng lúc, nên đó là Bài toán Đa lớp, Đa nhãn (Multiclass, multilabel) ạ.
+Người 1: Rất tốt. Vậy lọc thư rác, tách nội dung an toàn và độc hại?
+Người 2: Chỉ có hai cửa: Độc hại hoặc An toàn. Nên đích thị là Phân loại Nhị phân.
+Người 1: Còn gợi ý âm nhạc sẽ dùng phương pháp Lọc cộng tác hay Phân rã ma trận.
+
+Slide 8: Các Ứng dụng Thực tế - Phần 2
+Người 1: Tiếp theo, Phát hiện gian lận thẻ tín dụng cũng là Phân loại nhị phân, tìm các điểm bất thường. Dự đoán tỷ lệ nhấp vào quảng cáo (CTR) là Hồi quy vô hướng, trả ra một con số xác suất liên tục.
+Người 2: Còn việc khảo cổ qua ảnh vệ tinh, tìm địa điểm mới dựa trên dữ liệu cũ thì sao ạ?
+Người 1: Đó là bài toán Xếp hạng độ tương tự hình ảnh. Các em thấy đấy, mỗi ứng dụng kinh doanh đều ánh xạ tới một mô hình Học máy cụ thể.
+
+Slide 9: Lưu ý về Đạo đức AI
+Người 1: Nhưng làm Kỹ sư AI, các em phải giữ vững đạo đức nghề nghiệp. Đôi khi em sẽ nhận các dự án đáng ngờ như "Đánh giá độ tin cậy của một người qua ảnh khuôn mặt".
+Người 2: Cảm giác rất nguy hiểm ạ. Nếu dữ liệu thu thập bị nhiễm thiên kiến từ người gán nhãn, thì mô hình Học sâu sẽ biến thành một chiếc hộp đen "hợp pháp hóa" những định kiến và phân biệt đối xử của con người.
+Người 1: Rất đúng. Công nghệ không bao giờ trung tính. Các quyết định kỹ thuật cũng là quyết định đạo đức.
+
+Slide 10: Thu thập Dữ liệu (Collecting a dataset)
+Người 1: Bỏ qua vấn đề đạo đức, ta đến phần tốn kém và mệt mỏi nhất: Thu thập dữ liệu. Có câu nói nổi tiếng của Google năm hai ngàn lẻ chín: Dữ liệu quan trọng hơn thuật toán.
+Người 2: Nếu có thêm năm mươi giờ làm việc, đi kiếm thêm dữ liệu thường hiệu quả hơn là ngồi tinh chỉnh thuật toán.
+Người 1: Đúng. Việc gán nhãn có thể tự làm nội bộ, tốn thời gian và cần công cụ riêng. Hoặc dùng Dịch vụ cộng đồng như A-ma-dôn Cơ-hành (Amazon Mechanical Turk), rất rẻ và quy mô lớn nhưng dữ liệu lại rất ồn và nhiều rác.
+
+Slide 11: Cơ sở hạ tầng Gán nhãn (Annotation Infrastructure)
+Người 1: Quy trình gán nhãn quyết định chất lượng đầu ra. Ta cần xét đến Chuyên môn. Nhãn phân biệt chó mèo thì ai cũng làm được, nhưng chú thích Ảnh X-quang gãy xương thì bắt buộc phải là bác sĩ.
+Người 2: Hơn nữa, nếu tự làm nội bộ, ta cần một phần mềm công cụ dán nhãn có giao diện trực quan để vẽ khung chữ nhật bao quanh hoặc tô màu phân đoạn. Đầu tư vào phần mềm này từ sớm sẽ tiết kiệm hàng trăm giờ làm việc!
+
+Slide 12: Cảnh báo: Dữ liệu không đại diện (Nonrepresentative data)
+Người 1: Lưu ý tử huyệt: Dữ liệu tập Huấn luyện phải đại diện cho dữ liệu thực tế lúc đưa vào sản xuất (Production). Quy tắc là nếu xây ứng dụng đánh giá bài đăng Twitter, hãy dùng Twitter để huấn luyện, đừng dùng đánh giá phim IMDB.
+Người 2: Em từng thấy một ứng dụng chụp ảnh món ăn để tính calo. Huấn luyện toàn bằng ảnh chụp ở studio, đủ sáng. Khi dùng thực tế, người dùng chụp bằng điện thoại cùi bắp trong môi trường thiếu sáng, kết quả ứng dụng nhận diện sai đến tám mươi phần trăm!
+
+Slide 13: Thiên kiến Lấy mẫu (Sampling Bias)
+Người 1: Rất hay. Hoặc trường hợp lịch sử này: Báo Chicago Tribune năm một chín bốn tám in tít "Dewey đánh bại Truman" do lấy mẫu thăm dò qua điện thoại.
+Người 2: Thời đó chỉ người giàu mới có điện thoại, và họ thường bầu cho Dewey. Dữ liệu lấy mẫu này không đại diện cho toàn dân. Trí tuệ nhân tạo sẽ kế thừa toàn bộ thiên kiến thảm họa này nếu tập dữ liệu của ta bị sai lệch!
+
+Slide 14: Sự trôi dạt Khái niệm (Concept Drift)
+Người 1: Một vấn đề khác, dữ liệu Học máy không bất biến, nó thay đổi theo thời gian. Đây gọi là Sự trôi dạt khái niệm.
+Người 2: Giống như gu thời trang hay sở thích âm nhạc thay đổi theo mùa đúng không ạ? Mô hình phân loại từ vựng năm hai ngàn không trăm mười một sẽ hoạt động kém với ngôn ngữ mạng của năm hai ngàn không trăm hai mươi!
+Người 1: Chính xác. Đặc biệt trong phát hiện gian lận, thủ đoạn lừa đảo thay đổi từng ngày. Giải pháp là phải thu thập dữ liệu và huấn luyện lại liên tục.
+
+Slide 15: Hiểu dữ liệu của bạn (Understanding your data)
+Người 1: Về kỹ thuật, đừng bao giờ coi tập dữ liệu là hộp đen. Hãy trực quan hóa nó bằng cách vẽ Biểu đồ tần suất Histogram để xem dải phân bố.
+Người 2: Mình cũng phải đếm số lượng các lớp. Nếu bài toán có chín mươi chín phần trăm giao dịch thường và một phần trăm lừa đảo thì ta bị mất cân bằng dữ liệu cực lớn, cần chiến lược giải quyết riêng!
+Người 1: Thêm vào đó, cẩn thận với "Rò rỉ mục tiêu". Chẳng hạn dự đoán nguy cơ ung thư nhưng trong cột dữ liệu lại có thuộc tính "Đã từng hóa trị", mô hình sẽ ăn gian bằng cách dựa vào cột đó!
+
+Slide 16: MÁY HỌC (MACHINE LEARNING) - BẬC ĐẠI HỌC
+Người 1: Đó là xong phần định nghĩa bài toán và chuẩn bị dữ liệu. Bây giờ chúng ta bước sang Phần hai của Chương sáu: Đánh giá, Tinh chỉnh và Triển khai Mô hình.
+Người 2: Phần này sẽ tập trung sâu vào các kỹ thuật toán học và môi trường máy chủ đúng không thầy?
+
+Slide 17: "Nếu không thể đo lường, bạn không thể tối ưu."
+Người 1: Nếu không thể đo lường, em không thể tối ưu. Nếu dữ liệu của em cân bằng, các lớp xuất hiện đồng đều, ta dùng Độ chính xác Accuracy và diện tích dưới đường cong R O C.
+Người 2: Công thức Accuracy là Tê Pê cộng Tê En, chia cho Tổng số trường hợp. Tức là số lần dự đoán đúng bệnh và đúng không có bệnh chia cho toàn bộ tập dữ liệu.
+Người 1: Nhưng với dữ liệu mất cân bằng, như chín mươi chín phần trăm là bình thường và một phần trăm gian lận, Accuracy trở nên vô dụng vì máy cứ đoán bừa "không gian lận" là mặc định đúng chín mươi chín phần trăm. Khi đó ta phải dùng Pre-xi-zần (Precision) và Re-côn (Recall).
+
+Slide 18: Độ chuẩn xác (Precision) và Độ bao phủ (Recall)
+Người 2: Độ chuẩn xác, Pre-xi-zần, bằng Tê Pê chia cho Tê Pê cộng Ép Pê. Ý nghĩa cốt lõi là: Trong số các giao dịch MÁY CẢNH BÁO, có bao nhiêu phần trăm là gian lận thật?
+Người 1: Rất tốt. Còn Độ bao phủ, Re-côn, bằng Tê Pê chia cho Tê Pê cộng Ép En. Ý nghĩa cốt lõi là: Trong TỔNG SỐ các vụ gian lận thực tế có thật, máy đã tìm ra và bao phủ được bao nhiêu phần trăm? Tối ưu hai thông số này là một nghệ thuật đánh đổi.
+
+Slide 19: Vector hóa (Vectorization) và Chuẩn hóa (Normalization)
+Người 1: Trước khi đưa vào mạng, mọi văn bản, hình ảnh, âm thanh đều phải được Vector hóa, tức là chuyển thành Tensor chứa các số thực float ba mươi hai.
+Người 2: Sau đó ta tiến hành Chuẩn hóa, tức là lấy ma trận ích trừ đi giá trị trung bình Mean và chia cho độ lệch chuẩn. Việc này đưa phân phối về trung bình bằng không và độ lệch chuẩn bằng một.
+Người 1: Đúng vậy, điều này giúp tránh hiện tượng Gradient bùng nổ khi các cột dữ liệu có thang đo chênh lệch quá lớn, ví dụ một cột từ không đến một, cột khác từ một trăm đến hai trăm.
+
+Slide 20: Xử lý Giá trị Khuyết (Handling Missing Values)
+Người 1: Khi gặp các ô trống trong bảng dữ liệu, với Dữ liệu phân loại, cứ tạo hẳn một mục mới tên là "Khuyết". Mô hình sẽ tự học cách xử lý nó.
+Người 2: Còn với dữ liệu số thì tuyệt đối không được tự ý điền số không vì sẽ làm gián đoạn phân bố. Phải thay bằng Giá trị Trung bình hoặc Trung vị của cột đó thưa thầy.
+Người 1: Lưu ý cực kỳ quan trọng: Nếu dữ liệu Test thực tế có thể bị khuyết, em hãy cố tình xóa bớt một số ô trong tập Train để mô hình tập làm quen với sự thiếu sót đó!
+
+Slide 21: Chọn Giao thức Đánh giá
+Người 1: Làm sao để biết mô hình tốt mà không được chạm vào tập Test? Nếu dữ liệu dồi dào, ta dùng Hold-out Validation, cắt hẳn hai mươi phần trăm làm tập Validation.
+Người 2: Nếu dữ liệu vừa và nhỏ, ta đánh giá chéo Ca vòng lặp K-Fold Cross-Validation để lấy trung bình. Còn dữ liệu cực hiếm thì chạy Iterated K-Fold, lặp lại quy trình đó nhiều lần với các hạt giống ngẫu nhiên khác nhau!
+
+Slide 22: Đánh bại Đường cơ sở (Beating a Baseline)
+Người 1: Trước khi xây kiến trúc Học sâu phức tạp, em phải xây một Đường cơ sở (Baseline) bằng thuật toán cổ điển đơn giản như Random Forest để có "Sức mạnh thống kê", tức là phải tốt hơn việc "đoán mò".
+Người 2: Cảnh báo chiến lược là nếu một mạng Nơ-ron cực kỳ phức tạp mà không thắng nổi Baseline đơn giản thì sao ạ?
+Người 1: Thì điều đó chứng tỏ giả thuyết rằng dữ liệu đầu vào chứa đủ thông tin để đoán đầu ra có thể đã HOÀN TOÀN SAI. Ta phải quay lại bước định nghĩa bài toán.
+
+Slide 23: Bảng 6.1: Chọn Lớp Activation và Hàm mất mát (Loss Function)
+Người 1: Bảng này là nguyên tắc bất di bất dịch: Ta không tối ưu trực tiếp Độ đo Accuracy vì nó không khả vi, mà phải tối ưu qua Proxy Metric là hàm Mất mát (Loss).
+Người 2: Cho Phân loại nhị phân thì lớp kích hoạt cuối là Sigmoid, hàm loss là Bai-nơ-ri cờ-rót én-tờ-rô-pi. Phân loại đa lớp một nhãn thì dùng Sốp-mác và Ca-tê-gô-ri-cồ cờ-rót én-tờ-rô-pi.
+Người 1: Với Đa lớp nhiều nhãn, ta trở lại dùng Sigmoid. Đặc biệt với Hồi quy vô hướng, ta KHÔNG CÓ lớp kích hoạt ở cuối (None), và sử dụng hàm mất mát Min Xì-que E-rơ (MSE).
+
+Slide 24: Mở rộng Quy mô: Cố tình tạo Overfitting
+Người 1: Bước tiếp theo, em phải đẩy hệ thống đến giới hạn Quá khớp bằng ba bước: Thêm các lớp mạng, Tăng số lượng Nơ-ron để tăng sức chứa, và Huấn luyện nhiều vòng Epochs hơn.
+Người 2: Quan sát biểu đồ, Training Loss sẽ liên tục giảm, nhưng đến một "khúc cua", Validation Loss sẽ vọt lên. Ranh giới lý tưởng nhất chính là đáy của khúc cua đó!
+
+Slide 25: Tinh chỉnh và Chuẩn hóa (Regularizing & Tuning)
+Người 1: Giai đoạn mất thời gian nhất là gọt giũa lại hiệu suất. Ta thêm Dropout để ngắt Nơ-ron ngẫu nhiên, giảm phụ thuộc cục bộ. Thêm hình phạt Lờ một, Lờ hai (L1/L2 Regularization) để đè bẹp các trọng số quá lớn trong hàm mất mát.
+Người 2: Sau đó ta thử nghiệm các Siêu tham số như Tốc độ học, số lượng Units. Nhưng CẢNH BÁO: Tinh chỉnh quá nhiều lần dựa trên tập Validation sẽ dẫn đến hiện tượng Rò rỉ thông tin (Information Leakage), mô hình sẽ vô tình "học vẹt" chính tập đánh giá này!
+
+Slide 26: Quản trị Kỳ vọng với Stakeholders
+Người 1: Khi mô hình chuẩn bị lên sóng, em phải đập tan "Ảo tưởng AI" của các sếp kinh doanh. Họ hay hy vọng AI hoàn hảo, hiểu ngữ cảnh y như con người. Đừng bao giờ nói: "Mô hình chính xác chín mươi tám phần trăm".
+Người 2: Thực tế Học máy luôn khớp mẫu theo xác suất, luôn tồn tại sai số Âm tính giả và Dương tính giả. HÃY nói: "Mỗi ngày máy sẽ bắt đúng hai trăm sáu mươi sáu giao dịch lừa đảo, chặn nhầm hai trăm giao dịch thật, và bỏ sót mười bốn tên lừa đảo". Lựa chọn ngưỡng xác suất thuần túy là sự đánh đổi kinh doanh!
+
+Slide 27: Xuất mô hình (Exporting an Inference Model)
+Người 1: Về kỹ thuật triển khai: Không bao giờ chạy Python Object thô trên môi trường Production. Cần xuất ra Đồ thị tính toán (Computation Graph).
+Người 2: Có hai định dạng chính: một là dạng mô hình đã lưu của TensorFlow (tf_saved_model) để có thể tải lại trên máy chủ bằng ngôn ngữ C Cộng cộng. Hai là xuất ra định dạng tiêu chuẩn mở On-níc (ONNX) để chạy mượt mà trên nhiều nền tảng khác nhau.
+
+Slide 28: Các Môi trường Triển khai (Deployment Environments)
+Người 1: Có ba môi trường chính. Triển khai REST API trên Đám mây có sức mạnh tính toán tối đa, nhưng phụ thuộc mạng, có độ trễ lớn khoảng 500 mili giây và rủi ro bảo mật dữ liệu.
+Người 2: Triển khai trực tiếp Trên Thiết bị (On-device) bằng TFLite thì hoạt động offline, bảo mật cực cao, không độ trễ, nhưng đòi hỏi mô hình phải nén siêu nhỏ.
+Người 1: Cách ba là chạy trực tiếp bằng JavaScript trên trình duyệt (TF.js), giúp công ty tiết kiệm chi phí máy chủ bằng cách tận dụng cạc đồ họa GPU cá nhân của khách hàng.
+
+Slide 29: Tối ưu hóa Suy luận (Inference Optimization)
+Người 1: Nếu muốn đưa mô hình xuống thiết bị yếu, em phải tối ưu kích thước. Có thể dùng Cắt tỉa trọng số, loại bỏ bớt các kết nối Nơ-ron có trọng số quá nhỏ để tiết kiệm RAM đáng kể.
+Người 2: Đỉnh cao nhất là Lượng tử hóa trọng số (Weight Quantization). Ép các số thực float ba mươi hai bit độ chính xác kép thành các số nguyên int-tơ-giơ tám bit. Kích thước mô hình giảm ngay bốn lần, tốc độ tính toán tăng vọt mà độ chính xác giảm gần như không đáng kể! Chỉ với cú pháp chấm quantize int tám.
+
+Slide 30: Giám sát và Bảo trì (Monitoring & Maintaining)
+Người 1: Sự thật cay đắng là hiệu suất sẽ suy giảm ngay khi ứng dụng "Go Live" do sự Trôi dạt khái niệm.
+Người 2: Ta phải giám sát trên môi trường thực qua vòng lặp: Thu thập dữ liệu liên tục -> Tìm mẫu đoán sai -> Gán nhãn lại -> Huấn luyện lại (Retrain định kỳ) và đẩy bản cập nhật phiên bản hai chấm không.
+Người 1: Trong đó, việc triển khai A/B Testing so sánh 50% người dùng mẫu cũ với 50% người dùng mẫu mới, kiểm toán thủ công, và đặc biệt là nút "Báo cáo sai" trong ứng dụng tạo ra vòng lặp phản hồi cực kỳ tuyệt vời!
+
+Slide 31: Tổng kết Chương 6
+Người 1: Khép lại chương. Machine Learning không đơn thuần là code các mạng Nơ-ron. Nó là một Vòng đời phần mềm hoàn chỉnh (MLOps). Bước 1: Luôn định nghĩa bài toán kỹ càng, cẩn trọng với thiên kiến dữ liệu và chọn độ đo chuẩn.
+Người 2: Bước 2: Xây dựng Baseline, thúc đẩy Overfitting, rồi thu hẹp lại bằng Regularization. Bước 3: Đặt kỳ vọng đúng với khách hàng, tối ưu và xuất mô hình, đồng thời thiết lập giám sát liên tục. Em cảm ơn thầy, đây là một chương vô cùng thực tiễn cho môi trường đi làm.
+Người 1: Cảm ơn em. Hẹn gặp lại cả lớp trong những chương kế tiếp. Chào các em!
