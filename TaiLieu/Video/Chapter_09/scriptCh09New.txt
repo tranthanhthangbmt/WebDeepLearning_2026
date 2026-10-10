@@ -1,0 +1,135 @@
+Slide 1: Các Mẫu Kiến trúc Mạng Tích chập (ConvNet Architecture Patterns)
+Người 1: Chào các em. Ở bài trước ta đã biết cách dùng Transfer Learning mượn một kiến trúc có sẵn như VGG16 để dùng. Hôm nay ở Chương 9, ta sẽ học cách tự tay thiết kế và Lắp ráp nên một kiến trúc Mạng Tích chập khổng lồ và đẳng cấp như thế từ con số không.
+Người 2: Tức là không mượn não của người khác nữa, mà mình tự xây một bộ não chuyên biệt luôn phải không thầy? Tuyệt quá!
+
+Slide 2: Nội dung chương
+Người 1: Chương 9 có 7 phần cốt lõi. Một là Nguyên lý thiết kế Kiến trúc. Hai là Kỹ thuật Kết nối thặng dư (Residual Connections). Ba là Chuẩn hóa hàng loạt (Batch Normalization). Bốn là Tích chập tách rời (Separable Convolution). Năm là phần thực hành: kết hợp cả ba vũ khí đó để chế tạo mạng Mini-Xception. Sáu là nói về kỷ nguyên mới của Vision Transformers (ViTs) và cuối cùng là Tổng kết.
+Người 2: Hình minh họa là 7 khối block nối tiếp nhau như một dây chuyền công nghệ cao. Nghe có vẻ kiến thức ở tầm kỹ sư kiến trúc sư (Architect), không còn là thợ gõ code đơn thuần nữa rồi ạ.
+
+Slide 3: Không gian Giả thuyết (Hypothesis Space)
+Người 1: Đầu tiên, Kiến trúc mô hình là gì? Đó là nghệ thuật lắp ráp các tầng mạng. Sự lắp ráp này tạo ra một Không gian giả thuyết (Hypothesis Space). Thuật toán Gradient Descent sẽ tìm kiếm bộ Trọng số hoàn hảo nhất bên trong không gian này.
+Người 2: Hình ảnh chiếc hộp lập phương với mũi tên đang dò tìm bên trong mô tả rất rõ ràng. Vậy việc xây dựng kiến trúc có nghĩa là ta đang giới hạn trước phạm vi tìm kiếm cho cỗ máy?
+Người 1: Rất chuẩn. Một kiến trúc tốt đóng gói Tri thức tiên nghiệm (Prior Knowledge) của kỹ sư vào máy. Ví dụ, khi em quyết định thiết kế ra lớp Tích chập thay vì mạng Dense, là em đang cấy vào mô hình định luật: "Các mẫu cục bộ trong hình ảnh là bất biến với sự dịch chuyển"!
+
+Slide 4: Tầm quan trọng của Thiết kế Kiến trúc
+Người 1: Tại sao phải thiết kế cẩn thận? Nếu thiết kế khéo léo, không gian tìm kiếm bị thu hẹp, máy sẽ hội tụ nhanh hơn về điểm tối ưu. Mô hình dùng dữ liệu hiệu quả hơn, chống lại Overfitting. Tựa như gắn Động cơ Tên lửa và Tấm khiên bảo vệ cho mô hình vậy.
+Người 2: Và ngược lại, nếu ta chọn sai kiến trúc, ví dụ ngoan cố dùng mạng Dense tuyến tính để học nhận diện ảnh 4K?
+Người 1: Thì cỗ máy sẽ bị kéo chìm xuống đáy như hình chiếc Mỏ neo rỉ sét! Nó mắc kẹt vĩnh viễn ở hiệu suất thấp, và không có lượng dữ liệu khổng lồ nào có thể cứu vãn được nó.
+
+Slide 5: Nghệ thuật Thiết kế vs. Bằng chứng Khoa học
+Người 1: Có một sự thật khá phũ phàng: Thiết kế mạng phần nhiều nghiêng về Nghệ thuật (Art) hơn là Khoa học chính xác (Science).
+Người 2: Chiếc cân đẩu vân trong hình minh họa đang cân bằng giữa não bộ phát sáng (trực giác) và các ký hiệu toán học tích phân. Nghĩa là những kỹ sư xuất chúng thường thiết kế dựa trên Trực giác và kinh nghiệm nhận dạng mẫu thay vì chứng minh toán học khắt khe ạ?
+Người 1: Đúng thế. Hầu hết là dựa trên Thực nghiệm. Không ai có thể giải thích bằng toán học hoàn hảo 100% tại sao kiến trúc này lại tốt hơn kiến trúc kia. Ta cứ chạy thử, số to thì kết luận nó đúng!
+
+Slide 6: Ablation Studies (Nghiên cứu Cắt bỏ)
+Người 1: Chính vì cậy vào thực nghiệm nên nhiều người trong giới nghiên cứu hay vẽ ra các cấu trúc phức tạp vô ích chỉ để bài báo trông "nguy hiểm" hơn (Tối ưu cho Peer Review). Để bóc trần sự thật, ta dùng Kỹ thuật Nghiên cứu Cắt bỏ (Ablation Studies).
+Người 2: Mục tiêu là tìm hiểu quan hệ Nhân quả đúng không thầy? Giống như trong hình vẽ, tháo tung hộp XYZ ra thành các phần riêng lẻ X, Y, X+Y. Ta thử gỡ bỏ từng thành phần xem sự phức tạp thêm vào có thực sự mang lại hiệu quả, hay chỉ là trò vô dụng! Rất khoa học!
+
+Slide 7: Công thức MHR: Modularity, Hierarchy, Reuse
+Người 1: Bất kỳ một hệ thống phức tạp nào, từ bản vẽ một tòa Nhà thờ lớn (Cathedral) đến sơ đồ Giải phẫu cơ thể người trong hình 9.1, đều tuân thủ công thức nguyên lý ba chữ: MHR.
+Người 2: Chữ M là Modularity (Mô-đun hóa): Đóng gói tính toán thành các Khối độc lập. Chữ H là Hierarchy (Phân cấp): Xếp khối dưới làm móng cho khối trên hình tháp. Chữ R là Reuse (Tái sử dụng): Tái sử dụng cùng một cấu trúc khối lặp đi lặp lại thay vì code lại từ đầu!
+
+Slide 8: Tháp Đặc trưng trong Mô hình Xception
+Người 1: Nhìn vào cấu trúc của mạng Xception ở hình 9.2. Nó tuân thủ chặt chẽ MHR. Cấu trúc lặp lại là Khối SeparableConv nối tiếp nhau và chốt bằng MaxPooling.
+Người 2: Em thấy nó vẽ thành hình một cái Tháp Kim tự tháp. Về không gian (Shrinking), càng đi xuống sâu, kích thước ảnh càng teo nhỏ lại (từ 299x299 xuống 19x19). Nhưng về chiều sâu (Deepening), số lượng bộ lọc lại nở to dần ra (từ 32 lên tận 728). Rất có hệ thống!
+
+Slide 9: Vấn đề: Suy biến Đạo hàm (Vanishing Gradient)
+Người 1: Mạng càng sâu, hệ thống phân cấp càng tạo ra các đặc trưng trừu tượng cao cấp. Trực giác mách bảo ta cứ đắp thêm lớp là mô hình thông minh hơn. Nhưng...
+Người 2: Nhìn đồ thị Loss trong hình, hàm mất mát đang giảm rất đẹp thì đột ngột gãy ngang, tạo thành một đường thẳng tắp không chịu suy giảm nữa!
+Người 1: Khi xếp chồng quá nhiều lớp, mô hình đột ngột bị "tê liệt", ngừng học hoàn toàn. Bệnh này không phải do Overfitting, mà do Vanishing Gradient (Suy biến Đạo hàm). Căn bệnh này do đâu mà ra?
+
+Slide 10: Quy tắc Chuỗi (Chain Rule) và Trò chơi Truyền tin
+Người 1: Thuật toán Backpropagation truyền đạo hàm ngược từ hàm Loss về các tầng đầu thông qua Quy tắc Chuỗi (Chain Rule). Quá trình này y như trò chơi Truyền tin tĩnh điện vậy.
+Người 2: Bức hình minh họa 5 con Robot truyền tin cho thấy rất rõ. Tín hiệu đạo hàm mạnh mẽ (màu đỏ) truyền qua từng con robot bị nhiễu và yếu dần, đến con robot cuối cùng (tầng đầu tiên) thì tín hiệu đã chết hẳn (Dead Signal - màu xanh nhạt).
+Người 1: Quá đúng. Các phép nhân liên tiếp với số nhỏ hơn 1 (qua ReLU, Dropout) sẽ khiến đạo hàm teo tóp theo cấp số nhân về số 0 tuyệt đối. Tầng đầu không nhận được lực đẩy cập nhật, mô hình đứng im!
+
+Slide 11: Giải pháp: Kết nối Thặng dư (Residual Connections)
+Người 1: Năm 2015, kỹ sư tên Kaiming He đã phát minh ra giải pháp chấn động: Kết nối Thặng dư (Residual) trong mạng ResNet, giật luôn giải Best Paper tại CVPR!
+Người 2: Nhìn hình 9.3, ý tưởng của nó là tạo ra một "đường tắt" (Shortcut) màu xanh neon dạt sang một bên để thông tin nhảy vọt vòng qua khối Tính toán mà không bị biến đổi! 
+Người 1: Đúng! Đầu vào sau đó được cộng trực tiếp vào đầu ra: y = F(x) + x. Nhờ thế, đạo hàm chảy ngược có thể phóng xuyên qua các "đường cao tốc" này về đầu mạng một cách mượt mà không bao giờ bị suy biến.
+
+Slide 12: Mã nguồn giả (Pseudocode) cho Residual
+Người 1: Thay vì bắt khối học ra ánh xạ F(x) hoàn toàn mới, ta chỉ bắt nó học sự khác biệt phần thặng dư (Residual) còn thiếu so với đầu vào. Trong mã nguồn, đầu tiên em tạo biến `residual = x` để lưu giữ lại bản gốc.
+Người 2: Sau đó biến `x` đi qua khối tính toán (`block(x)`) có thể phá nát tín hiệu. Xong bước cuối cùng, gọi lệnh `add([x, residual])` để cộng đầu ra cuối với đầu vào gốc ban đầu. Điều này bảo tồn được trọn vẹn thông tin gốc!
+
+Slide 13: Mã nguồn: Cân bằng số lượng Bộ lọc (Filters)
+Người 1: Nhưng phép cộng `add` đòi hỏi 2 Tensor phải cùng kích thước mảng. Nếu lớp Convolution ở giữa làm tăng số Kênh (Channels) từ 32 lên 64 thì sao?
+Người 2: Hình vẽ mô phỏng rất trực quan! Ta dùng một lớp `Conv2D` 1x1 đặc biệt đóng vai trò như một cái máy chiếu (Project), ép đường dẫn thặng dư phình to lên cùng số lượng 64 kênh để khớp mảng lấy chỗ cộng lại! Mã nguồn ghi rõ `residual = layers.Conv2D(64, 1)(residual)`.
+
+Slide 14: Mã nguồn: Cân bằng Kích thước (MaxPooling)
+Người 1: Tương tự. Nếu không gian ảnh bị thu nhỏ bởi lớp `MaxPooling2D` thì sao?
+Người 2: Chắc chắn ở nhánh cắt `residual` em cũng phải thu nhỏ kích thước. Ta chèn thêm tham số `strides=2` vào lớp `Conv2D` 1x1. Bước nhảy cóc `strides=2` này sẽ ép nhánh cắt giảm chính xác một nửa chiều rộng chiều cao, đồng điệu với nhánh chính để bảo toàn phép cộng!
+
+Slide 15: Tại sao cần Chuẩn hóa Kích hoạt (Activation Normalization)?
+Người 1: Ta học xong vũ khí thứ nhất. Sang vũ khí số hai: Batch Normalization. Ta đã biết chuẩn hóa dữ liệu đầu vào (căn giữa Mean=0, Variance=1) giúp mô hình dễ hội tụ. Nhưng khi dữ liệu đi sâu vào các lớp bên trong, sự phân bố liên tục bị biến dạng sau mỗi phép nhân ma trận.
+Người 2: Hình sóng âm hỗn loạn ở hàng trên minh họa cho Internal Covariate Shift. Các tầng sau liên tục phải thay đổi để chạy theo đuôi phổ dữ liệu mới. Lớp Batch Normalization giải quyết bằng cách dùng Toán học ép chuẩn hóa lại hình Quả chuông (hàng dưới) ngay trong lúc dữ liệu đang di chuyển giữa các tầng.
+
+Slide 16: Tối ưu hóa CNN Nâng cao & Giao thời Vision Transformers
+Người 1: Tiếp theo, ta sẽ đi vào Toán học của Batch Normalization và các kỹ thuật nâng cao hơn để thiết kế mạng Mini-Xception, cũng như khám phá tương lai của Thị giác máy tính.
+
+Slide 17: Toán học của Batch Normalization
+Người 1: Toán học của Batch Normalization gồm 4 bước. 1. Tính Kỳ vọng (Trung bình của Batch). 2. Tính Phương sai (Độ phân tán của Batch). 3. Đưa dữ liệu về chuẩn gốc.
+Người 2: Còn bước 4: Dịch chuyển và Tỷ lệ là sao ạ? Hàm `y_i = gamma * x_hat + beta`?
+Người 1: Tham số gamma và beta là hai trọng số đặc biệt được Máy học qua Gradient Descent. Nó cho phép máy tính tự động điều chỉnh và khôi phục lại sự biến dạng phổ tín hiệu ban đầu nếu việc ép chuẩn hóa làm mất đi các đặc trưng quan trọng! Quá đỉnh!
+
+Slide 18: Quá trình Suy luận & Lời khuyên Transfer Learning
+Người 1: Nhưng khi mang mô hình ra làm ứng dụng chạy thực tế (Inference/Predict), người dùng chỉ đưa từng tấm hình một. Kích thước Batch = 1. Thế làm sao tính Trung bình và Phương sai của 1 tấm ảnh?
+Người 2: Ái chà, Vấn đề này rất nan giải! 
+Người 1: Giải pháp là lớp BN âm thầm cập nhật một "Trung bình động lũy thừa" (Exponential Moving Average) trong suốt lúc Training. Đến lúc Inference, nó dùng luôn hằng số đó thay vì tính lại! Từ đây sinh ra nguyên tắc Transfer Learning: Luôn đóng băng (Freeze) lớp BN bằng lệnh `trainable=False` để bảo vệ hằng số siêu phàm học từ ImageNet không bị phá hỏng.
+
+Slide 19: Cách lập trình Batch Normalization chuẩn xác
+Người 1: Mẹo tối ưu RAM cực đỉnh: Bản thân BN tự động dời Mean về 0, nên cái tham số `bias` của lớp Tích chập nằm ngay trước nó bị vô hiệu hóa hoàn toàn. Hãy mạnh dạn cài `use_bias=False` ở lớp Conv2D để khỏi tốn RAM vô ích!
+Người 2: Kế tiếp là vị trí đặt. Bên trái ghi "Cách Không Nên dùng", cho thấy đặt lớp Kích hoạt ReLU nằm TRƯỚC lớp BatchNormalization là sai lầm! Phải theo cách chuẩn bên phải: Conv2D -> BatchNormalization -> rồi mới đến Activation ReLU!
+
+Slide 20: Giới hạn của Tích chập Truyền thống (Conv2D)
+Người 1: Vũ khí số ba: Tích chập Tách rời (Separable Convolution). Lớp Conv2D truyền thống vô cùng nặng nề vì nó tham lam làm hai việc cùng lúc: 1. Học mẫu Không gian 2D. 2. Nhào trộn thông tin chéo từ nhiều Kênh màu.
+Người 2: Khối lượng tính toán khổng lồ như mớ bánh răng cưa trong hình vẽ! Chi phí là `K^2 * C_in * C_out`. 
+Người 1: Giả thuyết mới đặt ra: Đặc trưng Không gian và Đặc trưng Kênh có tính độc lập rất cao. Tại sao ta không tách đứt chúng ra để xử lý riêng biệt?
+
+Slide 21: Tích chập Tách rời (Depthwise Separable Convolution)
+Người 1: Ý tưởng đó tạo ra SeparableConv2D, tách phép tính thành 2 pha độc lập rạch ròi.
+Người 2: Nhìn sơ đồ hình 9.4: Pha 1 là Depthwise Conv: Chẻ ảnh ra nhiều kênh riêng biệt, mỗi kênh quét khung vuông 3x3 dò không gian riêng rẽ, không trộn màu! Xong xuôi pha 1, qua pha 2 là Pointwise Conv: Lúc này mới dùng bộ lọc 1x1 đâm xuyên để trộn các kênh lại với nhau! Rất thông minh! Tham số giảm mạnh mẽ!
+
+Slide 22: Phân tích Toán học về Hiệu suất
+Người 1: Xem bảng phân tích toán học. Giả sử Kernel 3x3, có 64 Channel đầu vào và ra. Lớp Conv2D chuẩn tốn gần 37 ngàn tham số. Lớp Tách rời SeparableConv2D chỉ tốn hơn 4 ngàn 6 trăm tham số.
+Người 2: Kinh dị! Tiết kiệm gần 90% bộ nhớ và năng lực tính toán phần cứng. Mô hình hội tụ nhanh như tên lửa, lại chống Overfitting cực đỉnh do vứt bỏ đi được một núi tham số dư thừa học vẹt!
+
+Slide 23: Sự tiến hóa đồng thời: Phần cứng & Phần mềm
+Người 1: Nhưng một sự thật phũ phàng: Chạy thực tế trên GPU máy tính, SeparableConv2D không hề nhanh hơn 90% như lý thuyết. Nó chỉ chạy tương đương tốc độ của Conv2D thường. Em biết vì sao không?
+Người 2: Dạ, lý do ở Insight 2: Thư viện lõi cuDNN của NVIDIA dành cho Conv2D truyền thống đã được các kỹ sư tối ưu hóa vi mô (micro-optimized) bằng hợp ngữ (Assembly) suốt hàng thập kỷ qua để đạt tốc độ thần thánh. Còn kỹ thuật tách rời mới mẻ chả ai thèm tối ưu dòng code!
+Người 1: Đúng. Đây là rào cản AI kinh điển: Thuật toán có ưu việt về toán học đến mấy, mà phần cứng không được thiết kế tương thích thì cũng khó phát huy sức mạnh. Phần cứng và phần mềm phải tiến hóa đồng thời.
+
+Slide 24: Lắp ráp mô hình Mini-Xception (Phần 1)
+Người 1: Giờ ta gom ba bảo bối lại, ráp siêu mô hình Mini-Xception. Lưu ý kỹ: Lớp đầu tiên PHẢI là Conv2D truyền thống. Vì các kênh Đỏ Xanh Lục RGB của ảnh tự nhiên dính chặt với nhau, vội vàng "Tách rời" lúc này sẽ làm nát bét hình ảnh!
+Người 2: Bắt đầu từ đoạn sau, ta mới mở vòng lặp tạo 5 khối Block khổng lồ. Ứng dụng ngay nguyên tắc `use_bias=False` cho cả Conv2D và SeparableConv2D để chuẩn bị lót ổ cho BatchNormalization! Cực kỳ nguyên tắc.
+
+Slide 25: Lắp ráp mô hình Mini-Xception (Phần 2)
+Người 1: Bên trong vòng lặp là lõi tính toán thặng dư. Lớp BN, lớp Kích hoạt ReLU, lớp Tích chập Tách rời, tiếp đến là MaxPooling. Ở nhánh rẽ nhánh Residual, ta chèn lớp Conv2D 1x1 kèm `strides=2` để chiếu và thu nhỏ khớp với nhánh chính, sau cùng Cộng `add` hai nhánh lại! 
+Người 2: Hình ảnh chiếc Cân điện tử tự hào công bố: Kích thước mạng lắp ráp siêu tối ưu này chỉ ngốn khoảng 721 ngàn tham số, bằng một nửa so với 1.5 triệu tham số của con CNN cồng kềnh thô sơ hôm trước. Quá gọn nhẹ!
+
+Slide 26: Đánh giá Độ chính xác (Accuracy)
+Người 1: Bật máy huấn luyện trên chính 2,000 bức ảnh Chó Mèo. So sánh kết quả: Cùng một lượng dữ liệu đó, mạng gõ tay cơ bản đạt 83.9%. Hôm nay, kiến trúc chuẩn mực Mini-Xception...
+Người 2: Vượt ngục đạt mốc 90.8%! Một sự tiến hóa khủng khiếp! Biểu đồ hình 9.5 đường Validation màu xanh lam bật nhảy hẳn lên cao so với đồ thị ngày hôm qua. Việc áp dụng đúng các "Architecture Best Practices" (Chuẩn mực thiết kế) mang lại quả ngọt không ngờ!
+
+Slide 27: Đánh giá Mất mát (Loss)
+Người 1: Đồ thị Loss ở hình 9.6 cũng chứng minh điều đó. Sự hiện diện của BatchNormalization dọn dẹp sạch sẽ mớ hỗn độn ở mọi ngõ ngách, giúp Validation Loss đâm thẳng xuống ổn định và mượt mà hơn cực kỳ nhiều.
+Người 2: Dạng kiến trúc lặp Xception thực sự xứng đáng là tiêu chuẩn công nghiệp (Industry Standard) trên Keras. Quá mỹ mãn!
+
+Slide 28: Giao thời Công nghệ: Beyond Convolution
+Người 1: Kết thúc hành trình, ta nói về tương lai. Suốt thập niên 2010, đế chế ConvNets thống trị độc tôn lĩnh vực Thị giác Máy tính. Nhưng năm 2017, một kẻ thách thức mang tên Vision Transformers (ViTs) ra đời.
+Người 2: Ơ, em nhớ Transformers sinh ra là dành riêng cho Xử lý Ngôn ngữ Tự nhiên (NLP - dịch thuật) mà? Sao lại đem đi làm ảnh? Ai đã nảy ra ý tưởng táo bạo: Coi một bức ảnh như "Một câu văn", và các bộ phận ảnh là "Các từ vựng" thế thầy?
+
+Slide 29: Cơ chế hoạt động & Sức mạnh Self-Attention
+Người 1: Táo bạo nhưng vô cùng triết lý! Cơ chế của ViTs bác bỏ hoàn toàn Conv2D. Máy tính lấy con dao băm nát ảnh gốc thành một lưới các mảnh ghép (ví dụ 16x16 pixel như hình đè dấu X đỏ).
+Người 2: Xong nó trải phẳng mỗi mảnh ghép thành một Vector 1 chiều (biến nó thành từ vựng). Bơm toàn bộ chuỗi Vector đó vào cơ chế Tự chú ý (Self-Attention)!
+Người 1: Đúng. Sức mạnh kinh hoàng của Self-Attention nằm ở Liên kết cự ly xa (Long-range relationships). ConvNet bị giới hạn bởi cái cửa sổ trượt 3x3 bé tí xíu, còn ViT so sánh MỌI mảnh ghép với MỌI mảnh ghép khác CÙNG MỘT LÚC! Nó nhìn một phát hiểu ngay quả bóng ở góc trái liên quan mật thiết đến con chó đang chạy ở tuốt góc phải!
+
+Slide 30: Hạn chế của ViTs & Kết luận Thực tiễn
+Người 1: Nghe thì như thần thánh. Nhưng điểm chí mạng của ViT là Không gian Giả thuyết rỗng! Vì nó xem ảnh như tờ giấy trắng ngôn ngữ, nó không hề có sẵn "Kiến thức ưu tiên 2D" (kiểu như 2 điểm ảnh nằm cạnh nhau thì có liên quan màu sắc).
+Người 2: Nghĩa là Nhu cầu dữ liệu của nó phải khổng lồ, to hơn cả thư viện ImageNet để nó tự cày cuốc ngộ ra quy luật không gian! Cực tốn điện và đòi hỏi Siêu máy tính (Clusters of TPUs/GPUs) để chạy, chứ không nhẹ nhàng như ConvNets!
+Người 1: Chính xác. Kết luận chiếc Cúp Vàng trao tay: ViTs là tương lai, nhưng đối với các bài toán doanh nghiệp thông thường với dữ liệu có giới hạn và thiết bị tiêu chuẩn, ConvNets vẫn là sự lựa chọn hoàn hảo nhất!
+
+Slide 31: Tổng kết Chương 9
+Người 1: Tổng kết chương. Để xây một CNN xuất sắc từ con số 0, hãy tuân theo 4 nguyên tắc: 1. Tổ chức thành Tháp Đặc trưng lặp lại (Quy tắc MHR). 2. Dùng Tích chập Tách rời Separable Conv tiết kiệm 90% hiệu năng. 3. Kết hợp Batch Normalization dập tắt Covariate Shift. 4. Xây Kết nối Thặng dư Residual để truyền xa dòng chảy Gradient!
+Người 2: Một bài học tuyệt đỉnh về nghệ thuật kiến trúc phần mềm, đóng gói trọn vẹn tinh hoa của thập kỷ AI vừa qua. Em cảm ơn thầy! Em sẽ thực hành viết lại cấu trúc Xception ngay!
+Người 1: Tinh thần rất tốt! Xin chào, ta sẽ gặp lại ở chương sau.

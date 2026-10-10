@@ -1,0 +1,123 @@
+Slide 1: Phát hiện Vật thể (Object Detection)
+Người 1: Chào các em. Ở bài trước ta học vẽ đường viền (Segmentation). Nhưng trong thực tế triển khai công nghiệp như hệ thống Đếm xe cộ qua trạm thu phí hay nhận diện khuôn mặt, người ta lại chuộng bài toán thứ hai hơn: Phát hiện Vật thể (Object Detection).
+Người 2: Tức là mình chỉ cần khoanh một cái Hộp chữ nhật vuông vức xung quanh cái ô tô thôi là đủ. Mạng tính toán tọa độ cái hộp thì vừa nhanh vừa nhẹ máy, chạy thời gian thực rất mượt đúng không ạ?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Chương 12 sẽ đào sâu vào việc vẽ cái Hộp chữ nhật này. Cụ thể gồm: Một là Giới thiệu Bài toán. Hai là Kiến trúc Hai giai đoạn chậm chạp. Ba là Kiến trúc Một giai đoạn tiên tiến. Bốn là mổ xẻ cơ chế Toán học của siêu thuật toán Dô-lô (YOLO - You Only Look Once). Cuối cùng là Tổng kết.
+
+Slide 3: Bài toán Phát hiện Vật thể là gì?
+Người 1: Nhìn vào bức ảnh 12.1 chụp người cưỡi ngựa thời xưa. Mạng Phân loại chỉ biết nói "Có con ngựa". Nhưng Mạng Phát hiện (Detection) phải vẽ được các Bâu-đinh Bóc (Bounding Boxes) để trả lời "Con ngựa nằm ở đâu".
+Người 2: Ứng dụng này em thấy khắp nơi. Xe tự lái khoanh vùng biển báo. Camera siêu thị quét đếm số lượng lon nước ngọt trên kệ. Hay cắt vùng biển số xe đưa vào máy đọc chữ OCR. Nó thông dụng hơn Segmentation rất nhiều!
+
+Slide 4: Bộ dữ liệu COCO (Common Objects in Context)
+Người 1: Chuẩn mực thế giới (Gold Standard) để thi đấu và đánh giá Thuật toán Detection là bộ dữ liệu Cô-Cô (COCO). Hai trăm ngàn bức ảnh gán nhãn thủ công với 80 lớp đối tượng.
+Người 2: Hãy nhìn hình 12.2 con mèo nằm trên ghế và cái xe đạp ở sau. Điểm đáng sợ của bộ dữ liệu này là Vật thể đan xen chồng chéo lên nhau rất loạn. Máy tính phải nhìn xuyên qua được sự chồng chéo rắc rối này mới gán được hộp vuông chính xác!
+
+Slide 5: Tải Dữ liệu COCO 2017
+Người 1: Để thực hành, ta dùng lệnh `keras.utils.get_file` tải bộ COCO train2017. Dung lượng lên tới 18 Gigabyte! Rất khổng lồ. File chứa Nhãn (Annotations) là định dạng di-sơn (JSON).
+
+Slide 6: Xử lý Tọa độ Hộp giới hạn (Bounding Boxes)
+Người 1: Mở file JSON ra, mỗi cái Hộp nó chứa 4 con số: tọa độ x, tọa độ y, chiều rộng w, chiều cao h tính theo độ dài Pixel thực của ảnh. Nhưng ảnh đầu vào thì tấm to tấm nhỏ. Mình phải làm gì?
+Người 2: Chuẩn hóa nó về Tỷ lệ phần trăm Không đến Một [0, 1]! Viết hàm `scale_box`, lấy kích thước chia cho số Max của Chiều rộng và Chiều cao ảnh. Như thế tọa độ hộp sẽ bất biến bất kể ảnh to hay nhỏ!
+
+Slide 7: Tích hợp Dữ liệu Meta
+Người 1: Gom nhóm. Vì một bức ảnh COCO có thể chứa đàn chó 10 con tương đương 10 cái hộp. Nên mình dùng cấu trúc mảng List trong Python để gom tất cả Hộp (boxes) và Nhãn Cây-tê-gô-ri (labels) vào chung một chìa khóa là I-mết Ai-đi (image_id). Gom xong ta có hơn một trăm mười bảy ngàn (117,266) tấm ảnh huấn luyện sẵn sàng!
+
+Slide 8: Hàm Hỗ trợ Trực quan hóa (Visualization Utilities)
+Người 1: Để lát nữa dễ xem kết quả, ta khai báo hàm vẽ dùng thư viện Matplotlib. 
+Người 2: Dùng lệnh `Rectangle` để vẽ Khung hình chữ nhật rỗng bao quanh Tọa độ hộp. Kèm theo dòng `ax.text` gắn Text tên vật thể ở góc dưới. Viết thêm hàm đổi Nhãn số sang Mảng màu HSV-RGB Đỏ Xanh Tím để phân biệt các hộp với nhau cho rực rỡ.
+
+Slide 9: Lọc và Shuffle Dữ liệu
+Người 1: Với máy tính cá nhân, 18 Gigabyte là quá sức. Mình dùng hàm `filter` gạt bỏ đi các bức ảnh chứa quá 4 hộp giới hạn. Chỉ học các ảnh có tối đa 4 vật thể đổ xuống để chạy cho kịp thời gian tiết học. Đừng quên gọi `random.shuffle` trộn đều mảng lên để máy không học vẹt.
+
+Slide 10: Họ mô hình R-CNN (Region-based CNN)
+Người 1: Lịch sử kiến trúc. Thời kỳ đầu người ta dùng mạng Hai giai đoạn. Nổi tiếng nhất là A-Xi-En-En (R-CNN). Nhìn sơ đồ hình 12.3.
+Người 2: Giai đoạn 1 tên là Đề xuất Vùng (Region Proposals). Nó quét mù tìm ra vài ngàn cái Khoanh vuông tiềm năng "có vẻ chứa đồ vật". Xong Giai đoạn 2 nó mới ném từng khoanh vuông đó vào mạng CNN khổng lồ để chấm điểm xem đó là Con gì.
+Người 1: Hoạt động kiểu đó thì ưu điểm là Độ chính xác rất cao, nhưng nhược điểm chí mạng là Rất Chậm! Cực kỳ ì ạch, không thể chạy Real-time trên Camera an ninh được.
+
+Slide 11: Kiến trúc Single-stage và FPN
+Người 1: Để giải quyết tốc độ, Kiến trúc Một giai đoạn (Single-stage) ra đời. Tiên đoán Tọa độ và Nhãn SONG SONG luôn trong 1 luồng duy nhất! Nhưng mạng kiểu này bị bệnh hay bỏ sót vật thể nhỏ xíu.
+Người 2: Kỹ sư nghĩ ra giải pháp: Mạng Tháp Đặc trưng F-P-N (Feature Pyramid Network). Giống hình 12.4, nó trộn đặc trưng của Lớp Nông (kích thước Không gian Lớn) với đặc trưng của Lớp Sâu (Kích thước Nhỏ). Nhờ sự dung hòa này, F-P-N có khả năng tóm gọn vật thể ở mọi kích cỡ từ con kiến đến con voi!
+
+Slide 12: Kết quả dự đoán của RetinaNet
+Người 1: Ứng dụng FPN nổi tiếng nhất là mạng Rê-ti-na-nét (RetinaNet) của Facebook AI. Mạng này còn xài thêm một hàm lốt bí truyền là Phô-cồ Lốt (Focal Loss) để xử lý việc mất cân bằng: Phạt cực nặng nếu máy làm ngơ vật thể, và nhẹ tay với vùng Hậu cảnh bãi cỏ trống không.
+Người 2: Nhìn hình 12.5 kết quả của nó khoanh vùng các đồ vật rất chính xác. Nhưng em nghe nói về một Huyền thoại YOLO (Dô-Lô) có tốc độ còn khủng khiếp hơn?
+
+Slide 13: Kỷ nguyên mới mang tên YOLO
+Người 1: Vâng, năm 2015, kỹ sư Dô-sếp Rét-môn ném một quả bom nguyên tử làm rung chuyển giới AI. Thuật toán YOLO - Viết tắt của "You Only Look Once" (Bạn chỉ cần nhìn một lần). Tốc độ lên tới 155 Khung hình trên Giây. Trơn tru hơn cả mắt người!
+Người 2: Sự chuyển đổi mô hình (Paradigm Shift) của ông ấy là gì thưa thầy?
+Người 1: Ông ấy biến bài toán Vẽ Hộp khoanh vùng phức tạp trở thành Bài toán Hồi quy Cơ bản (Regression) trên một tấm Lưới!
+
+Slide 14: Tư duy Chia lưới và Anchor Boxes
+Người 1: Nhìn hình 12.6 bên trái. YOLO lấy con dao chia bức ảnh thành Lưới Bàn Cờ 6 nhân 6. Tổng cộng 36 ô vuông. Giờ hãy nhìn con chó, TÂM của nó nằm ở ô màu nào?
+Người 2: Nằm ở ô màu Cam thưa thầy!
+Người 1: Đúng. Trọng tâm của YOLO: Ô màu Cam chứa Tâm của con chó, Ô ĐÓ TỰ BẢN THÂN NÓ phải chịu trách nhiệm phun ra thông số dự đoán cái Hộp bao quanh con chó! 35 ô còn lại không chứa gì thì nằm chơi, phun toàn số 0. Quy tắc phân công trách nhiệm vĩ đại!
+
+Slide 15: Nạp Mạng Xương sống (Backbone)
+Người 1: Ta lập trình YOLO luôn. Lấy Mạng Xương Sống `ResNet50` từ KerasHub làm bộ não trích xuất đặc trưng (Feature Extractor). Ép kích thước ảnh đầu vào thành hình vuông 448x448.
+
+Slide 16: Xây dựng Phần đầu YOLO (Prediction Head)
+Người 1: Cắt bỏ cái đầu gán nhãn cũ của ResNet đi. Ta đắp một cái Đầu Tiên đoán (Prediction Head) mang phong cách YOLO. Bóp phẳng (Flatten) bản đồ đặc trưng ra thành Vector 1 chiều. Xong ném nó qua hai lớp `Dense`. 
+Người 2: Ở lớp Dense cuối cùng, tại sao tham số units lại là `grid_size * grid_size * (num_labels + 5)` thưa thầy? Số 5 đó ở đâu ra vậy ạ?
+
+Slide 17: Định hình Tensor Đầu ra
+Người 1: Bức ảnh lưới 3D sẽ giải đáp cho em. Phép `Reshape` cuộn cái Vector dài ngoằng đó lại thành một Cục Khối Rubik kích thước 6 nhân 6 nhân (91 + 5). Khối đó chính là Bàn cờ vua 6x6 lúc nãy!
+Người 2: À! Khối lượng công việc của 1 ô cờ là: 5 giá trị đầu là Tọa độ ích, y, rộng w, cao h, và Điểm Tự tin (Confidence). 91 cái thông số đằng sau là Xác suất Softmax của 91 con vật! Tổng cộng 96 con số hồ sơ cho 1 Ô Cờ vua chịu trách nhiệm! Rất chặt chẽ!
+
+Slide 18: Ánh xạ Tọa độ Hộp vào Lưới Grid
+Người 1: Bài toán chuyển đổi hệ trục tọa độ. Nhãn gốc COCO đang dùng Tọa độ Toàn cục từ 0.0 đến 1.0 (như lưới phẳng lớn). Ta phải ánh xạ nó đút vào từng ô vuông Cục bộ trên bàn cờ. 
+Người 2: Công thức hàm `to_grid` rất đỉnh. Lấy Tọa độ Tâm ảnh nhân với Độ dài Lưới (`grid_size`). Xong ép kiểu số nguyên `int` để vứt phần thập phân đi, thế là lòi ra chỉ số Cột ix, Hàng iy (`ix, iy`) chính xác của cái Ô cờ chứa Tâm con vật đó!
+
+Slide 19: Sinh Dữ liệu Lưới (Grid Targets)
+Người 1: Đây là vòng lặp quan trọng nhất gán Nhãn Lưới. Chạy dạo qua toàn bộ Nhãn thực tế. Dùng hàm ánh xạ `to_grid`. Chú ý đoạn lệnh trong khung đỏ: `box_array[index, yi, xi] = [*grid_box, 1.0]`. Ô nào chứa Tâm, ta nhét thông tin cái Hộp đó vào Ô Cờ vua đó. Cắm Cờ Tự tin (Confidence) bằng 1.0 báo hiệu "Có Vật Ở Đây"!
+Người 2: Các ô cờ vua khác không bị chọt trúng sẽ mặc định chứa toàn số 0. Một cách thiết lập Dữ liệu mục tiêu thật sự thiên tài.
+
+Slide 20: Toán học: Cấu trúc Vector Đầu ra
+Người 1: Hãy nhìn kỹ biểu đồ Vector Hộp Mục tiêu hình 12.7 với con hươu cao cổ. Tham số sống còn là `pc` (Confidence Score). Nếu Ô này KHÔNG chứa TÂM của hươu, `pc` bằng 0. Khi đó toàn bộ phần Hộp (bx, by, bw, bh) và Nhãn phía sau vứt sọt rác hết! Không cần trừng phạt máy tính ở khúc đó.
+Người 2: Nhưng nếu TÂM hươu rơi vào, `pc` bằng 1! Ô lưới này ngay lập tức kích hoạt, đẩy dự đoán bù trừ tọa độ tâm bx by, bung kích thước hộp bw bh, và chốt cái nhãn xác suất c_k là Con Hươu!
+
+Slide 21: Sử dụng tf.data thiết lập Pipeline
+Người 1: Đẩy tất cả lên kho dữ liệu `tf.data.Dataset` chuyên dụng của TensorFlow. Dùng hàm `map` với `num_parallel_calls` để huy động 8 lõi CPU tải ảnh song song. Ghép nối tạo Dòng chảy (Pipeline).
+Người 2: Ở cuối có lệnh `prefetch(2)`. Lệnh này giúp chống thắt cổ chai cực hiệu quả, RAM cứ tự động tải trước 2 Mẻ dữ liệu nháp, xếp hàng sẵn đợi Cạc đồ họa GPU xử lý. Tốc độ sẽ bay như gió!
+
+Slide 22: Công cụ 1: Intersection over Union (IoU)
+Người 1: Để huấn luyện, máy phải biết nó vẽ hộp đúng hay sai. Ta dùng công thức Toán học I Ô U (IoU - Intersection over Union). Tiếng Việt là Diện tích Giao chia cho Diện tích Hợp.
+Người 2: Nó đo độ Trùng khớp giữa Khung hình vuông dự đoán (màu xanh dương) và Khung thực tế (màu xanh lá). Khác với Segmentation đo bằng Pixel loằng ngoằng, Detection đo IoU bằng hình khối chữ nhật vuông vức! Điểm từ 0 (trật lất) đến 1 (trùng khít hoàn toàn).
+
+Slide 23: Viết hàm tính IoU trong Keras
+Người 1: Code hàm Giao nhau `intersection` trên Keras. Thay vì dùng vòng lặp For chạy tay chậm chạp, thầy bắt buộc dùng các Lệnh Tensor Operations như `ops.maximum` và `ops.minimum` để vứt toàn bộ mảng ma trận vào chạy Song song trên cạc màn hình GPU!
+Người 2: Maximum mép trái, Minimum mép phải. Trừ đi lấy chiều dài cắt nhau. Rất tinh gọn.
+
+Slide 24: Hàm Hợp nhau (Union)
+Người 1: Tính diện tích hình Hợp nhau. Bằng Diện tích hộp 1 cộng Diện tích hộp 2 trừ đi phần Giao.
+Người 2: Em thấy đoạn trả về có dùng hàm đặc biệt `ops.divide_no_nan`? Mũi tên xanh ghi là Tránh lỗi ZeroDivision. À, vì có nguy cơ hai hộp cách xa nhau Diện tích Hợp bằng 0, phép chia cho 0 sẽ làm Văng (Crash) hệ thống ra lỗi NAN. Keras trang bị sẵn hàm chống Crash này rất hay!
+
+Slide 25: Định nghĩa Hàm Mất mát Hộp (YOLO Box Loss)
+Người 1: Tinh túy của tác giả Redmon nằm ở Hàm Mất mát Lốt (Loss) vô song này. Cộng dồn 3 loại Sai số. 
+Người 2: Bước 1 lấy Tọa độ Ích Y trừ nhau bình phương (xy_error). Bước 2 tính kích thước rào cản bằng căn bậc hai Chiều Cao/Rộng trừ nhau (wh_error). Bước 3 lấy Cờ-rốt Confidence thực tế trừ đi I-Ô-U để ra sai số Tự tin. Xong cộng dồn lại!
+
+Slide 26: Hệ số phạt (Penalty Scaling)
+Người 1: Để ép Máy học thông minh, tác giả Hack hệ số Phạt (Penalty Scaling). Hình cái Cân bên phải. Nếu là cái Ô Cờ Vua chứa Tâm con chó, Phạt nhân 5 Lần (`* 5.0`) cho Lỗi Kích thước Hộp để ép nó vẽ hộp cho tử tế!
+Người 2: Và nghịch lý là: Đối với những Ô trống (Bãi cỏ) không có đồ vật, ông ấy lại Giảm Nhẹ mức Phạt (`* 0.5`) cho Lỗi Tự tin. Tại sao vậy thầy?
+Người 1: Vì ảnh có 36 ô mà chỉ có 1 ô chứa con chó. Nếu phạt đều, 35 ô bãi cỏ sẽ tạo ra dòng thác đạo hàm khổng lồ lấn át hoàn toàn ô con chó, máy sẽ hoảng loạn và chỉ học cách đoán "Biển cỏ mênh mông"! Việc giảm nhẹ phạt vùng trống giúp Giữ Cân Bằng Học Tập.
+
+Slide 27: Huấn luyện Mô hình
+Người 1: Ráp cái hàm Lốt thần thánh đó vào khâu `loss` của lệnh biên dịch `compile`. Khâu phân loại thì vẫn giữ y nguyên `sparse_categorical_crossentropy`. Gọi lệnh `fit` và chờ đợi. Cảnh báo: Quá trình này ngốn hàng giờ trên GPU do khối lượng tính toán khổng lồ.
+
+Slide 28: Kết quả Thô (Raw Predictions)
+Người 1: Mang mô hình ra đời thực (Inference). Nó bị vướng một Căn bệnh kinh niên. Hình 12.8: Màn hình nát bét với hàng ngàn hộp xanh đỏ đan chéo lên con hươu cao cổ!
+Người 2: Ôi, mớ rác hỗn độn! Nguyên nhân do đâu ạ?
+Người 1: Do có tới 36 ô cờ vua. Lúc đoán, các ô lân cận ô trung tâm đều nhao nhao gào lên "Con hươu thuộc về Ô của tao!". Mô hình nhả ra hàng trăm hộp lặp lại của cùng 1 vật thể. Hầu hết là nhiễu, điểm Tự tin rất thấp. Làm sao để dọn dẹp?
+
+Slide 29: Công cụ 2: Non-Maximum Suppression (NMS)
+Người 1: Lọc rác bằng siêu thuật toán Non-Maximum Suppression (NMS). Triệt tiêu Phi cực đại. Hình cái Phễu chắt lọc.
+Người 2: Sơ đồ 5 bước rất đỉnh: Bước 1 vứt sọt rác mấy hộp Điểm tự tin lẹt đẹt. Bước 2 chọn ra Hộp To mồm nhất (Điểm cao nhất 0.98) làm Đội Trưởng. Bước 3 bắt Đội Trưởng đi đo I-Ô-U với đám anh em xung quanh. Bước 4: Hộp nào có độ đè lên Đội Trưởng > 0.4 (Tức là Hàng Nhái Bản Sao), Xóa Sạch! Lặp lại đến hết. Siêu thông minh!
+
+Slide 30: Kết quả Cuối cùng (Sau khi chạy NMS)
+Người 1: Chạy xong NMS. Từ đống rác rối mù, phép màu xuất hiện. Hình 12.9: Chỉ còn lại đúng duy nhất một cái Bâu-đinh Bóc xanh lam tuyệt đẹp bao trọn lấy chú hươu cao cổ. Vô cùng sạch sẽ.
+Người 2: YOLO vừa có tốc độ khủng khiếp của mạng chạy Grid 1 pha, vừa gọt rác chính xác bằng NMS. Nó thực sự xứng đáng là Tiêu chuẩn công nghiệp (Industry Standard) cho xe tự lái thời hiện đại!
+
+Slide 31: Tổng kết Chương 12
+Người 1: Tổng kết chương Phát hiện vật thể. Nhờ bài toán định vị (Localization), Object Detection phức tạp hơn hẳn Classification.
+Người 2: Về kiến trúc, đi từ Two-stage (R-CNN) chậm chạp lên Single-stage (YOLO, RetinaNet) thần tốc nhờ tư duy Hồi quy lưới tọa độ.
+Người 1: Và trên hết, nắm vững 3 khối đá tảng Toán học: Hồi quy Box `(x, y, w, h)`, Độ đo trùng khớp `IoU`, và thuật toán lọc nhiễu vô song `NMS`. Áp dụng thuần thục hệ thống này, em đã có thể tự thiết kế luồng triển khai Camera AI. Hẹn gặp lại em!

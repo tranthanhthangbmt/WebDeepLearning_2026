@@ -1,0 +1,139 @@
+Slide 1: Phân loại Ảnh với Mạng Tích chập (Image Classification with ConvNets)
+Người 1: Xin chào các em! Chào mừng đến với Chương 8. Bắt đầu từ chương này, ta chính thức bước chân vào lĩnh vực cực kỳ thú vị: Thị giác máy tính (Computer Vision). Hạt nhân của toàn bộ lĩnh vực này chính là Mạng nơ-ron Tích chập, hay còn gọi là ConvNets hoặc CNN.
+Người 2: Có phải CNN là công nghệ đằng sau các ứng dụng nhận diện khuôn mặt trên điện thoại, hay hệ thống xe tự lái phân tích biển báo giao thông không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Chính xác. Nội dung hôm nay gồm 6 phần: Thứ nhất, ta tìm hiểu nền tảng của Mạng Tích chập. Thứ hai là bài thực hành Phân loại Chó và Mèo. Thứ ba là cách chống hiện tượng Quá khớp bằng Tăng cường dữ liệu (Data Augmentation). 
+Người 2: Em thấy còn có Chuyển giao Học tập (Transfer Learning) và Tinh chỉnh (Fine-Tuning) ở phần 4 và 5. Đây chắc hẳn là những kỹ thuật chuyên sâu để tối ưu mô hình phải không ạ? Và cuối cùng là phần Tổng kết.
+
+Slide 3: Tại sao lại là Tích chập (Convolution)?
+Người 1: Đúng vậy. Tại sao ta không dùng mạng Dense truyền thống cho ảnh? Nhìn vào hình 8.1, mạng Dense học các mẫu toàn cục (Global Patterns). Nó kéo thẳng bức ảnh ra thành một vector dài và học dựa trên vị trí tuyệt đối của các điểm ảnh. Do đó, Dense rất dở trong việc nhận diện không gian.
+Người 2: Còn mạng Tích chập thì sao ạ? Ở hình bên phải, em thấy có những ô vuông nhỏ được trích xuất từ hình chữ số 4.
+Người 1: Đó chính là sức mạnh của CNN. Thay vì nhìn toàn cục, nó tìm kiếm các mẫu cục bộ (Local Patterns) như cạnh, góc, đường cong ở các khu vực nhỏ. Nhờ thế, nó có tính Bất biến dịch chuyển (Translation Invariance). Nếu nó học được hình dáng con mắt ở góc trái, khi con mắt đó dịch chuyển sang góc phải, nó vẫn nhận ra! Dense thì bị mù tịt việc này, nó sẽ phải học lại từ đầu.
+
+Slide 4: Hệ thống Phân cấp Thị giác (Visual Hierarchy)
+Người 1: Tính chất thứ hai là Sự phân cấp thị giác (Visual Hierarchy). CNN học theo một hệ thống phân cấp tự nhiên, giống hệt cách vỏ não thị giác (Visual Cortex) của con người hoạt động. Hãy nhìn vào sơ đồ.
+Người 2: Ở dưới cùng là ảnh con mèo. Mũi tên chỉ ra các lớp. Hình như lớp đầu tiên chỉ nhận diện được các đoạn thẳng cong và xiên (cạnh, góc). Lớp giữa thì ghép các nét đó lại thành hình đôi mắt, cái tai, cái mũi.
+Người 1: Đúng thế! Lớp càng sâu thì đặc trưng học được càng phức tạp và trừu tượng. Lớp cuối cùng sẽ tổng hợp các bộ phận đó thành vật thể hoàn chỉnh mang khái niệm "Con mèo" hay "Con chó".
+
+Slide 5: Mạng CNN cơ bản: Mã nguồn
+Người 1: Về mã nguồn, Keras hỗ trợ xây dựng CNN rất dễ dàng. Cấu trúc mạng cơ bản là sự xen kẽ giữa các lớp Conv2D (Tích chập) và MaxPooling2D (Gộp tối đa).
+Người 2: Em thấy đoạn code khai báo layers.Conv2D với filters=64 và kernel_size=3. Sau mỗi lớp Conv2D lại có một lớp MaxPooling2D với pool_size=2. Chức năng của lớp Pooling này là để nén ảnh lại đúng không thầy?
+Người 1: Chính xác. Lớp Tích chập dùng để trích xuất đặc trưng, còn lớp MaxPooling dùng để giảm một nửa kích thước không gian (chiều rộng và chiều cao) của bản đồ đặc trưng, giúp giảm thiểu khối lượng tính toán và làm cho các bộ lọc ở lớp sau có "tầm nhìn" bao quát hơn. Cuối cùng ta làm phẳng bằng GlobalAveragePooling2D và đưa qua lớp Dense để phân loại.
+
+Slide 6: Kiểm tra quá trình nén không gian (Model Summary)
+Người 1: Hãy nhìn vào bảng tóm tắt Model Summary. Em hãy nhận xét về sự thay đổi của Output Shape. Đầu vào ảnh là 28x28x1.
+Người 2: Đi qua lớp Conv2D và MaxPooling2D thứ nhất, kích thước giảm xuống 13x13, nhưng chiều sâu (số kênh) lại tăng lên 64. Xuống sâu hơn nữa, kích thước không gian chỉ còn 3x3, nhưng chiều sâu khổng lồ đạt 256 kênh!
+Người 1: Rất chuẩn. Quy luật của mạng CNN là: Kích thước không gian (chiều rộng x chiều cao) sẽ giảm dần qua các lớp Pooling, trong khi chiều sâu (số kênh đại diện cho số lượng đặc trưng) sẽ tăng dần. Nó giống như việc chắt lọc thông tin qua một cái phễu không gian vậy.
+
+Slide 7: Toán học của Phép Tích chập (Dot Product)
+Người 1: Vậy toán học đằng sau lớp Conv2D là gì? Bí mật nằm ở Phép trượt nhân chập. Nhìn vào công thức và hình 8.3, toán tử này thực chất chỉ là Phép tính Tích vô hướng (Dot Product).
+Người 2: Hình 8.3 minh họa rất rõ. Một khối hộp nhỏ (đại diện cho Bộ lọc Kernel K) sẽ trượt từ trái sang phải, từ trên xuống dưới trên khối Ma trận ảnh đầu vào I. 
+Người 1: Đúng. Tại mỗi vị trí dừng lại, nó sẽ lấy các giá trị điểm ảnh nhân tương ứng với các giá trị của bộ lọc rồi cộng dồn lại theo công thức Sigma. Mỗi thao tác như vậy sẽ tạo ra một điểm ảnh trên Bản đồ đặc trưng đầu ra (Output feature map).
+
+Slide 8: Trích xuất Phân mảnh (Patches)
+Người 1: Ta đi sâu hơn vào việc trích xuất phân mảnh (Patches). Giả sử tấm ảnh đầu vào kích thước 5x5, và bộ lọc kích thước 3x3.
+Người 2: Như hình 8.4 minh họa, bộ lọc 3x3 giống như một cái cửa sổ. Nó sẽ cắt ra các mảnh hình vuông 3x3 từ ảnh gốc. Em đếm được tổng cộng có 9 phân mảnh (patches) có thể cắt ra từ bức ảnh 5x5 này nếu ta trượt từng ô một.
+Người 1: Chính xác. Khớp với mỗi phân mảnh đó, phép Tích vô hướng sẽ tính toán sự tương đồng giữa mẫu của bộ lọc và nội dung của phân mảnh, cuối cùng sinh ra duy nhất một con số (Scalar) đại diện cho mức độ khớp. 9 phân mảnh sẽ tạo ra bản đồ đầu ra kích thước 3x3.
+
+Slide 9: Bản đồ Phản hồi (Response Map)
+Người 1: Vậy bản đồ đầu ra đó có ý nghĩa gì? Mỗi Bộ lọc (Filter) đại diện cho một "Khái niệm", ví dụ: Khái niệm "có mắt mèo ở vị trí này không?".
+Người 2: Hình 8.5 mô tả rất tuyệt. Từ hình ảnh gốc (Original input) là một đường cong, đưa qua một bộ lọc đơn lẻ (Single filter), nó tạo ra một Bản đồ phản hồi (Response Map) trông như bị nhòe đi.
+Người 1: Đúng vậy. Kết quả của quá trình tích chập tạo ra Bản đồ phản hồi. Điểm nào càng sáng trên bản đồ nghĩa là Bộ lọc đã "nhìn thấy" mẫu mà nó đang tìm kiếm tại vị trí đó với độ tin cậy càng cao. 64 kênh ở lớp đầu tiên chính là 64 bản đồ phản hồi của 64 bộ lọc tìm kiếm các đặc trưng khác nhau!
+
+Slide 10: Kỹ thuật Lấp đầy (Padding)
+Người 1: Tuy nhiên, có một vấn đề. Như em đã thấy ở hình 8.4, từ ảnh 5x5 trượt bộ lọc 3x3 chỉ thu được kết quả 3x3. Kích thước ảnh luôn bị co hẹp lại, và các điểm ảnh ở lớp biên bị bỏ qua rất nhiều, vì cửa sổ trượt ít khi ghé qua chúng.
+Người 2: Hình 8.6 đã đưa ra giải pháp là Lấp đầy (Padding) đúng không thầy? Ta thêm các viền chứa số 0 (Zero-padding) bao quanh tấm ảnh gốc (khối màu xanh). Vậy là cửa sổ quét 3x3 có thể trượt ra tận ngoài rìa, giúp bảo toàn kích thước sau khi quét.
+Người 1: Hoàn toàn chính xác. Trong Keras, em dùng tham số padding="same" để áp dụng lấp đầy bảo toàn kích thước, hoặc padding="valid" nếu không muốn lấp đầy (chấp nhận co hẹp).
+
+Slide 11: Bước nhảy (Strides)
+Người 1: Tham số quan trọng nữa là Bước nhảy (Strides). Mặc định là khoảng cách bộ lọc trượt đi sau mỗi nhịp là 1 pixel (strides=1).
+Người 2: Nhưng ở hình 8.7, nếu ta thiết lập strides=2, bộ lọc sẽ nhảy cóc qua 1 pixel. Hậu quả là kích thước bản đồ đầu ra sẽ bị giảm đi chính xác một nửa ngay lập tức, gọi là quá trình Downsampling phải không ạ?
+Người 1: Rất tốt. Tuy nhiên lưu ý, trong thực tế ta thường dùng lớp MaxPooling để giảm kích thước một cách an toàn và giữ lại đặc trưng nổi bật nhất, thay vì dùng Strides để nhảy cóc bỏ qua thông tin.
+
+Slide 12: Tập Dữ liệu Kaggle Dogs vs Cats
+Người 1: Giờ ta áp dụng vào thực tế. Bài toán thi đấu nổi tiếng phân loại Chó và Mèo trên Kaggle năm 2013 với 25,000 tấm ảnh. Hình 8.8 là các mẫu ảnh có đủ loại kích cỡ, màu sắc và bối cảnh lộn xộn.
+Người 2: Dữ liệu lớn thế này thì máy tính sinh viên của em sao chạy nổi ạ?
+Người 1: Yên tâm, mục tiêu thực hành của ta là trích xuất ra một tập con siêu nhỏ, chỉ 2,000 ảnh cho Training. Điều này vừa giúp máy chạy nhẹ nhàng, vừa giả lập kịch bản vô cùng phổ biến trong doanh nghiệp: Thiếu hụt dữ liệu gán nhãn!
+
+Slide 13: Tiền xử lý ảnh với Keras
+Người 1: Nhưng kể cả với vài ngàn ảnh, việc đọc tất cả vào RAM cùng lúc là bất khả thi. Keras cung cấp hàm image_dataset_from_directory.
+Người 2: Hàm này tạo ra một Data Generator. Nghĩa là nó không nạp hết vào RAM, mà chỉ lấy ảnh trực tiếp từ ổ cứng lên theo từng lô (batch), ví dụ batch_size=32. Đồng thời nó tự động thay đổi kích thước ảnh về chuẩn 180x180 thông qua tham số image_size. Rất tiện lợi và tiết kiệm RAM!
+
+Slide 14: Huấn luyện CNN cơ bản (Từ con số 0)
+Người 1: Chạy mô hình cơ bản với 4 khối Conv2D và MaxPooling2D. Hãy nhìn đồ thị Accuracy ở hình 8.9. Kết quả Validation Accuracy đạt khoảng 70-75% rồi chững lại.
+Người 2: Nhìn đồ thị, đường Training đứt nét màu đỏ vút lên tiệm cận 1.0 (100%), trong khi đường Validation liền nét màu xanh thì nằm lẹt đẹt ở dưới. Khoảng cách giữa 2 đường này nới rộng nhanh chóng, đây là dấu hiệu Overfitting điển hình. Tuy trên slide ghi text là Train (Xanh) và Validation (Đứt nét), nhưng nhìn đồ thị thực tế thì màu đang bị ngược lại.
+Người 1: Em quan sát rất tỉ mỉ, có sự nhầm lẫn nhỏ trong chú thích text của slide, đồ thị thực tế cho thấy đường Train đỏ đang tăng vọt báo hiệu mô hình đang "học vẹt". 
+
+Slide 15: Phân tích hàm Loss cơ bản
+Người 1: Nhìn sang hình 8.10 phân tích hàm Loss. Hàm mất mát Training liên tục giảm tiến về 0. Mô hình đang "thuộc lòng" (Memorizing) bộ dữ liệu học.
+Người 2: Ngược lại, hàm mất mát Validation không thể giảm xuống dưới ngưỡng 0.8 và bắt đầu bật tăng ngược trở lại (nảy lên nảy xuống) sau Epoch thứ 10.
+Người 1: Kết luận: Do dữ liệu huấn luyện quá ít (chỉ 2,000 ảnh), mạng CNN không thể học được các quy luật tổng quát hóa để nhận dạng chó mèo. Ta cần những kỹ thuật mạnh hơn để xử lý căn bệnh này.
+
+Slide 16: Cải thiện Hiệu suất Mô hình Học Sâu
+Người 1: Để chữa bách bệnh trong Học sâu, đặc biệt khi thiếu dữ liệu, ta có hai kỹ thuật tối thượng: Kỹ thuật Tăng cường Dữ liệu (Data Augmentation) và Trích xuất Đặc trưng (Feature Extraction) kết hợp Fine-Tuning.
+
+Slide 17: Khái niệm Kỹ thuật Tăng cường Dữ liệu
+Người 1: Đầu tiên là Data Augmentation. Khái niệm cốt lõi: Không có thêm dữ liệu? Hãy tự tạo ra dữ liệu mới từ dữ liệu cũ!
+Người 2: Nhìn hình 8.11, từ cùng một con mèo gốc ở góc trên trái, thuật toán áp dụng các phép biến đổi ngẫu nhiên như: Xoay (Rotation), Dịch chuyển, Thu phóng (Zoom), Lật ngang (Horizontal Flip). Kết quả là đẻ ra hàng loạt các biến thể con mèo khác nhau!
+Người 1: Đúng! Nhờ thế, trong quá trình học, mô hình sẽ gần như không bao giờ nhìn thấy cùng một bức ảnh giống hệt nhau hai lần. Bị ép phải nhìn các biến thể, nó buộc phải học các đặc trưng bất biến thực sự của con mèo thay vì học thuộc lòng các điểm ảnh.
+
+Slide 18: Data Augmentation: Mã nguồn
+Người 1: Trong mã nguồn, Keras cung cấp sẵn các Layer tăng cường dữ liệu. Ta gom các lớp RandomFlip, RandomRotation, RandomZoom vào một khối Sequential đặt tên là data_augmentation.
+Người 2: Sau đó, em gắn nguyên khối này vào ngay sau lớp Input của mô hình mạng nơ-ron chính! Có một lưu ý quan trọng dưới cùng: Data Augmentation tự động bị vô hiệu hóa (Deactivated) trong quá trình Testing/Validation, để không làm vặn vẹo hình ảnh dùng để chấm điểm mô hình!
+
+Slide 19: Đánh giá Accuracy sau Augmentation
+Người 1: Đánh giá lại mô hình, hình 8.12 cho thấy một sự thay đổi thần kỳ. 
+Người 2: Tuyệt vời! Validation Accuracy đã vọt tăng từ 70% lên hơn 80%. Quan trọng hơn, đường Validation liền nét màu xanh bám rất sát đường Training đứt nét màu đỏ. 
+Người 1: Hoàn toàn không còn hiện tượng Overfitting. Các đường cong đan xen và cùng hướng lên trên, chứng tỏ ta có thể tiếp tục huấn luyện lâu hơn với nhiều Epoch hơn mà không sợ mô hình bị thuộc lòng.
+
+Slide 20: Đánh giá Loss sau Augmentation & Giới hạn
+Người 1: Đồ thị Loss ở hình 8.13 cũng xác nhận điều này. Đường Validation Loss không còn nảy ngược hướng lên trời như trước nữa mà có xu hướng giảm dần đều cùng với Training Loss. Việc tăng cường dữ liệu được xử lý song song trên CPU rất mượt mà.
+Người 2: Tuy nhiên em thấy ở cuối đồ thị, dù đã trôi qua 100 Epoch, Accuracy có vẻ bị kẹt ở mức 82%. Để vượt ngưỡng này, ta cần đến kỹ thuật thứ hai là Transfer Learning phải không thầy?
+
+Slide 21: Trích xuất Đặc trưng (Feature Extraction)
+Người 1: Đúng thế. Ta sử dụng kỹ thuật Trích xuất Đặc trưng (Feature Extraction). Hình 8.14 giải thích khái niệm Swapping FC (Thay thế bộ phân loại).
+Người 2: Ý tưởng là tái sử dụng một mô hình khổng lồ, ví dụ VGG16 đã được huấn luyện trên 1.4 triệu bức ảnh của ImageNet. Ta giữ nguyên Khối Tích chập (Convolutional Base) của nó.
+Người 1: Rất chuẩn. Khối Tích chập này đã học được cách nhận diện hàng vạn đặc trưng từ cạnh, góc cho đến mắt, mũi của đủ loại động vật. Ta lấy kéo cắt bỏ phần đầu Phân loại (Fully Connected Classifier) cũ của VGG16, và gắn lõi Phân loại Dense mới của chúng ta vào để dạy nó phân biệt chó mèo.
+
+Slide 22: Feature Extraction - Mã nguồn
+Người 1: Để làm điều đó, ta khởi tạo mô hình VGG16 từ keras.applications, thiết lập weights="imagenet" để tải tri thức khổng lồ về, và include_top=False để vứt bỏ cái đầu cũ.
+Người 2: Cú pháp quan trọng nhất là conv_base.trainable = False. Lệnh này dùng để "Đóng băng" (Freeze) toàn bộ trọng số tri thức của Base, không cho chúng bị thay đổi trong quá trình ta huấn luyện cái đầu phân loại mới, nếu không sẽ làm vỡ nát các đặc trưng nó đã học. Sau đó ta mới Flatten và gắn lớp Dense của mình vào!
+
+Slide 23: Accuracy với Feature Extraction Cơ bản
+Người 1: Nhìn hình 8.15. Bằng cách đóng băng VGG16 Base, ta chỉ huấn luyện lớp Dense mới thêm vào. Kết quả vô cùng đáng kinh ngạc.
+Người 2: Validation Accuracy bắn thẳng vọt mốc 90% ngay từ những Epoch đầu tiên. Sự mạnh mẽ của ImageNet đã giúp trích xuất các đặc trưng mắt mèo/mũi chó một cách cực kỳ tinh xảo và sắc bén!
+
+Slide 24: Loss & Vấn đề Overfitting
+Người 1: Tuy nhiên, hãy nhìn biểu đồ Loss ở hình 8.16. Đồ thị Validation Loss sau khi tụt xuống lại bắt đầu vểnh ngược lên rất nhanh từ Epoch thứ 5.
+Người 2: Lại là căn bệnh Overfitting! Vì sức mạnh trích xuất đặc trưng của VGG16 quá khủng khiếp, tốc độ học quá nhanh, trong khi ta mới chỉ sử dụng mô hình cơ bản mà chưa áp dụng Data Augmentation cho quy trình Transfer Learning này. Nó nhanh chóng học vẹt 2,000 bức ảnh gốc.
+
+Slide 25: Mô hình Liên hoàn - FE + Data Augmentation
+Người 1: Để giải quyết triệt để, ta ghép chuỗi liên hoàn tối thượng: Lớp Data Augmentation, nối với hàm tiền xử lý preprocess_input của VGG16, đưa qua Khối Tích chập VGG16 Đóng băng, rồi nối vào Lớp ngọn Dense phân loại của ta.
+Người 2: Ôi, mô hình này yêu cầu mỗi bức ảnh vặn vẹo ngẫu nhiên sinh ra đều phải chạy forward-pass trọn vẹn qua toàn bộ hàng chục lớp của VGG16. Việc này chắc chắn đòi hỏi GPU phải rất mạnh mới gánh nổi khối lượng tính toán khổng lồ thưa thầy.
+
+Slide 26: Accuracy: Feature Extraction + Data Augmentation
+Người 1: Đúng vậy, chạy trên GPU sẽ tiết kiệm rất nhiều thời gian. Và phần thưởng ở hình 8.17 là vô giá!
+Người 2: Đường cong mượt mà hoàn hảo! Validation (màu xanh) bám sát chặt chẽ lấy Training (màu đỏ đứt nét). Hoàn toàn đánh bay Overfitting, và Accuracy đã đạt mốc 96%. Một con số trong mơ với lượng dữ liệu nhỏ bé.
+
+Slide 27: Loss: Feature Extraction + Data Augmentation
+Người 1: Đồ thị Loss ở hình 8.18 cũng chứng minh điều đó. Loss đi ngang và dao động ổn định ở mức rất thấp, không hề có dấu hiệu ngóc đầu lên phản kháng. Mô hình đã được huấn luyện cực kỳ chắc chắn.
+Người 2: Đạt 96% rồi, liệu ta còn có thể ép hiệu suất lên cao hơn nữa không ạ? Em thấy vẫn còn 1 kỹ thuật chưa dùng tới là Fine-Tuning.
+
+Slide 28: Quy trình Fine-Tuning
+Người 1: Chính xác. Quy trình Tinh chỉnh (Fine-Tuning) là bước ép xung cuối cùng. Sau khi đã huấn luyện ổn định cái đầu phân loại mới trên nền VGG16 bị đóng băng. Ta sẽ tiến hành Mở khóa (Unfreeze) một vài lớp Tích chập trên cùng của Base.
+Người 2: Nhìn đoạn mã nguồn, ta duyệt qua các lớp của conv_base. Chỉ khi nào gặp lớp mang tên block5_conv1, ta mới bật trainable = True. Nghĩa là ta chỉ mở khóa Block số 5 (block cuối cùng) của VGG16, giữ nguyên đóng băng từ Block 1 đến Block 4.
+Người 1: Tuyệt vời. Sau đó, bước số 5 là bắt buộc: Biên dịch (Compile) lại mô hình với Tốc độ học (Learning Rate) cực kỳ nhỏ, ví dụ RMSprop(learning_rate=1e-5) (một phần trăm ngàn). Điều này để các trọng số cũ chỉ nhúc nhích nhẹ nhàng điều chỉnh thích nghi, tránh làm phá vỡ toàn bộ cấu trúc đã học.
+
+Slide 29: Kết quả Accuracy sau Fine-Tuning
+Người 1: Và bùm! Chạy huấn luyện. Nhìn hình 8.19 đi.
+Người 2: Không thể tin nổi. Độ chính xác vọt lên tận 97.5%! Bằng cách nới lỏng nhẹ trọng số của khối Block 5, mô hình đã tự điều chỉnh các đặc trưng bậc cao (như hình dạng tai, mõm) sao cho khớp hoàn hảo với riêng tập dữ liệu chó/mèo cụ thể của chúng ta. Đánh bại hoàn toàn các mốc trước đó!
+
+Slide 30: Kết quả Loss sau Fine-Tuning
+Người 1: Ở hình 8.20, đồ thị Loss có thể biến động nhẹ (bị nhiễu), nhưng nếu ta kẻ một đường giá trị trung bình trượt dài (Moving Average), ta sẽ thấy tổng thể nó vẫn đang rất ổn định và hội tụ sâu hơn.
+Người 2: Một kết quả thực sự xuất chúng! Mặc dù chỉ dùng 2,000 ảnh (so với hàng chục ngàn ảnh của người thắng giải Kaggle), ta vẫn đạt được độ chính xác tuyệt vời nhờ sức mạnh của Transfer Learning và Fine-Tuning.
+
+Slide 31: Tổng kết Chương 8
+Người 1: Tựu trung lại Chương 8, Mạng Tích chập (CNN) vượt trội trong xử lý Ảnh vì nó học được các Mẫu cục bộ bất biến với sự dịch chuyển, thông qua các phép nhân Conv2D và giảm độ phân giải MaxPooling2D.
+Người 2: Về mặt chống Overfitting do thiếu hụt dữ liệu, Data Augmentation là vũ khí tối thượng sinh ra dữ liệu mới, kết hợp với Tái sử dụng Tri thức bằng Feature Extraction và Fine-Tuning từ các mạng lớn như VGG16 sẽ giúp đạt hiệu suất State-of-the-art một cách thần kỳ.
+Người 1: Các em đã nắm bắt rất tốt tư tưởng cốt lõi của Thị giác máy tính hiện đại. Bài học kết thúc tại đây, hẹn gặp lại các em ở Chương 9.

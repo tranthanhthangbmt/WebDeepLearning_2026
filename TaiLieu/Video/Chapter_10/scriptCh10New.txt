@@ -1,0 +1,130 @@
+Slide 1: Diễn dịch và Trực quan hóa Mạng Tích chập (Interpreting what ConvNets learn)
+Người 1: Chào các em. Ở các chương trước ta đã xây xong các siêu kiến trúc mạng Tích chập với độ chính xác cao kinh ngạc. Tuy nhiên, một nhà tuyển dụng khó tính sẽ hỏi: "Cậu có biết bên trong mạng máy tính đó thực sự nó hoạt động kiểu gì không? Nó đang nhìn vào cái gì để đưa ra quyết định?"
+Người 2: Đó đúng là câu hỏi em đang thắc mắc. Chúng ta chỉ biết nhét ma trận vào và thu kết quả ra, chứ đâu biết máy tính nó nghĩ cái gì trong đầu. 
+
+Slide 2: Nội dung chương
+Người 1: Chính xác. Vì vậy ở Chương 10 này, ta sẽ dùng ba phương pháp Mổ xẻ Hộp đen. Hình ảnh minh họa 5 viên bi màu nối tiếp nhau cho thấy lộ trình. Gồm: Vấn đề Hộp đen. Nội soi biểu diễn trung gian. Trực quan hóa Bộ lọc bằng Gradient Ascent. Và Bản đồ kích hoạt Lớp Grad-CAM. Cuối cùng là tổng kết.
+Người 2: Rất rõ ràng thưa thầy.
+
+Slide 3: Deep Learning có phải là Hộp Đen (Black Box)?
+Người 1: Từ xưa đến nay, báo chí hay dọa mọi người rằng Trí tuệ nhân tạo là một chiếc Hộp Đen (Black Box). Dữ liệu chui vào rồi nhả ra quyết định mà chả ai biết vì sao nó quyết định thế! Giống hình chiếc hộp đen bí ẩn có dấu chấm hỏi.
+Người 2: Nếu là làm App Phân loại chó mèo thì không sao. Chứ nếu đó là máy tính AI chẩn đoán Ung thư y tế, hay xe ô tô tự lái (hình vô lăng) mà đâm vào chướng ngại vật... thì việc không biết lý do AI phán đoán là cực kỳ rủi ro. Khả năng diễn dịch (Interpretability) là bắt buộc.
+Người 1: Chuẩn xác. Nhưng sự thật là: Mạng Tích chập CNN hoàn toàn KHÔNG PHẢI là hộp đen. Vì nó học các biểu diễn không gian 2D, ta có thể Nội soi toàn bộ hình ảnh mà nó đang nhìn thấy!
+
+Slide 4: Các phương pháp Trực quan hóa ConvNet
+Người 1: Ta có ba phương pháp cốt lõi để mở khóa hộp đen. Một: Trực quan hóa Bản đồ đặc trưng trung gian (Intermediate Activations) để xem mô hình đang thấy chi tiết nào. 
+Người 2: Hai: Trực quan hóa Bộ lọc (Filter Visualization) bằng Gradient Ascent để vẽ ra các mẫu họa tiết (Pattern) lý tưởng. Và Ba: Bản đồ Kích hoạt Lớp Grad-CAM, vẽ bản đồ nhiệt (Heatmap) trả lời câu hỏi "Tại sao AI đưa ra quyết định?".
+
+Slide 5: Kỹ thuật 1: Trực quan hóa Bản đồ Đặc trưng (Feature Maps)
+Người 1: Đi vào kỹ thuật đầu tiên. Mục tiêu là để nhìn lén xem khi một bức ảnh đi xuyên qua các lớp Tích chập liên tiếp (Successive Layers), nó biến đổi và bị bóc tách ra sao. Hình ảnh các tấm kính trong suốt xếp chồng lên nhau mô phỏng cho việc này.
+Người 2: Tức là mình sẽ xuất Kích hoạt (Activations) ở từng kênh của từng lớp ra màn hình. Vì mỗi kênh hoạt động như một bộ dò mẫu (Pattern Detector) độc lập, ta sẽ xem bằng mắt thường được nó đang dò cái gì phải không ạ?
+
+Slide 6: Ví dụ Đầu vào
+Người 1: Đúng. Ta đưa một bức ảnh con mèo lông trắng mắt xanh (hoàn toàn mới, không có trong tập huấn luyện) vào mạng CNN phân loại Chó-Mèo đã được train ở Chương 8. Hãy xem các lớp phản ứng thế nào.
+
+Slide 7: Tiền xử lý ảnh gốc
+Người 1: Trước tiên, dùng `keras.utils` để load ảnh gốc. Hàm `load_img` rồi biến nó thành numpy array bằng `img_to_array`.
+Người 2: Khúc này em nhớ. Mô hình Keras lúc nào cũng cần có Trục Lô (Batch Axis). Nên em phải gọi `np.expand_dims` với `axis=0` để bọc nó thành mảng 4 chiều, đóng vai trò như một Lô chứa duy nhất 1 tấm ảnh mèo.
+
+Slide 8: Xây dựng Mô hình Đa Đầu ra (Multi-output Model)
+Người 1: Vấn đề là Keras Model bình thường chỉ xuất ra 1 đầu ra ở đáy. Để trích xuất các bản đồ ở giữa mạng (Intermediate), ta phải định nghĩa một Model đặc biệt.
+Người 2: Ta dùng Vòng lặp `for`. Lặp qua toàn bộ lớp, nếu là `Conv2D` hoặc `MaxPooling2D`, ta túm lấy Đầu ra (`layer.output`) của nó nhét vào danh sách `layer_outputs`. Xong nhét danh sách đó vào `outputs` của `keras.Model` mới. Một khe vào mà túa ra hàng loạt đầu ra như hình minh họa! Thật ảo diệu.
+
+Slide 9: Kích hoạt của các Bộ lọc Đơn lẻ (Single Filter)
+Người 1: Chạy `predict` và ta thu được một đống mảng numpy. Lấy thử Kênh số 4 (Channel 4) của Khối Tích chập đầu tiên ra coi.
+Người 2: Hình 10.2 in ra một bức ảnh con mèo nền xanh thẫm, các viền thì sáng rực lên màu vàng lợt. Rõ ràng Kênh này đang làm nhiệm vụ Dò tìm Cạnh (Edge Detector), cực kỳ nhạy cảm với các đường viền nghiêng của lông và tai mèo thầy ạ.
+
+Slide 10: Kích hoạt Kênh đặc biệt (Mắt mèo)
+Người 1: Nhưng sang Kênh số 5 (Channel 5) ở cùng lớp đó, hình 10.3 lại cho kết quả hoàn toàn khác. Em thấy gì?
+Người 2: Đáng kinh ngạc. Hình dạng con mèo biến mất, nó chỉ sáng rực lên y như hòn than ở đúng vị trí Đôi mắt con mèo (hoặc các đốm sáng hình tròn)! Quá trình chuyên môn hóa của các nơ-ron đã bắt đầu ngay từ lớp nông nhất. Bộ lọc này đã bị "bắt dính" bởi mắt mèo.
+
+Slide 11: Trực quan hóa Toàn bộ Các kênh của Mạng (Phần 1)
+Người 1: Sự thú vị chưa dừng lại. Bây giờ, ta lặp Vòng lặp For lồng nhau để trải toàn bộ các Kênh ra vẽ thành một lưới (Grid) ma trận lớn. 
+Người 2: Ta tạo biến `display_grid = np.zeros` để làm một cái Khung Lưới nền đen khổng lồ chứa hàng tá bức ảnh nhỏ. 
+
+Slide 12: Trực quan hóa Toàn bộ Các kênh của Mạng (Phần 2)
+Người 1: Rất tinh tế. Tuy nhiên vì trị số của các kênh có thể là số dương âm vô chừng, ta cần Normalize giá trị của từng channel về phổ màu 0-255 để màn hình máy tính có thể render được.
+Người 2: Code này kiểm tra nếu sum khác 0 thì trừ đi Mean, chia cho Std (Độ lệch chuẩn), nhân 64 cộng 128... Sau đó ép giới hạn dùng hàm `np.clip` giới hạn từ 0 đến 255 và đổi type sang `uint8`. Xong dán ảnh đó vào từng ô trên Lưới hiển thị `display_grid`.
+
+Slide 13: Mạng Tích chập học được gì? (Lưới Kích hoạt)
+Người 1: Hãy nhìn lưới Kích hoạt khi bức ảnh lún sâu dần. Mạng Tích chập học được gì?
+Người 2: Càng tiến sâu vào mạng, các bản đồ đặc trưng trở nên thưa thớt (Sparse) và trừu tượng (Abstract). Chúng không còn chứa hình dáng vật lý của con mèo nữa, mà chuyển sang lưu giữ các Khái niệm. Thậm chí có những ô vuông trống đen xì nghĩa là bộ lọc đó hoàn toàn không tìm thấy mẫu mà nó cần!
+
+Slide 14: Sự chưng cất thông tin (Information Distillation)
+Người 1: Rất chính xác. Hiện tượng đó gọi là Sự chưng cất thông tin (Information Distillation). Hình ảnh chiếc Phễu lọc khổng lồ rót chiếc xe đạp xuống minh họa cho điều đó.
+Người 2: Ý thầy là các thông tin thừa thãi mang tính tiểu tiết (màu sắc lông, nền tường) sẽ bị gạt bỏ. Những thông tin sống còn mang tính phân loại (có tai nhọn, có ria mép) sẽ được phóng đại và lưu giữ thành "Khái niệm". Giống hệt não người nhìn xe đạp chỉ nhớ cái khái niệm xe đạp chứ không thèm nhớ số lượng nan hoa!
+
+Slide 15: Kỹ thuật 2: Gradient Ascent trên Không gian Ảnh
+Người 1: Kỹ thuật nội soi thứ hai. Lần này ta không đưa ảnh thật vào nữa. Mục tiêu là tự tạo ra một bức ảnh ảo (từ mảng nhiễu trắng ngẫu nhiên) sao cho một Bộ lọc nào đó phản ứng CỰC ĐẠI.
+Người 2: Bức ảnh ảo sinh ra chính là hiện thân cho "Mẫu lý tưởng" (Ideal Pattern) mà Bộ lọc đó đang khát khao tìm kiếm nhất! Thầy gọi đây là Gradient Ascent (Leo đồi Gradient), nó đi ngược lại với Gradient Descent truyền thống đúng không ạ?
+
+Slide 16: Trực quan hóa Mạng Tích chập: Gradient Ascent và Grad-CAM
+Người 1: Chúng ta sẽ đi sâu vào Toán học của kỹ thuật này và công nghệ Bản đồ nhiệt ở các slide tiếp theo. Hình ảnh con mắt phân tích mạng nơ-ron tượng trưng cho việc soi rọi "bên trong hộp đen".
+
+Slide 17: Huấn luyện thông thường (Gradient Descent) vs Trực quan hóa Bộ lọc (Gradient Ascent)
+Người 1: Nhìn đồ thị so sánh. Gradient Descent quen thuộc (mũi tên đỏ chúc xuống): Cố định Dữ liệu (X), Cập nhật Trọng số (W) để giảm thiểu Loss về cực tiểu. W_new = W_old - alpha * Đạo hàm.
+Người 2: Còn Gradient Ascent (mũi tên xanh lá leo lên): Cố định Đóng băng Trọng số (W), nhưng lại Cập nhật Pixel của bức Ảnh (X) để tối đa hóa Giá trị Kích hoạt A! X_new = X_old + alpha * Đạo hàm. Ta lấy đạo hàm cộng thêm vào Ảnh để nắn nót sửa đổi tờ giấy nháp cho đến khi bộ lọc sướng nhất! Cực kỳ thông minh.
+
+Slide 18: Định nghĩa Hàm Mất mát (Loss) cho Bộ lọc
+Người 1: Thực hành. Gọi cấu trúc `xception_41_imagenet` siêu mạnh ra. Bốc lấy một kênh (filter) của `block3_sepconv1`. Ta định nghĩa hàm `compute_loss`.
+Người 2: Hàm này không tính sai số, mà nó bóc lấy lớp kích hoạt, xẻo bỏ cái viền 2 pixel ở rìa đi để tránh nhiễu, rồi trả về giá trị Trung bình kích hoạt `ops.mean`. Đây chính là cái ta cần Tối đa hóa.
+
+Slide 19: Vòng lặp Gradient Ascent (TensorFlow)
+Người 1: Tiếp theo, vòng lặp Gradient Ascent. Dùng công cụ `tf.GradientTape` thần thánh. Chú ý phải gọi lệnh `tape.watch(image)` để ép hệ thống theo dõi cái Tensor ảnh, nếu không nó sẽ ngó lơ!
+Người 2: Xin đạo hàm `tape.gradient(loss, image)`. Sau đó là Chuẩn hóa Gradient. Và cuối cùng là Cập nhật tịnh tiến ảnh: `image += learning_rate * grads`. Mảnh giấy nháp sẽ dịch chuyển một chút về hướng làm bộ lọc kích thích.
+
+Slide 20: Khởi tạo Mảng Nhiễu Trắng ban đầu
+Người 1: Quá trình đó lặp lại 30 bước. Tại thời điểm t=0, bức ảnh khởi điểm chỉ là một mảng nhiễu trắng vô nghĩa chứa đầy các chấm đen trắng (noise) như hình minh họa 2 cục xúc xắc. Ta dùng `keras.random.uniform` để sinh mảng này xoay quanh giá trị 0.5.
+Người 2: Xong ném nó vào vòng lặp `gradient_ascent_step`. Dưới bàn tay nhào nặn của Gradient, tấm ảnh nhiễu dần hiện nguyên hình.
+
+Slide 21: Xử lý hậu kỳ ảnh (Deprocess Image)
+Người 1: Tuy nhiên, sau 30 bước, ma trận thu được chứa các giá trị số thực (float) cực kỳ dị thường, có thể là âm hoặc dương vô cực. Dãy số dị thường phải qua hàm Deprocess.
+Người 2: Hàm này `Normalize & Clip` bằng cách trừ mean chia std nhân 64 cộng 128, xong gọt ép nó bằng `ops.clip` về đúng khoảng 0-255 chuẩn Bảng màu RGB. Hàm trả về hình ảnh có thể coi được.
+
+Slide 22: Quần thể các Mẫu Đặc trưng lý tưởng
+Người 1: Chạy vòng lặp cho 64 kênh ở nhiều độ sâu. Hình ảnh sinh ra thật đáng kinh ngạc. Các họa tiết ảo giác (Psychedelic) tuyệt đẹp do chính máy tự vẽ!
+Người 2: Block 2 (Lớp nông): Nó học và vẽ ra các màu sắc, đường gợn sóng, vân gỗ, sóng nước. Xún Block 4 (Lớp giữa): Bắt đầu xuất hiện các kết cấu phức tạp hơn nhiều như chấm bi, sọc vằn, màng nhện đan chéo!
+
+Slide 23: Lớp Sâu - Các Khái niệm Đời thực
+Người 1: Sâu hơn nữa. Kéo xuống đáy mạng `block5_conv1`. Bức họa số 0 ở hình 10.6 mang hình thù gì kia? Hình cái elip đan chéo, có cái lỗ ở giữa...
+Người 2: Ôi, nó tổng hợp thành họa tiết trông y hệt như nan hoa bánh xe đạp (Bicycles)! Hay là lông chim vũ, vảy bò sát.
+Người 1: Đấy chính là bằng chứng tuyệt vời nhất cho thấy Convolution Layers hoàn toàn có thể hiểu cấu trúc của vạn vật trong đời thực, chứ không hề mù tịt như cái Hộp Đen!
+
+Slide 24: Kỹ thuật 3: Class Activation Map (CAM)
+Người 1: Phương pháp số 3. Vũ khí Tối thượng: Bản đồ Kích hoạt Lớp (CAM). Mục tiêu: Trả lời câu hỏi "Phần nào của bức ảnh đã khiến Mạng CNN đưa ra quyết định phân loại này?".
+Người 2: Ứng dụng của nó là Phân tích lỗi (Error Analysis - Tại sao nhận diện sai) và Khám phá Y khoa (Bác sĩ AI chỉ ra vùng Khối u nằm ở đâu trên ảnh X-Quang phổi thay vì chỉ phán có bệnh). Phương pháp SOTA (Tốt nhất) hiện nay là Grad-CAM.
+
+Slide 25: Toán học của Grad-CAM
+Người 1: Toán học của Grad-CAM gồm 3 bước. 1. Tính Đạo hàm của xác suất Lớp dự đoán (Vd: Voi châu Phi y^c) theo toàn bộ Bản đồ đặc trưng ở Lớp Tích chập CUỐI CÙNG.
+Người 2: 2. Lấy Trung bình không gian (Global Average Pooling) của Đạo hàm này để ra được cái Trọng số độ quan trọng alpha_k của Kênh k.
+Người 1: 3. Nhân chập Trọng số đó với Feature Maps tương ứng, rồi bọc qua hàm ReLU (chỉ lấy phần dương - Positive influence). Thế là ra bản đồ Grad-CAM!
+
+Slide 26: Đầu vào bài toán Phân tích Lỗi
+Người 1: Bài toán thực tế. Đưa bức ảnh chụp hai con Voi châu Phi (một mẹ một con) vào mô hình Xception chuẩn. Mô hình phán ngay: Voi châu Phi (African elephant) với xác suất cực cao.
+Người 2: Sếp chất vấn em: Nó nói bừa hay sao? Làm sao nó biết là Voi châu Phi? Câu hỏi đặt ra: Nó nhìn vào Voi mẹ hay Voi con để ra quyết định? Nếu không có Grad-CAM thì chịu chết không cãi được sếp thưa thầy!
+
+Slide 27: Chuẩn bị Grad-CAM: Trích xuất Lớp Cuối
+Người 1: Ta chẻ mô hình làm hai mảnh. Model 1 (`last_conv_layer_model`): Lấy đầu vào ảnh gốc chạy đến đầu ra của Lớp tích chập cuối cùng (`block14_sepconv2_act`).
+Người 2: Model 2 (`classifier_model`): Lấy đầu ra của Lớp tích chập cuối cùng đó làm đầu vào, chạy nốt khúc đuôi đi qua các lớp `pooler` và `predictions` (Softmax) để ra xác suất dự đoán. Rất logic.
+
+Slide 28: Đạo hàm Xếp hạng Lớp (Class Gradients)
+Người 1: Tính Đạo hàm. Mở bộ theo dõi `tf.GradientTape` ra, gọi `tape.watch`. Xin xác suất `preds`, tìm ra cái Kênh xác suất Voi châu Phi cao nhất `top_class_channel`.
+Người 2: Xong dòng lệnh cốt lõi: Lấy Đạo hàm `tape.gradient(top_class_channel, last_conv_layer_output)`. Có nghĩa là lấy Đạo hàm của Node dự đoán "African Elephant" đối chiếu ngược lại với Bản đồ đặc trưng lớp dưới để xem thằng nào đóng góp lớn nhất!
+
+Slide 29: Xây dựng Bản đồ Nhiệt (Heatmap)
+Người 1: Có đạo hàm rồi, ta cầm cục [Gradient Box] nhân chập với mảng [Feature Map Box]. Thu được một [Heatmap] rực lửa!
+Người 2: Trong code, lệnh `np.mean` lấy trung bình đạo hàm sinh ra `pooled_grads`. Xong lấy Bản đồ nhân với `pooled_grads`. Cuối cùng ép ReLU thủ công bằng lệnh `np.maximum(heatmap, 0)` để vứt bỏ các vùng giá trị âm không liên quan. Mảng Numpy 2D Bản đồ nhiệt thô Grad-CAM đã thành hình!
+
+Slide 30: Chồng bản đồ nhiệt (Superimposed Heatmap)
+Người 1: Hình 10.8 là Bản đồ thô đó. Chỗ nào sáng vàng chói lóa thì càng tác động lớn. Nhưng nhìn cái mảng ô vuông lờ mờ đó chẳng ai hiểu gì cả. Phải chồng nó lên ảnh gốc.
+Người 2: Gọi thư viện `matplotlib.cm`, xin cái phổ màu JET (Xanh dương sang Đỏ) để nhuộm màu mảng Heatmap mờ nhạt đó. 
+Người 1: Phóng to nó lên khớp ảnh gốc. Xong phép màu: `superimposed_img = jet_heatmap * 0.4 + img`. Áp cái Heatmap rực lửa đó lên trên ảnh Voi thật với độ trong suốt 40%!
+
+Slide 31: Kết luận về thuật toán định vị trí
+Người 1: Boom! Vùng đỏ rực tập trung chính xác vào đâu trên bức ảnh hình 10.9?
+Người 2: Trời ơi! Vùng bão đỏ thẫm nó đậu ngay chính giữa Đôi tai của Voi con!
+Người 1: Mạng AI hoàn toàn không bị ngốc! Kích thước đôi tai chính là đặc điểm sinh học định danh duy nhất phân biệt Voi châu Phi và Voi Ấn Độ. Nó đã học ĐÚNG đặc điểm nhận dạng cốt lõi của sinh học thay vì học lỏm bầu trời hay cành cây ngọn cỏ xung quanh.
+
+Slide 32: Tổng kết Chương 10
+Người 1: Chúc mừng em. Em đã thấy Mạng Tích chập KHÔNG phải là Hộp đen. Ta hoàn toàn có thể "Nội soi" chúng dễ dàng bằng Python qua 3 bước: Intermediate Activations, Filter Visualization, và Grad-CAM.
+Người 2: Một bài học chấn động. Khả năng mổ xẻ nội soi AI này thực sự sẽ làm yên lòng các bác sĩ hay các kỹ sư xe tự lái khi phó thác tính mạng con người cho nó. Em cảm ơn thầy rất nhiều!
