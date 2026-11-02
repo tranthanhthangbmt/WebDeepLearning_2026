@@ -1,0 +1,130 @@
+Slide 1: Phát hiện Vật thể (Object Detection)
+Người 1: Chào các em. Ở bài trước ta đã học bài toán vẽ đường viền chi tiết đến từng điểm ảnh (Image Segmentation). Nhưng trong thực tế triển khai công nghiệp, như hệ thống đếm xe cộ qua trạm thu phí hay nhận diện khuôn mặt, người ta lại chuộng bài toán thứ hai hơn: Phát hiện Vật thể (Object Detection).
+Người 2: Tức là mình chỉ cần khoanh một cái Hộp chữ nhật vuông vức xung quanh vật thể thôi là đủ. Việc dự đoán tọa độ cái hộp thì vừa nhanh, vừa nhẹ máy, đáp ứng hoàn hảo tốc độ thời gian thực (Real-time) phải không thầy?
+
+Slide 2: Nội dung chương
+Người 1: Đúng thế. Chương 12 sẽ đào sâu vào toàn bộ quy trình thiết kế và huấn luyện mô hình vẽ chiếc Hộp chữ nhật này từ con số 0. Cụ thể gồm 5 phần: Một là Giới thiệu bài toán Phát hiện vật thể. Hai là Kiến trúc Hai giai đoạn (Two-stage Detectors). Ba là Kiến trúc Một giai đoạn (Single-stage Detectors). Bốn là Tự tay xây dựng mô hình thuật toán Dô-lô (YOLO - You Only Look Once). Và cuối cùng là Tổng kết.
+Người 2: Nhìn cấu trúc chương từ lý thuyết kiến trúc đến tự lập trình một mô hình YOLO hoàn chỉnh rất hào hứng. Em đã sẵn sàng khám phá rồi thưa thầy!
+
+Slide 3: Bài toán Phát hiện Vật thể là gì?
+Người 1: Nhìn vào bức ảnh 12.1 chụp người cưỡi ngựa. Mạng Phân loại chỉ biết nói "Trong ảnh có con ngựa". Nhưng Mạng Phát hiện (Object Detection) phải trả lời được câu hỏi "Con ngựa nằm ở đâu?" bằng cách vẽ các Hộp giới hạn Bâu-đinh Bóc (Bounding Boxes) kèm nhãn phân loại.
+Người 2: Ứng dụng này em thấy phủ sóng khắp nơi! Xe tự lái khoanh vùng người đi bộ và biển báo giao thông; camera bán lẻ đếm số lượng hàng hóa trên kệ; hay hệ thống kiểm soát xe cộ cắt vùng biển số xe để chuyển vào module nhận dạng chữ OCR. Nó thông dụng và thực tế vô cùng!
+
+Slide 4: Bộ dữ liệu COCO (Common Objects in Context)
+Người 1: Chuẩn mực vàng (Gold Standard) thế giới để thi đấu và đánh giá các mô hình Object Detection hiện đại là bộ dữ liệu Cô-Cô (MS COCO). Hơn 200.000 bức ảnh được gán nhãn thủ công với 80 danh mục vật thể phong phú.
+Người 2: Hãy nhìn hình 12.2 con mèo nằm trên ghế và cái xe đạp phía sau. Điểm thách thức cực lớn của COCO là các vật thể đan xen, chồng chéo lên nhau rất phức tạp, kích thước thì biến thiên từ siêu nhỏ đến khổng lồ trong cùng một khung hình. Mô hình phải cực kỳ tinh tường mới bắt đúng từng vật thể!
+
+Slide 5: Tải Dữ liệu COCO 2017
+Người 1: Để thực hành, ta dùng lệnh `keras.utils.get_file` tải tập dữ liệu COCO train2017. Dung lượng nén lên tới gần 18 Gigabyte! Kèm theo file nhãn An-nô-tây-xần định dạng di-sơn (JSON) chứa siêu dữ liệu của toàn bộ các hộp giới hạn.
+Người 2: Dữ liệu 18 Gigabyte quả thực rất đồ sộ đối với máy cá nhân. Chắc chắn ta sẽ cần viết các đường ống nạp và xử lý dữ liệu thật thông minh và tinh gọn để không làm tràn bộ nhớ RAM phải không ạ?
+
+Slide 6: Xử lý Tọa độ Hộp giới hạn (Bounding Boxes)
+Người 1: Mở file JSON ra, mỗi chiếc Hộp trong COCO được lưu dưới dạng 4 con số: tọa độ góc trên-trái x, y, cùng chiều rộng w và chiều cao h tính theo pixel thực. Nhưng ảnh đầu vào thì tấm to tấm nhỏ, tỷ lệ ngang dọc khác nhau. Ta phải xử lý thế nào?
+Người 2: Chuẩn hóa nó về đoạn tỷ lệ không đến một [0, 1] trên một hình vuông đơn vị! Hàm `scale_box` lấy nghịch đảo của cạnh lớn nhất giữa chiều rộng và chiều cao làm tỷ lệ, đồng thời cộng thêm phần độ lệch đệm ở hai bên để giữ nguyên vẹn tỷ lệ khung hình thật của bức ảnh. Rất tỉ mỉ!
+
+Slide 7: Tích hợp Dữ liệu Meta
+Người 1: Gom nhóm dữ liệu. Vì một bức ảnh COCO có thể chứa đàn ngựa hoặc nhiều người tương ứng với nhiều cái hộp khác nhau. Ta dùng từ điển trong Python để gom tất cả Hộp (boxes) và Nhãn danh mục (labels) vào chung một khóa là I-mết Ai-đi (`image_id`).
+Người 2: Sau khi gom nhóm xong, ta thu được danh sách 117.266 bức ảnh huấn luyện sẵn sàng! Mỗi phần tử lưu trữ đường dẫn ảnh cùng toàn bộ danh sách tọa độ hộp và nhãn tương ứng. Dữ liệu đã được quy hoạch rất ngăn nắp.
+
+Slide 8: Hàm Hỗ trợ Trực quan hóa (Visualization Utilities)
+Người 1: Để tiện quan sát và đánh giá hộp giới hạn trực quan trên ảnh, ta viết các hàm phụ trợ bằng Matplotlib.
+Người 2: Hàm `draw_box` dùng đối tượng `Rectangle` để vẽ khung viền chữ nhật rỗng bao quanh tọa độ hộp, kèm lệnh `ax.text` gắn nhãn tên vật thể ở góc. Thầy còn viết thêm hàm `label_to_color` dùng công thức tỷ lệ vàng trên không gian màu HSV để tự động gán cho mỗi nhãn một màu sắc riêng biệt rất bắt mắt!
+
+Slide 9: Lọc và Shuffle Dữ liệu
+Người 1: Với quy mô máy tính thực hành, 18 Gigabyte và hàng chục hộp mỗi ảnh là quá tải. Ta dùng hàm `filter` để lọc, chỉ giữ lại những bức ảnh chứa tối đa 4 vật thể đổ lại. Đừng quên gọi `random.shuffle` để xáo trộn ngẫu nhiên toàn bộ danh sách.
+Người 2: Việc giới hạn tối đa 4 hộp giúp giảm đáng kể khối lượng tính toán và độ phức tạp bộ nhớ, rất phù hợp cho bài thực hành trên lớp. Còn việc shuffle sẽ ngăn chặn mạng nơ-ron học vẹt theo thứ tự nhóm ảnh.
+
+Slide 10: Họ mô hình R-CNN (Region-based CNN)
+Người 1: Đi vào lịch sử kiến trúc. Thời kỳ đầu, người ta tiếp cận bằng Kiến trúc Hai giai đoạn (Two-stage Detectors), đại diện kinh điển là họ mô hình A-Xi-En-En (R-CNN) ở hình 12.3.
+Người 2: Quy trình gồm 2 bước tách biệt: Giai đoạn 1 là Đề xuất Vùng (Region Proposals), quét toàn bộ ảnh để đề xuất ra khoảng 2.000 vùng tiềm năng có vẻ chứa vật thể. Giai đoạn 2 mới đưa từng vùng đó qua mạng CNN để phân loại nhãn và tinh chỉnh tọa độ hộp.
+Người 1: Cách làm này cho độ chính xác rất cao, nhưng nhược điểm chí mạng là Cực kỳ Chậm! Tốc độ vài giây một bức ảnh thì hoàn toàn bất khả thi đối với các tác vụ chạy thời gian thực (Real-time).
+
+Slide 11: Kiến trúc Single-stage và FPN
+Người 1: Để giải quyết bài toán tốc độ, Kiến trúc Một giai đoạn (Single-stage Detectors) ra đời như YOLO hay RetinaNet. Mạng dự đoán song song cả Tọa độ hộp lẫn Nhãn phân loại ngay trong 1 bước duy nhất! Nhưng thách thức lớn là các vật thể nhỏ xíu rất dễ bị lu mờ ở các lớp nơ-ron sâu.
+Người 2: Và giải pháp đột phá là Mạng Tháp Đặc trưng F-P-N (Feature Pyramid Network) ở hình 12.4! FPN kết hợp các bản đồ đặc trưng giàu ngữ nghĩa ở tầng sâu với các bản đồ đặc trưng giàu chi tiết không gian ở tầng nông. Nhờ kiến trúc kim tự tháp này, mạng có thể phát hiện chuẩn xác vật thể ở mọi kích cỡ, từ nhỏ li ti đến to lớn!
+
+Slide 12: Kết quả dự đoán của RetinaNet
+Người 1: Tiêu biểu cho dòng Single-stage kết hợp FPN là mạng Rê-ti-na-nét (RetinaNet) do Facebook AI phát minh. Mô hình này sở hữu vũ khí bí truyền là hàm mất mát Phô-cồ Lốt (Focal Loss).
+Người 2: Focal Loss giải quyết triệt để vấn đề mất cân bằng lớp trầm trọng: Nó tự động giảm trọng số phạt của hàng triệu vùng Hậu cảnh trống rỗng, và tập trung toàn bộ gradient trừng phạt vào các vùng Tiền cảnh chứa vật thể khó nhận dạng. Nhìn hình 12.5, RetinaNet khoanh vùng các vật thể rất mượt mà và chuẩn xác!
+
+Slide 13: Kỷ nguyên mới mang tên YOLO
+Người 1: Nhưng nếu nói về tốc độ đỉnh cao, năm 2015, kỹ sư Dô-sếp Rét-môn đã làm rung chuyển toàn bộ thế giới AI với thuật toán YOLO - viết tắt của "You Only Look Once" (Bạn chỉ cần nhìn một lần). Tốc độ đạt tới 45 đến 155 khung hình trên giây (FPS), vượt xa hoàn toàn mắt người và đè bẹp dòng R-CNN!
+Người 2: Điều gì tạo nên bước nhảy vọt tư duy (Paradigm Shift) của YOLO vậy thưa thầy?
+Người 1: Tác giả đã biến bài toán phân vùng hộp phức tạp thành một Bài toán Hồi quy (Regression) duy nhất trên một tấm Lưới không gian!
+
+Slide 14: Tư duy Chia lưới và Anchor Boxes
+Người 1: Nhìn hình 12.6: YOLO chia ảnh đầu vào thành một Lưới kích thước Éch nhân Éch (ở bài thực hành ta chọn lưới 6 nhân 6, tức 36 ô cờ). Giờ hãy nhìn con chó ở hình bên trái, TÂM của con chó nằm ở ô nào?
+Người 2: Nằm trúng vào ô màu cam thưa thầy!
+Người 1: Chính xác! Nguyên lý cốt lõi của YOLO: Ô lưới nào chứa TÂM của vật thể thì DUY NHẤT ô lưới đó phải chịu trách nhiệm dự đoán chiếc Hộp và Nhãn của vật thể đó. 35 ô còn lại không chứa tâm sẽ chỉ dự đoán độ tự tin bằng 0. Một sự phân công nhiệm vụ cực kỳ rõ ràng và thông minh!
+
+Slide 15: Nạp Mạng Xương sống (Backbone)
+Người 1: Bắt tay vào xây dựng YOLO từ đầu. Thay vì đào tạo một mạng CNN từ con số 0, ta lấy Mạng Xương Sống (Backbone) `ResNet50` đã được huấn luyện sẵn trên ImageNet từ KerasHub để làm bộ trích xuất đặc trưng. Ảnh đầu vào chuẩn hóa về kích thước vuông 448 nhân 448.
+Người 2: Tận dụng Feature Extractor cực mạnh của ResNet50 kèm bộ tiền xử lý `ImageConverter` của KerasHub giúp ta tiết kiệm được hàng tuần lễ huấn luyện mà vẫn sở hữu những bản đồ đặc trưng chất lượng cao nhất!
+
+Slide 16: Xây dựng Phần đầu YOLO (Prediction Head)
+Người 1: Cắt bỏ đầu phân loại cũ của ResNet, ta gắn vào một Đầu Dự Đoán (Prediction Head) kiểu YOLO. Dùng một lớp `Conv2D` với 512 bộ lọc kèm bước nhảy strides=2 để giảm kích thước, bóp phẳng bằng `Flatten`, rồi đưa qua lớp `Dense` 2048 nút kèm `Dropout` 0.5.
+Người 2: Và ở lớp Dense cuối cùng, số lượng nút đầu ra được tính bằng công thức: `grid_size * grid_size * (num_labels + 5)`. Với lưới 6x6 và 91 nhãn trong COCO, nó sẽ bung ra đúng 3456 con số!
+
+Slide 17: Định hình Tensor Đầu ra
+Người 1: Lớp `Reshape` cuộn vector 1 chiều đó lại thành Tensor 3D kích thước 6 nhân 6 nhân (91 + 5). 
+Người 2: Em hiểu cấu trúc của từng ô lưới rồi: 5 giá trị đầu tiên là Tọa độ tâm x, y, chiều rộng w, chiều cao h, và Điểm tự tin (Confidence score). Còn 91 giá trị phía sau chính là phân phối xác suất Softmax cho 91 lớp đối tượng! Một khối Tensor chứa đựng đầy đủ toàn bộ thông tin không gian và danh mục của cả bức ảnh.
+
+Slide 18: Ánh xạ Tọa độ Hộp vào Lưới Grid
+Người 1: Vấn đề toán học: Nhãn gốc trong file COCO đang ở hệ tọa độ toàn cục [0, 1]. Ta phải chuyển đổi tọa độ tâm về hệ tọa độ Cục bộ của từng ô lưới.
+Người 2: Hàm `to_grid` lấy tọa độ tâm nhân với kích thước lưới (`grid_size`), rồi lấy phần nguyên để tìm ra chỉ số Hàng và Cột `(ix, iy)` của ô cờ tương ứng. Phần thập phân dôi ra chính là tọa độ lệch tâm cục bộ nằm trong khoảng từ 0 đến 1! Hàm `from_grid` làm chiều ngược lại để giải mã hộp ra tọa độ toàn cục.
+
+Slide 19: Sinh Dữ liệu Lưới (Grid Targets)
+Người 1: Đây là đoạn code chuẩn bị nhãn mục tiêu Ground Truth cho YOLO. Khởi tạo mảng `box_array` kích thước 6x6x5 và `class_array` kích thước 6x6 toàn số 0. Duyệt qua từng hộp nhãn thực tế, gọi hàm `to_grid` để tìm đúng ô cờ chứa tâm.
+Người 2: Đoạn gán nhãn `box_array[index, yi, xi] = [*grid_box, 1.0]` đã cắm cờ Điểm tự tin bằng 1.0 cho đúng ô lưới đó, kèm nhãn lớp ở `class_array`. Các ô còn lại không chứa tâm vẫn giữ nguyên giá trị 0. Thiết kế dữ liệu mục tiêu vô cùng chuẩn xác!
+
+Slide 20: Toán học: Cấu trúc Vector Đầu ra
+Người 1: Nhìn vào vector mục tiêu hình 12.7 với ví dụ chú hươu cao cổ: Đại lượng quyết định sống còn là `pc` (Confidence Score). Nếu ô cờ KHÔNG chứa tâm hươu, `pc` bằng 0, khi đó toàn bộ sai số hộp và nhãn phía sau sẽ không bị tính phạt.
+Người 2: Còn nếu tâm rơi trúng ô đó, `pc` bằng 1.0! Ô lưới đó được lệnh kích hoạt: Nó vừa phải học bù trừ tọa độ tâm bx, by, học độ mở rộng bw, bh, vừa phải tối ưu xác suất lớp hươu cao cổ đạt cực đại.
+
+Slide 21: Sử dụng tf.data thiết lập Pipeline
+Người 1: Dữ liệu lớn cần đường ống truyền tải chuyên nghiệp. Ta đóng gói toàn bộ mảng NumPy vào `tf.data.Dataset`. Dùng hàm `map` với `num_parallel_calls` huy động 8 tiến trình CPU tải và tiền xử lý ảnh song song, chia theo mẻ Batch size 16.
+Người 2: Lệnh `prefetch(2)` ở cuối rất đắt giá! CPU sẽ luôn tranh thủ nạp trước 2 mẻ dữ liệu xếp hàng sẵn trong bộ nhớ đệm, giúp GPU luôn được ăn no dữ liệu liên tục mà không bị nghẽn cổ chai.
+
+Slide 22: Công cụ 1: Intersection over Union (IoU)
+Người 1: Để đánh giá chất lượng của hộp dự đoán so với hộp thực tế, giới Computer Vision dùng thước đo toán học cốt lõi: IoU - Intersection over Union (Diện tích Giao chia Diện tích Hợp).
+Người 2: Công thức IoU đo mức độ đè khít nhau giữa Khung hộp thực tế (Ground Truth) và Khung hộp do mô hình dự đoán. Giá trị chạy từ 0 đến 1: Bằng 0 nếu hai hộp rời nhau hoàn toàn, và bằng 1 nếu hai hộp đè khít từng milimet lên nhau.
+
+Slide 23: Viết hàm tính IoU trong Keras
+Người 1: Triển khai hàm `intersection` trên Keras. Thay vì dùng vòng lặp For duyệt từng hộp rất chậm, ta dùng hoàn toàn các phép toán Tensor như `ops.maximum` và `ops.minimum` để ép toàn bộ ma trận tính toán song song trên GPU.
+Người 2: Lấy Maximum của hai mép trái để tìm biên trái vùng giao, và Minimum của hai mép phải để tìm biên phải. Trừ đi nhau là ra ngay chiều rộng vùng giao nhau. Tương tự cho chiều cao. Cực kỳ ngắn gọn và tối ưu tốc độ!
+
+Slide 24: Hàm Hợp nhau (Union)
+Người 1: Tiếp theo là tính Diện tích Hợp (Union area): Bằng diện tích hộp 1 cộng diện tích hộp 2 trừ đi diện tích phần Giao nhau.
+Người 2: Điểm tinh tế trong code là hàm `ops.divide_no_nan`! Khi hai hộp không giao nhau và diện tích hợp tiệm cận 0, phép chia thông thường sẽ sinh ra lỗi chia cho không (ZeroDivision) làm tràn số hoặc sinh giá trị NaN làm sập quá trình huấn luyện. Keras có sẵn hàm này giúp tính toán an toàn tuyệt đối.
+
+Slide 25: Định nghĩa Hàm Mất mát Hộp (YOLO Box Loss)
+Người 1: Trái tim toán học của YOLO nằm ở hàm `box_loss`. Sai số của chiếc hộp được cấu thành từ 3 thành phần: Sai số tọa độ tâm (xy_error), Sai số kích thước hộp (wh_error), và Sai số độ tự tin (conf_error).
+Người 2: Em rất ấn tượng với hàm `signed_sqrt` tính căn bậc hai cho chiều rộng và chiều cao! Việc lấy căn bậc hai giúp phạt nặng hơn các sai lệch kích thước trên những vật thể nhỏ, trong khi vật thể lớn có sai số vài pixel thì ít bị ảnh hưởng hơn. Tư duy toán học của Redmon thực sự quá sâu sắc!
+
+Slide 26: Hệ số phạt (Penalty Scaling)
+Người 1: Để cân bằng quá trình học, tác giả đề xuất hai hệ số phạt: Phạt nhân 5 lần (`* 5.0`) đối với lỗi tọa độ và kích thước hộp của ô chứa vật thể. Ngược lại, giảm nhẹ mức phạt xuống một nửa (`* 0.5`) đối với lỗi tự tin ở các ô lưới trống rỗng.
+Người 2: Tại sao lại giảm phạt ở ô trống rỗng thưa thầy?
+Người 1: Bởi vì trong 36 ô cờ thì phần lớn là nền trống, chỉ có 1 hoặc vài ô chứa vật thể. Nếu phạt đều nhau, đạo hàm từ 35 ô trống sẽ áp đảo hoàn toàn tín hiệu học của ô chứa vật thể, khiến mô hình chỉ biết đoán ảnh trống không! Việc nhân hệ số 0.5 giúp duy trì sự cân bằng học tập hoàn hảo.
+
+Slide 27: Huấn luyện Mô hình
+Người 1: Gom tất cả lại vào hàm `model.compile`: Dùng thuật toán tối ưu Adam với tốc độ học 2 nhân 10 mũ trừ 4, hàm mất mát đa đầu ra gồm `box_loss` cho nhánh vẽ hộp và `sparse_categorical_crossentropy` cho nhánh phân loại nhãn. Sau đó gọi lệnh `model.fit`.
+Người 2: Khối lượng tính toán của bài toán Object Detection rất đồ sộ, nên việc huấn luyện 4 epochs trên tập dữ liệu này có thể mất hàng giờ trên GPU. Nhưng đây chính là nền tảng để mô hình tự học cách định vị vật thể!
+
+Slide 28: Kết quả Thô (Raw Predictions)
+Người 1: Mang mô hình đã huấn luyện ra dự đoán thử (Inference). Ở hình 12.8, một hiện tượng quen thuộc xuất hiện: Bức ảnh chú hươu cao cổ bị bao phủ bởi hàng trăm chiếc hộp giới hạn xanh đỏ nằm đan xen chồng chéo lên nhau!
+Người 2: Trông như một mớ ma trận hộp hỗn độn! Tại sao lại xuất hiện nhiều hộp lặp lại như vậy ạ?
+Người 1: Do có 36 ô lưới độc lập cùng tham gia dự đoán, các ô nằm cạnh ô trung tâm đều nhận diện được một phần thân hươu nên cùng đồng loạt xuất ra hộp dự đoán. Hầu hết là các hộp nhiễu có độ tự tin thấp. Ta cần một công cụ dọn dẹp đống rác này!
+
+Slide 29: Công cụ 2: Non-Maximum Suppression (NMS)
+Người 1: Đó chính là siêu thuật toán Non-Maximum Suppression (NMS - Triệt tiêu Phi cực đại).
+Người 2: Quy trình lọc nhiễu 5 bước hoạt động như một chiếc phễu: Đầu tiên loại bỏ tất cả các hộp có Điểm tự tin quá thấp. Tiếp theo chọn hộp có điểm tự tin cao nhất làm hộp chuẩn. Sau đó tính IoU giữa hộp chuẩn với toàn bộ các hộp còn lại. Bất kỳ hộp nào có IoU lớn hơn 0.4 tức là bản sao trùng lặp, xóa bỏ ngay lập tức! Lặp lại quy trình cho đến khi xử lý hết mọi hộp.
+
+Slide 30: Kết quả Cuối cùng (Sau khi chạy NMS)
+Người 1: Sau khi chạy qua bộ lọc NMS, phép màu xuất hiện ở hình 12.9: Toàn bộ hàng trăm hộp rác biến mất, chỉ còn lại duy nhất một chiếc hộp giới hạn màu xanh gọn gàng ôm khít chú hươu cao cổ với nhãn `giraffe` và độ tự tin rõ ràng!
+Người 2: Kết quả quá đỗi sạch sẽ và chuẩn xác! YOLO kết hợp giữa tốc độ suy luận 1 pha thần tốc trên lưới tọa độ và khả năng gọt rác chính xác của NMS đã thiết lập nên Tiêu chuẩn công nghiệp cho mọi hệ thống Camera AI, Flycam và Xe tự lái ngày nay!
+
+Slide 31: Tổng kết Chương 12
+Người 1: Tổng kết Chương 12: Phát hiện vật thể (Object Detection) phức tạp hơn Phân loại ảnh vì phải giải quyết đồng thời cả hai bài toán Định vị (Localization) và Phân loại (Classification).
+Người 2: Về mặt kiến trúc, ta đã thấy bước tiến lịch sử từ Two-stage (R-CNN) chính xác nhưng chậm chạp, sang Single-stage (YOLO, RetinaNet) thần tốc nhờ biến phát hiện thành bài toán hồi quy trên lưới tọa độ.
+Người 1: Và điều quan trọng nhất là các em đã nắm vững 3 trụ cột toán học cốt lõi: Hồi quy Hộp `(x, y, w, h)`, Độ đo trùng khớp `IoU`, và thuật toán lọc nhiễu vô song `NMS`. Chúc mừng các em đã làm chủ kỹ thuật phát hiện vật thể hiện đại! Hẹn gặp lại các em ở bài học tiếp theo!
+
