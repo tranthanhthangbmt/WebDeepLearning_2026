@@ -458,16 +458,7 @@
                 <input type="text" id="reg-class" required placeholder="Ví dụ: 23AI01" style="width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Mật khẩu làm bài *</label>
-                <div style="position: relative;">
-                    <input type="password" id="reg-password" required placeholder="Nhập mật khẩu do Giảng viên cung cấp" oninput="clearPassError()" style="width: 100%; padding: 12px 42px 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;">
-                    <button type="button" onclick="togglePassVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.15rem; color: #64748b; line-height: 1;" title="Hiện / Ẩn mật khẩu">👁️</button>
-                </div>
-                <div id="password-error" style="display: none; color: #dc2626; font-size: 0.85rem; margin-top: 6px; font-weight: 600;">
-                    ❌ Mật khẩu làm bài không chính xác! Vui lòng nhập đúng mật khẩu do Giảng viên cung cấp.
-                </div>
-            </div>
+
 
             <div id="attempt-info-box" style="display: none; padding: 14px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 0.92rem; line-height: 1.6;"></div>
 
@@ -482,7 +473,6 @@
                 <li>Hệ thống bốc ngẫu nhiên cân bằng <strong>90 câu</strong> từ 12 chương trọng tâm.</li>
                 <li>Thời gian làm bài là <strong>45 phút</strong>, đồng hồ sẽ tự động đếm ngược và tự nộp bài khi hết giờ.</li>
                 <li>Mỗi sinh viên chỉ được làm bài <strong>1 lần duy nhất</strong>. Kết quả sẽ được tự động lưu vào cơ sở dữ liệu của Giảng viên ngay khi nộp bài.</li>
-                <li>Sinh viên cần nhập chính xác <strong>Mật khẩu làm bài</strong> do Giảng viên cung cấp để được mở đề thi.</li>
                 <li>Chế độ giám sát bảo mật: <strong>Khóa sao chép, dán (Copy/Paste), khóa chuột phải, F12</strong>. Mọi hành vi <strong>chuyển tab hoặc rời màn hình bài thi</strong> đều được hệ thống tự động ghi nhận vào biên bản nộp bài.</li>
             </ul>
         </div>
@@ -958,18 +948,6 @@
 
     function startExam(e) {
         e.preventDefault();
-
-        const passInput = document.getElementById('reg-password').value.trim();
-        const passErr = document.getElementById('password-error');
-        const passField = document.getElementById('reg-password');
-
-        if (passInput !== EXAM_PASSWORD && passInput.toUpperCase() !== "UDA") {
-            if (passErr) passErr.style.display = 'block';
-            passField.style.borderColor = '#dc2626';
-            passField.focus();
-            alert('⚠️ Mật khẩu làm bài không chính xác!\nVui lòng nhập đúng mật khẩu do Giảng viên cung cấp để bắt đầu làm bài.');
-            return;
-        }
 
         student = {
             name: document.getElementById('reg-name').value.trim(),

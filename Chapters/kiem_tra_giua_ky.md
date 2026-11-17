@@ -15,7 +15,6 @@
 | **Phần 2: Thực hành lập trình** | **2 Mã đề (Đề 01 & Đề 02)** làm trên **Jupyter Notebook / Google Colab** (45 phút) |
 | **Quy định phân bổ mã đề** | 🎯 **MSSV có chữ số cuối là SỐ LẺ (1, 3, 5, 7, 9) ➔ Làm MÃ ĐỀ 01**<br>🎯 **MSSV có chữ số cuối là SỐ CHẴN (0, 2, 4, 6, 8) ➔ Làm MÃ ĐỀ 02** |
 | **Phạm vi kiến thức** | Bao quát toàn bộ **Chương 1 đến Chương 12** (Từ nền tảng Tensor đến Thị giác máy tính nâng cao) |
-| **Mật khẩu phòng thi** | Do Giảng viên cung cấp trực tiếp tại phòng thi (`Abcd1234` hoặc `UDA`) |
 | **Giám sát & An ninh** | Khóa Copy/Paste, chuột phải, F12; Bắt buộc bật JavaScript; Tự động ghi nhận số lần chuyển tab |
 | **Đồng bộ cơ sở dữ liệu** | Điểm số trắc nghiệm tự động đồng bộ và lưu trữ bảo mật vào Hệ thống Cơ sở dữ liệu của Giảng viên |
 
@@ -51,40 +50,7 @@
   </ul>
 </div>
 
-<!-- KHÓA BẢO MẬT ĐỀ THI -->
-<div id="practical-exam-lock" style="background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 14px; padding: 36px 20px; text-align: center; max-width: 640px; margin: 30px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-  <div style="font-size: 3.5rem; margin-bottom: 12px; line-height: 1;">🔒</div>
-  <h3 style="font-size: 1.45rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">KHU VỰC ĐỀ THI ĐÃ ĐƯỢC KHÓA BẢO MẬT</h3>
-  <p style="color: #64748b; font-size: 0.95rem; max-width: 520px; margin: 0 auto 24px; line-height: 1.6;">
-    Khu vực <strong>Đề thi thực hành giữa kỳ môn Học Sâu</strong> (Jupyter Notebook / Google Colab) được bảo mật. Sinh viên vui lòng nhập <strong>Mật khẩu làm bài</strong> do Giảng viên công bố tại phòng thi để mở khóa đề thi.
-  </p>
-  <div style="display: flex; gap: 10px; justify-content: center; max-width: 440px; margin: 0 auto; flex-wrap: wrap;">
-    <div style="position: relative; flex: 1; min-width: 240px;">
-      <input type="password" id="practical-exam-pass" placeholder="Nhập mật khẩu mở đề thi..." onkeydown="if(event.key==='Enter') window.checkPracticalExamPass();" oninput="window.clearPracticalExamErr();" style="width: 100%; box-sizing: border-box; padding: 12px 42px 12px 14px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s;">
-      <button type="button" id="btn-toggle-exam-pwd" onclick="window.togglePracticalPassVisibility()" title="Ẩn/Hiện mật khẩu" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.15rem; color: #64748b; padding: 4px;">
-        👁️
-      </button>
-    </div>
-    <button type="button" id="btn-unlock-exam" onclick="window.checkPracticalExamPass()" style="background: #1a73e8; color: #ffffff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3); transition: background 0.2s;">
-      🔓 Mở Khóa Đề Thi
-    </button>
-  </div>
-  <div id="practical-exam-err" style="display: none; color: #dc2626; font-size: 0.9rem; font-weight: 700; margin-top: 14px;">
-    ❌ Mật khẩu không chính xác! Vui lòng kiểm tra lại.
-  </div>
-</div>
-
-<!-- NỘI DUNG SAU KHI MỞ KHÓA -->
-<div id="practical-exam-unlocked" style="display: none; margin-top: 24px;">
-
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 12px 18px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; flex-wrap: wrap; gap: 10px;">
-  <span style="color: #16a34a; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-    🔓 Đề thi thực hành đã được mở khóa thành công!
-  </span>
-  <button type="button" onclick="window.lockPracticalExam()" style="background: #ffffff; color: #64748b; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
-    🔒 Khóa lại
-  </button>
-</div>
+<div id="practical-exam-unlocked" style="margin-top: 24px;">
 
 <!-- TIỆN ÍCH TRA CỨU MÃ ĐỀ THEO MSSV -->
 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.04);">
@@ -400,64 +366,6 @@ def build_detection_head(feature_maps, num_classes=10):
 
 <script>
 (function() {
-    const PRACTICAL_PASSWORD = "Abcd1234";
-
-    window.togglePracticalPassVisibility = function() {
-        const inp = document.getElementById('practical-exam-pass');
-        if (inp) {
-            inp.type = (inp.type === 'password') ? 'text' : 'password';
-        }
-    };
-
-    window.clearPracticalExamErr = function() {
-        const err = document.getElementById('practical-exam-err');
-        const inp = document.getElementById('practical-exam-pass');
-        if (err) err.style.display = 'none';
-        if (inp) inp.style.borderColor = '#cbd5e1';
-    };
-
-    window.checkPracticalExamPass = function() {
-        const inp = document.getElementById('practical-exam-pass');
-        const err = document.getElementById('practical-exam-err');
-        if (!inp) return;
-        const val = inp.value.trim();
-        if (val === PRACTICAL_PASSWORD || val === PRACTICAL_PASSWORD.toLowerCase() || val.toUpperCase() === "UDA") {
-            sessionStorage.setItem('dl_practical_exam_unlocked', 'true');
-            window.applyPracticalExamState();
-        } else {
-            if (err) err.style.display = 'block';
-            inp.style.borderColor = '#dc2626';
-            inp.focus();
-        }
-    };
-
-    window.lockPracticalExam = function() {
-        sessionStorage.removeItem('dl_practical_exam_unlocked');
-        window.applyPracticalExamState();
-    };
-
-    window.applyPracticalExamState = function() {
-        const isUnlocked = (sessionStorage.getItem('dl_practical_exam_unlocked') === 'true');
-        const lockBox = document.getElementById('practical-exam-lock');
-        const contentBox = document.getElementById('practical-exam-unlocked');
-        if (lockBox && contentBox) {
-            if (isUnlocked) {
-                lockBox.style.display = 'none';
-                contentBox.style.display = 'block';
-                setTimeout(function() {
-                    window.dispatchEvent(new Event('resize'));
-                }, 100);
-            } else {
-                lockBox.style.display = 'block';
-                contentBox.style.display = 'none';
-                const inp = document.getElementById('practical-exam-pass');
-                if (inp) inp.value = '';
-                const err = document.getElementById('practical-exam-err');
-                if (err) err.style.display = 'none';
-            }
-        }
-    };
-
     window.switchExamTab = function(keyword) {
         const tabs = document.querySelectorAll('.docsify-tabs__tab');
         for (const t of tabs) {
@@ -502,7 +410,6 @@ def build_detection_head(feature_maps, num_classes=10):
     };
 
     // Tự động kiểm tra trạng thái ngay khi trang nạp xong
-    setTimeout(window.applyPracticalExamState, 50);
 })();
 </script>
 
