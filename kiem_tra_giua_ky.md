@@ -17,7 +17,7 @@
 | **Phạm vi kiến thức** | Bao quát toàn bộ **Chương 1 đến Chương 12** (Từ nền tảng Tensor đến Thị giác máy tính nâng cao) |
 | **Mật khẩu phòng thi** | Do Giảng viên cung cấp trực tiếp tại phòng thi (`Abcd1234` hoặc `UDA`) |
 | **Giám sát & An ninh** | Khóa Copy/Paste, chuột phải, F12; Bắt buộc bật JavaScript; Tự động ghi nhận số lần chuyển tab |
-| **Đồng bộ cơ sở dữ liệu** | Điểm số trắc nghiệm tự động lưu trực tiếp vào [Google Sheet Điểm Giữa kỳ AI Kế toán_15.10.2026](https://docs.google.com/spreadsheets/d/1jE5pqvoSDxC_NG6VmGULdFj6_Kj5miL1mInSCx4VrQc/edit?gid=0#gid=0) |
+| **Đồng bộ cơ sở dữ liệu** | Điểm số trắc nghiệm tự động đồng bộ và lưu trữ bảo mật vào Hệ thống Cơ sở dữ liệu của Giảng viên |
 
 <div style="margin: 16px 0 24px 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
   <a href="quizzes/MidtermExam/index.html" target="_blank" class="btn-fullscreen" style="display: inline-flex; align-items: center; gap: 8px; background: #1a73e8; color: white !important; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);">
