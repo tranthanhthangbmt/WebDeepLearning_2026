@@ -565,7 +565,7 @@
         <!-- Action Buttons -->
         <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
             <button type="button" class="btn btn-secondary" onclick="openReviewWithPassword()" style="background: #f8fafc; border: 1.5px solid #cbd5e1; color: #334155; font-weight: 600; padding: 10px 20px;">
-                🔐 Mở xem lại câu hỏi (Yêu cầu GV mở khóa)
+                🔐 Xem lại bài làm & Lời giải chi tiết (Yêu cầu mật khẩu)
             </button>
             <button type="button" class="btn btn-primary" onclick="exitExamSession()" style="background: #0f172a; border-color: #0f172a; color: #ffffff; font-weight: 700; padding: 10px 24px;">
                 🔒 Hoàn tất & Khóa màn hình máy thi
@@ -591,8 +591,8 @@
 
     <!-- Review Container (Chỉ hiển thị khi Giảng viên nhập mật khẩu) -->
     <div id="review-container" style="display: none; margin-top: 30px;">
-        <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 12px 18px; margin-bottom: 16px; color: #991b1b; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-            🔓 ĐÃ MỞ KHÓA XEM LẠI BỞI GIẢNG VIÊN (DÀNH CHO PHÚC KHẢO / GIẢI ĐÁP)
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 18px; margin-bottom: 16px; color: #166534; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+            🔓 ĐÃ MỞ KHÓA XEM LẠI BÀI LÀM VÀ LỜI GIẢI CHI TIẾT
         </div>
         <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: #0f172a;">
             Chi tiết 90 câu hỏi và lời giải giải thích:
@@ -1339,16 +1339,16 @@
         });
     }
 
-    // Mở xem lại chi tiết bài làm - BẢO VỆ BẰNG MẬT KHẨU GIẢNG VIÊN (UDA)
+    // Mở xem lại chi tiết bài làm - YÊU CẦU MẬT KHẨU (123456789)
     function openReviewWithPassword() {
-        const pass = prompt("🔐 Vui lòng nhập Mật khẩu Giảng viên để mở xem lại chi tiết câu hỏi:");
-        if (pass === "UDA" || pass === "uda") {
+        const pass = prompt("🔐 Vui lòng nhập mật khẩu để xem lại chi tiết bài làm:");
+        if (pass === "123456789" || pass === "UDA" || pass === "uda") {
             const box = document.getElementById('review-container');
             box.style.display = 'block';
             box.scrollIntoView({ behavior: 'smooth' });
-            alert("✅ Xác thực Giảng viên thành công! Đã mở khóa xem lại chi tiết 90 câu hỏi và đáp án.");
+            alert("✅ Mật khẩu chính xác! Đã mở khóa xem lại chi tiết 90 câu hỏi và lời giải.");
         } else if (pass !== null) {
-            alert("❌ Mật khẩu không chính xác! Để đảm bảo tính công bằng và bảo mật đề thi cho phòng thi, chi tiết câu hỏi và đáp án chỉ được Giảng viên mở khóa.");
+            alert("❌ Mật khẩu không chính xác! Vui lòng kiểm tra lại mật khẩu do Giảng viên cung cấp.");
         }
     }
 
