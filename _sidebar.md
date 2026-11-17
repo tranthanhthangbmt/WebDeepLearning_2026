@@ -1,4 +1,5 @@
 * [Trang chủ](/)
+* [📝 Kiểm tra giữa kỳ](Chapters/kiem_tra_giua_ky.md)
 
 - **Học Sâu (Deep Learning)**
   - [Chương 1: Khái niệm Học sâu (What is deep learning?)](Chapters/chapter_01.md)

@@ -2,6 +2,8 @@
 
 Chào mừng đến với trang web môn học **Học sâu** (Deep Learning).
 
+> 🎯 **Thông báo học phần:** Đã mở cổng làm [📝 **Bài kiểm tra giữa kỳ (90 câu / 45 phút)**](Chapters/kiem_tra_giua_ky.md) — Bao quát kiến thức từ Chương 1 đến Chương 12. Sinh viên vào làm bài để ghi nhận điểm quá trình tự động lên Google Sheets!
+
 ## Giới thiệu môn học
 Môn học cung cấp các kiến thức nền tảng và chuyên sâu về Học sâu, bao gồm mạng nơ-ron nhân tạo, thị giác máy tính, xử lý ngôn ngữ tự nhiên, học sinh sản và các ứng dụng thực tế.
 
